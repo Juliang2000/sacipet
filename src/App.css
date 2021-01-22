@@ -1,0 +1,4 @@
+/* Quitar bordes de botones */
+button{
+    outline: none !important;
+  }
