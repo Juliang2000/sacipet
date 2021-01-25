@@ -17,7 +17,7 @@ import hamsterIcon from '../../../assets/icons/petype/hamster.svg'
 const useStyles = makeStyles(() => ({
 
     root: {
-        // padding: '50%',
+        margin: '10%',
 
     },
 
@@ -25,8 +25,8 @@ const useStyles = makeStyles(() => ({
         // padding: "50px",
         // margin: "20%",
     },
-    tittle: {
-        // marginBottom: '50%',
+    title: {
+        marginBotton: '20px',
     }
 
 }))
@@ -34,22 +34,22 @@ const useStyles = makeStyles(() => ({
 function PetType() {
     const classes = useStyles();
     return (
-        <React.Fragment className={classes.root}>
+        <div className={classes.root}>
             <Grid
                 container
-                spacing={0}
+                spacing={10}
                 // direction="column"
                 alignItems="center"
                 justify="space-between"
             >
-                <Hidden><Grid item xs={12} spacing={5} className={classes.title}><Typography variant="h6">Selecciona el tipo de mascota</Typography></Grid></Hidden><br/><br/>
+                <Hidden><Grid item xs={12} spacing={10} className={classes.title}><Typography variant="h6">Selecciona el tipo de mascota</Typography></Grid></Hidden><br/><br/>
                 <Grid item xs={12} sm={4} md={4} spacing={3}><IconButton><img width={70} src={dogIcon}></img></IconButton><Typography align='center'>Perro</Typography></Grid>
                 <Grid item xs={12} sm={4} md={4} spacing={3}><IconButton><img width={70} src={catIcon}></img></IconButton><Typography align='center'>Gato</Typography></Grid>
                 <Grid item xs={12} sm={4} md={4} spacing={3}><IconButton><img width={70} src={hamsterIcon}></img></IconButton><Typography align='center'>Hámster</Typography></Grid>
 
                 
             </Grid>
-        </React.Fragment>
+        </div>
     )
 }
 

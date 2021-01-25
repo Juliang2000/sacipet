@@ -1,8 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-// import Image from '../src/assets/images/wallpaper.svg';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';   
 
 import './App.css'
 
@@ -16,6 +14,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import PininaDashboard from './pages/PininaDashboard'
 import SaciDashboard from './pages/SaciDashboard'
+
 
 // import classes from '*.module.css';
 

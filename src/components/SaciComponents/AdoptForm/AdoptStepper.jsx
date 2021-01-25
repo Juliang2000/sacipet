@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Stepper, Step, StepLabel, Button, Grid, Typography, Box, Hidden, Dialog } from '@material-ui/core';
 
@@ -10,13 +10,14 @@ import UserData from './UserData';
 
 //icons
 import petIcon from '../../../assets/icons/drawer/pet.svg'
+import petIconGray from '../../../assets/icons/drawer/pet_gray.svg'
 
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    // padding: '5%',
+    padding: '5%',
   },
   button: {
     marginRight: theme.spacing(1),
@@ -32,39 +33,17 @@ const useStyles = makeStyles((theme) => ({
   petprice: {
     alignItems: 'center',
   },
-  adoptionButton: {      
+  adoptionButton: {
     color: '#fff',
     textTransform: 'none',
     fontSize: '15px',
   },
+  adoptionMobileButton: {
+    // color: 'black',
+    textTransform: 'none',
+    fontSize: '15px',
+  },
 }));
-
-// const [openModal, setOpenModal] = React.useState(false);
-
-//   const handleClickOpenModal = () => {
-//     setOpenModal(true);
-//   };
-
-//   const handleClickCloseModal = () => {
-//     setOpenModal(false);
-//   };
-
-// export default function AdoptButton() {
-//   const classes = useStyles();
-//   return (
-//       <React.Fragment>
-//           <Button
-//               // onClick={handleClickOpenModal}
-//               className={classes.adoptionButton}
-//               variant="text"
-//               // color="primary"
-//               startIcon={<img src={petIcon} alt="LogIn" style={{ width: '30px' }} />}
-//           >
-//               Adopciones
-//               </Button>
-//       </React.Fragment>
-//   )
-// }
 
 export function getSteps() {
   return ['Selecciona el tipo de mascota', 'Descripción de tu mascota', 'Ingresa tus datos'];
@@ -84,24 +63,7 @@ function getStepContent(step) {
   }
 }
 
-// const [openModal, setOpenModal] = React.useState(false);
-
-// const openCloseModal = () => {
-//   setModal(!modal);
-// }
-
-// export const handleClickOpenModal = () => {
- 
-//   setOpenModal(true);
-// };
-
-// const handleClickCloseModal = () => {
-  
-//   setOpenModal(false);
-// };
-
-
-export default function HorizontalLinearStepper() {
+export default function AdoptStepper() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
@@ -133,8 +95,6 @@ export default function HorizontalLinearStepper() {
 
   const handleSkip = () => {
     if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
       throw new Error("You can't skip a step that isn't optional.");
     }
 
@@ -150,10 +110,6 @@ export default function HorizontalLinearStepper() {
     setActiveStep(0);
   };
 
-  // const openCloseModal = () => {
-  //   setModal(!modal);
-  // };
-  
   const [openModal, setOpenModal] = React.useState(false);
 
   const handleClickOpenModal = () => {
@@ -167,19 +123,36 @@ export default function HorizontalLinearStepper() {
   return (
     <React.Fragment>
       <React.Fragment>
+        <Hidden smDown>
           <Button
-              onClick={handleClickOpenModal}
-              className={classes.adoptionButton}
-              variant="text"
-              // color="primary"
-              startIcon={<img src={petIcon} alt="LogIn" style={{ width: '30px' }} />}
+            onClick={handleClickOpenModal}
+            className={classes.adoptionButton}
+            variant="text"
+            // color="primary"
+            startIcon={<img src={petIcon} alt="LogIn" style={{ width: '40px' }} />}
           >
-              Adopciones
+            Adopciones
               </Button>
+        </Hidden>
+
+        <Hidden mdUp>
+          <Button
+            onClick={handleClickOpenModal}
+            className={classes.adoptionMobileButton}
+            variant="text"
+            // color="primary"
+            startIcon={<img src={petIconGray} alt="LogIn" style={{ width: '40px' }} />}
+          >
+            <Typography>
+              Adopciones
+            </Typography>
+          </Button>
+        </Hidden>
       </React.Fragment>
-      <Dialog open={openModal}
-              onClose={handleClickCloseModal}
-              >
+      <Dialog
+        open={openModal} 
+        onClose={handleClickCloseModal}
+      >
         <div className={classes.root}>
           <Hidden only={'xs'}>
             <Stepper activeStep={activeStep}>

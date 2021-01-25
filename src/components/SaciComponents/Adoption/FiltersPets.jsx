@@ -1,71 +1,136 @@
-import React from 'react';
+import React, { /* useState */ } from 'react';
 import PropTypes from 'prop-types';
-import SvgIcon from '@material-ui/core/SvgIcon';
-import { fade, makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
-import Collapse from '@material-ui/core/Collapse';
-import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
+import Typography from '@material-ui/core/Typography';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 
-function MinusSquare(props) {
-  return (
-    <SvgIcon fontSize="inherit" style={{ width: 14, height: 14 }} {...props}>
-      {/* tslint:disable-next-line: max-line-length */}
-      <path d="M22.047 22.074v0 0-20.147 0h-20.12v0 20.147 0h20.12zM22.047 24h-20.12q-.803 0-1.365-.562t-.562-1.365v-20.147q0-.776.562-1.351t1.365-.575h20.147q.776 0 1.351.575t.575 1.351v20.147q0 .803-.575 1.365t-1.378.562v0zM17.873 11.023h-11.826q-.375 0-.669.281t-.294.682v0q0 .401.294 .682t.669.281h11.826q.375 0 .669-.281t.294-.682v0q0-.401-.294-.682t-.669-.281z" />
-    </SvgIcon>
-  );
-}
+// import filters from '../../../assets/icons/filters/046-pet-shelter.svg'
+// import dog from '../../../assets/icons/petype/dog.svg';
+// import cat from '../../../assets/icons/petype/cat.svg';
+// import hamster from '../../../assets/icons/petype/hamster.svg';
 
-function PlusSquare(props) {
-  return (
-    <SvgIcon fontSize="inherit" style={{ width: 14, height: 14 }} {...props}>
-      {/* tslint:disable-next-line: max-line-length */}
-      <path d="M22.047 22.074v0 0-20.147 0h-20.12v0 20.147 0h20.12zM22.047 24h-20.12q-.803 0-1.365-.562t-.562-1.365v-20.147q0-.776.562-1.351t1.365-.575h20.147q.776 0 1.351.575t.575 1.351v20.147q0 .803-.575 1.365t-1.378.562v0zM17.873 12.977h-4.923v4.896q0 .401-.281.682t-.682.281v0q-.375 0-.669-.281t-.294-.682v-4.896h-4.923q-.401 0-.682-.294t-.281-.669v0q0-.401.281-.682t.682-.281h4.923v-4.896q0-.401.294-.682t.669-.281v0q.401 0 .682.281t.281.682v4.896h4.923q.401 0 .682.281t.281.682v0q0 .375-.281.669t-.682.294z" />
-    </SvgIcon>
-  );
-}
+// Lotties
+import Lottie from 'react-lottie';
 
-function CloseSquare(props) {
-  return (
-    <SvgIcon className="close" fontSize="inherit" style={{ width: 14, height: 14 }} {...props}>
-      {/* tslint:disable-next-line: max-line-length */}
-      <path d="M17.485 17.512q-.281.281-.682.281t-.696-.268l-4.12-4.147-4.12 4.147q-.294.268-.696.268t-.682-.281-.281-.682.294-.669l4.12-4.147-4.12-4.147q-.294-.268-.294-.669t.281-.682.682-.281.696 .268l4.12 4.147 4.12-4.147q.294-.268.696-.268t.682.281 .281.669-.294.682l-4.12 4.147 4.12 4.147q.294.268 .294.669t-.281.682zM22.047 22.074v0 0-20.147 0h-20.12v0 20.147 0h20.12zM22.047 24h-20.12q-.803 0-1.365-.562t-.562-1.365v-20.147q0-.776.562-1.351t1.365-.575h20.147q.776 0 1.351.575t.575 1.351v20.147q0 .803-.575 1.365t-1.378.562v0z" />
-    </SvgIcon>
-  );
-}
+import petFilter from '../../../assets/icons/filters/petFilter.svg';
 
-function TransitionComponent(props) {
-  const style = useSpring({
-    from: { opacity: 0, transform: 'translate3d(20px,0,0)' },
-    to: { opacity: props.in ? 1 : 0, transform: `translate3d(${props.in ? 0 : 20}px,0,0)` },
-  });
+import petType  from '../../../assets/icons/filters/petType.svg';
+import dog from '../../../assets/lotties/lottieDog.json';
+import cat from '../../../assets/lotties/lottieCat.json';
+import hamster from '../../../assets/lotties/lottieHamster.json';
 
-  return (
-    <animated.div style={style}>
-      <Collapse {...props} />
-    </animated.div>
-  );
-}
+import petBreed  from '../../../assets/icons/filters/petBreed.svg';
 
-TransitionComponent.propTypes = {
-  /**
-   * Show the component; triggers the enter or exit states
-   */
-  in: PropTypes.bool,
-};
+import petSize  from '../../../assets/icons/filters/petSize.svg';
 
-const StyledTreeItem = withStyles((theme) => ({
-  iconContainer: {
-    '& .close': {
-      opacity: 0.3,
+import petGender from '../../../assets/icons/filters/petGender.svg';
+import petGenderMale from '../../../assets/icons/filters/petGenderMale.svg';
+import petGenderFemale from '../../../assets/icons/filters/petGenderFemale.svg';
+
+import petYear from '../../../assets/icons/filters/petYear.svg';
+
+
+// import Button from '@material-ui/core/Button';
+
+// prueba componente
+// import LottiePrueba from './LottiePrueba'
+
+const useTreeItemStyles = makeStyles((theme) => ({
+  root: {
+    color: theme.palette.text.secondary,
+    '&:hover > $content': {
+      backgroundColor: theme.palette.action.hover,
+    },
+    '&:focus > $content, &$selected > $content': {
+      backgroundColor: `var(--tree-view-bg-color, ${theme.palette.grey[400]})`,
+      color: 'var(--tree-view-color)',
+    },
+    '&:focus > $content $label, &:hover > $content $label, &$selected > $content $label': {
+      backgroundColor: 'transparent',
+    },
+    userSelect: 'none',
+  },
+  content: {
+    color: theme.palette.text.secondary,
+    borderTopRightRadius: theme.spacing(2),
+    borderBottomRightRadius: theme.spacing(2),
+    paddingRight: theme.spacing(1),
+    fontWeight: theme.typography.fontWeightMedium,
+    '$expanded > &': {
+      fontWeight: theme.typography.fontWeightRegular,
     },
   },
   group: {
-    marginLeft: 7,
-    paddingLeft: 18,
-    borderLeft: `1px dashed ${fade(theme.palette.text.primary, 0.4)}`,
+    marginLeft: 0,
+    '& $content': {
+      paddingLeft: theme.spacing(2),
+    },
   },
-}))((props) => <TreeItem {...props} TransitionComponent={TransitionComponent} />);
+  expanded: {},
+  selected: {},
+  label: {
+    fontWeight: 'inherit',
+    color: 'inherit',
+  },
+  labelRoot: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0.5, 0),
+  },
+  labelIcon: {
+    marginRight: theme.spacing(1),
+  },
+  labelText: {
+    fontWeight: 'inherit',
+    flexGrow: 1,
+  },
+}));
+
+function StyledTreeItem(props) {
+  const classes = useTreeItemStyles();
+  const { labelText, labelIcon: LabelIcon, labelInfo, color, bgColor, ...other } = props;
+
+  return (
+    <TreeItem
+      label={
+        <div className={classes.labelRoot}>
+          <LabelIcon color="inherit" className={classes.labelIcon} />
+          <Typography variant="body2" className={classes.labelText}>
+            {labelText}
+          </Typography>
+          <Typography variant="caption" color="inherit">
+            {labelInfo}
+          </Typography>
+        </div>
+      }
+      style={{
+        '--tree-view-color': color,
+        '--tree-view-bg-color': bgColor,
+      }}
+      classes={{
+        root: classes.root,
+        content: classes.content,
+        expanded: classes.expanded,
+        selected: classes.selected,
+        group: classes.group,
+        label: classes.label,
+      }}
+      {...other}
+    />
+  );
+}
+
+StyledTreeItem.propTypes = {
+  bgColor: PropTypes.string,
+  color: PropTypes.string,
+  labelIcon: PropTypes.elementType.isRequired,
+  labelInfo: PropTypes.string,
+  labelText: PropTypes.string.isRequired,
+};
 
 const useStyles = makeStyles({
   root: {
@@ -73,53 +138,264 @@ const useStyles = makeStyles({
     flexGrow: 1,
     maxWidth: 400,
   },
+  iconSize: {
+    width: '40px',
+    marginRight: '10px'
+  },
+  // lottieSize: {
+  //   width: '40px',
+  //   marginRight: '10px'
+  // }
 });
 
-export default function CustomizedTreeView() {
+
+
+export default function GmailTreeView() {
+
   const classes = useStyles();
 
+  // Const Lotties
+  const defaultOptions = {
+    loop: true,
+    autoplay: false,
+    rendererSettings: {
+      preserveAespectRatio: 'xMidYMid slice'
+    }
+  }
+
+  // const [isPaused, setIsPaused] = useState(false);
+
+  // const [isStopeed, setIsStopped] = useState(false);
+
+  // const [isStart, setIsStart] = useState(false);
+
+  // const handleStart = () => {
+  //   setIsStart(true)
+  // }
+
+  const lottieDog = () => {
+    return (
+      <Lottie options={{ animationData: dog, ...defaultOptions }}/* className={classes.lottieSize} */
+        style={{ width: '40px', marginRight: '10px' }}
+        //  isStopped={isStopeed}
+        //  isPaused={isPaused}
+        // autoplay={isStart}
+      />
+    )
+  }
+
+  const lottieCat = () => {
+    return (
+      <Lottie options={{ animationData: cat, ...defaultOptions }}/* className={classes.lottieSize} */
+        style={{ width: '40px', marginRight: '10px' }} />
+    )
+  }
+
+  const lottieHamster = () => {
+    return (
+      <Lottie options={{ animationData: hamster, ...defaultOptions }}/* className={classes.lottieSize} */
+        style={{ width: '40px', marginRight: '10px' }} />
+    )
+  }
+
+  const lottieFilter = () => {
+    return (
+      <img src={petFilter} alt="Icon Pet Filter" className={classes.iconSize} />
+    )
+  }
+
+  const lottiePetType = () => {
+    return (
+      <img src={petType} alt="Icon Pet Type" className={classes.iconSize} />
+    )
+  }
+
+  const lottiePetBreed = () => {
+    return (
+      <img src={petBreed} alt="Icon Pet Breed" className={classes.iconSize} />
+    )
+  }
+
+  const lottiePetSize = () => {
+    return (
+      <img src={petSize} alt="Icon Pet Size" className={classes.iconSize} />
+    )
+  }
+
+  const lottiePetGender = () => {
+    return (
+      <img src={petGender} alt="Icon Pet Gender" className={classes.iconSize} />
+    )
+  }
+
+  const lottiePetGenderMale = () => {
+    return (
+      <img src={petGenderMale} alt="Icon Pet Gender Male" className={classes.iconSize} />
+    )
+  }
+
+  const lottiePetGenderFemale = () => {
+    return (
+      <img src={petGenderFemale} alt="Icon Pet Gender Female" className={classes.iconSize} />
+    )
+  }
+
+  const lottiePetYear = () => {
+    return (
+      <img src={petYear} alt="Icon Pet Year" className={classes.iconSize} />
+    )
+  }
+
   return (
+<div>
+
+    {/* <Lottie
+    options={{ animationData: dog, ...defaultOptions }}
+    height={400}
+    width={400}
+    autoplay={isStart}
+    /> */}
+
     <TreeView
       className={classes.root}
       defaultExpanded={['1']}
-      defaultCollapseIcon={<MinusSquare />}
-      defaultExpandIcon={<PlusSquare />}
-      defaultEndIcon={<CloseSquare />}
+      defaultCollapseIcon={<ArrowDropDownIcon />}
+      defaultExpandIcon={<ArrowRightIcon />}
+      defaultEndIcon={<div style={{ width: 24 }} />}
     >
-      <StyledTreeItem nodeId="1" label="Filtros">
+      <StyledTreeItem nodeId="1" labelText="Filtros" labelIcon={lottieFilter} bgColor="#63C132" color="#FFFFFF">
+        <StyledTreeItem nodeId="2" labelText="Tipo De Mascota" labelIcon={lottiePetType} >
+          <StyledTreeItem
+            bgColor="#FF8899"
+            nodeId="7"
+            labelText="Perros"
+            labelIcon={lottieDog}
+            // onClick={handleStart}
+            // labelInfo="90"
+          />
 
-        <StyledTreeItem nodeId="2" label="Tipo De Mascota" >
-          <StyledTreeItem nodeId="7" label="Perros" />
-          <StyledTreeItem nodeId="8" label="Gatos" />
-          <StyledTreeItem nodeId="9" label="Hamsters" />
+          {/* <Button variant="text" color="default" onClick={handleStart}>
+            prueba
+          </Button> */}
+
+          {/* <LottiePrueba/> */}
+
+          <StyledTreeItem
+            bgColor="#FF8899"
+            nodeId="8"
+            labelText="Gatos"
+            labelIcon={lottieCat}
+          // labelInfo="90"
+          />
+          <StyledTreeItem
+            bgColor="#FF8899"
+            nodeId="9"
+            labelText="Hámsters"
+            labelIcon={lottieHamster}
+          // labelInfo="90"
+          />
         </StyledTreeItem>
-
-        <StyledTreeItem nodeId="3" label="Raza">
-          <StyledTreeItem nodeId="10" label="Raza1" />
-          <StyledTreeItem nodeId="11" label="Raza2" />
-          <StyledTreeItem nodeId="12" label="Raza3" />
-          <StyledTreeItem nodeId="13" label="Raza4" />
-          <StyledTreeItem nodeId="14" label="Raza5" />
+        <StyledTreeItem nodeId="3" labelText="Raza" labelIcon={lottiePetBreed} >
+          <StyledTreeItem
+            bgColor="#FF8899"
+            nodeId="10"
+            labelText="Raza1"
+            labelIcon={SupervisorAccountIcon}
+          // labelInfo="90"
+          />
+          <StyledTreeItem
+            bgColor="#FF8899"
+            nodeId="11"
+            labelText="Raza2"
+            labelIcon={SupervisorAccountIcon}
+          // labelInfo="90"
+          />
+          <StyledTreeItem
+            bgColor="#FF8899"
+            nodeId="12"
+            labelText="Raza3"
+            labelIcon={SupervisorAccountIcon}
+          // labelInfo="90"
+          />
+          <StyledTreeItem
+            bgColor="#FF8899"
+            nodeId="13"
+            labelText="Raza4"
+            labelIcon={SupervisorAccountIcon}
+          // labelInfo="90"
+          />
+          <StyledTreeItem
+            bgColor="#FF8899"
+            nodeId="14"
+            labelText="Raza5"
+            labelIcon={SupervisorAccountIcon}
+          // labelInfo="90"
+          />
         </StyledTreeItem>
-
-        <StyledTreeItem nodeId="4" label="Tamaño">
-          <StyledTreeItem nodeId="15" label="Pequeño" />
-          <StyledTreeItem nodeId="16" label="Mediano" />
-          <StyledTreeItem nodeId="17" label="Grande" />
+        <StyledTreeItem nodeId="4" labelText="Tamaño" labelIcon={lottiePetSize} >
+          <StyledTreeItem
+            bgColor="#FF8899"
+            nodeId="15"
+            labelText="Pequeño"
+            labelIcon={SupervisorAccountIcon}
+          // labelInfo="90"
+          />
+          <StyledTreeItem
+            bgColor="#FF8899"
+            nodeId="16"
+            labelText="Mediano"
+            labelIcon={SupervisorAccountIcon}
+          // labelInfo="90"
+          />
+          <StyledTreeItem
+            bgColor="#FF8899"
+            nodeId="17"
+            labelText="Grande"
+            labelIcon={SupervisorAccountIcon}
+          // labelInfo="90"
+          />
         </StyledTreeItem>
-
-        <StyledTreeItem nodeId="5" label="Género">
-          <StyledTreeItem nodeId="18" label="Macho" />
-          <StyledTreeItem nodeId="19" label="Hembra" />
+        <StyledTreeItem nodeId="5" labelText="Género" labelIcon={lottiePetGender} >
+          <StyledTreeItem
+            bgColor="#FF8899"
+            nodeId="18"
+            labelText="Macho"
+            labelIcon={lottiePetGenderMale}
+          // labelInfo="90"
+          />
+          <StyledTreeItem
+            bgColor="#FF8899"
+            nodeId="19"
+            labelText="Hembra"
+            labelIcon={lottiePetGenderFemale}
+          // labelInfo="90"
+          />
         </StyledTreeItem>
-
-        <StyledTreeItem nodeId="6" label="Edad">
-          <StyledTreeItem nodeId="20" label="Joven" />
-          <StyledTreeItem nodeId="21" label="Adulto" />
-          <StyledTreeItem nodeId="22" label="Viejo" />
+        <StyledTreeItem nodeId="6" labelText="Edad" labelIcon={lottiePetYear} >
+          <StyledTreeItem
+            bgColor="#FF8899"
+            nodeId="20"
+            labelText="Joven"
+            labelIcon={SupervisorAccountIcon}
+          // labelInfo="90"
+          />
+          <StyledTreeItem
+            bgColor="#FF8899"
+            nodeId="21"
+            labelText="Adulto"
+            labelIcon={SupervisorAccountIcon}
+          // labelInfo="90"
+          />
+          <StyledTreeItem
+            bgColor="#FF8899"
+            nodeId="22"
+            labelText="Viejo"
+            labelIcon={SupervisorAccountIcon}
+          // labelInfo="90"
+          />
         </StyledTreeItem>
-
       </StyledTreeItem>
     </TreeView>
+    </div>
   );
 }

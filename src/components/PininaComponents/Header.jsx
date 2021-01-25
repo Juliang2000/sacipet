@@ -15,12 +15,9 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Drawer from '@material-ui/core/Drawer';
-import { useMediaQuery, Dialog, Hidden } from '@material-ui/core';
+import { useMediaQuery, Hidden } from '@material-ui/core';
 import Box from '@material-ui/core/Box'
 
-
-//components
-import Stepper from '../SaciComponents/AdoptForm/Stepper'
 
 
 
@@ -147,25 +144,25 @@ export default function PrimarySearchAppBar() {
 
   const classes = useStyles();
 
-  const [modal, setModal] = useState(false);
+  // const [modal, setModal] = useState(false);
 
 
 
 
 
-  const openCloseModal = () => {
-    setModal(!modal);
-  }
+  // const openCloseModal = () => {
+  //   setModal(!modal);
+  // }
 
-  const [openModal, setOpenModal] = React.useState(false);
+  // const [openModal, setOpenModal] = React.useState(false);
 
-  const handleClickOpenModal = () => {
-    setOpenModal(true);
-  };
+  // const handleClickOpenModal = () => {
+  //   setOpenModal(true);
+  // };
 
-  const handleClickCloseModal = () => {
-    setOpenModal(false);
-  };
+  // const handleClickCloseModal = () => {
+  //   setOpenModal(false);
+  // };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -386,7 +383,7 @@ export default function PrimarySearchAppBar() {
           <Box m={2}>
           <MenuItem><img src={servicesIcon} alt="Servicios" style={{ width: '30px', marginRight: '15px' }} /><h6>Servicios</h6></MenuItem>
             <MenuItem><img src={storeIcon} alt="Tienda" style={{ width: '30px', marginRight: '15px' }} /><h6>Tienda</h6></MenuItem>
-            <MenuItem onClick={handleClickOpenModal}><img src={petIcon} alt="Adopción" style={{ width: '30px', marginRight: '15px' }} /><h6>Adopción mascota</h6></MenuItem>
+            <MenuItem><img src={petIcon} alt="Adopción" style={{ width: '30px', marginRight: '15px' }} /><h6>Adopción mascota</h6></MenuItem>
             <MenuItem><img src={loginIcon} alt="Iniciar sesión" style={{ width: '30px', marginRight: '15px' }} /><h6>Ingresa</h6></MenuItem>
             <MenuItem><img src={registerIcon} alt="Registrarse" style={{ width: '30px', marginRight: '15px' }} /><h6>Regístrate</h6></MenuItem>
           </Box>
@@ -395,13 +392,13 @@ export default function PrimarySearchAppBar() {
       {renderMobileMenu}
       {renderMenu}
 
-      <Dialog
+      {/* <Dialog
 
         open={openModal}
         onclose={handleClickCloseModal}
       >
         <Stepper />
-      </Dialog>
+      </Dialog> */}
 
 
     </div>
