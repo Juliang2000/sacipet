@@ -83,18 +83,18 @@ export default function PetDescription() {
           <Grid container justify="center">
             <TextField name="nombre" fullWidth id="outlined-basic" label="Nombre" variant="outlined" size="small" onChange={handleChange} />
             <TextField name="edad" id="outlined-basic" label='Edad' variant="outlined" size="small" onChange={handleChange} />
-            <TextField name="microChip" fullWidth id="outlined-basic" label="número de microchip" variant="outlined" size="small" onChange={handleChange} />
-            <TextField name="raza" fullWidth id="outlined-basic" label="Raza" variant="outlined" size="small" onChange={handleChange} />
-            <TextField name="color" fullWidth id="outlined-basic" label="Color" variant="outlined" size="small" onChange={handleChange} />
+            {/* <TextField name="microChip" fullWidth id="outlined-basic" label="número de microchip" variant="outlined" size="small" onChange={handleChange} /> */}
+            <TextField name="raza" fullWidth id="outlined-basic" label="Tamaño" variant="outlined" size="small" onChange={handleChange} />
+            <TextField name="color" fullWidth id="outlined-basic" label="Raza" variant="outlined" size="small" onChange={handleChange} />
             <TextField name="genero" fullWidth id="outlined-basic" label="Género" variant="outlined" size="small" onChange={handleChange} />
           </Grid>
 
-          <FormControlLabel
+          {/* <FormControlLabel
             value="end"
             control={<Checkbox color="primary" />}
             label="Esterilización"
             labelPlacement="start"
-          />
+          /> */}
         </div>
 
         <div>

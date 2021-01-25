@@ -120,6 +120,8 @@ export default function AdoptStepper() {
     setOpenModal(false);
   };
 
+  /////
+
   return (
     <React.Fragment>
       <React.Fragment>
@@ -150,6 +152,7 @@ export default function AdoptStepper() {
         </Hidden>
       </React.Fragment>
       <Dialog
+        fullWidth
         open={openModal} 
         onClose={handleClickCloseModal}
       >
