@@ -23,7 +23,7 @@ import hamsterPet from '../../../assets/lotties/lottieHamster.json'
 const useStyles = makeStyles(() => ({
 
     root: {
-        margin: '10%',
+        // margin: '10%',
 
     },
 
@@ -32,7 +32,7 @@ const useStyles = makeStyles(() => ({
         // margin: "20%",
     },
     title: {
-        // marginBotton: '10x',
+        marginBotton: '20px',
     }
 
 }))
@@ -118,7 +118,7 @@ export default function PetType() {
                 justify="space-between"
             >
                 <Hidden>
-                    <Grid item xs={12} spacing={0} className={classes.title}>
+                    <Grid item xs={12} spacing={10} className={classes.title}>
                         <Typography variant="h6">
                             Selecciona el tipo de mascota
                         </Typography>
@@ -131,7 +131,7 @@ export default function PetType() {
                     <Lottie
                         options={dogPetOptions}
                         height={200}
-                        width={200}
+                        width={150}
                         isPaused={playLottie.dogPet}
                     />
                     <Typography variant='h5' align='center'>Perro</Typography></Grid>
@@ -142,7 +142,7 @@ export default function PetType() {
                     <Lottie
                         options={catPetOptions}
                         height={200}
-                        width={200}
+                        width={150}
                         isPaused={playLottie.CatPet}
                     />
                     <Typography variant='h5' align='center'>
@@ -156,7 +156,7 @@ export default function PetType() {
                     <Lottie
                         options={hamsterPetOptions}
                         height={200}
-                        width={200}
+                        width={150}
                         isPaused={playLottie.hamsterPet}
                     />
                     <Typography variant='h5' align='center'>

@@ -1,15 +1,18 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';   
-
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles'; 
+  
+// Css
 import './App.css'
 
 // Redux
-// import { Provider } from 'react-redux';
-// import store from './redux/store';
-// Css
+import { Provider } from 'react-redux';
+import store from './redux/store';
+
 
 // Pages
+import PublicRoute from './routes/PublicRoute';
+import PrivateRoute from './routes/PrivateRoute';
 import Login from './pages/Login'
 import Register from './pages/Register'
 import PininaDashboard from './pages/PininaDashboard'
@@ -38,30 +41,21 @@ const theme = createMuiTheme({
 function App() {
 
   return (
-    // <Provider store={ store }>
-
-
-    <ThemeProvider theme={theme}>
-      <Router>
-        <Switch>
-          <Route path="/Register">
-            <Register/>
-          </Route>
-          <Route path="/Login">
-            <Login/>
-          </Route>
-          <Route path="/Pinina">
-            <PininaDashboard />
-          </Route>
-          <Route exact path="/">
-            <SaciDashboard/>
-          </Route>
-        </Switch>
-      </Router>
+    <Provider store={ store }>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={SaciDashboard}/>
+            <Route path="/Register" component={Register}/>
+            <Route path="/Login" component={Login}/>
+            <Route path="/Pinina" component={PininaDashboard}/>
+            
+          </Switch>
+        </Router>
       </ThemeProvider>
 
     
-    // </Provider>
+    </Provider>
   );
 }
 
