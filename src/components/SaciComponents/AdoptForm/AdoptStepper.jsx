@@ -134,7 +134,7 @@ export default function AdoptStepper() {
             startIcon={<img src={petIcon} alt="LogIn" style={{ width: '40px' }} />}
           >
             Adopciones
-              </Button>
+          </Button>
         </Hidden>
 
         <Hidden mdUp>
