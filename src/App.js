@@ -47,7 +47,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={SaciDashboard}/>
             <Route path="/Register" component={Register}/>
-            <Route path="/Login" setOpen={ setOpen } component={Login}/>
+            <Route path="/Login" component={Login}/>
             <Route path="/Pinina" component={PininaDashboard}/>
             
           </Switch>
