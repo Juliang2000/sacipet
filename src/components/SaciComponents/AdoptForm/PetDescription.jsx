@@ -1,144 +1,225 @@
-import React, { useState } from 'react'
-import { Grid, IconButton, TextField, makeStyles, Typography, Checkbox, FormControlLabel, Hidden } from '@material-ui/core'
-
-//icons
-import photoupload from '../../../assets/images/photoupload.svg'
+import React from 'react'
+import {
+  makeStyles,
+  Grid,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Checkbox,
+  ListItemText,
+  Typography
+} from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-      width: 200,
-    },
-  },
-  content: {
-    //  margin: '15%',
-
-    // padding: '10px',
-  },
-  image: {
-    //   margin: '5%',
-    alignItems: "center",
-    alignContent: 'center',
-    justifyContent: "center",
-    // display: "flex",
-  },
-  t1: {
-    display: 'flex',
-    textAlign: 'center',
-    alignItems: 'center',
-  },
-  form: {
-    marginLeft: '10%',
-    marginRight: '10%',
-    margin: '5%',
-    // margin: theme.spacing(1),
+  formPetDescription: {
+    marginTop: 20,
+    marginBottom: 20
   }
-}))
+}));
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250
+    }
+  }
+};
+
+const names = [
+  "Moquillo",
+  "Hepatitis",
+  "Parvovirosis",
+  "Leptospirosis",
+  "Rabia",
+  "Leucemia",
+  "Rinotraqueitis",
+  "Panleucopenia",
+  "Calcivirosis",
+];
 
 export default function PetDescription() {
+
   const classes = useStyles();
 
-  const [newPet, setNewPet] = useState({
+  const [personName, setPersonName] = React.useState([]);
 
-    nombre: '',
-    edad: '',
-    microChip: '',
-    esterilizacion: '',
-    raza: '',
-    color: '',
-    genero: '',
-
-  });
-
-  const { nombre, edad, microchip, esterilizacion, raza, color, genero } = newPet
-
-  const handleChange = e => {
-    setNewPet({
-      ...newPet,
-      [e.target.name]: e.target.value
-    })
-  }
+  const handleChange = (event) => {
+    setPersonName(event.target.value);
+  };
 
   return (
-    <div className={classes.content}>
-
-      <Grid container justify="center"
-        alignItems="center"
-      >
-        <Hidden><Grid item xs={12} spacing={5} className={classes.title}><Typography variant="h6">Descripción de la mascota</Typography></Grid></Hidden><br /><br />
-
+    <Grid container spacing={2} className={classes.formPetDescription}>
+      <Grid item xs={12}>
+        <Typography variant="h4" gutterBottom>
+          Describe Tu Mascota
+      </Typography>
       </Grid>
-      <Grid container justify="center" alignItems="center">
-        <Grid item xs={12} sm={12} md={12} spacing={3}>
-          <IconButton><img width={100} src={photoupload}></img></IconButton>
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} spacing={3}>
-          <Typography>Subir fotos</Typography>
-        </Grid>
+      <Grid item xs={6}>
+        <TextField
+          label="Nombre De Mascota"
+          variant="outlined"
+          fullWidth
+        />
       </Grid>
-      <form className={classes.root} noValidate autoComplete="off">
-        <div className={classes.form}>
-          <Grid container justify="center">
-            <TextField name="nombre" fullWidth id="outlined-basic" label="Nombre" variant="outlined" size="small" onChange={handleChange} />
-            <TextField name="edad" id="outlined-basic" label='Edad' variant="outlined" size="small" onChange={handleChange} />
-            {/* <TextField name="microChip" fullWidth id="outlined-basic" label="número de microchip" variant="outlined" size="small" onChange={handleChange} /> */}
-            <TextField name="raza" fullWidth id="outlined-basic" label="Tamaño" variant="outlined" size="small" onChange={handleChange} />
-            <TextField name="color" fullWidth id="outlined-basic" label="Raza" variant="outlined" size="small" onChange={handleChange} />
-            <TextField name="genero" fullWidth id="outlined-basic" label="Género" variant="outlined" size="small" onChange={handleChange} />
-          </Grid>
+      <Grid item xs={2}>
+        <TextField
+          label="Edad"
+          variant="outlined"
+          fullWidth
+        />
+      </Grid>
+      <Grid item xs={4}>
+        <FormControl variant="outlined" fullWidth>
+          <InputLabel id="demo-simple-select-outlined-label">Seleccione</InputLabel>
+          <Select
+            labelId="demo-simple-select-outlined-label"
+            id="demo-simple-select-outlined"
+            // value={age}
+            // onChange={handleChange}
+            label="Seleccione"
+          >
+            <MenuItem value="">
+              <em>Seleccione:</em>
+            </MenuItem>
+            <MenuItem value={1}>Semanas</MenuItem>
+            <MenuItem value={2}>Meses</MenuItem>
+            <MenuItem value={3}>Años</MenuItem>
+          </Select>
+        </FormControl>
+      </Grid>
 
-          {/* <FormControlLabel
-            value="end"
-            control={<Checkbox color="primary" />}
-            label="Esterilización"
-            labelPlacement="start"
-          /> */}
-        </div>
-
-        <div>
-          <Typography variant="h6">Vacunas</Typography><br/>
-          <FormControlLabel
-            value="end"
-            control={<Checkbox color="primary" />}
-            label="Contra la rabia"
-            labelPlacement="start"
-          />
-          <FormControlLabel
-            value="end"
-            control={<Checkbox color="primary" />}
-            label="Contra la rinotraqueítis"
-            labelPlacement="start"
-          />
-          <FormControlLabel
-            value="end"
-            control={<Checkbox color="primary" />}
-            label="Contra Parvovirus"
-            labelPlacement="start"
-          />
-          <FormControlLabel
-            value="end"
-            control={<Checkbox color="primary" />}
-            label="Contra moquillo"
-            labelPlacement="start"
-          /><br /><br />
-        </div>
-
-
-
-
-
-      </form>
-    </div>
-
-
-
-
-
-
-
-
-
+      <Grid item xs={6}>
+        <FormControl variant="outlined" fullWidth>
+          <InputLabel id="demo-simple-select-outlined-label">Tamaño De Mascota</InputLabel>
+          <Select
+            labelId="demo-simple-select-outlined-label"
+            id="demo-simple-select-outlined"
+            // value={age}
+            // onChange={handleChange}
+            label="Tamaño De Mascota"
+          >
+            <MenuItem value="" >
+              <em>Seleccione:</em>
+            </MenuItem>
+            <MenuItem value={1}>Pequeño</MenuItem>
+            <MenuItem value={2}>Mediano</MenuItem>
+            <MenuItem value={3}>Grande</MenuItem>
+          </Select>
+        </FormControl>
+      </Grid>
+      <Grid item xs={6}>
+        <FormControl variant="outlined" fullWidth>
+          <InputLabel id="demo-simple-select-outlined-label">Raza De Mascota</InputLabel>
+          <Select
+            labelId="demo-simple-select-outlined-label"
+            id="demo-simple-select-outlined"
+            // value={age}
+            // onChange={handleChange}
+            label="Raza De Mascota"
+          >
+            <MenuItem value="">
+              <em>Seleccione:</em>
+            </MenuItem>
+            <MenuItem value={1}>Pastor Alemán</MenuItem>
+            <MenuItem value={2}>Rottweiler</MenuItem>
+            <MenuItem value={3}>Doberman</MenuItem>
+            <MenuItem value={4}>Schnauzer</MenuItem>
+            <MenuItem value={5}>Akita Inu</MenuItem>
+          </Select>
+        </FormControl>
+      </Grid>
+      <Grid item xs={6}>
+        <FormControl variant="outlined" fullWidth>
+          <InputLabel id="demo-simple-select-outlined-label">Genéro De Macota</InputLabel>
+          <Select
+            labelId="demo-simple-select-outlined-label"
+            id="demo-simple-select-outlined"
+            // value={age}
+            // onChange={handleChange}
+            label="Genéro De Mascota"
+          >
+            <MenuItem value="">
+              <em>Seleccione:</em>
+            </MenuItem>
+            <MenuItem value={1}>Macho</MenuItem>
+            <MenuItem value={2}>Hembra</MenuItem>
+          </Select>
+        </FormControl>
+      </Grid>
+      <Grid item xs={6}>
+        <FormControl variant="outlined" fullWidth>
+          <InputLabel id="demo-mutiple-checkbox-label">Vacunas De Mascota</InputLabel>
+          <Select
+            labelId="demo-mutiple-checkbox-label"
+            id="demo-mutiple-checkbox"
+            multiple
+            value={personName}
+            onChange={handleChange}
+            label="Vacunas De Mascota"
+            renderValue={(selected) => selected.join(', ')}
+            MenuProps={MenuProps}
+          >
+            {names.map((name) => (
+              <MenuItem key={name} value={name}>
+                <Checkbox color="primary" checked={personName.indexOf(name) > -1} />
+                <ListItemText primary={name} />
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Grid>
+      <Grid item xs={6}>
+        <FormControl variant="outlined" fullWidth>
+          <InputLabel id="demo-simple-select-outlined-label">Departamento De Mascota</InputLabel>
+          <Select
+            labelId="demo-simple-select-outlined-label"
+            id="demo-simple-select-outlined"
+            // value={age}
+            // onChange={handleChange}
+            label="Departamento De Mascota"
+          >
+            <MenuItem value="">
+              <em>Seleccione:</em>
+            </MenuItem>
+            <MenuItem value={1}>Cundinamarca</MenuItem>
+            <MenuItem value={2}>Antioquía</MenuItem>
+            <MenuItem value={3}>Valle del Cauca</MenuItem>
+          </Select>
+        </FormControl>
+      </Grid>
+      <Grid item xs={6}>
+        <FormControl variant="outlined" fullWidth>
+          <InputLabel id="demo-simple-select-outlined-label">Capital De Mascota</InputLabel>
+          <Select
+            labelId="demo-simple-select-outlined-label"
+            id="demo-simple-select-outlined"
+            // value={age}
+            // onChange={handleChange}
+            label="Capital De Mascota"
+          >
+            <MenuItem value="">
+              <em>Seleccione:</em>
+            </MenuItem>
+            <MenuItem value={1}>Bogotá</MenuItem>
+            <MenuItem value={2}>Medellín</MenuItem>
+            <MenuItem value={3}>Cali</MenuItem>
+          </Select>
+        </FormControl>
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          fullWidth
+          variant="outlined"
+          placeholder="Descripción De Mascota"
+          multiline
+          rows={4}
+        />
+      </Grid>
+    </Grid>
   )
-}
+};
