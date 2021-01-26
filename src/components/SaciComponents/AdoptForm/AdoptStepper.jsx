@@ -251,6 +251,7 @@ export default function AdoptStepper() {
         </React.Fragment>
         <Dialog
           fullWidth
+          // Resolución Modal Dialog
           maxWidth='md'
           open={openModal}
           onClose={handleClickCloseModal}
