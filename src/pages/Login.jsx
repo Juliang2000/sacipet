@@ -1,5 +1,5 @@
-import React, { useState, /* useEffect */ } from 'react';
-import { Link, /* useHistory */ } from 'react-router-dom';
+import React, { useEffect, useState, /* useEffect */ } from 'react';
+import { Link, useHistory, /* useHistory */ } from 'react-router-dom';
 // Alerts
 import swal from 'sweetalert2';
 // Form Validation
@@ -22,8 +22,17 @@ import titlepinina from '../assets/images/titlepinina.png';
 import GoogleLogin from 'react-google-login';
 // Facebook Button
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import { useDispatch, useSelector } from 'react-redux';
+import { iniciarSesionAction } from '../redux/actions/mainAction';
+import Loader from './Loader';
 ////////////////////////////////////////////////////
 export default function Login() {
+
+  const { user, loader } = useSelector( state => state.main );
+
+  const dispatch = useDispatch();
+
+  const history = useHistory();
 
   const classes = loginStyles();
 
@@ -32,6 +41,13 @@ export default function Login() {
     correo: '',
     origen_cuenta: 'Registro_normal'
   });
+
+  useEffect(() => {
+    if (user.length !== 0) {
+        history.push('/');
+    }
+
+  }, [user]);
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -44,9 +60,13 @@ export default function Login() {
     e.target.reset();
   };
 
-  const _handleSubmit = (data) => {
-    saveUserLogin(data)
-    swal("Muy Bien!", "Inicio Sesión Exitoso!", "success");
+  const _handleSubmit = async(data) => {
+    const response = await saveUserLogin(data);
+    console.log(response);
+    if (response.data.ok) {
+      dispatch(iniciarSesionAction(response.data.user.nombres));
+    }
+    //swal("Muy Bien!", "Inicio Sesión Exitoso!", "success");
   };
 
   const { register, errors, handleSubmit } = useForm();
@@ -68,6 +88,12 @@ export default function Login() {
 
   return (
     // <ThemeProvider theme={pininaTheme}>
+    <>
+      { loader && (
+        <Loader />
+      ) }
+      
+
       <div className={classes.containerLogin}>
         <Grid container alignItems="center" justify="center">
           <Grid item xs={12} sm={8} md={5} lg={4} xl={3} >
@@ -214,6 +240,7 @@ export default function Login() {
           </Grid>
         </Grid>
       </div>
+    </>
   )
 };
 
