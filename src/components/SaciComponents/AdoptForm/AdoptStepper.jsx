@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { Stepper, Step, StepLabel, Button, Grid, Typography, Box, Hidden, Dialog } from '@material-ui/core';
+import { Stepper, Step, StepLabel, Button, Grid, Typography, Box, Hidden, Dialog, useMediaQuery } from '@material-ui/core';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import StepConnector from '@material-ui/core/StepConnector';
+import { useTheme } from '@material-ui/core/styles';
 
 
 //components
 import PetType from './PetType'
 import PetDescription from './PetDescription';
-import UserData from './UserData';
+
 
 //icons
 import petIcon from '../../../assets/icons/drawer/pet.svg'
@@ -141,7 +142,7 @@ function getStepContent(step) {
     case 1:
       return <PetDescription />;
     case 2:
-      return
+      return <PetDescription />;
     default:
       return 'Unknown step';
   }
@@ -161,9 +162,9 @@ export default function AdoptStepper() {
     return step === 1;
   };
 
-  const isStepSkipped = (step) => {
-    return skipped.has(step);
-  };
+  // const isStepSkipped = (step) => {
+  //   return skipped.has(step);
+  // };
 
 
   ColorlibStepIcon.propTypes = {
@@ -181,18 +182,18 @@ export default function AdoptStepper() {
     icon: PropTypes.node,
   };
 
-  const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-      throw new Error("You can't skip a step that isn't optional.");
-    }
+  // const handleSkip = () => {
+  //   if (!isStepOptional(activeStep)) {
+  //     throw new Error("You can't skip a step that isn't optional.");
+  //   }
 
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped((prevSkipped) => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
-  };
+  //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  //   setSkipped((prevSkipped) => {
+  //     const newSkipped = new Set(prevSkipped.values());
+  //     newSkipped.add(activeStep);
+  //     return newSkipped;
+  //   });
+  // };
 
   const [openModal, setOpenModal] = React.useState(false);
 
@@ -219,6 +220,10 @@ export default function AdoptStepper() {
     const handleReset = () => {
       setActiveStep(0);
     };
+
+    const theme = useTheme();
+
+    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     return (
       <React.Fragment>
@@ -251,6 +256,7 @@ export default function AdoptStepper() {
         </React.Fragment>
         <Dialog
           maxWidth='xl'
+          fullScreen={fullScreen}
           open={openModal}
           onClose={handleClickCloseModal}
         >
