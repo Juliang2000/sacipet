@@ -1,16 +1,19 @@
-import React, { useEffect, useState, /* useEffect */ } from 'react';
-import { Link, useHistory, /* useHistory */ } from 'react-router-dom';
+import React, { useEffect, useState, } from 'react';
+import { Link, useHistory,  } from 'react-router-dom';
 // Alerts
 import swal from 'sweetalert2';
 // Form Validation
 import { useForm } from "react-hook-form";
-//Axios Service
-import { saveUserLogin } from '../configAxios/Login';
-import { saveGoogleUser } from '../configAxios/Google';
-import { saveFbUser } from '../configAxios/Facebook';
+// Dispach Redux
+import { useDispatch, useSelector } from 'react-redux';
+// redux Actions
+import { loginNormalAction } from '../redux/actions/loginAction';
+import { loginGoogleAction } from '../redux/actions/googleAction';
+import { loginFacebookAction } from '../redux/actions/facebookAction';
+import Loader from './Loader';
 // Material UI
 import { TextField, Grid, Button, Typography, Card, Hidden } from '@material-ui/core';
-// Email
+// Icons 
 import iconEmail from '../assets/icons/email.svg';
 import iconPassword from '../assets/icons/lock.svg';
 import iconSend from '../assets/icons/send.svg';
@@ -22,69 +25,50 @@ import titlepinina from '../assets/images/titlepinina.png';
 import GoogleLogin from 'react-google-login';
 // Facebook Button
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
-import { useDispatch, useSelector } from 'react-redux';
-import { iniciarSesionAction } from '../redux/actions/mainAction';
-import Loader from './Loader';
-////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 export default function Login() {
-
-  const { user, loader } = useSelector( state => state.main );
-
-  const dispatch = useDispatch();
-
-  const history = useHistory();
-
+  // Styles
   const classes = loginStyles();
-
+  // Validation Form Login
+  const { register, errors, handleSubmit } = useForm();
+  // Field Validation 
   const [newUser, setnewUser] = useState({
     password: '',
     correo: '',
     origen_cuenta: 'Registro_normal'
   });
-
-  useEffect(() => {
-    if (user.length !== 0) {
-        history.push('/');
-    }
-
-  }, [user]);
-
   const handleChange = (event) => {
     const { name, value } = event.target
     setnewUser({ ...newUser, [name]: value })
   };
-
   const onSubmit = (data, e) => {
     _handleSubmit({ ...newUser })
     console.log(newUser)
     e.target.reset();
   };
-
+  // redux implementation
+  const { user, loader } = useSelector( state => state.login );
+  const dispatch = useDispatch();
+  const history = useHistory();
+  // redux Actions
   const _handleSubmit = async(data) => {
-    const response = await saveUserLogin(data);
-    console.log(response);
-    if (response.data.ok) {
-      dispatch(iniciarSesionAction(response.data.user.nombres));
-    }
+    dispatch(loginNormalAction(data));
     //swal("Muy Bien!", "Inicio Sesión Exitoso!", "success");
   };
-
-  const { register, errors, handleSubmit } = useForm();
-
-  const responseFacebook = (response) => {
-    console.log(response);
-    saveFbUser(response);
+  const responseGoogle = (data) => {
+    //console.log(data);
+    dispatch(loginGoogleAction(data));
   };
-
-  const responseGoogle = (response) => {
-    console.log(response);
-    saveGoogleUser(response)
+  const responseFacebook = (data) => {
+    dispatch(loginFacebookAction(data));
   };
+  // Push to SaciDashboard
+  useEffect(() => {
+    if (user.length !== 0) {
+        history.push('/');
+    }
+  }, [user]);
 
-  // Recuperar Contraseña
-  /* const ReturnPass = () => {
-    history.push('/RecuperarContraseña');
-  } */
 
   return (
     // <ThemeProvider theme={pininaTheme}>

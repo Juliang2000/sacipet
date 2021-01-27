@@ -51,6 +51,7 @@ function App() {
             <Route path="/Register" component={Register}/>
             <Route path="/Login" component={Login}/>
             <Route path="/Pinina" component={PininaDashboard}/>
+            {/* <PrivateRoute path="/menu-user" component={MenuUser} /> */}
             
           </Switch>
         </Router>

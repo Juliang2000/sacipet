@@ -124,7 +124,7 @@ export default function PetType() {
                     <Lottie
                         options={dogPetOptions}
                         height={200}
-                        width={150}
+                        width={200}
                         isPaused={playLottie.dogPet}
                     />
                     <Typography variant='h5' align='center'>Perro</Typography></Grid>
@@ -135,7 +135,7 @@ export default function PetType() {
                     <Lottie
                         options={catPetOptions}
                         height={200}
-                        width={150}
+                        width={200}
                         isPaused={playLottie.CatPet}
                     />
                     <Typography variant='h5' align='center'>
@@ -149,7 +149,7 @@ export default function PetType() {
                     <Lottie
                         options={hamsterPetOptions}
                         height={200}
-                        width={150}
+                        width={200}
                         isPaused={playLottie.hamsterPet}
                     />
                     <Typography variant='h5' align='center'>

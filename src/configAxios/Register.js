@@ -1,14 +1,9 @@
-import axios from 'axios'
+import axiosClient from './axios';
 
-
-
-
-
-const baseURL = 'http://localhost:3000';
 
 export async function saveUserRegister(userData) {
     try {
-        // console.log(userData)
+
         const formData = new FormData();
 
         formData.append('nombres', userData.nombres)
@@ -21,11 +16,8 @@ export async function saveUserRegister(userData) {
         formData.append('origen_cuenta', userData.origen_cuenta)
         formData.append('id_rol', userData.id_rol)
 
-        const response = await axios({
-            url: `${baseURL}/registro`,
-            method: 'POST',
-            data: formData,
-        })
+        const response = await axiosClient.post('/registro', formData);
+        
         return response
     } catch (e) {
         console.log(e)
