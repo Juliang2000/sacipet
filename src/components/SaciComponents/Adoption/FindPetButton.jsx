@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 const StyledMenu = withStyles({
   paper: {
     border: '1px solid #d3d4d5',
-    marginTop: '5px',
+    marginTop: '7px',
   },
 })((props) => (
   <Menu

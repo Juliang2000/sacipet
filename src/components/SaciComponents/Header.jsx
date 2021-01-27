@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { fade, makeStyles, withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -25,9 +26,11 @@ import SectionMobile from './SectionMobile';
 
 
 //icons
-import logo from './../../assets/svg/Pininawhite.png'
+// import logo from './../../assets/svg/Pininawhite.png'
+import logo from './../../assets/svg/Pininawhite.png';
 import servicesIcon from '../../assets/icons/drawer/services.svg'
 import storeIcon from '../../assets/icons/drawer/store.svg'
+import iconsend from './../../assets/icons/send.svg';
 
 
 
@@ -257,6 +260,7 @@ export default function PrimarySearchAppBar() {
           </div>
 
         </Drawer>
+        
       </div>
 
 
