@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import swal from 'sweetalert2';
 //Axios Service
 import { saveUserRegister } from '../configAxios/Register';
-import { saveGoogleUser } from '../configAxios/Google';
+import { saveUserGoogle } from '../configAxios/Google';
 import { saveFbUser } from '../configAxios/Facebook';
 // Material UI
 import { 
@@ -85,7 +85,7 @@ export default function Register() {
 
   const responseGoogle = (response) => {
     console.log(response);
-    saveGoogleUser(response)
+    saveUserGoogle(response)
   };
 
   const [isChecked, setIsChecked] = useState(false);

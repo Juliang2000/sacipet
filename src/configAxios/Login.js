@@ -1,10 +1,5 @@
-import axios from 'axios'
+import axiosClient from './axios';
 
-
-
-
-
-const baseURL = 'http://localhost:3000';
 
 export async function saveUserLogin(userData) {
     try {
@@ -16,11 +11,8 @@ export async function saveUserLogin(userData) {
         formData.append('origen_cuenta', userData.origen_cuenta)
         
 
-        const response = await axios({
-            url: `${baseURL}/login`,
-            method: 'POST',
-            data: formData,
-        })
+        const response = await axiosClient.post('/login', formData);
+        
         return response
     } catch (e) {
         console.log(e)

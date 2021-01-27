@@ -1,13 +1,7 @@
-import axios from 'axios'
+import axiosClient from './axios';
 
 
-
-
-
-const baseURL = 'http://localhost:3000';
-
-
-export async function saveGoogleUser(userData) {
+export async function saveUserGoogle(userData) {
     try {
         console.log(userData)
         const formData = new FormData();
@@ -21,11 +15,8 @@ export async function saveGoogleUser(userData) {
         formData.append('token',userData.tokenObj.id_token)
         
 
-        const response = await axios({
-            url: `${baseURL}/login`,
-            method: 'POST',
-            data: formData,
-        })
+        const response = await axiosClient.post('/login', formData);
+        //console.log(response);
         return response
     } catch (e) {
         console.log(e)

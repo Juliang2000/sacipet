@@ -4,9 +4,10 @@
 
 // const PrivateRoute = ({ component: Component, ...props }) => {
 
-//     const autenticado = useSelector(state => state.login.autenticado)
+//     const { user, isActive } = useSelector(state => state.main);
+
 //     return(
-//         <Route {...props} render={props => !autenticado ?
+//         <Route {...props} render={props => !user && !isActive ?
 //             (<Redirect to='/login' />) :
 //             (<Component {...props} />)} 
 //         />

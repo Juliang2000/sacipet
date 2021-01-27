@@ -1,10 +1,4 @@
-import axios from 'axios'
-
-
-
-
-
-const baseURL = 'http://localhost:3000';
+import axiosClient from './axios';
 
 
 export async function saveFbUser(userData) {
@@ -19,17 +13,9 @@ export async function saveFbUser(userData) {
         formData.append('userID',userData.userID)
         formData.append('token',userData.accessToken)
         
-        
-        // formData.append('givenName', userData.profileObj.email)
-        // formData.append('origen_cuenta','google')
-        
-        
 
-        const response = await axios({
-            url: `${baseURL}/login`,
-            method: 'POST',
-            data: formData,
-        })
+        const response = await axiosClient.post('/login', formData);
+        
         return response
     } catch (e) {
         console.log(e)

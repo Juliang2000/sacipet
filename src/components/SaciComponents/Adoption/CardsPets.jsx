@@ -20,6 +20,7 @@ import AdoptMeModal from '../AdoptMeForm/AdoptMeModal';
 // useMediaQuery
 import {  useTheme } from '@material-ui/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import useModal  from '../../../hooks/useModal';
 
 // import mascota1 from '../assets/images/cards/perro_con_peluca.jpg'
 // import mascota2 from '../../assets/images/cards/pastor_aleman_navideño.jpg'
@@ -132,6 +133,9 @@ const rows = [
 
 ////////////////////////////////////////////////////////////
 export default function RecipeReviewCard() {
+
+  const { open, handleClickOpen, handleClickClose } = useModal();
+
   const classes = useStyles();
 
   const [modal, setModal] = useState(false);
