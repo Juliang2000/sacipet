@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { Stepper, Step, StepLabel, Button, Grid, Typography, Box, Hidden, Dialog } from '@material-ui/core';
+import { Stepper, Step, StepLabel, Button, Grid, Typography, Box, Hidden, Dialog, IconButton } from '@material-ui/core';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import StepConnector from '@material-ui/core/StepConnector';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+
 
 
 //components
 import PetType from './PetType'
 import PetDescription from './PetDescription';
-import UserData from './UserData';
+
 
 //icons
 import petIcon from '../../../assets/icons/drawer/pet.svg'
 import petIconGray from '../../../assets/icons/drawer/pet_gray.svg'
+import CloseIcon from '@material-ui/icons/Close';
 
 import SettingsIcon from '@material-ui/icons/Settings';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
@@ -97,6 +101,16 @@ const useStyles = makeStyles((theme) => ({
     textTransform: 'none',
     fontSize: '15px',
   },
+  closeIconButton: {
+    marginRight: 5,
+    marginTop: 5,
+  },
+  closeButton: {
+    
+    color: '#808080', 
+    width: 30,
+    height: 30,
+  }
 }));
 
 
@@ -141,7 +155,7 @@ function getStepContent(step) {
     case 1:
       return <PetDescription />;
     case 2:
-      return
+      return 'Texto de prueba, aquí va el campo de subir fotos'
     default:
       return 'Unknown step';
   }
@@ -153,17 +167,17 @@ export default function AdoptStepper() {
 
   const classes = useStyles();
 
-  const [skipped, setSkipped] = React.useState(new Set());
+  // const [skipped, setSkipped] = React.useState(new Set());
 
 
 
-  const isStepOptional = (step) => {
-    return step === 1;
-  };
+  // const isStepOptional = (step) => {
+  //   return step === 1;
+  // };
 
-  const isStepSkipped = (step) => {
-    return skipped.has(step);
-  };
+  // const isStepSkipped = (step) => {
+  //   return skipped.has(step);
+  // };
 
 
   ColorlibStepIcon.propTypes = {
@@ -181,19 +195,6 @@ export default function AdoptStepper() {
     icon: PropTypes.node,
   };
 
-  const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-      throw new Error("You can't skip a step that isn't optional.");
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped((prevSkipped) => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
-  };
-
   const [openModal, setOpenModal] = React.useState(false);
 
   const handleClickOpenModal = () => {
@@ -205,132 +206,161 @@ export default function AdoptStepper() {
   };
 
 
-    const [activeStep, setActiveStep] = React.useState(1);
-    const steps = getSteps();
+  const [activeStep, setActiveStep] = React.useState(0);
+  const steps = getSteps();
 
-    const handleNext = () => {
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    };
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
 
-    const handleBack = () => {
-      setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
 
-    const handleReset = () => {
-      setActiveStep(0);
-    };
+  const handleReset = () => {
+    setActiveStep(0);
+  };
 
-    return (
-      <React.Fragment>
-        <React.Fragment>
-          <Hidden smDown>
-            <Button
-              onClick={handleClickOpenModal}
-              className={classes.adoptionButton}
-              variant="text"
-              // color="primary"
-              startIcon={<img src={petIcon} alt="LogIn" style={{ width: '40px' }} />}
-            >
-              Adopciones
-              </Button>
-          </Hidden>
+  const theme = useTheme();
 
-          <Hidden mdUp>
-            <Button
-              onClick={handleClickOpenModal}
-              className={classes.adoptionMobileButton}
-              variant="text"
-              // color="primary"
-              startIcon={<img src={petIconGray} alt="LogIn" style={{ width: '40px' }} />}
-            >
-              <Typography>
-                Adopciones
-            </Typography>
-            </Button>
-          </Hidden>
-        </React.Fragment>
-        <Dialog
-          fullWidth
-          // Resolución Modal Dialog
-          maxWidth='md'
-          open={openModal}
-          onClose={handleClickCloseModal}
+  const fullScreenResponsive = useMediaQuery(theme.breakpoints.down('sm'));
+
+
+  return (
+    <>
+      <Hidden smDown>
+        <Button
+          onClick={handleClickOpenModal}
+          className={classes.adoptionButton}
+          variant="text"
+          // color="primary"
+          startIcon={<img src={petIcon} alt="LogIn" style={{ width: '40px' }} />}
         >
-          <div className={classes.root}>
-            <Hidden only={'xs'}>
-              {/* <Stepper activeStep={activeStep}>
-
-              {steps.map((label, index) => {
-                const stepProps = {};
-                const labelProps = {};
-                if (isStepOptional(index)) {
-                  labelProps.optional = <Typography variant="caption"></Typography>;
-                }
-                if (isStepSkipped(index)) {
-                  stepProps.completed = false;
-                }
-                return (
-                  <Step key={label} {...stepProps}>
-                    <StepLabel {...labelProps}>{label}</StepLabel>
-                  </Step>
-                );
-              })}
-
-            </Stepper> */}
-
-              <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
-                {steps.map((label) => (
-                  <Step key={label}>
-                    <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
-                  </Step>
-                ))}
-              </Stepper>
-            </Hidden>
-            <div>
-
-              {activeStep === steps.length ? (
-                <div>
-
-                  <Box m={10}>
-                    <Typography variant="h6" className={classes.instructions}>
-                      Confirma el formulario de adopción
-            </Typography>
-                  </Box>
-                  <Grid container justify="center">
-                    <Button onClick={handleReset} className={classes.button}>
-                      Reiniciar
-            </Button>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      className={classes.button}>
-                      Enviar
-            </Button>
-                  </Grid>
-                </div>
-              ) : (
-                  <div>
-                    <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-                    <div>
-                      <Grid container justify="center">
-                        <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                          Atrás
+          Adopciones
               </Button>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={handleNext}
-                          className={classes.button}
-                        >
-                          {activeStep === steps.length - 1 ? 'Siguiente' : 'Siguiente'}
-                        </Button>
-                      </Grid>
-                    </div>
+      </Hidden>
+
+      <Hidden mdUp>
+        <Button
+          onClick={handleClickOpenModal}
+          className={classes.adoptionMobileButton}
+          variant="text"
+          // color="primary"
+          startIcon={<img src={petIconGray} alt="LogIn" style={{ width: '40px' }} />}
+        >
+          <Typography>
+            Adopciones
+            </Typography>
+        </Button>
+      </Hidden>
+      <Dialog
+        open={openModal}
+        onClose={handleClickCloseModal}
+        fullWidth
+        maxWidth='md'
+        fullScreen={fullScreenResponsive}
+
+      >
+        <Grid
+          container
+          justify="flex-end"
+          alignItems="flex-start">
+          <IconButton className={classes.closeIconButton} edge="end" color="inherit" aria-label="close" onClick={handleClickCloseModal}>
+            <CloseIcon className={classes.closeButton}  />
+          </IconButton>
+        </Grid>
+        <div className={classes.root}>
+          <Hidden only={'xs'}>
+            <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+          </Hidden>
+          <div>
+            {activeStep === steps.length ? (
+              <div>
+
+                <Box m={10}>
+                  <Typography variant="h6" className={classes.instructions}>
+                    Confirma el formulario de adopción
+            </Typography>
+                </Box>
+                <Grid container justify="center">
+                  <Button onClick={handleReset} className={classes.button}>
+                    Reiniciar
+            </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}>
+                    Enviar
+            </Button>
+                </Grid>
+              </div>
+            ) : (
+                <div>
+                  <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+                  <div>
+                    <Grid container justify="center">
+                      <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                        Atrás
+              </Button>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleNext}
+                        className={classes.button}
+                      >
+                        {activeStep === steps.length - 1 ? 'Siguiente' : 'Siguiente'}
+                      </Button>
+                    </Grid>
                   </div>
-                )}
-            </div>
+                </div>
+              )}
           </div>
-        </Dialog>
-      </React.Fragment>
-    );
-  }
+        </div>
+      </Dialog>
+
+      {/* <Dialog
+        open={openModal}
+        onClose={handleClickCloseModal}
+      >
+        <Grid container>
+          <Grid item>
+            <Tipography>Hola, si ya tienes cuenta Inicia sesión o Registrate con nosotros!</Tipography>
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              className={classes.buttonPrimary}
+              variant="contained"
+              size="large"
+              endIcon={<img src={iconSend} alt="LogIn" className={classes.icons2} />}
+              fullWidth
+              type="submit"
+            >
+              Entrar
+                        </Button>
+          </Grid>
+
+          <Link
+            to="/Register"
+            style={{ textDecoration: "none", filter: "contrast(1)" }}
+          >
+            <Grid item xs={12} spacing={3}>
+              <Button
+                variant="text"
+                size="small"
+                className={classes.buttonSecondary2}
+              >
+                ¿No tienes una cuenta? Regístrate
+                            </Button>
+            </Grid>
+          </Link>
+        </Grid>
+      </Dialog> */}
+    </>
+  );
+}

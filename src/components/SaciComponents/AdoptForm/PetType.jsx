@@ -32,7 +32,7 @@ const useStyles = makeStyles(() => ({
         // margin: "20%",
     },
     title: {
-        // marginBotton: '10x',
+        // marginBotton: '20px',
     }
 
 }))
@@ -110,24 +110,17 @@ export default function PetType() {
 
     return (
         <div className={classes.root}>
-            <Grid
-                container
-                spacing={10}
-                // direction="column"
-                alignItems="center"
-                justify="space-between"
-            >
+            <Grid container>
                 <Hidden>
-                    <Grid item xs={12} spacing={0} className={classes.title}>
-                        <Typography variant="h6">
-                            Selecciona el tipo de mascota
+                    <Grid item xs={12} justify="center"  alignItems="flex-start">
+                        <Typography variant="h5">
+                            ¿Qué tipo de mascota deseas dar en adopción?
                         </Typography>
                     </Grid>
                 </Hidden>
                 <br />
                 <br />
                 <Grid item xs={12} sm={4} md={4} spacing={3}>
-                    {/* <IconButton><img width={70} src={dogIcon}></img></IconButton> */}
                     <Lottie
                         options={dogPetOptions}
                         height={200}
