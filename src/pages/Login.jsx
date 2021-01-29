@@ -1,5 +1,5 @@
 import React, { useEffect, useState, } from 'react';
-import { Link, useHistory,  } from 'react-router-dom';
+import { Link, useHistory, } from 'react-router-dom';
 // Alerts
 import swal from 'sweetalert2';
 // Form Validation
@@ -27,56 +27,66 @@ import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 ////////////////////////////////////////////////////////////////////////////////////
 export default function Login() {
+
   // Styles
   const classes = loginStyles();
+
   // Validation Form Login
   const { register, errors, handleSubmit } = useForm();
-  // Field Validation 
+
+  // Field Validation
   const [newUser, setnewUser] = useState({
     password: '',
     correo: '',
     origen_cuenta: 'Registro_normal'
   });
+
   const handleChange = (event) => {
     const { name, value } = event.target
     setnewUser({ ...newUser, [name]: value })
   };
+
   const onSubmit = (data, e) => {
     _handleSubmit({ ...newUser })
     console.log(newUser)
     e.target.reset();
   };
+
   // redux implementation
-  const { user, loader } = useSelector( state => state.login );
+  const { user, loader } = useSelector(state => state.login);
+  // const { correo } = useSelector( state => state.login)
   const dispatch = useDispatch();
   const history = useHistory();
+
   // redux Actions
-  const _handleSubmit = async(data) => {
+  const _handleSubmit = async (data) => {
     dispatch(loginNormalAction(data));
-    //swal("Muy Bien!", "Inicio Sesión Exitoso!", "success");
+    // const errorCorreo = data.correo
+    // swal.fire('Error', `El correo ${errorCorreo} no está registrado`, 'error')
   };
+
   const responseGoogle = (data) => {
-    //console.log(data);
     dispatch(loginGoogleAction(data));
   };
+
   const responseFacebook = (data) => {
     dispatch(loginFacebookAction(data));
   };
+
   // Push to SaciDashboard
   useEffect(() => {
     if (user.length !== 0) {
-        history.push('/');
+      history.push('/');
+      swal.fire("felicitaciones!", `${user} te has logeado con éxito`, "success");
     }
   }, [user]);
-
 
   return (
     // <ThemeProvider theme={pininaTheme}>
     <>
       { loader && (
         <Loader />
-      ) }
-      
+      )}
 
       <div className={classes.containerLogin}>
         <Grid container alignItems="center" justify="center">
