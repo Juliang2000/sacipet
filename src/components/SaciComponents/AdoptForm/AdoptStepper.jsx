@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { Stepper, Step, StepLabel, Button, Grid, Typography, Box, Hidden, Dialog, IconButton } from '@material-ui/core';
 import clsx from 'clsx';
@@ -6,6 +7,9 @@ import PropTypes from 'prop-types';
 import StepConnector from '@material-ui/core/StepConnector';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+
+//Redux
+import { useSelector } from 'react-redux';
 
 
 
@@ -18,6 +22,7 @@ import PetDescription from './PetDescription';
 import petIcon from '../../../assets/icons/drawer/pet.svg'
 import petIconGray from '../../../assets/icons/drawer/pet_gray.svg'
 import CloseIcon from '@material-ui/icons/Close';
+import iconSend from '../../../assets/icons/send.svg';
 
 import SettingsIcon from '@material-ui/icons/Settings';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
@@ -106,10 +111,27 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 5,
   },
   closeButton: {
-    
-    color: '#808080', 
+
+    color: '#808080',
     width: 30,
     height: 30,
+  },
+  titleDialogStart: {
+    marginBottom: '5%',
+  },
+  rootDialogStart: {
+    padding: '50px',
+    textAlign: 'center',
+  },
+  buttonStart: {
+    textTransform: 'none',
+    color: '#ffff',
+    fontSize: '15px',
+  },
+  buttonSecondary2: {
+    textAlign: 'center',
+    textTransform: 'none',
+    fontSize: '15px',
   }
 }));
 
@@ -164,6 +186,7 @@ function getStepContent(step) {
 
 export default function AdoptStepper() {
 
+  const { user } = useSelector(state => state.login);
 
   const classes = useStyles();
 
@@ -227,17 +250,22 @@ export default function AdoptStepper() {
 
 
   return (
+
     <>
       <Hidden smDown>
+      {/* <Grid container justify="center"> */}
         <Button
+        fullWidth
           onClick={handleClickOpenModal}
           className={classes.adoptionButton}
-          variant="text"
+          // variant="contained"
+          color="secondary"
           // color="primary"
-          startIcon={<img src={petIcon} alt="LogIn" style={{ width: '40px' }} />}
+          startIcon={<img src={petIcon} alt="LogIn" style={{ width: '30px' }} />}
         >
-          Adopciones
+          Adoptar
               </Button>
+              {/* </Grid> */}
       </Hidden>
 
       <Hidden mdUp>
@@ -253,76 +281,129 @@ export default function AdoptStepper() {
             </Typography>
         </Button>
       </Hidden>
-      <Dialog
-        open={openModal}
-        onClose={handleClickCloseModal}
-        fullWidth
-        maxWidth='md'
-        fullScreen={fullScreenResponsive}
 
-      >
-        <Grid
-          container
-          justify="flex-end"
-          alignItems="flex-start">
-          <IconButton className={classes.closeIconButton} edge="end" color="inherit" aria-label="close" onClick={handleClickCloseModal}>
-            <CloseIcon className={classes.closeButton}  />
-          </IconButton>
-        </Grid>
-        <div className={classes.root}>
-          <Hidden only={'xs'}>
-            <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
-              {steps.map((label) => (
-                <Step key={label}>
-                  <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-          </Hidden>
-          <div>
-            {activeStep === steps.length ? (
+      {user ?
+        <>
+          <Dialog
+            open={openModal}
+            onClose={handleClickCloseModal}
+            fullWidth
+            maxWidth='md'
+            fullScreen={fullScreenResponsive}
+          >
+            <Grid
+              container
+              justify="flex-end"
+              alignItems="flex-start">
+              <IconButton className={classes.closeIconButton} edge="end" color="inherit" aria-label="close" onClick={handleClickCloseModal}>
+                <CloseIcon className={classes.closeButton} />
+              </IconButton>
+            </Grid>
+            <div className={classes.root}>
+              <Hidden only={'xs'}>
+                <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
+                  {steps.map((label) => (
+                    <Step key={label}>
+                      <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+                    </Step>
+                  ))}
+                </Stepper>
+              </Hidden>
               <div>
-
-                <Box m={10}>
-                  <Typography variant="h6" className={classes.instructions}>
-                    Confirma el formulario de adopción
-            </Typography>
-                </Box>
-                <Grid container justify="center">
-                  <Button onClick={handleReset} className={classes.button}>
-                    Reiniciar
-            </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}>
-                    Enviar
-            </Button>
-                </Grid>
-              </div>
-            ) : (
-                <div>
-                  <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+                {activeStep === steps.length ? (
                   <div>
+                    <Box m={10}>
+                      <Typography variant="h6" className={classes.instructions}>
+                        Confirma el formulario de adopción
+            </Typography>
+                    </Box>
                     <Grid container justify="center">
-                      <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                        Atrás
-              </Button>
+                      <Button onClick={handleReset} className={classes.button}>
+                        Reiniciar
+            </Button>
                       <Button
                         variant="contained"
                         color="primary"
-                        onClick={handleNext}
-                        className={classes.button}
-                      >
-                        {activeStep === steps.length - 1 ? 'Siguiente' : 'Siguiente'}
-                      </Button>
+                        className={classes.button}>
+                        Enviar
+            </Button>
                     </Grid>
                   </div>
-                </div>
-              )}
-          </div>
-        </div>
-      </Dialog>
+                ) : (
+                    <div>
+                      <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+                      <div>
+                        <Grid container justify="center">
+                          <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                            Atrás
+              </Button>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleNext}
+                            className={classes.button}
+                          >
+                            {activeStep === steps.length - 1 ? 'Siguiente' : 'Siguiente'}
+                          </Button>
+                        </Grid>
+                      </div>
+                    </div>
+                  )}
+              </div>
+            </div>
+          </Dialog>
+        </>
+        :
+        <>
+          <Dialog
+            open={openModal}
+            onClose={handleClickCloseModal}
+          >
+            <div className={classes.rootDialogStart}>
+              <Grid container justify="center">
+                <Grid item className={classes.titleDialogStart}>
+                  <Typography variant='h6'>¡Hola! si ya tienes cuenta Inicia sesión o Regístrate</Typography>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Link
+                    to="/login"
+                    style={{ textDecoration: "none", filter: "contrast(1)" }}
+                  >
+                    <Button
+                      className={classes.buttonStart}
+                      color="primary"
+                      variant="contained"
+                      size="large"
+                      endIcon={<img src={iconSend} alt="LogIn" className={classes.icons2} />}
+                      fullWidth
+                      type="submit"
+                    >
+                      Inicia Sesión
+                        </Button>
+                  </Link>
+                </Grid>
+
+                <Link
+                  to="/Register"
+                  style={{ textDecoration: "none", filter: "contrast(1)" }}
+                >
+                  <Grid item xs={12} spacing={3} justifyContent="center" >
+                    <Button
+                      variant="text"
+                      size="small"
+                      className={classes.buttonSecondary2}
+                    >
+                      ¿No tienes una cuenta? Regístrate
+                            </Button>
+                  </Grid>
+                </Link>
+              </Grid>
+            </div>
+          </Dialog>
+
+        </>
+      }
 
       {/* <Dialog
         open={openModal}
@@ -361,6 +442,8 @@ export default function AdoptStepper() {
           </Link>
         </Grid>
       </Dialog> */}
+
+
     </>
   );
 }

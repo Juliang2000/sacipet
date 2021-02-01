@@ -1,4 +1,4 @@
-import React, {UseState} from 'react'
+import React from 'react'
 import { IconButton, makeStyles, Dialog, Grid } from '@material-ui/core';
 import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
@@ -21,19 +21,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop:'65px',
   },
 
-sectionMobile: {
-    // display: 'flex',
-    // [theme.breakpoints.up('md')]: {
-    //   display: 'none',
-    },
-
     appBar: {
         position: 'relative',
       },
       title: {
-        //   textAlign: 'center',
-        // marginLeft: theme.spacing(2),
-        // flex: 1,
+
       },
     closeButton: {
       alignItems: 'right',
@@ -50,30 +42,6 @@ export default function SectionMobile() {
     
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-
-   
-      
-
-    // //   const [anchorEl, setAnchorEl] = React.useState(null);
-    //     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-    // const handleProfileMenuOpen = (event) => {
-    //     // setAnchorEl(event.currentTarget);
-    //   };
-    
-    //   const handleMobileMenuClose = () => {
-    //     setMobileMoreAnchorEl(null);
-    //   };
-    
-    
-    //   const handleMenuClose = () => {
-    //     // setAnchorEl(null);
-    //     handleMobileMenuClose();
-    //   };
-    
-
-    // const handleMobileMenuOpen = (event) => {
-    //     setMobileMoreAnchorEl(event.currentTarget);
-    //   };
 
       const handleClickOpen = () => {
         setOpen(true);

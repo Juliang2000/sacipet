@@ -77,7 +77,7 @@ export default function Login() {
   useEffect(() => {
     if (user.length !== 0) {
       history.push('/');
-      swal.fire("felicitaciones!", `${user} te has logeado con éxito`, "success");
+      swal.fire(`Bienvenid@ ${user}`, `Sesión Iniciada`, "success");
     }
   }, [user]);
 

@@ -192,7 +192,7 @@ export default function RecipeReviewCard() {
       )) } 
       
 
-        <Dialog open={modal} onclose={openCloseAdopt}>
+        <Dialog onclose={openCloseAdopt}>
           <AdoptMeModal />
         </Dialog>
     </Grid>

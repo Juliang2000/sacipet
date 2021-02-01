@@ -1,6 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Lottie from 'react-lottie';
+
+import logo from '../assets/lotties/pinina.json';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -13,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'absolute',
         top: 0,
         left: 0,
-        backgroundColor: 'rgba(0, 0, 0, .3)',
+        backgroundColor: 'rgba(0, 0, 0, .9)',
         width: '100%',
         height: '100%',
         zIndex: 1000,
@@ -26,7 +29,22 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+
+
 const Loader = () => {
+
+    const [playLottie, setPlayLottie] = useState({
+        logo: false,
+        
+    });
+    
+     // LottieFiles configuration
+    
+     const logoOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: logo,
+    };
 
     // Styles Instance
     const classes = useStyles();
@@ -36,7 +54,13 @@ const Loader = () => {
             <div className={ classes.blackScreen }></div>
             <div className={ classes.loader}>
                 <div className={ classes.root} >
-                    <CircularProgress style={{ color: '#006937' }} />
+                <Lottie
+                        options={logoOptions}
+                        height={150}
+                        width={150}
+                        isPaused={playLottie.logo}
+                    />
+                    {/* <CircularProgress style={{ color: '#006937' }} /> */}
                 </div>
             </div>
         </>
