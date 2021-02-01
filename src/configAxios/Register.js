@@ -3,7 +3,7 @@ import axiosClient from './axios';
 
 export async function saveUserRegister(userData) {
     try {
-
+        console.log(userData)
         const formData = new FormData();
 
         formData.append('nombres', userData.nombres)

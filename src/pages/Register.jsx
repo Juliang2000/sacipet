@@ -1,15 +1,18 @@
-import React, { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState, useRef } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 // Clsx
 import clsx from 'clsx';
 // Form Validation
 import { useForm } from "react-hook-form";
+// Dispach Redux
+import { useDispatch, useSelector } from 'react-redux';
+// redux Actions
+import { registerAction } from '../redux/actions/registerAction';
+import { loginGoogleAction } from '../redux/actions/googleAction';
+import { loginFacebookAction } from '../redux/actions/facebookAction';
+import Loader from './Loader';
 // Alerts
 import swal from 'sweetalert2';
-//Axios Service
-import { saveUserRegister } from '../configAxios/Register';
-import { saveUserGoogle } from '../configAxios/Google';
-import { saveFbUser } from '../configAxios/Facebook';
 // Material UI
 import { 
   FormControlLabel, 
@@ -37,9 +40,11 @@ import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 ////////////////////////////////////////////////////////////////////////////////////
 export default function Register() {
-
+//Styles
   const classes = registerStyles();
-
+  //Validation Form Register
+  const { register, errors, handleSubmit, watch } = useForm();
+  //Field Validation
   const [newUser, setnewUser] = useState({
     nombres: '',
     apellidos: 'test',
@@ -51,42 +56,41 @@ export default function Register() {
     id_rol: '1',
     origen_cuenta: 'Registro Normal'
   });
-
   const handleChange = (event) => {
     const { name, value } = event.target
     setnewUser({ ...newUser, [name]: value })
   };
 
   const onSubmit = (data, e) => {
-    if (isChecked === true) {
-      setIsChecked(false)
+    // if (isChecked === true) {
+    //   setIsChecked(false)
       _handleSubmit({ ...newUser })
       console.log(newUser)
       e.target.reset();
-    } else {
-      return
-    }
+    // } else {
+    //   return
+    // }
   };
 
-  const _handleSubmit = (data) => {
-    saveUserRegister(data)
-    swal.fire("Muy Bien!", "Registro Exitoso!", "success");
-  };
+  // const _handleSubmit = (data) => {
+  //   saveUserRegister(data)
+  //   swal.fire("Muy Bien!", "Registro Exitoso!", "success");
+  // };
 
-  const { register, errors, handleSubmit, watch } = useForm();
+ 
 
   const password = useRef({});
   password.current = watch("password", "");
 
-  const responseFacebook = (response) => {
-    console.log(response);
-    saveFbUser(response);
-  };
+  // const responseFacebook = (response) => {
+  //   console.log(response);
+  //   saveFbUser(response);
+  // };
 
-  const responseGoogle = (response) => {
-    console.log(response);
-    saveUserGoogle(response)
-  };
+  // const responseGoogle = (response) => {
+  //   console.log(response);
+  //   saveUserGoogle(response)
+  // };
 
   const [isChecked, setIsChecked] = useState(false);
 
@@ -108,7 +112,38 @@ export default function Register() {
     }
   };
 
+ // redux implementation
+ const { user, loader, ok } = useSelector( state => state.register );
+ const dispatch = useDispatch();
+ const history = useHistory();
+ // redux Actions
+ const _handleSubmit = async(data) => {
+   dispatch(registerAction(data));
+   //swal("Muy Bien!", "Inicio Sesión Exitoso!", "success");
+ };
+
+ const responseGoogle = (data) => {
+   //console.log(data);
+   dispatch(loginGoogleAction(data));
+ };
+ const responseFacebook = (data) => {
+   dispatch(loginFacebookAction(data));
+ };
+ // Push to SaciDashboard
+ useEffect(() => {
+   if (ok !== false) {
+       history.push('/');
+   }
+ }, [user]);
+
   return (
+
+    <>
+
+    { loader && (
+      <Loader />
+    ) }
+
       <div className={classes.containerLogin}>
         <Grid container alignItems="center" justify="center">
           <Grid item xs={12} sm={8} md={5} lg={4} xl={3} >
@@ -322,5 +357,6 @@ export default function Register() {
           </Grid>
         </Grid>
       </div>
+      </>
   )
 };

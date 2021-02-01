@@ -9,8 +9,11 @@ export function loginNormalAction(data) {
 
         try {
             const response = await saveUserLogin(data)
-
-            dispatch(loginNormalSuccess(response.data.user.nombres));
+            
+            // setTimeout(() => {
+                dispatch(loginNormalSuccess(response.data.user.nombres));
+            // }, 3000);
+           
 
         } catch (error) {
             dispatch(loginNormalError(error))

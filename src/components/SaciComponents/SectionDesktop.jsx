@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { IconButton, makeStyles, withStyles } from '@material-ui/core'
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { IconButton, makeStyles, withStyles, Typography, Button, Grid } from '@material-ui/core'
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -10,14 +11,30 @@ import findPetIconWhite from '../../assets/icons/drawer/findPetWhite.svg'
 import Home from '@material-ui/icons/Home';
 import Person from '@material-ui/icons/Person';
 import PersonAdd from '@material-ui/icons/PersonAdd';
+import loginIcon from '../../assets/icons/drawer/login.svg';
+import petUser from '../../assets/icons/drawer/petUser.svg';
+import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
+import petIcon from '../../assets/icons/drawer/pet.svg'
+//Redux
+import { useSelector } from 'react-redux';
 
 
 const useStyles = makeStyles((theme) => ({
 
     accountCircle: {
-        color: '#fff'
+        color: '#fff',
+        textTransform: 'none',
+        fontSize: '15px',
+    },
+    loginButton: {
+        color: '#fff',
+        textTransform: 'none',
+        fontSize: '15px',
+    },
+    accountIcon: {
+        width: '40px',
     }
-}))
+}));
 
 
 const StyledMenu = withStyles({
@@ -54,6 +71,10 @@ const StyledMenuItem = withStyles((theme) => ({
 
 export default function SectionDesktop() {
 
+
+    const { user } = useSelector(state => state.login);
+
+
     ///////////////Constantes Botón Encuentra tu mascota////////////////
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -84,56 +105,118 @@ export default function SectionDesktop() {
 
     // const handleClose = () => {
     //     setAnchorElement(null);
-    // };
+    // }; 
+
+    //push to login if user is not logged
+    const history = useHistory();
+    const [pushLogin, setPushLogin] = React.useState(null);
+
+    const handlePushLogin = () => {
+        setPushLogin(history.push('/Login'));
+    };
+
+
 
     return (
-        <div>
-            <IconButton
-                edge="end"
-                aria-label="account of current user"
-                // aria-controls={menuId}
-                aria-haspopup="true"
-                color="inherit"
-                onClick={handleClick}
-            >
-                <AccountCircle className={classes.accountCircle} />
+        <>
+            { user ?
+                ////Logged
+                <>
+                    <Grid container justify="center">
+                        <Button
+                            className={classes.accountCircle}
+                            edge="end"
+                            aria-label="account of current user"
+                            // aria-controls={menuId}
+                            aria-haspopup="true"
+                            color="inherit"
+                            onClick={handleClick}
+                            startIcon={<img src={petUser} alt="Login" style={{ width: '30px' }} />}
+                        >
+                            {`${user}`}
 
 
-            </IconButton>
+                        </Button>
+                    </Grid>
 
-            <StyledMenu
-                id="customized-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-            >
-                <StyledMenuItem>
-                    <ListItemIcon>
-                        <Home/>
-                    </ListItemIcon>
-                    <ListItemText primary="Inicio" />
-                </StyledMenuItem>
-                <StyledMenuItem>
-                    <ListItemIcon>
-                        <Person/>
-                    </ListItemIcon>
-                    <ListItemText primary="Ingresar" />
-                </StyledMenuItem>
-            </StyledMenu>
+                    <StyledMenu
+                        id="customized-menu"
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                    >
+                        <StyledMenuItem>
+                            <ListItemIcon>
+                                <Home />
+                            </ListItemIcon>
+                            <ListItemText primary="Inicio" />
+                        </StyledMenuItem>
+                        <StyledMenuItem>
+                            <ListItemIcon>
+                                <Person />
+                            </ListItemIcon>
+                            <ListItemText primary="Cuenta" />
+                        </StyledMenuItem>
+                    </StyledMenu>
+                </> :
+                ////Not Logged
+                <>
+                    {/* <Grid container justify="center"> */}
+                        <Button
+                        color="secondary"
+                        fullWidth
+                            // variant="contained"
+                            className={classes.loginButton}
+                            onClick={handlePushLogin}
+                            startIcon={<img src={petUser} alt="Login" style={{ width: '30px' }} />}
+                        >Ingresar
+                        </Button>
+                    {/* </Grid> */}
+                </>
+            }
 
-            {/* <Menu
-                anchorEl={anchorElement}
-                keepMounted
-                open={Boolean(anchorElement)}
-                onClose={handleClose}
-            >
-                <MenuItem onClick={handleClose}>Perfil</MenuItem>
-                <MenuItem onClick={handleClose}>Mi cuenta</MenuItem>
-                <MenuItem onClick={handleClose}>Cerrar sesión</MenuItem>
-            </Menu> */}
+        </>
 
-        </div>
     )
 }
+
+//             <Typography>{`${user}`}</Typography>
+//             <IconButton
+//                 edge="end"
+//                 aria-label="account of current user"
+//                 // aria-controls={menuId}
+//                 aria-haspopup="true"
+//                 color="inherit"
+//                 onClick={handleClick}
+//             >
+//                 <AccountCircle className={classes.accountCircle} />
+
+
+//             </IconButton>
+
+//             <StyledMenu
+//                 id="customized-menu"
+//                 anchorEl={anchorEl}
+//                 keepMounted
+//                 open={Boolean(anchorEl)}
+//                 onClose={handleClose}
+//             >
+//                 <StyledMenuItem>
+//                     <ListItemIcon>
+//                         <Home />
+//                     </ListItemIcon>
+//                     <ListItemText primary="Inicio" />
+//                 </StyledMenuItem>
+//                 <StyledMenuItem>
+//                     <ListItemIcon>
+//                         <Person />
+//                     </ListItemIcon>
+//                     <ListItemText primary="Ingresar" />
+//                 </StyledMenuItem>
+//             </StyledMenu>
+//         }
+//         </>
+//     )
+// }
 

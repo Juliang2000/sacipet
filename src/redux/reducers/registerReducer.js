@@ -1,37 +1,37 @@
-import { INICIAR_SESION_ERROR, INICIAR_SESION_EXITO, INICIAR_SESION_START } from "../types"
+import { REGISTRO_USUARIO_ERROR, REGISTRO_USUARIO_EXITO, REGISTRO_USUARIO_START } from "../types";
 
 const initialState = {
     user: '',
     loader: false,
     error: false,
     errorMessage: '',
-    log: false,
+    ok: false,
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case INICIAR_SESION_START:
+        case REGISTRO_USUARIO_START:
             return {
                 ...state,
                 loader: true
             }
-        case INICIAR_SESION_EXITO:
+        case REGISTRO_USUARIO_EXITO:
             return {
                 ...state,
                 loader: false,
                 error: false,
                 errorMessage: '',
                 user: action.payload,
-                log: true,
+                ok: action.payload
             }
-        case INICIAR_SESION_ERROR:
+        case REGISTRO_USUARIO_ERROR:
             return {
                 ...state,
                 loader: false,
                 error: true,
                 errorMessage: action.payload.error,
                 user: '',
-                log: false,
+                ok: false,
             }
 
         default: return state

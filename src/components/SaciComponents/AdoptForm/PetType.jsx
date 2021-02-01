@@ -112,7 +112,7 @@ export default function PetType() {
         <div className={classes.root}>
             <Grid container>
                 <Hidden>
-                    <Grid item xs={12} justify="center"  alignItems="flex-start">
+                    <Grid item xs={12} justify="center" alignItems="flex-start">
                         <Typography variant="h5">
                             ¿Qué tipo de mascota deseas dar en adopción?
                         </Typography>
@@ -140,7 +140,7 @@ export default function PetType() {
                     />
                     <Typography variant='h5' align='center'>
                         Gato
-                        </Typography>
+                    </Typography>
                 </Grid>
                 <Grid item xs={12} sm={4} md={4} spacing={3}>
                     {/* <IconButton>
@@ -154,7 +154,7 @@ export default function PetType() {
                     />
                     <Typography variant='h5' align='center'>
                         Hámster
-                            </Typography>
+                    </Typography>
                 </Grid>
 
 

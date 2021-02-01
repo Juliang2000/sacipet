@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, makeStyles, withStyles, Hidden, Typography, Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
+import { Button, makeStyles, withStyles, Hidden, Typography, Accordion, AccordionSummary, AccordionDetails, Grid } from '@material-ui/core';
 import PetsIcon from '@material-ui/icons/Pets';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -94,15 +94,20 @@ export default function FindPetButton() {
   return (
     <div>
       <Hidden xsDown>
+        {/* <Grid container justify="center"> */}
         <Button
+          // variant="contained"
+          color="secondary"
+          fullWidth
           className={classes.findPetButtonDesktop}
           onClick={handleClick}
-          startIcon={<img src={findPetIconWhite} alt="LogIn" style={{ width: '40px' }} />}
+          startIcon={<img src={findPetIconWhite} alt="LogIn" style={{ width: '30px' }} />}
 
         >
 
-          Encuentra tu mascota
+          Encontrar
                 </Button>
+        {/* </Grid> */}
         <StyledMenu
           id="customized-menu"
           anchorEl={anchorEl}

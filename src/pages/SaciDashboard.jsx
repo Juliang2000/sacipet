@@ -4,23 +4,16 @@ import CardsPets from '../components/SaciComponents/Adoption/CardsPets'
 import FiltersPets from '../components/SaciComponents/Adoption/FiltersPets'
 import FiltersPetsResponsive from '../components/SaciComponents/Adoption/FiltersPetsResponsive'
 import { Grid, Hidden } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles(() => ({
-
-    // adoption: {
-    //     marginTop: '50px',
-    //     display: 'flex',
-    // }
-}))
 
 
-function SaciDashboard() {
-    const classes = useStyles()
+
+
+export default function SaciDashboard() {
+
     return (
-            <React.Fragment>
+            <>
                 <Header />
-                <Grid container style={{ marginTop: '50px' }} className={classes.adoption}>
+                <Grid container style={{ marginTop: '50px' }}>
 
                     <Hidden smDown>
                         <Grid item xs={12} sm={12} md={2} lg={2} xl={2}>
@@ -38,8 +31,7 @@ function SaciDashboard() {
                         <CardsPets />
                     </Grid>
                 </Grid>
-            </React.Fragment>
+            </>
     )
 }
 
-export default SaciDashboard
