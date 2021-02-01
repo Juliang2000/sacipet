@@ -12,6 +12,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 //components
 import PetType from './PetType'
 import PetDescription from './PetDescription';
+import PetImages from './PetImages';
 
 
 //icons
@@ -155,7 +156,7 @@ function getStepContent(step) {
     case 1:
       return <PetDescription />;
     case 2:
-      return 'Texto de prueba, aquí va el campo de subir fotos'
+      return <PetImages />;
     default:
       return 'Unknown step';
   }
