@@ -123,13 +123,13 @@ export default function PetType() {
         setClassSelectHamster(classes.cards2);
         const newPet = 3;
         console.log(newPet)
-        registroDatos(newPet);
+        // registroDatos(newPet);
       
     };
 
-    const datos = () => {
-        console.log(registroDatos)
-    }
+    // const datos = () => {
+    //     console.log(registroDatos)
+    // }
 
     return (
         <div className={classes.root}>
@@ -143,9 +143,6 @@ export default function PetType() {
                         </Box>
                     </Grid>
                 </Hidden>
-                <Button onClick={datos}>
-                    Hola carebola
-                </Button>
                 <br />
                 <br />
                 <Grid item xs={12} sm={4} md={4} spacing={10}>
