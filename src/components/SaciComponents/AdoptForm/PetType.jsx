@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Lottie from 'react-lottie';
-import { Grid, IconButton, Typography, Hidden } from '@material-ui/core'
+import { Grid, IconButton, Typography, Hidden, Button, Box } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 
 //icons
@@ -22,8 +22,27 @@ import hamsterPet from '../../../assets/lotties/lottieHamster.json'
 
 const useStyles = makeStyles(() => ({
 
+    cards: {
+
+        width: 200,
+        height: 200,
+        borderRadius: '100%',
+
+    },
+
+    cards2: {
+
+        width: 200,
+        height: 200,
+        borderRadius: '100%',
+        border: 'solid #4CB333',
+        boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)',
+    },
+
     root: {
-        margin: '10%',
+        marginBottom: '10%',
+        marginLeft: '10%',
+        marginRight: '10%',
 
     },
 
@@ -32,7 +51,7 @@ const useStyles = makeStyles(() => ({
         // margin: "20%",
     },
     title: {
-        // marginBotton: '20px',
+        marginBotton: '20px',
     }
 
 }))
@@ -43,47 +62,12 @@ export default function PetType() {
 
     const classes = useStyles();
 
-
-    // Props Animations
-    const props = click ? 'animate__animated animate__zoomOut' : null
-
-    // Functions for animations
-    const handleClick = () => {
-
-        // Scroll
-        const behavior = document.querySelector('.behavior');
-        behavior.scrollIntoView({ behavior: 'smooth' });
-
-        // Animation
-        setClick(true);
-
-        //     // Redirect
-        //     setTimeout(() => {
-        //         history.push('/')
-        //     }, 300);
-    }
-
     // Local State
     const [playLottie, setPlayLottie] = useState({
         dogPet: true,
         catPet: true,
         hamsterPet: true,
     });
-
-    // Function to manage hover Effect on cards
-    const handleMouseEnter = (option) => {
-        setPlayLottie({
-            ...playLottie,
-            [option]: false
-        });
-    }
-
-    const handleMouseLeave = (option) => {
-        setPlayLottie({
-            ...playLottie,
-            [option]: true
-        });
-    }
 
     // LottieFiles configuration
 
@@ -105,60 +89,107 @@ export default function PetType() {
         animationData: hamsterPet,
     };
 
+    // let selection = classes.cards;
 
+    //State to select pet
+    const [classSelectDog, setClassSelectDog] = useState(classes.cards);
+    const [classSelectCat, setClassSelectCat] = useState(classes.cards);
+    const [classSelectHamster, setClassSelectHamster] = useState(classes.cards);
+    // const classSelect = classes.cards;
+    const selectClassDog = classSelectDog;
+    const selectClassCat = classSelectCat;
+    const selectClassHamster = classSelectHamster;
 
+    const handleClickDog = () => {
+        setClassSelectDog(classes.cards2);
+        setClassSelectCat(classes.cards);
+        setClassSelectHamster(classes.cards);
+        const newPet = 1;
+        console.log(newPet)
+    };
+
+    const handleClickCat = () => {
+        setClassSelectDog(classes.cards);
+        setClassSelectCat(classes.cards2);
+        setClassSelectHamster(classes.cards);
+        const newPet = 2;
+        console.log(newPet)
+    
+    };
+
+    const handleClickHamster = () => {
+        setClassSelectDog(classes.cards);
+        setClassSelectCat(classes.cards);
+        setClassSelectHamster(classes.cards2);
+        const newPet = 3;
+        console.log(newPet)
+        // registroDatos(newPet);
+      
+    };
+
+    // const datos = () => {
+    //     console.log(registroDatos)
+    // }
 
     return (
         <div className={classes.root}>
             <Grid container>
                 <Hidden>
-                    <Grid item xs={12} justify="center" alignItems="flex-start">
-                        <Typography variant="h5">
-                            ¿Qué tipo de mascota deseas dar en adopción?
-                        </Typography>
+                    <Grid container justify="center" alignItems="flex-start">
+                        <Box mb={8}>
+                            <Typography variant="h5">
+                                ¿Qué tipo de mascota deseas dar en adopción?
+                            </Typography>
+                        </Box>
                     </Grid>
                 </Hidden>
                 <br />
                 <br />
-                <Grid item xs={12} sm={4} md={4} spacing={3}>
-                    <Lottie
-                        options={dogPetOptions}
-                        height={200}
-                        width={200}
-                        isPaused={playLottie.dogPet}
-                    />
-                    <Typography variant='h5' align='center'>Perro</Typography></Grid>
-                <Grid item xs={12} sm={4} md={4} spacing={3}>
-                    {/* <IconButton>
-                        <img width={70} src={catIcon}></img>
-                    </IconButton> */}
-                    <Lottie
-                        options={catPetOptions}
-                        height={200}
-                        width={200}
-                        isPaused={playLottie.CatPet}
-                    />
-                    <Typography variant='h5' align='center'>
+                <Grid item xs={12} sm={4} md={4} spacing={10}>
+                    <Typography variant='h6' align='center'>
+                        Perro
+                    </Typography>
+                    <Button onClick={handleClickDog} className={selectClassDog}>
+                        <Lottie
+                            options={dogPetOptions}
+                            height={150}
+                            width={150}
+                            isPaused={playLottie.dogPet}
+                        />
+                    </Button>
+                </Grid>
+                <Grid item xs={12} sm={4} md={4} spacing={10}>
+                    <Typography variant='h6' align='center'>
                         Gato
                     </Typography>
+                    <Button onClick={handleClickCat} className={selectClassCat}>
+                        <Lottie
+                            options={catPetOptions}
+                            height={150}
+                            width={150}
+                            isPaused={playLottie.CatPet}
+                        />
+                    </Button>
+
                 </Grid>
-                <Grid item xs={12} sm={4} md={4} spacing={3}>
-                    {/* <IconButton>
-                        <img width={70} src={hamsterIcon}></img>
-                    </IconButton> */}
-                    <Lottie
-                        options={hamsterPetOptions}
-                        height={200}
-                        width={200}
-                        isPaused={playLottie.hamsterPet}
-                    />
-                    <Typography variant='h5' align='center'>
+                <Grid item xs={12} sm={4} md={4} spacing={10}>
+                    <Typography variant='h6' align='center'>
                         Hámster
                     </Typography>
+                    <Button onClick={handleClickHamster} className={selectClassHamster}>
+                        <Lottie
+                            options={hamsterPetOptions}
+                            height={150}
+                            width={150}
+                            isPaused={playLottie.hamsterPet}
+                        />
+                    </Button>
+
                 </Grid>
 
 
             </Grid>
+            
         </div>
     )
 }

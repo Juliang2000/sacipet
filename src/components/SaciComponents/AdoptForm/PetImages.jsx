@@ -126,7 +126,6 @@ const PetImages = () => {
                 {preview1 ? (
                     <Grid item xs={2}>
                         <Card className={classes.root} >
-
                             <IconButton aria-label="close"
                                 onClick={() => {
                                     setPetimage1(null);
@@ -134,15 +133,11 @@ const PetImages = () => {
                             >
                                 <CloseIcon />
                             </IconButton>
-
                             <CardActionArea>
                                 <img
                                     alt="imagen1"
                                     src={preview1}
                                     className={classes.media}
-                                    // onClick={() => {
-                                    //     setImage2(null);
-                                    // }}
                                 />
                             </CardActionArea>
                         </Card>
@@ -168,14 +163,18 @@ const PetImages = () => {
                 {preview2 ? (
                     <Grid item xs={2}>
                         <Card className={classes.root} >
+                            <IconButton aria-label="close"
+                                onClick={() => {
+                                    setPetimage2(null);
+                                }}
+                            >
+                                <CloseIcon />
+                            </IconButton>
                             <CardActionArea>
                                 <img
                                     alt="imagen2"
                                     src={preview2}
                                     className={classes.media}
-                                // onClick={() => {
-                                //     setImage2(null);
-                                // }}
                                 />
                             </CardActionArea>
                         </Card>
@@ -201,14 +200,18 @@ const PetImages = () => {
                 {preview3 ? (
                     <Grid item xs={2}>
                         <Card className={classes.root} >
+                            <IconButton aria-label="close"
+                                onClick={() => {
+                                    setPetimage3(null);
+                                }}
+                            >
+                                <CloseIcon />
+                            </IconButton>
                             <CardActionArea>
                                 <img
                                     alt="imagen3"
                                     src={preview3}
                                     className={classes.media}
-                                // onClick={() => {
-                                //     setImage2(null);
-                                // }}
                                 />
                             </CardActionArea>
                         </Card>
@@ -234,14 +237,18 @@ const PetImages = () => {
                 {preview4 ? (
                     <Grid item xs={2}>
                         <Card className={classes.root} >
+                            <IconButton aria-label="close"
+                                onClick={() => {
+                                    setPetimage4(null);
+                                }}
+                            >
+                                <CloseIcon />
+                            </IconButton>
                             <CardActionArea>
                                 <img
                                     alt="imagen4"
                                     src={preview4}
                                     className={classes.media}
-                                // onClick={() => {
-                                //     setImage2(null);
-                                // }}
                                 />
                             </CardActionArea>
                         </Card>
@@ -268,14 +275,18 @@ const PetImages = () => {
                 {preview5 ? (
                     <Grid item xs={2}>
                         <Card className={classes.root} >
+                            <IconButton aria-label="close"
+                                onClick={() => {
+                                    setPetimage5(null);
+                                }}
+                            >
+                                <CloseIcon />
+                            </IconButton>
                             <CardActionArea>
                                 <img
                                     alt="imagen5"
                                     src={preview5}
                                     className={classes.media}
-                                // onClick={() => {
-                                //     setImage2(null);
-                                // }}
                                 />
                             </CardActionArea>
                         </Card>
