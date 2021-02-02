@@ -172,16 +172,15 @@ export default function PrimarySearchAppBar() {
             <Grid container alignItems="center" xs={12}>
               <Grid container xs={11} sm={11} md={3} lg={3} xl={2} alignItems="center">
                 {/* <Grid item xs={1}> */}
-                <Button
+                <IconButton
                   edge="start"
                   className={classes.menuButton}
-                  color="inherit"
                   aria-label="open drawer"
                   onClick={handleDrawerOpen}
                 >
                   <MenuIcon
                     onClick={handleDrawerClose} />
-                </Button>
+                </IconButton>
 
                 {/* </Grid> */}
 
@@ -197,31 +196,8 @@ export default function PrimarySearchAppBar() {
 
                 </Hidden>
               </Grid>
-
-              {/* </Grid> */}
-
-              {/* <Hidden smDown>
-              <Grid container xs={5} justify="flex-center">      
-              <Grid item>          
-                <div className={classes.search} >
-                  <div className={classes.searchIcon} >
-                    <SearchIcon />
-                  </div>
-                  <InputBase
-                    placeholder="Buscar…"
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput,
-                    }}
-                    inputProps={{ 'aria-label': 'search' }}
-                  />
-                </div> 
-                </Grid>             
-              </Grid>
-              </Hidden> */}
-              {/* </Grid> */}
               <Hidden smDown>
-                <Grid item xs={1} sm={2} md={3} lg={3} xl={4} >
+                <Grid item xs={1} sm={2} md={4} lg={3} xl={4} >
 
                   <div className={classes.search} >
                     <div className={classes.searchIcon} >
@@ -239,7 +215,7 @@ export default function PrimarySearchAppBar() {
                   {/* </Grid> */}
                 </Grid>
               </Hidden>
-              <Grid container justify="flex-end" alignItems="center" xs={1} sm={1} md={6} lg={6} xl={6}>
+              <Grid container justify="flex-end" alignItems="center" xs={1} sm={1} md={5} lg={6} xl={6}>
                 <Hidden smDown>
 
                   <Grid item sm={2} md={3} lg={2} xl={2}>
@@ -284,7 +260,7 @@ export default function PrimarySearchAppBar() {
             </IconButton>
             <IconButton className={classes.upper}><img width={40} src={logo} alt="logo"></img></IconButton>
             <Typography className={classes.title} variant="h5" noWrap>
-              SACI
+              SACI Pet
           </Typography>
           </Toolbar>
         </AppBar>

@@ -1,7 +1,7 @@
 import { REGISTRO_USUARIO_ERROR, REGISTRO_USUARIO_EXITO, REGISTRO_USUARIO_START } from "../types";
 
 const initialState = {
-    user: '',
+    user: 'true',
     loader: false,
     error: false,
     errorMessage: '',

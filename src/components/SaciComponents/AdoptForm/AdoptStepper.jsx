@@ -188,7 +188,7 @@ function getStepContent(step) {
 export default function AdoptStepper() {
 
   const { user } = useSelector(state => state.login);
-
+  // const user = true;
   const classes = useStyles();
 
   // const [skipped, setSkipped] = React.useState(new Set());
@@ -254,9 +254,9 @@ export default function AdoptStepper() {
 
     <>
       <Hidden smDown>
-      {/* <Grid container justify="center"> */}
+        {/* <Grid container justify="center"> */}
         <Button
-        fullWidth
+          fullWidth
           onClick={handleClickOpenModal}
           className={classes.adoptionButton}
           // variant="contained"
@@ -266,7 +266,7 @@ export default function AdoptStepper() {
         >
           Adoptar
               </Button>
-              {/* </Grid> */}
+        {/* </Grid> */}
       </Hidden>
 
       <Hidden mdUp>
