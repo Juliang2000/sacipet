@@ -132,13 +132,11 @@ export default function AlertDialogSlide() {
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                <ul>
-                  <li>
-                    <li>1- Vacuna</li>
-                    <li>2- Vacuna</li>
-                    <li>3- Vacuna</li>
-                  </li>
-                </ul>
+                <ol>
+                    <li>Vacuna</li>
+                    <li>Vacuna</li>
+                    <li>Vacuna</li>
+                </ol>
               </Typography>
             </AccordionDetails>
           </Accordion>

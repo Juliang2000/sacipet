@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, Grid, CardActionArea, CardMedia, Button } from '@material-ui/core';
+import { Card, Grid, CardActionArea, CardMedia, Button, IconButton } from '@material-ui/core';
+
+import CloseIcon from '@material-ui/icons/Close';
 
 
 import petImage1 from '../../../assets/images/cardsPets/pet1.png';
@@ -16,6 +18,7 @@ const useStyles = makeStyles({
     },
     media: {
         height: 100,
+        objectFit: 'cover'
     },
 
 
@@ -23,266 +26,357 @@ const useStyles = makeStyles({
 
 const PetImages = () => {
 
-    const [selectedImages, setSelectedImages] = useState([])
-
-    const imageHandleChange = (e) => {
-        // console.log(e.target.files)
-        if (e.target.files) {
-            const fileArray = Array.from(e.target.files).map((file) => URL.createObjectURL(file))
-            console.log(fileArray)
-
-            setSelectedImages((prevImages) => prevImages.concat(fileArray))
-            Array.from(e.target.files).map(
-                (file) => URL.revokeObjectURL(file)
-            )
-        }
-    }
-
-    const renderPhotos = (source) => {
-        return source.map((photo) => {
-            return (
-                <Grid item xs={2}>
-                    <Card className={classes.root}>
-                        <CardActionArea>
-                            <CardMedia
-                                className={classes.media}
-                                image={photo}
-                                title="Contemplative Reptile"
-                            />
-                            {/* <img src={photo} key={photo} alt={photo} /> */}
-                        </CardActionArea>
-                    </Card>
-                </Grid>
-            )
-
-        })
-    }
-
-
     const classes = useStyles();
+
+    const [petimage1, setPetimage1] = useState();
+    const [preview1, setPreview1] = useState();
+
+    const [petimage2, setPetimage2] = useState();
+    const [preview2, setPreview2] = useState();
+
+    const [petimage3, setPetimage3] = useState();
+    const [preview3, setPreview3] = useState();
+
+    const [petimage4, setPetimage4] = useState();
+    const [preview4, setPreview4] = useState();
+
+    const [petimage5, setPetimage5] = useState();
+    const [preview5, setPreview5] = useState();
+
+    const fileInputRef1 = useRef();
+    const fileInputRef2 = useRef();
+    const fileInputRef3 = useRef();
+    const fileInputRef4 = useRef();
+    const fileInputRef5 = useRef();
+
+
+    useEffect(() => {
+        if (petimage1) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreview1(reader.result);
+            };
+            reader.readAsDataURL(petimage1);
+        } else {
+            setPreview1(null);
+        }
+    }, [petimage1]);
+
+
+    useEffect(() => {
+        if (petimage2) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreview2(reader.result);
+            };
+            reader.readAsDataURL(petimage2);
+        } else {
+            setPreview2(null);
+        }
+    }, [petimage2]);
+
+
+    useEffect(() => {
+        if (petimage3) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreview3(reader.result);
+            };
+            reader.readAsDataURL(petimage3);
+        } else {
+            setPreview3(null);
+        }
+    }, [petimage3]);
+
+
+    useEffect(() => {
+        if (petimage4) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreview4(reader.result);
+            };
+            reader.readAsDataURL(petimage4);
+        } else {
+            setPreview3(null);
+        }
+    }, [petimage4]);
+
+
+    useEffect(() => {
+        if (petimage5) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreview5(reader.result);
+            };
+            reader.readAsDataURL(petimage5);
+        } else {
+            setPreview3(null);
+        }
+    }, [petimage5]);
+
 
     return (
         <>
-
-            <Grid container spacing={2} xs={12} alignItems="center" justify="center" classname="containerImages" style={{ marginTop: '50px', marginBottom: '50px' }}>
-                {/* 
-                <Grid item xs={2}>
-                    <Button
-                        variant="contained"
-                        component="label"
-                        onChange={imageHandleChange}
-                    >
-                        Foto 1
-                    <input
-                            type="file"
-                            hidden
-                        />
-                    </Button>
-
-                </Grid>
-                <Grid item xs={2}>
-                    <Button
-                        variant="contained"
-                        component="label"
-                        onChange={imageHandleChange}
-                    >
-                        Foto 2
-                    <input
-                            type="file"
-                            hidden
-                        />
-                    </Button>
-
-                </Grid>
-                <Grid item xs={2}>
-                    <Button
-                        variant="contained"
-                        component="label"
-                        onChange={imageHandleChange}
-                    >
-                        Foto 3
-                    <input
-                            type="file"
-                            hidden
-                        />
-                    </Button>
-
-                </Grid>
-                <Grid item xs={2}>
-                    <Button
-                        variant="contained"
-                        component="label"
-                        onChange={imageHandleChange}
-                    >
-                        Foto 4
-                    <input
-                            type="file"
-                            hidden
-                        />
-                    </Button>
-
-                </Grid>
-                <Grid item xs={2}>
-                    <Button
-                        variant="contained"
-                        component="label"
-                        onChange={imageHandleChange}
-                    >
-                        Foto 5
-                    <input
-                            type="file"
-                            hidden
-                        />
-                    </Button>
-                </Grid> */}
-
-                {/* <Grid item xs={2}>
-                    <Card className={classes.root}>
-                        <CardActionArea>
-                            <CardMedia
-                                className={classes.media}
-                                title="Contemplative Reptile"
-                            />
-                        </CardActionArea>
-                    </Card>
-                </Grid> */}
-
-                <Grid item xs={2}>
-                    <Card className={classes.root}>
-                        <CardActionArea>
-                            <CardMedia
-                                className={classes.media}
-                                image={petImage1}
-                                title="Contemplative Reptile"
-
-                            />
-                        </CardActionArea>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            component="label"
-                            onChange={imageHandleChange}
-                            fullWidth
-                        >
-                            Subir
-                            <input
-                                type="file"
-                                hidden
-                            />
-                        </Button>
-                    </Card>
-                </Grid>
+            <Grid container spacing={2} xs={12}
+                alignItems="center"
+                justify="center"
+                style={{ marginTop: '50px', marginBottom: '50px' }}>
 
 
+                {preview1 ? (
+                    <Grid item xs={2}>
+                        <Card className={classes.root} >
+
+                            <IconButton aria-label="close"
+                                onClick={() => {
+                                    setPetimage1(null);
+                                }}
+                            >
+                                <CloseIcon />
+                            </IconButton>
+
+                            <CardActionArea>
+                                <img
+                                    alt="imagen1"
+                                    src={preview1}
+                                    className={classes.media}
+                                    // onClick={() => {
+                                    //     setImage2(null);
+                                    // }}
+                                />
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
+                ) : (
+                        <Grid item xs={2}>
+                            <Card className={classes.root}>
+                                <CardActionArea>
+                                    <CardMedia
+                                        onClick={(event) => {
+                                            event.preventDefault();
+                                            fileInputRef1.current.click();
+                                        }}
+                                        className={classes.media}
+                                        image={petImage1}
+                                        title="Contemplative Reptile"
+                                    />
+                                </CardActionArea>
+                            </Card>
+                        </Grid>
+                    )}
+
+                {preview2 ? (
+                    <Grid item xs={2}>
+                        <Card className={classes.root} >
+                            <CardActionArea>
+                                <img
+                                    alt="imagen2"
+                                    src={preview2}
+                                    className={classes.media}
+                                // onClick={() => {
+                                //     setImage2(null);
+                                // }}
+                                />
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
+                ) : (
+                        <Grid item xs={2}>
+                            <Card className={classes.root}>
+                                <CardActionArea>
+                                    <CardMedia
+                                        onClick={(event) => {
+                                            event.preventDefault();
+                                            fileInputRef2.current.click();
+                                        }}
+                                        className={classes.media}
+                                        image={petImage2}
+                                        title="Contemplative Reptile"
+                                    />
+                                </CardActionArea>
+                            </Card>
+                        </Grid>
+                    )}
+
+                {preview3 ? (
+                    <Grid item xs={2}>
+                        <Card className={classes.root} >
+                            <CardActionArea>
+                                <img
+                                    alt="imagen3"
+                                    src={preview3}
+                                    className={classes.media}
+                                // onClick={() => {
+                                //     setImage2(null);
+                                // }}
+                                />
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
+                ) : (
+                        <Grid item xs={2}>
+                            <Card className={classes.root}>
+                                <CardActionArea>
+                                    <CardMedia
+                                        onClick={(event) => {
+                                            event.preventDefault();
+                                            fileInputRef3.current.click();
+                                        }}
+                                        className={classes.media}
+                                        image={petImage3}
+                                        title="Contemplative Reptile"
+                                    />
+                                </CardActionArea>
+                            </Card>
+                        </Grid>
+                    )}
+
+                {preview4 ? (
+                    <Grid item xs={2}>
+                        <Card className={classes.root} >
+                            <CardActionArea>
+                                <img
+                                    alt="imagen4"
+                                    src={preview4}
+                                    className={classes.media}
+                                // onClick={() => {
+                                //     setImage2(null);
+                                // }}
+                                />
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
+                ) : (
+                        <Grid item xs={2}>
+                            <Card className={classes.root}>
+                                <CardActionArea>
+                                    <CardMedia
+                                        onClick={(event) => {
+                                            event.preventDefault();
+                                            fileInputRef4.current.click();
+                                        }}
+                                        className={classes.media}
+                                        image={petImage4}
+                                        title="Contemplative Reptile"
+                                    />
+                                </CardActionArea>
+                            </Card>
+                        </Grid>
+                    )}
 
 
-                <Grid item xs={2}>
-                    <Card className={classes.root}>
-                        <CardActionArea>
-                            <CardMedia
-                                className={classes.media}
-                                image={petImage2}
-                                title="Contemplative Reptile"
-                            />
-                        </CardActionArea>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            component="label"
-                            onChange={imageHandleChange}
-                            fullWidth
-                        >
-                            Subir
-                            <input
-                                type="file"
-                                hidden
-                            />
-                        </Button>
-                    </Card>
-                </Grid>
-
-                <Grid item xs={2}>
-                    <Card className={classes.root}>
-                        <CardActionArea>
-                            <CardMedia
-                                className={classes.media}
-                                image={petImage3}
-                                title="Contemplative Reptile"
-                            />
-                        </CardActionArea>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            component="label"
-                            onChange={imageHandleChange}
-                            fullWidth
-                        >
-                            Subir
-                            <input
-                                type="file"
-                                hidden
-                            />
-                        </Button>
-                    </Card>
-                </Grid>
-
-                <Grid item xs={2}>
-                    <Card className={classes.root}>
-                        <CardActionArea>
-                            <CardMedia
-                                className={classes.media}
-                                image={petImage4}
-                                title="Contemplative Reptile"
-                            />
-                        </CardActionArea>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            component="label"
-                            onChange={imageHandleChange}
-                            fullWidth
-                        >
-                            Subir
-                            <input
-                                type="file"
-                                hidden
-                            />
-                        </Button>
-                    </Card>
-                </Grid>
-
-                <Grid item xs={2}>
-                    <Card className={classes.root}>
-                        <CardActionArea>
-                            <CardMedia
-                                className={classes.media}
-                                image={petImage5}
-                                title="Contemplative Reptile"
-                            />
-                        </CardActionArea>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            component="label"
-                            onChange={imageHandleChange}
-                            fullWidth
-                        >
-                            Subir
-                            <input
-                                type="file"
-                                hidden
-                            />
-                        </Button>
-                    </Card>
-                </Grid>
+                {preview5 ? (
+                    <Grid item xs={2}>
+                        <Card className={classes.root} >
+                            <CardActionArea>
+                                <img
+                                    alt="imagen5"
+                                    src={preview5}
+                                    className={classes.media}
+                                // onClick={() => {
+                                //     setImage2(null);
+                                // }}
+                                />
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
+                ) : (
+                        <Grid item xs={2}>
+                            <Card className={classes.root}>
+                                <CardActionArea>
+                                    <CardMedia
+                                        onClick={(event) => {
+                                            event.preventDefault();
+                                            fileInputRef5.current.click();
+                                        }}
+                                        className={classes.media}
+                                        image={petImage5}
+                                        title="Contemplative Reptile"
+                                    />
+                                </CardActionArea>
+                            </Card>
+                        </Grid>
+                    )}
 
 
-                {renderPhotos(selectedImages)}
+
+
+                <input
+                    type="file"
+                    style={{ display: "none" }}
+                    ref={fileInputRef1}
+                    accept="image/*"
+                    onChange={(event) => {
+                        const file = event.target.files[0];
+                        if (file && file.type.substr(0, 5) === "image") {
+                            setPetimage1(file);
+                        } else {
+                            setPetimage1(null);
+                        }
+                    }}
+                />
+
+                <input
+                    type="file"
+                    style={{ display: "none" }}
+                    ref={fileInputRef2}
+                    accept="image/*"
+                    onChange={(event) => {
+                        const file = event.target.files[0];
+                        if (file && file.type.substr(0, 5) === "image") {
+                            setPetimage2(file);
+                        } else {
+                            setPetimage2(null);
+                        }
+                    }}
+                />
+
+                <input
+                    type="file"
+                    style={{ display: "none" }}
+                    ref={fileInputRef3}
+                    accept="image/*"
+                    onChange={(event) => {
+                        const file = event.target.files[0];
+                        if (file && file.type.substr(0, 5) === "image") {
+                            setPetimage3(file);
+                        } else {
+                            setPetimage3(null);
+                        }
+                    }}
+                />
+
+                <input
+                    type="file"
+                    style={{ display: "none" }}
+                    ref={fileInputRef4}
+                    accept="image/*"
+                    onChange={(event) => {
+                        const file = event.target.files[0];
+                        if (file && file.type.substr(0, 5) === "image") {
+                            setPetimage4(file);
+                        } else {
+                            setPetimage4(null);
+                        }
+                    }}
+                />
+
+                <input
+                    type="file"
+                    style={{ display: "none" }}
+                    ref={fileInputRef5}
+                    accept="image/*"
+                    onChange={(event) => {
+                        const file = event.target.files[0];
+                        if (file && file.type.substr(0, 5) === "image") {
+                            setPetimage5(file);
+                        } else {
+                            setPetimage5(null);
+                        }
+                    }}
+                />
+
             </Grid>
-
-            {/* <div className="result">
-                    {renderPhotos(selectedImages)}
-            </div> */}
         </>
     );
 }

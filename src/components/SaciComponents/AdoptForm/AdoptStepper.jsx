@@ -189,7 +189,8 @@ export default function AdoptStepper() {
 
   const { user } = useSelector(state => state.login);
 
-  const classes = useStyles();
+  const classes = useStyles(); //hola
+
 
   // const [skipped, setSkipped] = React.useState(new Set());
 
