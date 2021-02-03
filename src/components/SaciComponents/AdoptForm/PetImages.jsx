@@ -97,7 +97,7 @@ const PetImages = () => {
             };
             reader.readAsDataURL(petimage4);
         } else {
-            setPreview3(null);
+            setPreview4(null);
         }
     }, [petimage4]);
 
@@ -110,7 +110,7 @@ const PetImages = () => {
             };
             reader.readAsDataURL(petimage5);
         } else {
-            setPreview3(null);
+            setPreview5(null);
         }
     }, [petimage5]);
 
