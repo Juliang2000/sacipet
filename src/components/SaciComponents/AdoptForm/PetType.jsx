@@ -62,6 +62,8 @@ export default function PetType() {
 
     const classes = useStyles();
 
+    const prueba = classes;
+
     // Local State
     const [playLottie, setPlayLottie] = useState({
         dogPet: true,

@@ -187,8 +187,8 @@ function getStepContent(step) {
 
 export default function AdoptStepper() {
 
-  const { user } = useSelector(state => state.login);
-  // const user = true;
+  // const { user } = useSelector(state => state.login);
+  const user = true;
   const classes = useStyles();
 
   // const [skipped, setSkipped] = React.useState(new Set());
