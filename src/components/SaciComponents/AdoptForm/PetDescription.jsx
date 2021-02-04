@@ -62,6 +62,8 @@ export default function PetDescription() {
       <Grid item xs={6}>
         <TextField
           label="Nombre De Mascota"
+          type="text"
+          name="nombre_mascota"
           variant="outlined"
           fullWidth
         />
@@ -69,6 +71,8 @@ export default function PetDescription() {
       <Grid item xs={2}>
         <TextField
           label="Edad"
+          type="number"
+          name="edad_mascota"
           variant="outlined"
           fullWidth
         />
@@ -79,6 +83,7 @@ export default function PetDescription() {
           <Select
             labelId="demo-simple-select-outlined-label"
             id="demo-simple-select-outlined"
+            name="escala_edad"
             // value={age}
             // onChange={handleChange}
             label="Seleccione"
@@ -93,12 +98,33 @@ export default function PetDescription() {
         </FormControl>
       </Grid>
 
-      <Grid item xs={6}>
+      <Grid item xs={4}>
+        <FormControl variant="outlined" fullWidth>
+          <InputLabel id="demo-simple-select-outlined-label">Esterelización De Mascota</InputLabel>
+          <Select
+            labelId="demo-simple-select-outlined-label"
+            id="demo-simple-select-outlined"
+            name="esterilizado"
+            // value={age}
+            // onChange={handleChange}
+            label="Esterelización De Mascota"
+          >
+            <MenuItem value="" >
+              <em>Seleccione:</em>
+            </MenuItem>
+            <MenuItem value={1}>Si</MenuItem>
+            <MenuItem value={2}>No</MenuItem>
+          </Select>
+        </FormControl>
+      </Grid>
+
+      <Grid item xs={4}>
         <FormControl variant="outlined" fullWidth>
           <InputLabel id="demo-simple-select-outlined-label">Tamaño De Mascota</InputLabel>
           <Select
             labelId="demo-simple-select-outlined-label"
             id="demo-simple-select-outlined"
+            name="id_tamanio"
             // value={age}
             // onChange={handleChange}
             label="Tamaño De Mascota"
@@ -106,18 +132,19 @@ export default function PetDescription() {
             <MenuItem value="" >
               <em>Seleccione:</em>
             </MenuItem>
-            <MenuItem value={1}>Pequeño</MenuItem>
+            <MenuItem value={1}>Grande</MenuItem>
             <MenuItem value={2}>Mediano</MenuItem>
-            <MenuItem value={3}>Grande</MenuItem>
+            <MenuItem value={3}>Pequeño</MenuItem>
           </Select>
         </FormControl>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={4}>
         <FormControl variant="outlined" fullWidth>
           <InputLabel id="demo-simple-select-outlined-label">Raza De Mascota</InputLabel>
           <Select
             labelId="demo-simple-select-outlined-label"
             id="demo-simple-select-outlined"
+            name="id_raza"
             // value={age}
             // onChange={handleChange}
             label="Raza De Mascota"
@@ -139,6 +166,7 @@ export default function PetDescription() {
           <Select
             labelId="demo-simple-select-outlined-label"
             id="demo-simple-select-outlined"
+            name="genero_mascota"
             // value={age}
             // onChange={handleChange}
             label="Genéro De Mascota"

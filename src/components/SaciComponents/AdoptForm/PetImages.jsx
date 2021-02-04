@@ -14,14 +14,34 @@ import petImage5 from '../../../assets/images/cardsPets/pet5.png';
 
 const useStyles = makeStyles({
     root: {
+        "&:hover": {
+            border: '3px dashed  #63C132',
+            transition: 'border 0.8s linear 0.2s',
+        },
         maxWidth: 145,
+        border: '3px solid  #fff',
     },
+
     media: {
+        "&:hover": {
+            transform: 'scale(1.2)',
+            '-webkit-transition': 'all 500ms ease-in-out',
+            objectFit: 'cover',
+        },
         height: 100,
-        objectFit: 'cover'
+        objectFit: 'cover',
+
+        '-webkit-transition': 'all 500ms ease-in-out',
+
+        transform: 'scale(1)',
+        
     },
 
-
+    containerPetimages: {
+        // marginTop: 50,
+        // marginBottom: 50,
+        height: 200,
+    }
 });
 
 const PetImages = () => {
@@ -117,10 +137,11 @@ const PetImages = () => {
 
     return (
         <>
-            <Grid container spacing={2} xs={12}
+            <Grid container spacing={2}
                 alignItems="center"
                 justify="center"
-                style={{ marginTop: '50px', marginBottom: '50px' }}>
+                className={classes.containerPetimages}
+            >
 
 
                 {preview1 ? (
@@ -153,7 +174,7 @@ const PetImages = () => {
                                         }}
                                         className={classes.media}
                                         image={petImage1}
-                                        title="Contemplative Reptile"
+                                        title="Subir Imagen 1"
                                     />
                                 </CardActionArea>
                             </Card>
@@ -190,7 +211,7 @@ const PetImages = () => {
                                         }}
                                         className={classes.media}
                                         image={petImage2}
-                                        title="Contemplative Reptile"
+                                        title="Subir Imagen 2"
                                     />
                                 </CardActionArea>
                             </Card>
@@ -227,7 +248,7 @@ const PetImages = () => {
                                         }}
                                         className={classes.media}
                                         image={petImage3}
-                                        title="Contemplative Reptile"
+                                        title="Subir Imagen 3"
                                     />
                                 </CardActionArea>
                             </Card>
@@ -264,7 +285,7 @@ const PetImages = () => {
                                         }}
                                         className={classes.media}
                                         image={petImage4}
-                                        title="Contemplative Reptile"
+                                        title="Subir Imagen 4"
                                     />
                                 </CardActionArea>
                             </Card>
@@ -302,7 +323,7 @@ const PetImages = () => {
                                         }}
                                         className={classes.media}
                                         image={petImage5}
-                                        title="Contemplative Reptile"
+                                        title="Subir Imagen 5"
                                     />
                                 </CardActionArea>
                             </Card>
