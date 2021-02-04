@@ -3,15 +3,19 @@ import Lottie from 'react-lottie';
 import { Grid, IconButton, Typography, Hidden, Button, Box } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 
-//icons
-import dogIcon from '../../../assets/icons/petype/dog.svg'
-import catIcon from '../../../assets/icons/petype/cat.svg'
-import hamsterIcon from '../../../assets/icons/petype/hamster.svg'
+//Redux
+import { useDispatch } from 'react-redux';
+
+
+//Redux Actions
+import { dog_action, cat_action, hamster_action } from '../../../redux/actions/petTypeAction';
+
 
 //loties
 import dogPet from '../../../assets/lotties/lottieDog.json'
 import catPet from '../../../assets/lotties/lottieCat.json'
 import hamsterPet from '../../../assets/lotties/lottieHamster.json'
+import petType from '../../../redux/reducers/petTypeReducer';
 
 
 
@@ -51,149 +55,177 @@ const useStyles = makeStyles(() => ({
         // margin: "20%",
     },
     title: {
-        marginBotton: '20px',
-    }
+        margin: '5%',
+    },
+    petFont: {
+        marginTop: '10%',
+    },
 
-}))
+}));
 
 export default function PetType() {
-
-    const [click, setClick] = useState(false);
-
-    const classes = useStyles();
-
-    const prueba = classes;
-
-    // Local State
-    const [playLottie, setPlayLottie] = useState({
-        dogPet: true,
-        catPet: true,
-        hamsterPet: true,
-    });
-
-    // LottieFiles configuration
-
-    const dogPetOptions = {
-        loop: true,
-        autoplay: true,
-        animationData: dogPet,
-    };
-
-    const catPetOptions = {
-        loop: true,
-        autoplay: true,
-        animationData: catPet,
-    };
-
-    const hamsterPetOptions = {
-        loop: true,
-        autoplay: true,
-        animationData: hamsterPet,
-    };
-
-    // let selection = classes.cards;
-
-    //State to select pet
-    const [classSelectDog, setClassSelectDog] = useState(classes.cards);
-    const [classSelectCat, setClassSelectCat] = useState(classes.cards);
-    const [classSelectHamster, setClassSelectHamster] = useState(classes.cards);
-    // const classSelect = classes.cards;
-    const selectClassDog = classSelectDog;
-    const selectClassCat = classSelectCat;
-    const selectClassHamster = classSelectHamster;
-
-    const handleClickDog = () => {
-        setClassSelectDog(classes.cards2);
-        setClassSelectCat(classes.cards);
-        setClassSelectHamster(classes.cards);
-        const newPet = 1;
-        console.log(newPet)
-    };
-
-    const handleClickCat = () => {
-        setClassSelectDog(classes.cards);
-        setClassSelectCat(classes.cards2);
-        setClassSelectHamster(classes.cards);
-        const newPet = 2;
-        console.log(newPet)
     
-    };
+        const classes = useStyles();
 
-    const handleClickHamster = () => {
-        setClassSelectDog(classes.cards);
-        setClassSelectCat(classes.cards);
-        setClassSelectHamster(classes.cards2);
-        const newPet = 3;
-        console.log(newPet)
-        // registroDatos(newPet);
-      
-    };
 
-    // const datos = () => {
-    //     console.log(registroDatos)
-    // }
 
-    return (
-        <div className={classes.root}>
-            <Grid container>
-                <Hidden>
-                    <Grid container justify="center" alignItems="flex-start">
-                        <Box mb={8}>
-                            <Typography variant="h5">
-                                ¿Qué tipo de mascota deseas dar en adopción?
+        // Local State
+        const [playLottie, setPlayLottie] = useState({
+            dogPet: true,
+            catPet: true,
+            hamsterPet: true,
+        });
+
+        // LottieFiles configuration
+
+        const dogPetOptions = {
+            loop: true,
+            autoplay: true,
+            animationData: dogPet,
+        };
+
+        const catPetOptions = {
+            loop: true,
+            autoplay: true,
+            animationData: catPet,
+        };
+
+        const hamsterPetOptions = {
+            loop: true,
+            autoplay: true,
+            animationData: hamsterPet,
+        };
+
+        // let selection = classes.cards;
+
+        const dispatch = useDispatch();
+
+        //State to select pet
+        const [classSelectDog, setClassSelectDog] = useState(classes.cards);
+        const [classSelectCat, setClassSelectCat] = useState(classes.cards);
+        const [classSelectHamster, setClassSelectHamster] = useState(classes.cards);
+        // const classSelect = classes.cards;
+        const selectClassDog = classSelectDog;
+        const selectClassCat = classSelectCat;
+        const selectClassHamster = classSelectHamster;
+
+        //Pet Validation
+        // const [pet, setPet] = useState({
+        //     petType: '',
+        // });
+
+        // const petTypeData = handleClickDog;
+
+        const handleClickDog = () => {
+            setClassSelectDog(classes.cards2);
+            setClassSelectCat(classes.cards);
+            setClassSelectHamster(classes.cards);
+            dispatch(dog_action(petType));
+
+
+            // setPet({...pet})
+            // dispatch(saveAdoptForm(newPet));
+            // console.log(newPet)
+        };
+
+        // const _handleSubmit = async (data) => {
+        //     dispatch(saveAdoptForm(data));
+        // }
+
+        const handleClickCat = () => {
+            setClassSelectDog(classes.cards);
+            setClassSelectCat(classes.cards2);
+            setClassSelectHamster(classes.cards);
+            dispatch(cat_action(petType));
+
+        };
+
+        const handleClickHamster = () => {
+            setClassSelectDog(classes.cards);
+            setClassSelectCat(classes.cards);
+            setClassSelectHamster(classes.cards2);
+            dispatch(hamster_action(petType));
+
+        };
+
+
+        return (
+            <div className={classes.root} >
+                <Grid container>
+                    <Hidden>
+                        <Grid container justify="center" alignItems="flex-start">
+                            <div className={classes.title}>
+
+
+                                <Typography variant="h5">
+                                    ¿Qué tipo de mascota deseas dar en adopción?
                             </Typography>
-                        </Box>
+
+
+                            </div>
+                        </Grid>
+                    </Hidden>
+                    <br />
+                    <br />
+                    <Grid item xs={12} sm={4} md={4} spacing={10}>
+
+                        <Button
+                            className={selectClassDog}
+                            onClick={handleClickDog}>
+                            <Lottie
+                                options={dogPetOptions}
+                                height={150}
+                                width={150}
+                                isPaused={playLottie.dogPet}
+                            />
+                        </Button>
+                        <div className={classes.petFont}>
+                            <Typography variant='h6' align='center'>
+                                Perro
+                    </Typography>
+                        </div>
                     </Grid>
-                </Hidden>
-                <br />
-                <br />
-                <Grid item xs={12} sm={4} md={4} spacing={10}>
-                    <Typography variant='h6' align='center'>
-                        Perro
-                    </Typography>
-                    <Button onClick={handleClickDog} className={selectClassDog}>
-                        <Lottie
-                            options={dogPetOptions}
-                            height={150}
-                            width={150}
-                            isPaused={playLottie.dogPet}
-                        />
-                    </Button>
-                </Grid>
-                <Grid item xs={12} sm={4} md={4} spacing={10}>
-                    <Typography variant='h6' align='center'>
-                        Gato
-                    </Typography>
-                    <Button onClick={handleClickCat} className={selectClassCat}>
-                        <Lottie
-                            options={catPetOptions}
-                            height={150}
-                            width={150}
-                            isPaused={playLottie.CatPet}
-                        />
-                    </Button>
+                    <Grid item xs={12} sm={4} md={4} spacing={10}>
 
-                </Grid>
-                <Grid item xs={12} sm={4} md={4} spacing={10}>
-                    <Typography variant='h6' align='center'>
-                        Hámster
+                        <Button onClick={handleClickCat} className={selectClassCat}>
+                            <Lottie
+                                options={catPetOptions}
+                                height={150}
+                                width={150}
+                                isPaused={playLottie.CatPet}
+                            />
+                        </Button>
+                        <div className={classes.petFont}>
+                            <Typography variant='h6' align='center'>
+                                Gato
                     </Typography>
-                    <Button onClick={handleClickHamster} className={selectClassHamster}>
-                        <Lottie
-                            options={hamsterPetOptions}
-                            height={150}
-                            width={150}
-                            isPaused={playLottie.hamsterPet}
-                        />
-                    </Button>
+                        </div>
+
+                    </Grid>
+                    <Grid item xs={12} sm={4} md={4} spacing={10}>
+
+                        <Button onClick={handleClickHamster} className={selectClassHamster}>
+                            <Lottie
+                                options={hamsterPetOptions}
+                                height={150}
+                                width={150}
+                                isPaused={playLottie.hamsterPet}
+                            />
+                        </Button>
+                        <div className={classes.petFont}>
+                            <Typography variant='h6' align='center'>
+                                Hámster
+                    </Typography>
+                        </div>
+
+                    </Grid>
+
 
                 </Grid>
 
+            </div>
+        )
+    };
 
-            </Grid>
-            
-        </div>
-    )
-}
 
 

@@ -12,7 +12,7 @@ export async function saveUserLogin(userData) {
         
 
         const response = await axiosClient.post('/login', formData);
-        
+        console.log(response)
         return response
     } catch (e) {
         console.log(e)
