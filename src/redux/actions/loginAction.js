@@ -11,17 +11,15 @@ export function loginNormalAction(data) {
             const response = await saveUserLogin(data)
 
             // setTimeout(() => {
-            dispatch(loginNormalSuccess(response.data));
-            console.log(response.data)
+            dispatch(loginNormalSuccess(response.data.user.nombres));
 
             // }, 3000);
 
 
         } catch (error) {
-            const response = await saveUserLogin(data)
             dispatch(loginNormalError())
             swal.fire('Error', `Correo o Contraseña incorrectos`, 'error')
-            console.log(response.msg)
+            
             // console.log(error);
 
         }
