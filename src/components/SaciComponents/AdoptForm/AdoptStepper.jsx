@@ -7,11 +7,14 @@ import PropTypes from 'prop-types';
 import StepConnector from '@material-ui/core/StepConnector';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+// import { PetType} from '../AdoptForm/PetType';
 
 //Redux
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-
+//Redux actions
+import { reset_action } from '../../../redux/actions/petTypeAction'
 
 //components
 import PetType from './PetType'
@@ -188,6 +191,8 @@ function getStepContent(step) {
 export default function AdoptStepper() {
 
   // const { user } = useSelector(state => state.login);
+  const { petType } = useSelector(state => state.petType);
+  const dispatch = useDispatch();
   const user = true;
   const classes = useStyles();
 
@@ -227,6 +232,7 @@ export default function AdoptStepper() {
 
   const handleClickCloseModal = () => {
     setOpenModal(false);
+    dispatch(reset_action(petType));
   };
 
 
@@ -248,6 +254,15 @@ export default function AdoptStepper() {
   const theme = useTheme();
 
   const fullScreenResponsive = useMediaQuery(theme.breakpoints.down('sm'));
+
+  // const [clickPet, setClickPet] = React.useState(false);
+
+ 
+  //   if (petType == 2) {
+  //     setClickPet()
+  //   }
+  
+
 
 
   return (
@@ -337,8 +352,9 @@ export default function AdoptStepper() {
                         <Grid container justify="center">
                           <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                             Atrás
-              </Button>
+                          </Button>
                           <Button
+                            disabled={petType == 0}
                             variant="contained"
                             color="primary"
                             onClick={handleNext}
@@ -405,46 +421,6 @@ export default function AdoptStepper() {
 
         </>
       }
-
-      {/* <Dialog
-        open={openModal}
-        onClose={handleClickCloseModal}
-      >
-        <Grid container>
-          <Grid item>
-            <Tipography>Hola, si ya tienes cuenta Inicia sesión o Registrate con nosotros!</Tipography>
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              className={classes.buttonPrimary}
-              variant="contained"
-              size="large"
-              endIcon={<img src={iconSend} alt="LogIn" className={classes.icons2} />}
-              fullWidth
-              type="submit"
-            >
-              Entrar
-                        </Button>
-          </Grid>
-
-          <Link
-            to="/Register"
-            style={{ textDecoration: "none", filter: "contrast(1)" }}
-          >
-            <Grid item xs={12} spacing={3}>
-              <Button
-                variant="text"
-                size="small"
-                className={classes.buttonSecondary2}
-              >
-                ¿No tienes una cuenta? Regístrate
-                            </Button>
-            </Grid>
-          </Link>
-        </Grid>
-      </Dialog> */}
-
-
     </>
   );
 }

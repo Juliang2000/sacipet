@@ -19,6 +19,7 @@ export function loginNormalAction(data) {
             console.log(data.msg)
             swal.fire('Error', `${data.correo} o contraseña incorrectos`, 'error')
         }
+
     }
 }
 
