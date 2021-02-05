@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   makeStyles,
   Grid,
@@ -30,26 +30,53 @@ const MenuProps = {
   }
 };
 
-const names = [
-  "Moquillo",
-  "Hepatitis",
-  "Parvovirosis",
-  "Leptospirosis",
-  "Rabia",
-  "Leucemia",
-  "Rinotraqueitis",
-  "Panleucopenia",
-  "Calcivirosis",
-];
+// const names = [
+//   "Moquillo",
+//   "Hepatitis",
+//   "Parvovirosis",
+//   "Leptospirosis",
+//   "Rabia",
+//   "Leucemia",
+//   "Rinotraqueitis",
+//   "Panleucopenia",
+//   "Calcivirosis",
+// ];
 
 export default function PetDescription() {
 
   const classes = useStyles();
 
-  const [personName, setPersonName] = React.useState([]);
+  // const [personName, setPersonName] = useState([]);
+
+  // const handleChange2 = (event) => {
+  //   setPersonName(event.target.value);
+  // };
+
+
+  const [newPet, setnewPet] = useState({
+    nombre_mascota: '',
+    edad_mascota: '',
+    escala_edad: '',
+    esterilizado: '',
+    id_tamanio: '',
+    id_raza: '',
+    genero_mascota: '',
+    id_color: '',
+    id_vacuna_Rabia: false,
+    id_vacuna_Rinotraqueítis: false,
+    id_vacuna_Parvovirus: false,
+    id_vacuna_Moquillo: false,
+    id_codigo: '',
+    descripcion_mascota: ''
+  })
 
   const handleChange = (event) => {
-    setPersonName(event.target.value);
+    const { name, value } = event.target
+    setnewPet({ ...newPet, [name]: value })
+  }
+
+  const handleChange3 = (event) => {
+    setnewPet({ ...newPet, [event.target.name]: event.target.checked });
   };
 
   return (
@@ -66,6 +93,7 @@ export default function PetDescription() {
           name="nombre_mascota"
           variant="outlined"
           fullWidth
+          onChange={handleChange}
         />
       </Grid>
       <Grid item xs={2}>
@@ -75,6 +103,7 @@ export default function PetDescription() {
           name="edad_mascota"
           variant="outlined"
           fullWidth
+          onChange={handleChange}
         />
       </Grid>
       <Grid item xs={4}>
@@ -85,8 +114,8 @@ export default function PetDescription() {
             id="demo-simple-select-outlined"
             name="escala_edad"
             // value={age}
-            // onChange={handleChange}
             label="Seleccione"
+            onChange={handleChange}
           >
             <MenuItem value="">
               <em>Seleccione:</em>
@@ -106,14 +135,14 @@ export default function PetDescription() {
             id="demo-simple-select-outlined"
             name="esterilizado"
             // value={age}
-            // onChange={handleChange}
             label="Esterelización De Mascota"
+            onChange={handleChange}
           >
             <MenuItem value="" >
               <em>Seleccione:</em>
             </MenuItem>
             <MenuItem value={1}>Si</MenuItem>
-            <MenuItem value={2}>No</MenuItem>
+            <MenuItem value={0}>No</MenuItem>
           </Select>
         </FormControl>
       </Grid>
@@ -126,8 +155,8 @@ export default function PetDescription() {
             id="demo-simple-select-outlined"
             name="id_tamanio"
             // value={age}
-            // onChange={handleChange}
             label="Tamaño De Mascota"
+            onChange={handleChange}
           >
             <MenuItem value="" >
               <em>Seleccione:</em>
@@ -146,8 +175,8 @@ export default function PetDescription() {
             id="demo-simple-select-outlined"
             name="id_raza"
             // value={age}
-            // onChange={handleChange}
             label="Raza De Mascota"
+            onChange={handleChange}
           >
             <MenuItem value="">
               <em>Seleccione:</em>
@@ -160,7 +189,7 @@ export default function PetDescription() {
           </Select>
         </FormControl>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={4}>
         <FormControl variant="outlined" fullWidth>
           <InputLabel id="demo-simple-select-outlined-label">Genéro De Macota</InputLabel>
           <Select
@@ -168,8 +197,8 @@ export default function PetDescription() {
             id="demo-simple-select-outlined"
             name="genero_mascota"
             // value={age}
-            // onChange={handleChange}
             label="Genéro De Mascota"
+            onChange={handleChange}
           >
             <MenuItem value="">
               <em>Seleccione:</em>
@@ -179,25 +208,87 @@ export default function PetDescription() {
           </Select>
         </FormControl>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={4}>
+        <FormControl variant="outlined" fullWidth>
+          <InputLabel id="demo-simple-select-outlined-label">Color De Mascota</InputLabel>
+          <Select
+            labelId="demo-simple-select-outlined-label"
+            id="demo-simple-select-outlined"
+            name="id_color"
+            // value={age}
+            label="Color De Mascota"
+            onChange={handleChange}
+          >
+            <MenuItem value="">
+              <em>Seleccione:</em>
+            </MenuItem>
+            <MenuItem value={1}>Café</MenuItem>
+            <MenuItem value={2}>Negro</MenuItem>
+            <MenuItem value={3}>Gris</MenuItem>
+            <MenuItem value={4}>Blanco</MenuItem>
+          </Select>
+        </FormControl>
+      </Grid>
+      <Grid item xs={4}>
         <FormControl variant="outlined" fullWidth>
           <InputLabel id="demo-mutiple-checkbox-label">Vacunas De Mascota</InputLabel>
           <Select
             labelId="demo-mutiple-checkbox-label"
             id="demo-mutiple-checkbox"
-            multiple
-            value={personName}
-            onChange={handleChange}
+            // name="prueba_vacunas"
+            // multiple
+            // value={personName}
+            // onChange={handleChange2}
             label="Vacunas De Mascota"
-            renderValue={(selected) => selected.join(', ')}
+            // renderValue={(selected) => selected.join(', ')}
             MenuProps={MenuProps}
           >
-            {names.map((name) => (
-              <MenuItem key={name} value={name}>
-                <Checkbox color="primary" checked={personName.indexOf(name) > -1} />
-                <ListItemText primary={name} />
-              </MenuItem>
-            ))}
+            {/* {names.map((name) => ( */}
+            <MenuItem /* key={name} value={name} */>
+              <Checkbox
+                color="primary"
+                name="id_vacuna_Rabia"
+                onChange={handleChange3}
+                checked={newPet.id_vacuna_Rabia}
+                /* checked={personName.indexOf(name) > -1} */ />
+                Rabia
+              <ListItemText /* primary={name} */ />
+            </MenuItem>
+            {/* ))} */}
+
+            <MenuItem >
+              <Checkbox
+                color="primary"
+                name="id_vacuna_Rinotraqueítis"
+                onChange={handleChange3}
+                checked={newPet.id_vacuna_Rinotraqueítis}
+              />
+                Rinotraqueítis
+              <ListItemText />
+            </MenuItem>
+
+            <MenuItem >
+              <Checkbox
+                color="primary"
+                name="id_vacuna_Parvovirus"
+                onChange={handleChange3}
+                checked={newPet.id_vacuna_Parvovirus}
+              />
+                Parvovirus
+              <ListItemText />
+            </MenuItem>
+
+            <MenuItem >
+              <Checkbox
+                color="primary"
+                name="id_vacuna_Moquillo"
+                onChange={handleChange3}
+                checked={newPet.id_vacuna_Moquillo}
+              />
+                Moquillo
+              <ListItemText />
+            </MenuItem>
+
           </Select>
         </FormControl>
       </Grid>
@@ -207,9 +298,10 @@ export default function PetDescription() {
           <Select
             labelId="demo-simple-select-outlined-label"
             id="demo-simple-select-outlined"
+            name="id_codigo"
             // value={age}
-            // onChange={handleChange}
             label="Departamento De Mascota"
+            onChange={handleChange}
           >
             <MenuItem value="">
               <em>Seleccione:</em>
@@ -227,8 +319,8 @@ export default function PetDescription() {
             labelId="demo-simple-select-outlined-label"
             id="demo-simple-select-outlined"
             // value={age}
-            // onChange={handleChange}
             label="Capital De Mascota"
+            onChange={handleChange}
           >
             <MenuItem value="">
               <em>Seleccione:</em>
@@ -243,9 +335,11 @@ export default function PetDescription() {
         <TextField
           fullWidth
           variant="outlined"
+          name="descripcion_mascota"
           placeholder="Descripción De Mascota"
           multiline
           rows={4}
+          onChange={handleChange}
         />
       </Grid>
     </Grid>
