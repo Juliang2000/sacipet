@@ -1,28 +1,39 @@
-// import { saveUserLogin } from "../../configAxios/Login";
-// import { INICIAR_SESION_ERROR, INICIAR_SESION_EXITO, INICIAR_SESION_START } from "../types";
-// import swal from 'sweetalert2';
+import { GET_PET_SIZE, SAVE_PET_FORM_ACTION } from "../types";
+import { getPetSize, petFormAdoption } from "../../configAxios/petFormAdoption"
 
-// // Get Data to localStorage
-// export function saveAdoptForm(data) {
-//     return async (dispatch) => {
-//         dispatch(loginNormalStart())
+// parámetros de tamaño de mascotas que se van a solicitar en la función sizepetData
+export function sizePetData(petData) {
+    return async (dispatch) => {
 
-//         try {
-//             const response = await saveAdoptForm(petType)
-            
-//             // setTimeout(() => {
-//                 // dispatch(loginNormalSuccess(response.data.user.nombres));
-//             // }, 3000);
-           
+        // dispatch(loginNormalStart())
+// try para obtener datos de getSizePet duncion del cliente de axios por metodo get
+        try {
+            const response = await getPetSize(petData)
+            const responseForm = await petFormAdoption()
+            // console.log(response)
 
-//         } catch (error) {
-//             dispatch(loginNormalError(error))
-//             swal.fire('Error', `Correo o Contraseña incorrectos`, 'error')
-//         }
-//     }
-// }
+            // setTimeout(() => {
 
-// const saveAdoptForm = () => ({
-//     type: ADOPTFORM_PET_SELECTED
-// });
+            // dispatch que trae los datos del api de tamaños, repuesta de axios
+            // dispatch(put_pet_size_data(response));
+            // console.log(response)
+            // }, 3000);
+
+
+            } catch (error) {
+
+            }
+        }
+
+    }
+
+export const get_size_pet_data = (petSize) => ({
+    type: GET_PET_SIZE,
+    payload: petSize
+});
+
+export const save_pet_form_action = (petForm) => ({
+    type: SAVE_PET_FORM_ACTION,
+    payload: petForm
+});
 
