@@ -133,7 +133,7 @@ export default function SectionDesktop() {
                             onClick={handleClick}
                             startIcon={<img src={petUser} alt="Login" style={{ width: '30px' }} />}
                         >
-                            {`${user.nombres}`}
+                            {`${user}`}
 
 
                         </Button>

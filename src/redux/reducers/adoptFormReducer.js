@@ -1,21 +1,28 @@
-// import { ADOPTFORM_PET_SELECTED } from "../types"
+import { GET_PET_SIZE, SAVE_PET_FORM_ACTION } from "../types"
 
-// const initialState = {
-//     petType: '',
+const initialState = {
+    petSize: false,
+    petForm: false
 
-// }
+}
 
-// export default (state = initialState, action) => {
-//     switch (action.type) {
+export default (state = initialState, action) => {
+    switch (action.type) {
 
-//         case ADOPTFORM_PET_SELECTED:
-//             return {
-//                 ...state,
-//                 petType: action.payload,
+        case GET_PET_SIZE:
+            return {
+                ...state,
+                petSize: true
 
-//             }
+            }
+        case SAVE_PET_FORM_ACTION:
+            return {
+                ...state,
+                petForm: true
+
+            }
 
 
-//         default: return state
-//     }
-// }
+        default: return state
+    }
+}
