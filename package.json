@@ -2,6 +2,7 @@
   "name": "veterinaria-app",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://190.24.252.100.2000",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",

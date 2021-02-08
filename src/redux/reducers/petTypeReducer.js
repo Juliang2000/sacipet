@@ -9,13 +9,13 @@ const petType = (state = default_petType, action) => {
         case DOG_ACTION: {
             return {
                 ...state,
-                petType: 1,
+                petType: 2,
             }
         }
         case CAT_ACTION: {
             return {
                 ...state,
-                petType: 2,
+                petType: 1,
             }
         }
         case HAMSTER_ACTION: {

@@ -1,39 +1,40 @@
-import { GET_PET_SIZE, SAVE_PET_FORM_ACTION } from "../types";
-import { getPetSize, petFormAdoption } from "../../configAxios/petFormAdoption"
+import { SMALL_SIZE_PET_ACTION, MEDIUM_SIZE_PET_ACTION, BIG_SIZE_PET_ACTION, GET_PET_SIZE_DATA } from "../types";
+import { getPetSize } from "../../configAxios/getPetSize"
 
 // parámetros de tamaño de mascotas que se van a solicitar en la función sizepetData
 export function sizePetData(petData) {
     return async (dispatch) => {
 
         // dispatch(loginNormalStart())
-// try para obtener datos de getSizePet duncion del cliente de axios por metodo get
+        // try para obtener datos de getSizePet duncion del cliente de axios por metodo get
         try {
             const response = await getPetSize(petData)
-            const responseForm = await petFormAdoption()
-            // console.log(response)
+            return response
+        } catch (error) {
 
-            // setTimeout(() => {
-
-            // dispatch que trae los datos del api de tamaños, repuesta de axios
-            // dispatch(put_pet_size_data(response));
-            // console.log(response)
-            // }, 3000);
-
-
-            } catch (error) {
-
-            }
         }
-
     }
 
-export const get_size_pet_data = (petSize) => ({
-    type: GET_PET_SIZE,
+}
+
+export const get_size_pet_data = (petSizeData) => ({
+    type: GET_PET_SIZE_DATA,
+    payload: petSizeData
+});
+
+export const small_size_action = (petSize) => ({
+    type: SMALL_SIZE_PET_ACTION,
     payload: petSize
 });
 
-export const save_pet_form_action = (petForm) => ({
-    type: SAVE_PET_FORM_ACTION,
-    payload: petForm
+export const medium_size_action = (petSize) => ({
+    type: MEDIUM_SIZE_PET_ACTION,
+    payload: petSize
 });
+
+export const big_size_action = (petSize) => ({
+    type: BIG_SIZE_PET_ACTION,
+    payload: petSize
+});
+
 

@@ -21,6 +21,7 @@ import { useForm } from "react-hook-form";
 
 // Dispach Redux
 import { useDispatch, useSelector } from 'react-redux';
+import { big_size_action, medium_size_action, small_size_action, sizePetData } from '../../../redux/actions/adoptFormAction';
 
 const useStyles = makeStyles((theme) => ({
   formPetDescription: {
@@ -100,11 +101,37 @@ export default function PetDescription() {
   // redux implementation
   // const { user, loader } = useSelector(state => state.login);
   // const { correo } = useSelector( state => state.login)
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const history = useHistory();
 
 
   // redux Actions
+
+  const { petSize } = useSelector(state => state.petSize);
+  const { petType } = useSelector(state => state.petType);
+
+  const petData = ({
+    id_tipo_mascota: petType,
+    id_tamanio: petSize,
+  });
+
+  //Save PetSize selected on local Storage
+  const saveSmallSize = async () => {
+    dispatch(small_size_action());
+    sendPetData();
+  };
+  const saveMediumSize = async () => {
+    dispatch(medium_size_action());
+    sendPetData();
+  };
+  const saveBigSize = async () => {
+    dispatch(big_size_action());
+    sendPetData();
+  };
+
+  const sendPetData = async () => {
+    dispatch(sizePetData(petData));
+  };
   // const _handleSubmit = async (data) => {
   //   dispatch(savePetFormAction(data));
   // };
@@ -192,9 +219,9 @@ export default function PetDescription() {
               <MenuItem value="" >
                 <em>Seleccione:</em>
               </MenuItem>
-              <MenuItem value={1}>Grande</MenuItem>
-              <MenuItem value={2}>Mediano</MenuItem>
-              <MenuItem value={3}>Pequeño</MenuItem>
+              <MenuItem value={1} onClick={saveBigSize}>Grande</MenuItem>
+              <MenuItem value={2} onClick={saveMediumSize}>Mediano</MenuItem>
+              <MenuItem value={3} onClick={saveSmallSize}>Pequeño</MenuItem>
             </Select>
           </FormControl>
         </Grid>

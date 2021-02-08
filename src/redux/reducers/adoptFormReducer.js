@@ -1,24 +1,36 @@
-import { GET_PET_SIZE, SAVE_PET_FORM_ACTION } from "../types"
+import { GET_PET_SIZE_DATA, SMALL_SIZE_PET_ACTION, MEDIUM_SIZE_PET_ACTION, BIG_SIZE_PET_ACTION } from "../types"
 
 const initialState = {
-    petSize: false,
-    petForm: false
+    petSize: 0,
+    petSizeData: 0  
 
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
 
-        case GET_PET_SIZE:
+        case GET_PET_SIZE_DATA:
             return {
                 ...state,
-                petSize: true
+                petSizeData: true
 
             }
-        case SAVE_PET_FORM_ACTION:
+        case SMALL_SIZE_PET_ACTION:
             return {
                 ...state,
-                petForm: true
+                petSize: 1,
+
+            }
+        case MEDIUM_SIZE_PET_ACTION:
+            return {
+                ...state,
+                petSize: 2,
+
+            }
+        case BIG_SIZE_PET_ACTION:
+            return {
+                ...state,
+                petSize: 3,
 
             }
 
