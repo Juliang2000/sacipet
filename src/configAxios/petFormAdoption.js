@@ -9,7 +9,7 @@ export async function petFormAdoption(formAdoptionData) {
         
 
         const response = await axiosClient.post('/mascotas', formAdoptionData);
-        console.log(response)
+
         return response
     } catch (e) {
         console.log(e)

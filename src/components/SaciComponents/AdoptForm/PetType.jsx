@@ -116,17 +116,13 @@ export default function PetType() {
 
     // const petTypeData = handleClickDog;
     
-    const petData =  ({
-        id_tipo_mascota: 1,
-        id_tamanio: 2,
-      });
+
 
     const handleClickDog = () => {
         setClassSelectDog(classes.cards2);
         setClassSelectCat(classes.cards);
         setClassSelectHamster(classes.cards);
         dispatch(dog_action(petType));
-        dispatch(sizePetData(petData));
         console.log()
 
         // setPet({...pet})
