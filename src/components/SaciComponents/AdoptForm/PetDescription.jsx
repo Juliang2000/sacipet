@@ -30,30 +30,31 @@ const MenuProps = {
   }
 };
 
-// const names = [
-//   "Moquillo",
-//   "Hepatitis",
-//   "Parvovirosis",
-//   "Leptospirosis",
-//   "Rabia",
-//   "Leucemia",
-//   "Rinotraqueitis",
-//   "Panleucopenia",
-//   "Calcivirosis",
-// ];
+const names = [
+  "Moquillo",
+  "Hepatitis",
+  "Parvovirosis",
+  "Leptospirosis",
+  "Rabia",
+  "Leucemia",
+  "Rinotraqueitis",
+  "Panleucopenia",
+  "Calcivirosis",
+];
 
 export default function PetDescription() {
 
   const classes = useStyles();
 
-  // const [personName, setPersonName] = useState([]);
+  const [personName, setPersonName] = useState([]);
 
-  // const handleChange2 = (event) => {
-  //   setPersonName(event.target.value);
-  // };
+  const handleChange2 = (event) => {
+    setnewPet(event.target.value);
+  };
 
 
   const [newPet, setnewPet] = useState({
+    "names": [],
     nombre_mascota: '',
     edad_mascota: '',
     escala_edad: '',
@@ -62,10 +63,7 @@ export default function PetDescription() {
     id_raza: '',
     genero_mascota: '',
     id_color: '',
-    id_vacuna_Rabia: false,
-    id_vacuna_Rinotraqueítis: false,
-    id_vacuna_Parvovirus: false,
-    id_vacuna_Moquillo: false,
+    prueba_vacunas: '',
     id_codigo: '',
     descripcion_mascota: ''
   })
@@ -74,10 +72,6 @@ export default function PetDescription() {
     const { name, value } = event.target
     setnewPet({ ...newPet, [name]: value })
   }
-
-  const handleChange3 = (event) => {
-    setnewPet({ ...newPet, [event.target.name]: event.target.checked });
-  };
 
   return (
     <Grid container spacing={2} className={classes.formPetDescription}>
@@ -142,7 +136,7 @@ export default function PetDescription() {
               <em>Seleccione:</em>
             </MenuItem>
             <MenuItem value={1}>Si</MenuItem>
-            <MenuItem value={0}>No</MenuItem>
+            <MenuItem value={2}>No</MenuItem>
           </Select>
         </FormControl>
       </Grid>
@@ -203,8 +197,8 @@ export default function PetDescription() {
             <MenuItem value="">
               <em>Seleccione:</em>
             </MenuItem>
-            <MenuItem value={1}>Macho</MenuItem>
-            <MenuItem value={2}>Hembra</MenuItem>
+            <MenuItem value={"Macho"}>Macho</MenuItem>
+            <MenuItem value={"Hembra"}>Hembra</MenuItem>
           </Select>
         </FormControl>
       </Grid>
@@ -235,60 +229,20 @@ export default function PetDescription() {
           <Select
             labelId="demo-mutiple-checkbox-label"
             id="demo-mutiple-checkbox"
-            // name="prueba_vacunas"
-            // multiple
-            // value={personName}
-            // onChange={handleChange2}
+            name="prueba_vacunas"
+            multiple
+            value={newPet}
+            onChange={handleChange2}
             label="Vacunas De Mascota"
-            // renderValue={(selected) => selected.join(', ')}
+            renderValue={(selected) => selected.join(', ')}
             MenuProps={MenuProps}
           >
-            {/* {names.map((name) => ( */}
-            <MenuItem /* key={name} value={name} */>
-              <Checkbox
-                color="primary"
-                name="id_vacuna_Rabia"
-                onChange={handleChange3}
-                checked={newPet.id_vacuna_Rabia}
-                /* checked={personName.indexOf(name) > -1} */ />
-                Rabia
-              <ListItemText /* primary={name} */ />
-            </MenuItem>
-            {/* ))} */}
-
-            <MenuItem >
-              <Checkbox
-                color="primary"
-                name="id_vacuna_Rinotraqueítis"
-                onChange={handleChange3}
-                checked={newPet.id_vacuna_Rinotraqueítis}
-              />
-                Rinotraqueítis
-              <ListItemText />
-            </MenuItem>
-
-            <MenuItem >
-              <Checkbox
-                color="primary"
-                name="id_vacuna_Parvovirus"
-                onChange={handleChange3}
-                checked={newPet.id_vacuna_Parvovirus}
-              />
-                Parvovirus
-              <ListItemText />
-            </MenuItem>
-
-            <MenuItem >
-              <Checkbox
-                color="primary"
-                name="id_vacuna_Moquillo"
-                onChange={handleChange3}
-                checked={newPet.id_vacuna_Moquillo}
-              />
-                Moquillo
-              <ListItemText />
-            </MenuItem>
-
+            {names.map((name) => (
+              <MenuItem key={name} value={name}>
+                <Checkbox color="primary" checked={newPet.indexOf(name) > -1} />
+                <ListItemText primary={name} />
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </Grid>
