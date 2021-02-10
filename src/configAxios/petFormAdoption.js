@@ -49,6 +49,7 @@ export async function getPetSize(petData) {
         const response = await axiosClient.post('/razasTipoTamano', petData)
         console.log(response)
         return response
+        
     } catch (e) {
         console.log(e)
     }
