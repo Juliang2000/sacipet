@@ -5,6 +5,7 @@ import registerReducer from './registerReducer';
 import petTypeReducer from './petTypeReducer';
 import adoptFormReducer from "./adoptFormReducer";
 import petSizeReducer from "./petSizeReducer";
+import getHamsterRaceReducer from "./getHamsterRaceReducer";
 
 export default combineReducers({
     main: mainReducer,
@@ -12,8 +13,8 @@ export default combineReducers({
     register: registerReducer,
     petType: petTypeReducer,
     petSize: petSizeReducer,
-    adoptForm: adoptFormReducer,
-    activeStepState: adoptFormReducer,
     raceData: petSizeReducer,
+    hamsterRaceData: getHamsterRaceReducer,
+    adoptFormData: adoptFormReducer,
 
 })
