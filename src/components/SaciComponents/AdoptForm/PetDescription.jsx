@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+import { getPetSize } from '../../../configAxios/getPetSize';
 
 import {
   makeStyles,
@@ -21,7 +23,8 @@ import { useForm } from "react-hook-form";
 
 // Dispach Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { big_size_action, medium_size_action, small_size_action, sizePetData } from '../../../redux/actions/adoptFormAction';
+import { big_size_action, medium_size_action, small_size_action, get_pet_size_data } from '../../../redux/actions/petSizeAction';
+import { responsesAreSame } from 'workbox-broadcast-update';
 
 const useStyles = makeStyles((theme) => ({
   formPetDescription: {
@@ -41,27 +44,21 @@ const MenuProps = {
   }
 };
 
-// const names = [
-//   "Moquillo",
-//   "Hepatitis",
-//   "Parvovirosis",
-//   "Leptospirosis",
-//   "Rabia",
-//   "Leucemia",
-//   "Rinotraqueitis",
-//   "Panleucopenia",
-//   "Calcivirosis",
-// ];
+const names = [
+  "Moquillo",
+  "Hepatitis",
+  "Parvovirosis",
+  "Leptospirosis",
+  "Rabia",
+  "Leucemia",
+  "Rinotraqueitis",
+  "Panleucopenia",
+  "Calcivirosis",
+];
 
 export default function PetDescription() {
 
   const classes = useStyles();
-
-  // const [personName, setPersonName] = useState([]);
-
-  // const handleChange2 = (event) => {
-  //   setPersonName(event.target.value);
-  // };
 
   // Validation Form Login
   const { handleSubmit } = useForm();
@@ -93,51 +90,58 @@ export default function PetDescription() {
   };
 
   const onSubmit = (data, e) => {
-    // _handleSubmit({ ...newPet })
     console.log(newPet)
     e.target.reset();
   };
 
-  // redux implementation
-  // const { user, loader } = useSelector(state => state.login);
-  // const { correo } = useSelector( state => state.login)
-  const dispatch = useDispatch();
-  // const history = useHistory();
-
-
   // redux Actions
-
-  const { petSize } = useSelector(state => state.petSize);
+  const dispatch = useDispatch();
   const { petType } = useSelector(state => state.petType);
+  const  raceData  = useSelector(store => store.raceData.raceData);
+  console.log(raceData);
+  const { activeStepState } = useSelector(state => state.activeStepState);
 
-  const petData = ({
+
+  const [petData, setPetData] = useState({
     id_tipo_mascota: petType,
-    id_tamanio: petSize,
+    id_tamanio: '',
   });
 
+  const petSizeChange = (event) => {
+    const { name, value } = event.target
+    setPetData({ ...petData, [name]: value })
+  }
+  const [sendPetData, setSendPetData] = useState(false);
+
   //Save PetSize selected on local Storage
-  const saveSmallSize = async () => {
+  const saveSmallSize = () => {
     dispatch(small_size_action());
-    sendPetData();
-  };
-  const saveMediumSize = async () => {
-    dispatch(medium_size_action());
-    sendPetData();
-  };
-  const saveBigSize = async () => {
-    dispatch(big_size_action());
-    sendPetData();
+    setSendPetData(true);
   };
 
-  const sendPetData = async () => {
-    dispatch(sizePetData(petData));
+  const saveMediumSize = () => {
+    dispatch(medium_size_action());
+    setSendPetData(true);
+
   };
-  // const _handleSubmit = async (data) => {
-  //   dispatch(savePetFormAction(data));
-  // };
+  const saveBigSize = () => {
+    dispatch(big_size_action());
+    setSendPetData(true);
+  };
+
+  if (sendPetData == true) {
+    if (petData.id_tamanio.length !== 0) {
+
+      (dispatch(get_pet_size_data(petData)))
+      console.log(petData)
+
+      setSendPetData(false);
+    }
+    setSendPetData(false);
+  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form>
       <Grid container spacing={2} className={classes.formPetDescription}>
         <Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
@@ -214,9 +218,9 @@ export default function PetDescription() {
               name="id_tamanio"
               // value={age}
               label="Tamaño De Mascota"
-              onChange={handleChange}
+              onChange={petSizeChange}
             >
-              <MenuItem value="" >
+              <MenuItem>
                 <em>Seleccione:</em>
               </MenuItem>
               <MenuItem value={1} onClick={saveBigSize}>Grande</MenuItem>
@@ -236,14 +240,20 @@ export default function PetDescription() {
               label="Raza De Mascota"
               onChange={handleChange}
             >
-              <MenuItem value="">
+              <MenuItem>
                 <em>Seleccione:</em>
               </MenuItem>
-              <MenuItem value={1}>Pastor Alemán</MenuItem>
-              <MenuItem value={2}>Rottweiler</MenuItem>
-              <MenuItem value={3}>Doberman</MenuItem>
-              <MenuItem value={4}>Schnauzer</MenuItem>
-              <MenuItem value={5}>Akita Inu</MenuItem>
+
+              {
+                raceData.map(item => (
+                  // <li key={item.nombre_raza}>{item.nombre_raza}</li>
+                  <MenuItem key={item.nombre_raza} value={item.id_raza}>
+                    {item.nombre_raza}
+                  </MenuItem>
+                ))
+              }
+
+
             </Select>
           </FormControl>
         </Grid>

@@ -7,10 +7,6 @@ import axiosClient from './axios';
 
 export async function getPetSize(petData) {
 
-    
-    console.log(petData)
-
-
     try {
         console.log()
         const response = await axiosClient.post('/razasTipoTamano', petData)
