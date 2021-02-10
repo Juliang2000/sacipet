@@ -1,7 +1,7 @@
-import { INICIAR_SESION_ERROR, INICIAR_SESION_EXITO, INICIAR_SESION_START } from "../types"
+import { SAVE_PET_START, SAVE_PET_SUCCESS, SAVE_PET_ERROR } from "../types";
 
 const initialState = {
-    user: '',
+    pet: '',
     loader: false,
     error: false,
     errorMessage: '',
@@ -12,7 +12,7 @@ export default (state = initialState, action) => {
 
     switch (action.type) {
 
-        case INICIAR_SESION_START:
+        case SAVE_PET_START:
 
             return {
                 ...state,
@@ -20,25 +20,25 @@ export default (state = initialState, action) => {
                 msg: '',
             }
 
-        case INICIAR_SESION_EXITO:
+        case SAVE_PET_SUCCESS:
 
             return {
                 ...state,
                 loader: false,
                 error: false,
                 errorMessage: '',
-                user: action.payload,
+                pet: action.payload,
                 msg: action.payload
             }
 
-        case INICIAR_SESION_ERROR:
+        case SAVE_PET_ERROR:
 
             return {
                 ...state,
                 loader: false,
                 error: true,
                 errorMessage: action.payload.error,
-                user: '',
+                pet: '',
                 ok: false,
             }
 

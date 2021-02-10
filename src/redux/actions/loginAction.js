@@ -12,6 +12,7 @@ export function loginNormalAction(data) {
 
             // setTimeout(() => {
             dispatch(loginNormalSuccess(response.data.user.nombres));
+            dispatch(loginNormalSuccess(response.data.user.id));
             // }, 3000);
 
         } catch (error) {

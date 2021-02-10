@@ -13,3 +13,8 @@ export const GET_PET_SIZE = 'GET_PET_SIZE'
 
 //Save Pet Form
 export const SAVE_PET_FORM_ACTION = 'GET_PET_FORM_ACTION'
+
+// Save Pet Form Adoption
+export const SAVE_PET_START = 'SAVE_PET_START'
+export const SAVE_PET_SUCCESS = 'SAVE_PET_SUCCESS'
+export const SAVE_PET_ERROR = 'SAVE_PET_ERROR'

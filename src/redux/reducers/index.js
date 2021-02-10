@@ -4,6 +4,7 @@ import loginReducer from './loginReducer';
 import registerReducer from './registerReducer';
 import petTypeReducer from './petTypeReducer';
 import adoptFormReducer from "./adoptFormReducer";
+import adoptFormReducer2 from './adoptFormReducer2';
 
 export default combineReducers({
     main: mainReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
     register: registerReducer,
     petType: petTypeReducer,
     petSize: adoptFormReducer,
+    petForm: adoptFormReducer2,
 })
