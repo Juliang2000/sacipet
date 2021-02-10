@@ -193,7 +193,7 @@ export default function AdoptStepper() {
 
   // const { user } = useSelector(state => state.login);
   const { petType } = useSelector(state => state.petType);
-  const { activeStepState } = useSelector(state => state.activeStepState);
+  const { activeStepState } = useSelector(state => state.adoptFormData.activeStepState);
   const dispatch = useDispatch();
   const user = true;
   const classes = useStyles();
@@ -243,7 +243,8 @@ export default function AdoptStepper() {
 
 
   const handleNext = () => {
-    dispatch(next_step_action()) 
+    dispatch(next_step_action())
+     
       setTimeout(() => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }, 500);
@@ -270,6 +271,8 @@ export default function AdoptStepper() {
   //   if (petType == 2) {
   //     setClickPet()
   //   }
+
+  
 
 
 
