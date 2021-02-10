@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import {
   makeStyles,
@@ -10,19 +10,19 @@ import {
   MenuItem,
   Checkbox,
   ListItemText,
-  Typography
+  Typography,
+  Button
 } from '@material-ui/core';
 
 // Form Validation
 import { useForm } from "react-hook-form";
 
 // redux Actions
-// import { savePetFormAction } from '../redux/actions/adoptFormAdoption';
+import { savePetFormAction } from '../../../redux/actions/adoptFormAction2';
 
 // Dispach Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { big_size_action, medium_size_action, small_size_action, get_pet_size_data } from '../../../redux/actions/petSizeAction';
-import { responsesAreSame } from 'workbox-broadcast-update';
 import { get_hamster_race_action } from '../../../redux/actions/getHamsterRaceAction';
 import { get_department_data_action } from '../../../redux/actions/adoptFormAction';
 
@@ -44,108 +44,98 @@ const MenuProps = {
   }
 };
 
-const names = [
-  "Moquillo",
-  "Hepatitis",
-  "Parvovirosis",
-  "Leptospirosis",
-  "Rabia",
-  "Leucemia",
-  "Rinotraqueitis",
-  "Panleucopenia",
-  "Calcivirosis",
-];
-
 export default function PetDescription() {
 
   ///////////////////////INSERTS
   const raceData = useSelector(store => store.raceData.raceData);
   const hamsterRaceData = useSelector(store => store.hamsterRaceData.hamsterRaceData);
   const hamster = useSelector(state => state.petType.hamster);
-  const dog = useSelector(state => state.petType.dog);
-  const cat = useSelector(state => state.petType.cat);
   const activeStepState = useSelector(state => state.adoptFormData.activeStepState);
   const departmentData = useSelector(state => state.adoptFormData.departments);
 
-   // redux Actions
-   const dispatch = useDispatch();
-   const { petType } = useSelector(store => store.petType);
-   const [sendHamsterData, setSendHamsterData] = useState(true);
-   const [racesContent, setRacesContent] = useState(false);
-   const [getData, setGetData] = useState(true);
- 
-   if (activeStepState == 2) {
-     if (getData == true) {
-       dispatch(get_department_data_action());
-       setGetData(false);
-     }
-   }
- 
-   const [petData, setPetData] = useState({
-     id_tipo_mascota: petType,
-     id_tamanio: '',
-   });
- 
-   const [hamsterData, setHamsterData] = useState({
-     id_tipo_mascota: petType,
-   });
- 
-   // const [sendDepartment, setSendDeparment] = useState({
-   //   id_unde: id_codigo
-   // });
-   // console.log(id_codigo)
- 
-   const petSizeChange = (event) => {
-     const { name, value } = event.target
-     setPetData({ ...petData, [name]: value })
-   }
-   const [sendPetData, setSendPetData] = useState(false);
- 
-   //Save PetSize selected on local Storage
-   const saveSmallSize = () => {
-     dispatch(small_size_action());
-     setSendPetData(true);
-     setRacesContent(true);
-   };
- 
-   const saveMediumSize = () => {
-     dispatch(medium_size_action());
-     setSendPetData(true);
-     setRacesContent(true);
- 
-   };
-   const saveBigSize = () => {
-     dispatch(big_size_action());
-     setSendPetData(true);
-     setRacesContent(true);
-   };
- 
-   if (sendPetData == true) {
- 
-     if (petData.id_tamanio.length !== 0) {
-       (dispatch(get_pet_size_data(petData)))
-       console.log(petData)
-       setSendPetData(false);
-     }
-     setSendPetData(false);
-   };
- 
- 
-   if (sendHamsterData == true) {
-     if (hamster == true) {
-       (dispatch(get_hamster_race_action(hamsterData)));
-       setRacesContent(true);
-     }
-     setSendHamsterData(false);
-   }
-//////////////////////////////////////////////////
+  // redux Actions
+  const dispatch = useDispatch();
+  const { petType } = useSelector(store => store.petType);
+  const [sendHamsterData, setSendHamsterData] = useState(true);
+  const [racesContent, setRacesContent] = useState(false);
+  const [getData, setGetData] = useState(true);
+
+  if (activeStepState === 2) {
+    if (getData === true) {
+      dispatch(get_department_data_action());
+      setGetData(false);
+    }
+  }
+
+  const [petData, setPetData] = useState({
+    id_tipo_mascota: petType,
+    id_tamanio: '',
+  });
+
+  const [hamsterData, setHamsterData] = useState({
+    id_tipo_mascota: petType,
+  });
+
+  // const [sendDepartment, setSendDeparment] = useState({
+  //   id_unde: id_codigo
+  // });
+  // console.log(id_codigo)
+
+  const petSizeChange = (event) => {
+    const { name, value } = event.target
+    setPetData({ ...petData, [name]: value })
+    setnewPet({ ...newPet, [name]: value })
+  }
+  const [sendPetData, setSendPetData] = useState(false);
+
+  //Save PetSize selected on local Storage
+  const saveSmallSize = () => {
+    dispatch(small_size_action());
+    setSendPetData(true);
+    setRacesContent(true);
+  };
+
+  const saveMediumSize = () => {
+    dispatch(medium_size_action());
+    setSendPetData(true);
+    setRacesContent(true);
+
+  };
+  const saveBigSize = () => {
+    dispatch(big_size_action());
+    setSendPetData(true);
+    setRacesContent(true);
+  };
+
+  if (sendPetData === true) {
+
+    if (petData.id_tamanio.length !== 0) {
+      (dispatch(get_pet_size_data(petData)))
+      console.log(petData)
+      setSendPetData(false);
+    }
+    setSendPetData(false);
+  };
+
+
+  if (sendHamsterData === true) {
+    if (hamster === true) {
+      (dispatch(get_hamster_race_action(hamsterData)));
+      setRacesContent(true);
+    }
+    setSendHamsterData(false);
+  }
+  //////////////////////////////////////////////////
 
   const classes = useStyles();
 
-  // Validation Form Login
   const { handleSubmit } = useForm();
 
+  const { user } = useSelector(state => state.login);
+
   const [newPet, setnewPet] = useState({
+    id_usuario: user,
+    tipo_tramite: 1,
     nombre_mascota: '',
     edad_mascota: '',
     escala_edad: '',
@@ -172,12 +162,15 @@ export default function PetDescription() {
   };
 
   const onSubmit = (data, e) => {
-    _handleSubmit({...newPet})
+    _handleSubmit({ ...newPet })
     console.log(newPet)
-    e.target.reset();
+    // e.target.reset();
   };
 
- 
+  // redux Actions
+  const _handleSubmit = async (data) => {
+    dispatch(savePetFormAction(data));
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -258,7 +251,7 @@ export default function PetDescription() {
               // value={age}
               label="Tamaño De Mascota"
               onChange={petSizeChange}
-              disabled={hamster == true}
+              disabled={hamster === true}
             >
               <MenuItem>
                 <em>Seleccione:</em>
@@ -271,7 +264,7 @@ export default function PetDescription() {
         </Grid>
         <Grid item xs={4}>
           <FormControl variant="outlined" fullWidth>
-            <InputLabel id="demo-simple-select-outlined-label">Raza</InputLabel>
+            <InputLabel id="demo-simple-select-outlined-label">Raza De Mascota</InputLabel>
             <Select
               labelId="demo-simple-select-outlined-label"
               id="demo-simple-select-outlined"
@@ -279,7 +272,7 @@ export default function PetDescription() {
               // value={age}
               label="Raza De Mascota"
               onChange={handleChange}
-              disabled={racesContent == false}
+              disabled={racesContent === false}
             >
               <MenuItem>
                 <em>Seleccione:</em>
@@ -458,6 +451,9 @@ export default function PetDescription() {
             onChange={handleChange}
           />
         </Grid>
+        <Button variant="text" color="default" type="submit">
+          Enviar
+        </Button>
       </Grid>
     </form>
   )

@@ -191,11 +191,11 @@ function getStepContent(step) {
 
 export default function AdoptStepper() {
 
-  // const { user } = useSelector(state => state.login);
+  const { user } = useSelector(state => state.login);
   const { petType } = useSelector(state => state.petType);
   const { activeStepState } = useSelector(state => state.adoptFormData.activeStepState);
   const dispatch = useDispatch();
-  const user = true;
+  // const user = true;
   const classes = useStyles();
 
   // const [skipped, setSkipped] = React.useState(new Set());
@@ -244,12 +244,12 @@ export default function AdoptStepper() {
 
   const handleNext = () => {
     dispatch(next_step_action())
-     
-      setTimeout(() => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      }, 500);
- 
-    }
+
+    setTimeout(() => {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }, 500);
+
+  }
 
 
   const handleBack = () => {
@@ -272,7 +272,7 @@ export default function AdoptStepper() {
   //     setClickPet()
   //   }
 
-  
+
 
 
 
@@ -357,26 +357,26 @@ export default function AdoptStepper() {
                     </Grid>
                   </div>
                 ) : (
+                  <div>
+                    <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
                     <div>
-                      <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-                      <div>
-                        <Grid container justify="center">
-                          <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                            Atrás
+                      <Grid container justify="center">
+                        <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                          Atrás
                           </Button>
-                          <Button
-                            disabled={petType == 0}
-                            variant="contained"
-                            color="primary"
-                            onClick={handleNext}
-                            className={classes.button}
-                          >
-                            {activeStep === steps.length - 1 ? 'Siguiente' : 'Siguiente'}
-                          </Button>
-                        </Grid>
-                      </div>
+                        <Button
+                          disabled={petType == 0}
+                          variant="contained"
+                          color="primary"
+                          onClick={handleNext}
+                          className={classes.button}
+                        >
+                          {activeStep === steps.length - 1 ? 'Siguiente' : 'Siguiente'}
+                        </Button>
+                      </Grid>
                     </div>
-                  )}
+                  </div>
+                )}
               </div>
             </div>
           </Dialog>
