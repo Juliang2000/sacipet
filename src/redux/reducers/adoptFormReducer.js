@@ -1,28 +1,36 @@
-import { GET_PET_SIZE, SAVE_PET_FORM_ACTION } from "../types"
+import { NEXT_STEP_ACTION, BACK_STEP_ACTION, GET_DEPARTMENT_DATA } from "../types"
 
 const initialState = {
-    petSize: false,
-    petForm: false
+    activeStepState: 1,
+    departments: []
 
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
 
-        case GET_PET_SIZE:
+        case NEXT_STEP_ACTION:
             return {
                 ...state,
-                petSize: true
+                activeStepState: state.activeStepState + 1
 
             }
-        case SAVE_PET_FORM_ACTION:
+        case BACK_STEP_ACTION:
             return {
                 ...state,
-                petForm: true
+                activeStepState: state.activeStepState - 1
 
             }
+        case GET_DEPARTMENT_DATA:
+            return {
+                ...state,
+                departments: action.payload
 
 
+            }
+            
         default: return state
+
     }
+
 }

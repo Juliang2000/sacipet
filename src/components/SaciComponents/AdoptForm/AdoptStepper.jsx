@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux';
 
 //Redux actions
 import { reset_action } from '../../../redux/actions/petTypeAction'
+import { next_step_action, back_step_action, sizePetData } from '../../../redux/actions/adoptFormAction'
 
 //components
 import PetType from './PetType'
@@ -192,6 +193,7 @@ export default function AdoptStepper() {
 
   // const { user } = useSelector(state => state.login);
   const { petType } = useSelector(state => state.petType);
+  const { activeStepState } = useSelector(state => state.adoptFormData.activeStepState);
   const dispatch = useDispatch();
   const user = true;
   const classes = useStyles();
@@ -239,12 +241,20 @@ export default function AdoptStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
 
+
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
+    dispatch(next_step_action())
+     
+      setTimeout(() => {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      }, 500);
+ 
+    }
+
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    dispatch(back_step_action())
   };
 
   const handleReset = () => {
@@ -257,10 +267,11 @@ export default function AdoptStepper() {
 
   // const [clickPet, setClickPet] = React.useState(false);
 
- 
+
   //   if (petType == 2) {
   //     setClickPet()
   //   }
+
   
 
 

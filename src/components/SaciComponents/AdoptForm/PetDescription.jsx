@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   makeStyles,
@@ -21,6 +21,10 @@ import { useForm } from "react-hook-form";
 
 // Dispach Redux
 import { useDispatch, useSelector } from 'react-redux';
+import { big_size_action, medium_size_action, small_size_action, get_pet_size_data } from '../../../redux/actions/petSizeAction';
+import { responsesAreSame } from 'workbox-broadcast-update';
+import { get_hamster_race_action } from '../../../redux/actions/getHamsterRaceAction';
+import { get_department_data_action } from '../../../redux/actions/adoptFormAction';
 
 const useStyles = makeStyles((theme) => ({
   formPetDescription: {
@@ -40,27 +44,103 @@ const MenuProps = {
   }
 };
 
-// const names = [
-//   "Moquillo",
-//   "Hepatitis",
-//   "Parvovirosis",
-//   "Leptospirosis",
-//   "Rabia",
-//   "Leucemia",
-//   "Rinotraqueitis",
-//   "Panleucopenia",
-//   "Calcivirosis",
-// ];
+const names = [
+  "Moquillo",
+  "Hepatitis",
+  "Parvovirosis",
+  "Leptospirosis",
+  "Rabia",
+  "Leucemia",
+  "Rinotraqueitis",
+  "Panleucopenia",
+  "Calcivirosis",
+];
 
 export default function PetDescription() {
 
+  ///////////////////////INSERTS
+  const raceData = useSelector(store => store.raceData.raceData);
+  const hamsterRaceData = useSelector(store => store.hamsterRaceData.hamsterRaceData);
+  const hamster = useSelector(state => state.petType.hamster);
+  const dog = useSelector(state => state.petType.dog);
+  const cat = useSelector(state => state.petType.cat);
+  const activeStepState = useSelector(state => state.adoptFormData.activeStepState);
+  const departmentData = useSelector(state => state.adoptFormData.departments);
+
+   // redux Actions
+   const dispatch = useDispatch();
+   const { petType } = useSelector(store => store.petType);
+   const [sendHamsterData, setSendHamsterData] = useState(true);
+   const [racesContent, setRacesContent] = useState(false);
+   const [getData, setGetData] = useState(true);
+ 
+   if (activeStepState == 2) {
+     if (getData == true) {
+       dispatch(get_department_data_action());
+       setGetData(false);
+     }
+   }
+ 
+   const [petData, setPetData] = useState({
+     id_tipo_mascota: petType,
+     id_tamanio: '',
+   });
+ 
+   const [hamsterData, setHamsterData] = useState({
+     id_tipo_mascota: petType,
+   });
+ 
+   // const [sendDepartment, setSendDeparment] = useState({
+   //   id_unde: id_codigo
+   // });
+   // console.log(id_codigo)
+ 
+   const petSizeChange = (event) => {
+     const { name, value } = event.target
+     setPetData({ ...petData, [name]: value })
+   }
+   const [sendPetData, setSendPetData] = useState(false);
+ 
+   //Save PetSize selected on local Storage
+   const saveSmallSize = () => {
+     dispatch(small_size_action());
+     setSendPetData(true);
+     setRacesContent(true);
+   };
+ 
+   const saveMediumSize = () => {
+     dispatch(medium_size_action());
+     setSendPetData(true);
+     setRacesContent(true);
+ 
+   };
+   const saveBigSize = () => {
+     dispatch(big_size_action());
+     setSendPetData(true);
+     setRacesContent(true);
+   };
+ 
+   if (sendPetData == true) {
+ 
+     if (petData.id_tamanio.length !== 0) {
+       (dispatch(get_pet_size_data(petData)))
+       console.log(petData)
+       setSendPetData(false);
+     }
+     setSendPetData(false);
+   };
+ 
+ 
+   if (sendHamsterData == true) {
+     if (hamster == true) {
+       (dispatch(get_hamster_race_action(hamsterData)));
+       setRacesContent(true);
+     }
+     setSendHamsterData(false);
+   }
+//////////////////////////////////////////////////
+
   const classes = useStyles();
-
-  // const [personName, setPersonName] = useState([]);
-
-  // const handleChange2 = (event) => {
-  //   setPersonName(event.target.value);
-  // };
 
   // Validation Form Login
   const { handleSubmit } = useForm();
@@ -92,22 +172,12 @@ export default function PetDescription() {
   };
 
   const onSubmit = (data, e) => {
-    // _handleSubmit({ ...newPet })
+    _handleSubmit({...newPet})
     console.log(newPet)
     e.target.reset();
   };
 
-  // redux implementation
-  // const { user, loader } = useSelector(state => state.login);
-  // const { correo } = useSelector( state => state.login)
-  // const dispatch = useDispatch();
-  // const history = useHistory();
-
-
-  // redux Actions
-  // const _handleSubmit = async (data) => {
-  //   dispatch(savePetFormAction(data));
-  // };
+ 
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -187,20 +257,21 @@ export default function PetDescription() {
               name="id_tamanio"
               // value={age}
               label="Tamaño De Mascota"
-              onChange={handleChange}
+              onChange={petSizeChange}
+              disabled={hamster == true}
             >
-              <MenuItem value="" >
+              <MenuItem>
                 <em>Seleccione:</em>
               </MenuItem>
-              <MenuItem value={1}>Grande</MenuItem>
-              <MenuItem value={2}>Mediano</MenuItem>
-              <MenuItem value={3}>Pequeño</MenuItem>
+              <MenuItem value={1} onClick={saveBigSize}>Grande</MenuItem>
+              <MenuItem value={2} onClick={saveMediumSize}>Mediano</MenuItem>
+              <MenuItem value={3} onClick={saveSmallSize}>Pequeño</MenuItem>
             </Select>
           </FormControl>
         </Grid>
         <Grid item xs={4}>
           <FormControl variant="outlined" fullWidth>
-            <InputLabel id="demo-simple-select-outlined-label">Raza De Mascota</InputLabel>
+            <InputLabel id="demo-simple-select-outlined-label">Raza</InputLabel>
             <Select
               labelId="demo-simple-select-outlined-label"
               id="demo-simple-select-outlined"
@@ -208,15 +279,25 @@ export default function PetDescription() {
               // value={age}
               label="Raza De Mascota"
               onChange={handleChange}
+              disabled={racesContent == false}
             >
-              <MenuItem value="">
+              <MenuItem>
                 <em>Seleccione:</em>
               </MenuItem>
-              <MenuItem value={1}>Pastor Alemán</MenuItem>
-              <MenuItem value={2}>Rottweiler</MenuItem>
-              <MenuItem value={3}>Doberman</MenuItem>
-              <MenuItem value={4}>Schnauzer</MenuItem>
-              <MenuItem value={5}>Akita Inu</MenuItem>
+              {hamster ?
+                hamsterRaceData.map(item => (
+                  <MenuItem key={item.nombre_raza} value={item.id_raza}>
+                    {item.nombre_raza}
+                  </MenuItem>
+                ))
+                :
+                raceData.map(item => (
+                  <MenuItem key={item.nombre_raza} value={item.id_raza}>
+                    {item.nombre_raza}
+                  </MenuItem>
+                ))
+              }
+
             </Select>
           </FormControl>
         </Grid>
@@ -325,32 +406,36 @@ export default function PetDescription() {
         </Grid>
         <Grid item xs={6}>
           <FormControl variant="outlined" fullWidth>
-            <InputLabel id="demo-simple-select-outlined-label">Departamento De Mascota</InputLabel>
+            <InputLabel id="demo-simple-select-outlined-label">Departamento</InputLabel>
             <Select
               labelId="demo-simple-select-outlined-label"
               id="demo-simple-select-outlined"
               name="id_codigo"
               // value={age}
-              label="Departamento De Mascota"
+              label="Departamento"
               onChange={handleChange}
             >
               <MenuItem value="">
                 <em>Seleccione:</em>
               </MenuItem>
-              <MenuItem value={1}>Cundinamarca</MenuItem>
-              <MenuItem value={2}>Antioquía</MenuItem>
-              <MenuItem value={3}>Valle del Cauca</MenuItem>
+              {
+                departmentData.map(item => (
+                  <MenuItem key={item.id_codigo} value={item.id_codigo}>
+                    {item.descripcion}
+                  </MenuItem>
+                ))
+              }
             </Select>
           </FormControl>
         </Grid>
         <Grid item xs={6}>
           <FormControl variant="outlined" fullWidth>
-            <InputLabel id="demo-simple-select-outlined-label">Capital De Mascota</InputLabel>
+            <InputLabel id="demo-simple-select-outlined-label">Ciudad o municipio</InputLabel>
             <Select
               labelId="demo-simple-select-outlined-label"
               id="demo-simple-select-outlined"
               // value={age}
-              label="Capital De Mascota"
+              label="Ciudad o municipio"
               onChange={handleChange}
             >
               <MenuItem value="">

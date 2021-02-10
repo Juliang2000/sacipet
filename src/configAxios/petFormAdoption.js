@@ -1,5 +1,38 @@
 import axiosClient from './axios';
 
+//redux selector
+
+
+export async function getPetSize(petData) {
+
+    try {
+        const response = await axiosClient.post('/razasTipoTamano', petData)
+        console.log(response)
+        return response
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+export async function getHamsterRace(hamsterData) {
+
+    try {
+        const response = await axiosClient.post('/razas', hamsterData)
+        return response
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+export async function getDepartmentData() {
+
+    try {
+        const response = await axiosClient.get('/departamentos')
+        return response
+    } catch (e) {
+        console.log(e)
+    }
+}
 
 export async function savePetAdoption(petData) {
     try {
@@ -33,39 +66,3 @@ export async function savePetAdoption(petData) {
 
 }
 
-// export async function getPetSize(petData) {
-//     console.log(petData)
-
-    //     try {
-
-
-    //         const formData = new FormData();
-    //         formData.append('id_tipo_mascota', petData.id_tipo_mascota)
-    //         formData.append('id_tamanio', petData.id_tamanio)
-
-    //         const response = await axiosClient.post('/razasTipoTamano', formData)
-    //         // const response = await data.json()
-    //         // console.log(response)
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-
-    // try {
-    //     console.log()
-        // const formData = new FormData();
-
-        // formData.append("id_tipo_mascota", "1")
-        // formData.append("id_tamanio", "2")
-        // formData.append('id_tipo_mascota', '1')
-        // formData.append('id_tamanio', '2')
-
-
-
-//         const response = await axiosClient.post('/razasTipoTamano', petData)
-//         console.log(response)
-//         return response
-//     } catch (e) {
-//         console.log(e)
-//     }
-// }
