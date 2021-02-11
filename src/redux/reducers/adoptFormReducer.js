@@ -3,12 +3,10 @@ import { NEXT_STEP_ACTION, BACK_STEP_ACTION, GET_DEPARTMENT_DATA, UPDATE_FORM_DA
 const initialState = {
     activeStepState: 1,
     departments: [],
-    // nombre_mascota: '',
-    // edad_mascota: ''
     descriptionData: {
         nombre_mascota: '',
         edad_mascota: '',
-      }
+    }
 
 }
 
