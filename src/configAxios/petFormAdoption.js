@@ -66,3 +66,13 @@ export async function savePetAdoption(petData) {
 
 }
 
+export async function getCityData(depData) {
+
+    try {
+        const response = await axiosClient.post('/municipios', depData)
+        return response
+    } catch (e) {
+        console.log(e)
+    }
+}
+

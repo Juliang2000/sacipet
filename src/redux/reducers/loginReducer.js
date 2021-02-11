@@ -5,7 +5,6 @@ const initialState = {
     loader: false,
     error: false,
     errorMessage: '',
-    msg: '',
 }
 
 export default (state = initialState, action) => {
@@ -17,7 +16,6 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 loader: true,
-                msg: '',
             }
 
         case INICIAR_SESION_EXITO:
@@ -28,7 +26,6 @@ export default (state = initialState, action) => {
                 error: false,
                 errorMessage: '',
                 user: action.payload,
-                msg: action.payload
             }
 
         case INICIAR_SESION_ERROR:
