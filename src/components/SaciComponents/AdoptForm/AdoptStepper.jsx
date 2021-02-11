@@ -365,7 +365,7 @@ export default function AdoptStepper() {
                           Atrás
                           </Button>
                         <Button
-                          disabled={petType == 0}
+                          disabled={petType === 0}
                           variant="contained"
                           color="primary"
                           onClick={handleNext}

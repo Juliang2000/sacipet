@@ -9,6 +9,7 @@ export function savePetFormAction(data) {
 
         try {
             const response = await savePetAdoption(data)
+            console.log(data)
             // setTimeout(() => {
             dispatch(adoptionPetSuccess(response.data.user.nombre_mascota));
             // }, 3000);

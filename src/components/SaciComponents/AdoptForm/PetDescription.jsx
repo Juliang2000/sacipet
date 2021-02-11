@@ -161,19 +161,27 @@ export default function PetDescription() {
     setnewPet({ ...newPet, [event.target.name]: event.target.checked });
   };
 
-  const onSubmit = (data, e) => {
-    _handleSubmit({ ...newPet })
+  // const [onSubmit, setOnSubmit] = useState(false)
+
+  if(activeStepState === 3) {
+    dispatch(savePetFormAction(newPet));
     console.log(newPet)
-    // e.target.reset();
-  };
+
+  }
+
+  // const onSubmit = (data, e) => {
+  //   _handleSubmit({ ...newPet })
+  //   console.log(newPet)
+  //   // e.target.reset();
+  // };
 
   // redux Actions
-  const _handleSubmit = async (data) => {
-    dispatch(savePetFormAction(data));
-  };
+  // const _handleSubmit = async (data) => {
+  //   dispatch(savePetFormAction(data));
+  // };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form /* onSubmit={handleSubmit(onSubmit)} */>
       <Grid container spacing={2} className={classes.formPetDescription}>
         <Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
@@ -451,9 +459,9 @@ export default function PetDescription() {
             onChange={handleChange}
           />
         </Grid>
-        <Button variant="text" color="default" type="submit">
+        {/* <Button variant="text" color="default" type="submit">
           Enviar
-        </Button>
+        </Button> */}
       </Grid>
     </form>
   )
