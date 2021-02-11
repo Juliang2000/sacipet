@@ -24,7 +24,8 @@ import { savePetFormAction } from '../../../redux/actions/adoptFormAction2';
 import { useDispatch, useSelector } from 'react-redux';
 import { big_size_action, medium_size_action, small_size_action, get_pet_size_data } from '../../../redux/actions/petSizeAction';
 import { get_hamster_race_action } from '../../../redux/actions/getHamsterRaceAction';
-import { get_department_data_action } from '../../../redux/actions/adoptFormAction';
+import { get_department_data_action, update_form_data_action } from '../../../redux/actions/adoptFormAction';
+// import { Update } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   formPetDescription: {
@@ -46,19 +47,23 @@ const MenuProps = {
 
 export default function PetDescription() {
 
-  ///////////////////////INSERTS
-  const raceData = useSelector(store => store.raceData.raceData);
-  const hamsterRaceData = useSelector(store => store.hamsterRaceData.hamsterRaceData);
-  const hamster = useSelector(state => state.petType.hamster);
-  const activeStepState = useSelector(state => state.adoptFormData.activeStepState);
-  const departmentData = useSelector(state => state.adoptFormData.departments);
-
   // redux Actions
   const dispatch = useDispatch();
   const { petType } = useSelector(store => store.petType);
   const [sendHamsterData, setSendHamsterData] = useState(true);
   const [racesContent, setRacesContent] = useState(false);
   const [getData, setGetData] = useState(true);
+
+  ///////////////////////INSERTS
+  const raceData = useSelector(store => store.raceData.raceData);
+  const hamsterRaceData = useSelector(store => store.hamsterRaceData.hamsterRaceData);
+  const hamster = useSelector(state => state.petType.hamster);
+  const activeStepState = useSelector(state => state.adoptFormData.activeStepState);
+  const departmentData = useSelector(state => state.adoptFormData.departments);
+  const { nombre_mascota, edad_mascota } = useSelector(state => state.adoptFormData.descriptionData);
+  
+
+
 
   if (activeStepState === 2) {
     if (getData === true) {
@@ -72,9 +77,9 @@ export default function PetDescription() {
     id_tamanio: '',
   });
 
-  const [hamsterData, setHamsterData] = useState({
+  const hamsterData = {
     id_tipo_mascota: petType,
-  });
+  };
 
   // const [sendDepartment, setSendDeparment] = useState({
   //   id_unde: id_codigo
@@ -85,6 +90,7 @@ export default function PetDescription() {
     const { name, value } = event.target
     setPetData({ ...petData, [name]: value })
     setnewPet({ ...newPet, [name]: value })
+    // setSendDepartment({ ...sendDepartment, [name]: value })
   }
   const [sendPetData, setSendPetData] = useState(false);
 
@@ -129,7 +135,8 @@ export default function PetDescription() {
 
   const classes = useStyles();
 
-  const { handleSubmit } = useForm();
+  const { handleSubmit, register, errors } = useForm();
+  console.log(useForm)
 
   const { user } = useSelector(state => state.login);
 
@@ -163,17 +170,23 @@ export default function PetDescription() {
 
   // const [onSubmit, setOnSubmit] = useState(false)
 
-  if(activeStepState === 3) {
-    dispatch(savePetFormAction(newPet));
-    console.log(newPet)
+ 
 
+  if (activeStepState === 3) {
+    dispatch(savePetFormAction(newPet));
+    dispatch(update_form_data_action(newPet));
+    console.log(newPet)
   }
+
 
   // const onSubmit = (data, e) => {
   //   _handleSubmit({ ...newPet })
   //   console.log(newPet)
-  //   // e.target.reset();
+  //   e.target.reset();
   // };
+
+  // console.log(handleSubmit)
+  // console.log(onSubmit)
 
   // redux Actions
   // const _handleSubmit = async (data) => {
@@ -196,6 +209,7 @@ export default function PetDescription() {
             variant="outlined"
             fullWidth
             onChange={handleChange}
+            defaultValue={nombre_mascota}
           />
         </Grid>
         <Grid item xs={2}>
@@ -206,6 +220,7 @@ export default function PetDescription() {
             variant="outlined"
             fullWidth
             onChange={handleChange}
+            defaultValue={edad_mascota}
           />
         </Grid>
         <Grid item xs={4}>
@@ -459,9 +474,9 @@ export default function PetDescription() {
             onChange={handleChange}
           />
         </Grid>
-        {/* <Button variant="text" color="default" type="submit">
+        <Button variant="text" color="default" type="submit">
           Enviar
-        </Button> */}
+        </Button>
       </Grid>
     </form>
   )

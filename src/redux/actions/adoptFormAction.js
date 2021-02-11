@@ -1,4 +1,4 @@
-import { NEXT_STEP_ACTION, BACK_STEP_ACTION, GET_DEPARTMENT_DATA } from "../types";
+import { NEXT_STEP_ACTION, BACK_STEP_ACTION, GET_DEPARTMENT_DATA, UPDATE_FORM_DATA } from "../types";
 import { getDepartmentData } from "../../configAxios/petFormAdoption"
 
 export const next_step_action = (activeStepState) => ({
@@ -22,5 +22,18 @@ export const get_department_data_action = () => async (dispatch, getState) => {
         console.log(error)
     }
 }
+
+export const update_form_data_action = (newPet) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: UPDATE_FORM_DATA,
+            payload: newPet
+            
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 
 

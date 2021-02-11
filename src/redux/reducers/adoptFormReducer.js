@@ -1,8 +1,14 @@
-import { NEXT_STEP_ACTION, BACK_STEP_ACTION, GET_DEPARTMENT_DATA } from "../types"
+import { NEXT_STEP_ACTION, BACK_STEP_ACTION, GET_DEPARTMENT_DATA, UPDATE_FORM_DATA } from "../types"
 
 const initialState = {
     activeStepState: 1,
-    departments: []
+    departments: [],
+    // nombre_mascota: '',
+    // edad_mascota: ''
+    descriptionData: {
+        nombre_mascota: '',
+        edad_mascota: '',
+      }
 
 }
 
@@ -28,7 +34,14 @@ export default (state = initialState, action) => {
 
 
             }
-            
+        case UPDATE_FORM_DATA:
+            return {
+                ...state,
+                descriptionData: action.payload,
+
+
+            }
+
         default: return state
 
     }
