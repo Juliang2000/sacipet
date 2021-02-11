@@ -162,7 +162,7 @@ export default function PetDescription() {
   const { user } = useSelector(state => state.login);
 
   const [newPet, setnewPet] = useState({
-    id_usuario: user,
+    id_usuario: user.id,
     tipo_tramite: 1,
     nombre_mascota: '',
     edad_mascota: '',
@@ -502,6 +502,12 @@ export default function PetDescription() {
             onChange={handleChange}
           />
         </Grid>
+<<<<<<< HEAD
+=======
+        {/* <Button variant="text" color="default" type="submit">
+          Enviar
+        </Button> */}
+>>>>>>> ec21646793d31f94379505edffeef838d9788500
       </Grid>
     </form>
   )
