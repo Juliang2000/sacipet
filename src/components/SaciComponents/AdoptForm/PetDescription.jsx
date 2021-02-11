@@ -16,6 +16,8 @@ import {
 
 // Form Validation
 import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup';
 
 // redux Actions
 import { savePetFormAction } from '../../../redux/actions/adoptFormAction2';
@@ -61,7 +63,7 @@ export default function PetDescription() {
   const activeStepState = useSelector(state => state.adoptFormData.activeStepState);
   const departmentData = useSelector(state => state.adoptFormData.departments);
   const { nombre_mascota, edad_mascota } = useSelector(state => state.adoptFormData.descriptionData);
-  
+
 
 
 
@@ -135,8 +137,25 @@ export default function PetDescription() {
 
   const classes = useStyles();
 
-  const { handleSubmit, register, errors } = useForm();
-  console.log(useForm)
+
+  //////////////////////////////////// Validaciones
+  const schema = yup.object().shape({
+    nombre_mascota: yup
+      .string()
+      .required("El nombre es un campo obligatorio")
+      .min(4, "Mínimo 4 carácteres!")
+      .max(20, "Maximo 20 carácteres!")
+      .matches(/^[a-zA-ZÁ-ÿ\s]+$/, "Solo letras mayúsculas y minúsculas")
+  });
+
+  const { handleSubmit, register, errors } = useForm({
+    defaultValues: { nombre_mascota: nombre_mascota },
+    mode: "onChange",
+    resolver: yupResolver(schema),
+  });
+  ////////////////////////////////////
+
+
 
   const { user } = useSelector(state => state.login);
 
@@ -170,23 +189,17 @@ export default function PetDescription() {
 
   // const [onSubmit, setOnSubmit] = useState(false)
 
- 
-
   if (activeStepState === 3) {
     dispatch(savePetFormAction(newPet));
     dispatch(update_form_data_action(newPet));
     console.log(newPet)
   }
 
-
   // const onSubmit = (data, e) => {
   //   _handleSubmit({ ...newPet })
   //   console.log(newPet)
-  //   e.target.reset();
+  //   // e.target.reset();
   // };
-
-  // console.log(handleSubmit)
-  // console.log(onSubmit)
 
   // redux Actions
   // const _handleSubmit = async (data) => {
@@ -194,7 +207,7 @@ export default function PetDescription() {
   // };
 
   return (
-    <form /* onSubmit={handleSubmit(onSubmit)} */>
+    <form onSubmit={handleSubmit(/* onSubmit */)} autocomplete="off">
       <Grid container spacing={2} className={classes.formPetDescription}>
         <Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
@@ -210,6 +223,10 @@ export default function PetDescription() {
             fullWidth
             onChange={handleChange}
             defaultValue={nombre_mascota}
+
+            inputRef={register}
+            error={!!errors.nombre_mascota}
+            helperText={errors?.nombre_mascota?.message}
           />
         </Grid>
         <Grid item xs={2}>
@@ -474,9 +491,9 @@ export default function PetDescription() {
             onChange={handleChange}
           />
         </Grid>
-        {/* <Button variant="text" color="default" type="submit">
+        <Button variant="text" color="default" type="submit">
           Enviar
-        </Button> */}
+        </Button>
       </Grid>
     </form>
   )
