@@ -1,4 +1,11 @@
-import { NEXT_STEP_ACTION, BACK_STEP_ACTION, GET_DEPARTMENT_DATA, UPDATE_FORM_DATA, GET_CITY_DATA } from "../types"
+import {
+    NEXT_STEP_ACTION,
+    BACK_STEP_ACTION,
+    GET_DEPARTMENT_DATA,
+    UPDATE_FORM_DATA,
+    GET_CITY_DATA,
+    PET_DESCRIPTION_OK
+} from "../types"
 
 const initialState = {
     activeStepState: 1,
@@ -6,8 +13,16 @@ const initialState = {
     descriptionData: {
         nombre_mascota: '',
         edad_mascota: '',
+        escala_edad: '',
+        id_tamanio: '',
+        id_raza: '',
+        genero_mascota: '',
+        id_color: '',
+        id_codigo: '',
+        descripcion_mascota: ''
     },
-    cities: []
+    cities: [],
+    petDescription: false,
 
 }
 
@@ -19,7 +34,7 @@ export default (state = initialState, action) => {
                 ...state,
                 activeStepState: state.activeStepState + 1
             }
-            
+
         case BACK_STEP_ACTION:
             return {
                 ...state,
@@ -42,6 +57,14 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 descriptionData: action.payload,
+
+
+            }
+
+        case PET_DESCRIPTION_OK:
+            return {
+                ...state,
+                petDescription: true,
 
 
             }

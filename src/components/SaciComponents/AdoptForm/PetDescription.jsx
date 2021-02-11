@@ -23,7 +23,13 @@ import { savePetFormAction } from '../../../redux/actions/adoptFormAction2';
 import { useDispatch, useSelector } from 'react-redux';
 import { big_size_action, medium_size_action, small_size_action, get_pet_size_data } from '../../../redux/actions/petSizeAction';
 import { get_hamster_race_action } from '../../../redux/actions/getHamsterRaceAction';
-import { get_city_data_action, get_department_data_action, update_form_data_action } from '../../../redux/actions/adoptFormAction';
+
+import {
+  get_city_data_action,
+  get_department_data_action,
+  update_form_data_action,
+  full_pet_description_action
+} from '../../../redux/actions/adoptFormAction';
 // import { Update } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
@@ -59,11 +65,7 @@ export default function PetDescription() {
   const hamster = useSelector(state => state.petType.hamster);
   const activeStepState = useSelector(state => state.adoptFormData.activeStepState);
   const { departments, cities } = useSelector(state => state.adoptFormData);
-  const { nombre_mascota, edad_mascota } = useSelector(state => state.adoptFormData.descriptionData);
-
-
-
-
+  const { nombre_mascota, edad_mascota, escala_edad, esterilizado } = useSelector(state => state.adoptFormData.descriptionData);
 
   if (activeStepState === 2) {
     if (getData === true) {
@@ -85,19 +87,23 @@ export default function PetDescription() {
     id_unde: ''
   });
 
+
+
   // const [sendDepartment, setSendDeparment] = useState({
   //   id_unde: id_codigo
   // });
   // console.log(id_codigo)
 
-  const petSizeChange = (event) => {
-    const { name, value } = event.target
-    setPetData({ ...petData, [name]: value })
-    setnewPet({ ...newPet, [name]: value })
+  function petSizeChange(event) {
+    const { name, value } = event.target;
+    setPetData({ ...petData, [name]: value });
+    setnewPet({ ...newPet, [name]: value });
     // setSendDepartment({ ...sendDepartment, [name]: value })
   }
   const [sendPetData, setSendPetData] = useState(false);
   const [sendCityData, setSendCityData] = useState(false);
+  const [fullPetDescription, setFullPetDescription] = useState(false);
+  const [checkForm, setCheckForm] = useState(true);
 
   //Save PetSize selected on local Storage
   const saveSmallSize = () => {
@@ -134,8 +140,6 @@ export default function PetDescription() {
 
   }
 
-
-
   if (sendPetData === true) {
     if (petData.id_tamanio.length !== 0) {
       (dispatch(get_pet_size_data(petData)))
@@ -143,7 +147,6 @@ export default function PetDescription() {
     }
     setSendPetData(false);
   };
-
 
   if (sendHamsterData === true) {
     if (hamster === true) {
@@ -180,23 +183,36 @@ export default function PetDescription() {
     descripcion_mascota: ''
   })
 
+  if (checkForm === true) {
+    if ({nombre_mascota}.length && {edad_mascota}.length !== 0) {
+      setFullPetDescription(true)
+    }
+  }
+
+  if (fullPetDescription === true) {
+    dispatch(full_pet_description_action());
+    setFullPetDescription(false);
+    setCheckForm(false);
+  }
+
   const handleChange = (event) => {
     const { name, value } = event.target
     setnewPet({ ...newPet, [name]: value })
     setDepData({ ...depData, [name]: value })
+    dispatch(update_form_data_action(newPet));
   }
 
   const handleChange3 = (event) => {
     setnewPet({ ...newPet, [event.target.name]: event.target.checked });
   };
-
+  
   // const [onSubmit, setOnSubmit] = useState(false)
   const [saveFormDescription, setSaveFormDescription] = useState(true);
 
   if (saveFormDescription === true) {
     if (activeStepState === 3) {
       dispatch(savePetFormAction(newPet));
-      dispatch(update_form_data_action(newPet));
+
       setSaveFormDescription(false);
     }
   }
@@ -502,12 +518,6 @@ export default function PetDescription() {
             onChange={handleChange}
           />
         </Grid>
-<<<<<<< HEAD
-=======
-        {/* <Button variant="text" color="default" type="submit">
-          Enviar
-        </Button> */}
->>>>>>> ec21646793d31f94379505edffeef838d9788500
       </Grid>
     </form>
   )
