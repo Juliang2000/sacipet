@@ -3,9 +3,11 @@ import {
     NEXT_STEP_ACTION,
     BACK_STEP_ACTION,
     GET_DEPARTMENT_DATA,
-    UPDATE_FORM_DATA,
+    UPDATE_ADOPT_FORM_DESCRIPTION_DATA,
     GET_CITY_DATA,
-    PET_DESCRIPTION_OK
+    PET_DESCRIPTION_OK,
+    GET_ADOPT_FORM_DESCRIPTION_DATA,
+    PUSH_DATA_ACTION
 } from "../types";
 
 //axios
@@ -50,16 +52,44 @@ export const get_city_data_action = (depData) => async (dispatch, getState) => {
     }
 }
 
-//save changes in the description step 2
-export const update_form_data_action = (newPet) => async (dispatch, getState) => {
-    try {
-        dispatch({
-            type: UPDATE_FORM_DATA,
-            payload: newPet
+// get changes to the description data 
+// export const get_form_data_action = (newPet) => async (dispatch, getState) => {
+//     try {
+//         dispatch({
+//             type: GET_ADOPT_FORM_DESCRIPTION_DATA,
+//             payload: newPet
 
-        })
-    } catch (error) {
-        console.log(error)
+//         })
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
+
+export const get_form_data_action = (newPet) => {
+    return {
+        type: GET_ADOPT_FORM_DESCRIPTION_DATA,
+        payload: newPet
+    }
+}
+
+
+// update changes to the description data
+// export const update_form_data_action = () => async (dispatch, getState) => {
+//     try {
+//         dispatch({
+//             type: UPDATE_ADOPT_FORM_DESCRIPTION_DATA,
+//             payload: updateDescriptionData
+//         })
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
+
+
+export const update_form_data_action = (updateDescriptionData) => {
+    return {
+        type: UPDATE_ADOPT_FORM_DESCRIPTION_DATA,
+        payload: updateDescriptionData
     }
 }
 
@@ -76,5 +106,12 @@ export const full_pet_description_action = () => async (dispatch, getState) => {
     }
 }
 
-///////////////redux actions///////////
+export const push_data_action = (pushData) => {
+    return {
+        type: PUSH_DATA_ACTION,
+        payload: pushData
+    }
+}
+
+
 

@@ -19,9 +19,6 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 
-// redux Actions
-import { savePetFormAction } from '../../../redux/actions/adoptFormAction2';
-
 // Dispach Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { big_size_action, medium_size_action, small_size_action, get_pet_size_data } from '../../../redux/actions/petSizeAction';
@@ -31,7 +28,9 @@ import {
   get_city_data_action,
   get_department_data_action,
   update_form_data_action,
-  full_pet_description_action
+  full_pet_description_action,
+  get_form_data_action,
+  push_data_action
 } from '../../../redux/actions/adoptFormAction';
 // import { Update } from '@material-ui/icons';
 
@@ -68,7 +67,74 @@ export default function PetDescription() {
   const hamster = useSelector(state => state.petType.hamster);
   const activeStepState = useSelector(state => state.adoptFormData.activeStepState);
   const { departments, cities } = useSelector(state => state.adoptFormData);
-  const { nombre_mascota, edad_mascota, escala_edad, esterilizado } = useSelector(state => state.adoptFormData.descriptionData);
+  const { user } = useSelector(state => state.login);
+
+  // const escala_edad  = useSelector(store => store.adoptFormData.descriptionData.escala_edad);
+  const {
+    nombre_mascota,
+    edad_mascota,
+    escala_edad,
+    esterilizado,
+    id_tamanio,
+    id_raza,
+    genero_mascota,
+    id_color,
+    id_vacuna_Rabia,
+    id_vacuna_Rinotraqueítis,
+    id_vacuna_Parvovirus,
+    id_vacuna_Moquillo,
+    id_codigo,
+    id_unde,
+    descripcion_mascota
+  } = useSelector(store => store.adoptFormData.updateDescriptionData);
+
+  const [saveFormDescription, setSaveFormDescription] = useState(true);
+
+  // if (saveFormDescription === true) {
+  //   if (activeStepState === 2) {
+  //     // dispatch(savePetFormAction(newPet));
+  //     dispatch(update_form_data_action());
+
+  //     setSaveFormDescription(false);
+  //   }
+  // }
+
+  const [newPet, setnewPet] = useState({
+    id_usuario: user.id,
+    tipo_tramite: 1,
+    nombre_mascota: `${nombre_mascota}`,
+    edad_mascota: `${edad_mascota}`,
+    escala_edad: `${escala_edad}`,
+    esterilizado: `${esterilizado}`,
+    id_tamanio: `${id_tamanio}`,
+    id_raza: `${id_raza}`,
+    genero_mascota: `${genero_mascota}`,
+    id_color: `${id_color}`,
+    id_vacuna_Rabia: id_vacuna_Rabia,
+    id_vacuna_Rinotraqueítis: id_vacuna_Rinotraqueítis,
+    id_vacuna_Parvovirus: id_vacuna_Parvovirus,
+    id_vacuna_Moquillo: id_vacuna_Moquillo,
+    id_codigo: `${id_codigo}`,
+    id_unde: `${id_unde}`,
+    descripcion_mascota: `${descripcion_mascota}`,
+  })
+
+  if (saveFormDescription === true) {
+    if (activeStepState === 3) {
+      dispatch(get_form_data_action(newPet));
+      dispatch(update_form_data_action());
+
+      setSaveFormDescription(false);
+    }
+  }
+
+  const handleChange = (event) => {
+    const { name, value } = event.target
+    setnewPet({ ...newPet, [name]: value })
+    setDepData({ ...depData, [name]: value })
+    dispatch(get_form_data_action(newPet));
+    dispatch(update_form_data_action());
+  }
 
   if (activeStepState === 2) {
     if (getData === true) {
@@ -90,13 +156,6 @@ export default function PetDescription() {
     id_unde: ''
   });
 
-
-
-  // const [sendDepartment, setSendDeparment] = useState({
-  //   id_unde: id_codigo
-  // });
-  // console.log(id_codigo)
-
   function petSizeChange(event) {
     const { name, value } = event.target;
     setPetData({ ...petData, [name]: value });
@@ -104,48 +163,86 @@ export default function PetDescription() {
     // setSendDepartment({ ...sendDepartment, [name]: value })
   }
   const [sendPetData, setSendPetData] = useState(false);
-  const [sendCityData, setSendCityData] = useState(false);
+  const [sendCityData, setSendCityData] = useState(true);
   const [fullPetDescription, setFullPetDescription] = useState(false);
   const [checkForm, setCheckForm] = useState(true);
 
   //Save PetSize selected on local Storage
+
+  // const saveScaleData = () => {
+  //   dispatch(push_data_action());
+  //   setSendPetData(true);
+  //   setRacesContent(true);
+  //   dispatch(get_form_data_action(newPet));
+  //   dispatch(update_form_data_action());
+  // }
+
+  const saveData = () => {
+    dispatch(push_data_action());
+    setSendPetData(true);
+    setRacesContent(true);
+    dispatch(get_form_data_action(newPet));
+    dispatch(update_form_data_action());
+  }
+
   const saveSmallSize = () => {
     dispatch(small_size_action());
     setSendPetData(true);
     setRacesContent(true);
+    dispatch(get_form_data_action(newPet));
+    dispatch(update_form_data_action());
   };
 
   const saveMediumSize = () => {
     dispatch(medium_size_action());
     setSendPetData(true);
     setRacesContent(true);
+    dispatch(get_form_data_action(newPet));
+    dispatch(update_form_data_action());
 
   };
   const saveBigSize = () => {
     dispatch(big_size_action());
     setSendPetData(true);
     setRacesContent(true);
+    dispatch(get_form_data_action(newPet));
+    dispatch(update_form_data_action());
   };
+
 
   const saveDepartment = () => {
     setSendCityData(true);
+    dispatch(get_form_data_action(newPet));
+    dispatch(update_form_data_action());
   };
 
-  const [cityContent, setCityContent] = useState(false);
-
   if (sendCityData === true) {
-
-    if (depData.id_unde.length !== 0) {
+    if (id_unde !== 0) {
       (dispatch(get_city_data_action(depData)))
-      setCityContent(true);
+      dispatch(get_form_data_action(newPet));
+      dispatch(update_form_data_action());
+      // setCityContent(true);
     }
     setSendCityData(false);
-
   }
+
+  if (racesContent === true) {
+    if (id_tamanio !== 0) {
+      dispatch(get_form_data_action(newPet));
+      dispatch(update_form_data_action());
+    }
+    setRacesContent(false);
+  }
+
+  // if (id_unde.length !== 0) {
+  //   setCityContent(true);
+  // }
 
   if (sendPetData === true) {
     if (petData.id_tamanio.length !== 0) {
       (dispatch(get_pet_size_data(petData)))
+      setSendPetData(true);
+      setRacesContent(true);
       setSendPetData(false);
     }
     setSendPetData(false);
@@ -158,6 +255,19 @@ export default function PetDescription() {
     }
     setSendHamsterData(false);
   }
+
+  const [checkAge, setCheckAge] = useState(true)
+
+  if (checkAge === true)
+    if (edad_mascota.length !== 0) {
+      dispatch(push_data_action());
+      setSendPetData(true);
+      setRacesContent(true);
+      dispatch(get_form_data_action(newPet));
+      dispatch(update_form_data_action());
+      setCheckAge(false)
+    }
+
   //////////////////////////////////////////////////
 
   const classes = useStyles();
@@ -180,31 +290,18 @@ export default function PetDescription() {
   });
   ////////////////////////////////////
 
-
-
-  const { user } = useSelector(state => state.login);
-
-  const [newPet, setnewPet] = useState({
-    id_usuario: user.id,
-    tipo_tramite: 1,
-    nombre_mascota: '',
-    edad_mascota: '',
-    escala_edad: '',
-    esterilizado: '',
-    id_tamanio: '',
-    id_raza: '',
-    genero_mascota: '',
-    id_color: '',
-    id_vacuna_Rabia: false,
-    id_vacuna_Rinotraqueítis: false,
-    id_vacuna_Parvovirus: false,
-    id_vacuna_Moquillo: false,
-    id_codigo: '',
-    descripcion_mascota: ''
-  })
-
   if (checkForm === true) {
-    if ({nombre_mascota}.length && {edad_mascota}.length !== 0) {
+    if (
+      nombre_mascota.length &&
+      edad_mascota.length &&
+      escala_edad &&
+      id_tamanio &&
+      id_raza &&
+      id_color &&
+      id_unde &&
+      id_codigo &&
+      descripcion_mascota.length !== 0
+    ) {
       setFullPetDescription(true)
     }
   }
@@ -212,30 +309,23 @@ export default function PetDescription() {
   if (fullPetDescription === true) {
     dispatch(full_pet_description_action());
     setFullPetDescription(false);
+    dispatch(get_form_data_action(newPet));
+    dispatch(update_form_data_action());
     setCheckForm(false);
   }
 
-  const handleChange = (event) => {
-    const { name, value } = event.target
-    setnewPet({ ...newPet, [name]: value })
-    setDepData({ ...depData, [name]: value })
-    dispatch(update_form_data_action(newPet));
-  }
+  // const handleChange = (event) => {
+  //   const { name, value } = event.target
+  //   setnewPet({ ...newPet, [name]: value })
+  //   setDepData({ ...depData, [name]: value })
+  // }
 
   const handleChange3 = (event) => {
     setnewPet({ ...newPet, [event.target.name]: event.target.checked });
   };
-  
+
   // const [onSubmit, setOnSubmit] = useState(false)
-  const [saveFormDescription, setSaveFormDescription] = useState(true);
-
-  if (saveFormDescription === true) {
-    if (activeStepState === 3) {
-      dispatch(savePetFormAction(newPet));
-
-      setSaveFormDescription(false);
-    }
-  }
+  // const [saveFormDescription, setSaveFormDescription] = useState(true);
 
   // const onSubmit = (data, e) => {
   //   _handleSubmit({ ...newPet })
@@ -265,7 +355,6 @@ export default function PetDescription() {
             fullWidth
             onChange={handleChange}
             defaultValue={nombre_mascota}
-
             inputRef={register}
             error={!!errors.nombre_mascota}
             helperText={errors?.nombre_mascota?.message}
@@ -284,41 +373,41 @@ export default function PetDescription() {
         </Grid>
         <Grid item xs={4}>
           <FormControl variant="outlined" fullWidth>
-            <InputLabel id="demo-simple-select-outlined-label">Seleccione</InputLabel>
+            <InputLabel id="demo-simple-select-outlined-label">Escala Edad</InputLabel>
             <Select
               labelId="demo-simple-select-outlined-label"
               id="demo-simple-select-outlined"
               name="escala_edad"
-              // value={age}
-              label="Seleccione"
+              label="Escala de Edad"
               onChange={handleChange}
+              defaultValue={escala_edad}
             >
-              <MenuItem value="">
+              {/* <MenuItem>
                 <em>Seleccione:</em>
-              </MenuItem>
-              <MenuItem value={1}>Semanas</MenuItem>
-              <MenuItem value={2}>Meses</MenuItem>
-              <MenuItem value={3}>Años</MenuItem>
+              </MenuItem> */}
+              <MenuItem value={1} onClick={saveData}>Semanas</MenuItem>
+              <MenuItem value={2} onClick={saveData}>Meses</MenuItem>
+              <MenuItem value={3} onClick={saveData}>Años</MenuItem>
             </Select>
           </FormControl>
         </Grid>
 
         <Grid item xs={4}>
           <FormControl variant="outlined" fullWidth>
-            <InputLabel id="demo-simple-select-outlined-label">Esterelización De Mascota</InputLabel>
+            <InputLabel id="demo-simple-select-outlined-label">Mascota esterilizada</InputLabel>
             <Select
               labelId="demo-simple-select-outlined-label"
               id="demo-simple-select-outlined"
               name="esterilizado"
-              // value={age}
-              label="Esterelización De Mascota"
+              label="Mascota esterilizada"
               onChange={handleChange}
+              defaultValue={esterilizado}
             >
-              <MenuItem value="" >
+              {/* <MenuItem>
                 <em>Seleccione:</em>
-              </MenuItem>
-              <MenuItem value={1}>Si</MenuItem>
-              <MenuItem value={0}>No</MenuItem>
+              </MenuItem> */}
+              <MenuItem value={1} onClick={saveData}>Si</MenuItem>
+              <MenuItem value={0} onClick={saveData}>No</MenuItem>
             </Select>
           </FormControl>
         </Grid>
@@ -334,10 +423,11 @@ export default function PetDescription() {
               label="Tamaño De Mascota"
               onChange={petSizeChange}
               disabled={hamster === true}
+              defaultValue={id_tamanio}
             >
-              <MenuItem>
+              {/* <MenuItem>
                 <em>Seleccione:</em>
-              </MenuItem>
+              </MenuItem> */}
               <MenuItem value={1} onClick={saveBigSize}>Grande</MenuItem>
               <MenuItem value={2} onClick={saveMediumSize}>Mediano</MenuItem>
               <MenuItem value={3} onClick={saveSmallSize}>Pequeño</MenuItem>
@@ -354,20 +444,21 @@ export default function PetDescription() {
               // value={age}
               label="Raza De Mascota"
               onChange={handleChange}
-              disabled={racesContent === false}
+              disabled={id_tamanio.length === 0}
+              defaultValue={id_raza}
             >
-              <MenuItem>
+              {/* <MenuItem>
                 <em>Seleccione:</em>
-              </MenuItem>
+              </MenuItem> */}
               {hamster ?
                 hamsterRaceData.map(item => (
-                  <MenuItem key={item.nombre_raza} value={item.id_raza}>
+                  <MenuItem key={item.nombre_raza} value={item.id_raza} defaultValue={item.nombre_raza} >
                     {item.nombre_raza}
                   </MenuItem>
                 ))
                 :
                 raceData.map(item => (
-                  <MenuItem key={item.nombre_raza} value={item.id_raza}>
+                  <MenuItem key={item.nombre_raza} value={item.id_raza} defaultValue={item.nombre_raza}>
                     {item.nombre_raza}
                   </MenuItem>
                 ))
@@ -385,12 +476,13 @@ export default function PetDescription() {
               // value={age}
               label="Genéro De Mascota"
               onChange={handleChange}
+              defaultValue={genero_mascota}
             >
-              <MenuItem value="">
+              {/* <MenuItem>
                 <em>Seleccione:</em>
-              </MenuItem>
-              <MenuItem value={1}>Macho</MenuItem>
-              <MenuItem value={2}>Hembra</MenuItem>
+              </MenuItem> */}
+              <MenuItem value={1} onClick={saveData}>Macho</MenuItem>
+              <MenuItem value={2} onClick={saveData}>Hembra</MenuItem>
             </Select>
           </FormControl>
         </Grid>
@@ -404,14 +496,15 @@ export default function PetDescription() {
               // value={age}
               label="Color De Mascota"
               onChange={handleChange}
+              defaultValue={id_color}
             >
-              <MenuItem value="">
+              <MenuItem>
                 <em>Seleccione:</em>
               </MenuItem>
-              <MenuItem value={1}>Café</MenuItem>
-              <MenuItem value={2}>Negro</MenuItem>
-              <MenuItem value={3}>Gris</MenuItem>
-              <MenuItem value={4}>Blanco</MenuItem>
+              <MenuItem value={1} onClick={saveData}>Café</MenuItem>
+              <MenuItem value={2} onClick={saveData}>Negro</MenuItem>
+              <MenuItem value={3} onClick={saveData}>Gris</MenuItem>
+              <MenuItem value={4} onClick={saveData}>Blanco</MenuItem>
             </Select>
           </FormControl>
         </Grid>
@@ -474,7 +567,6 @@ export default function PetDescription() {
                 Moquillo
               <ListItemText />
               </MenuItem>
-
             </Select>
           </FormControl>
         </Grid>
@@ -485,14 +577,14 @@ export default function PetDescription() {
               labelId="demo-simple-select-outlined-label"
               id="demo-simple-select-outlined"
               name="id_unde"
-              // value={age}
               label="Departamento"
               onChange={handleChange}
               onClick={saveDepartment}
+              defaultValue={id_unde}
             >
-              <MenuItem value="">
+              {/* <MenuItem>
                 <em>Seleccione:</em>
-              </MenuItem>
+              </MenuItem> */}
               {
                 departments.map(item => (
                   <MenuItem key={item.id_codigo} value={item.id_codigo}>
@@ -512,11 +604,12 @@ export default function PetDescription() {
               name="id_codigo"
               label="Ciudad o municipio"
               onChange={handleChange}
-              disabled={cityContent === false}
+              disabled={id_unde.length === 0}
+              defaultValue={id_codigo}
             >
-              <MenuItem value="">
+              {/* <MenuItem>
                 <em>Seleccione:</em>
-              </MenuItem>
+              </MenuItem> */}
               {
                 cities.map(item => (
                   <MenuItem key={item.id_codigo} value={item.id_codigo}>
@@ -536,6 +629,7 @@ export default function PetDescription() {
             multiline
             rows={4}
             onChange={handleChange}
+            defaultValue={descripcion_mascota}
           />
         </Grid>
         {/* <Button variant="text" color="default" type="submit">

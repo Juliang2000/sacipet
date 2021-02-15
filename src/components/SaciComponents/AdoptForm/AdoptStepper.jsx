@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { Stepper, Step, StepLabel, Button, Grid, Typography, Box, Hidden, Dialog, IconButton } from '@material-ui/core';
@@ -15,7 +15,7 @@ import { useDispatch } from 'react-redux';
 
 //Redux actions
 import { reset_action } from '../../../redux/actions/petTypeAction'
-import { next_step_action, back_step_action, sizePetData } from '../../../redux/actions/adoptFormAction'
+import { next_step_action, back_step_action, sizePetData, update_form_data_action } from '../../../redux/actions/adoptFormAction'
 
 //components
 import PetType from './PetType'
@@ -188,19 +188,67 @@ function getStepContent(step) {
   }
 }
 
+export function SecureCloseModal() {
+  return (
+    <>
+
+    </>
+  )
+}
+
 
 export default function AdoptStepper() {
-
   const { user } = useSelector(state => state.login);
   const { petType } = useSelector(state => state.petType);
-  const { activeStepState } = useSelector(state => state.adoptFormData.activeStepState);
+  const { activeStepState } = useSelector(state => state.adoptFormData);
+  const { petDescription } = useSelector(state => state.adoptFormData);
   const dispatch = useDispatch();
   // const user = true;
   const classes = useStyles();
 
   // const [skipped, setSkipped] = React.useState(new Set());
 
+  const [saveFormDescription, setSaveFormDescription] = useState(true);
+  const [allowContent, setAllowContent] = useState(false);
+  const [checkedStepOne, setCheckedStepOne] = useState(true)
+  const [checkedStepTwo, setCheckedStepTwo] = useState(true)
 
+  if (saveFormDescription === true) {
+    if (activeStepState === 2) {
+      // dispatch(savePetFormAction(newPet));
+      dispatch(update_form_data_action());
+      setSaveFormDescription(false);
+    }
+  }
+
+  if (checkedStepOne === true) {
+    if (activeStepState === 1) {
+      if (petType !== 0) {
+        setAllowContent(true)
+        setCheckedStepOne(false);
+      }
+    }
+  }
+
+  if (petDescription === true) {
+    if (checkedStepTwo === false) {
+      setAllowContent(true)
+      setCheckedStepTwo(null)
+    }
+  }
+
+  if (activeStepState === 2)
+    if (checkedStepTwo === true) {
+      setAllowContent(false)
+      setCheckedStepTwo(false)
+    }
+
+
+  // if (activeStepState === 1) {
+  //   if (petType === 2) {
+  //     setAllowContent(true);
+  //   }
+  // }
 
   // const isStepOptional = (step) => {
   //   return step === 1;
@@ -225,36 +273,61 @@ export default function AdoptStepper() {
      */
     icon: PropTypes.node,
   };
+  const [openConfirmCloseDialog, setOpenConfirmCloseDialog] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  // const [cancelForm, setCancelForm] = useState(false);
 
-  const [openModal, setOpenModal] = React.useState(false);
+
+  const handleCheckClose = () => {
+    //  setCheckClose(true)
+    setOpenConfirmCloseDialog(true);
+  };
 
   const handleClickOpenModal = () => {
     setOpenModal(true);
   };
 
   const handleClickCloseModal = () => {
-    setOpenModal(false);
+      setOpenModal(false);
+      setOpenConfirmCloseDialog(false);
+      
     dispatch(reset_action(petType));
   };
 
+  const handleClickCloseConfirm = () => {
+    setOpenConfirmCloseDialog(false);
+};
 
-  const [activeStep, setActiveStep] = React.useState(0);
+
+
+  const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
 
 
   const handleNext = () => {
     dispatch(next_step_action())
-
-    setTimeout(() => {
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    }, 500);
-
+    if (activeStepState === 2) {
+      if (petDescription === true) {
+        setTimeout(() => {
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }, 20);
+      }
+    } else {
+      setTimeout(() => {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      }, 20);
+    }
   }
 
 
+
+
+
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
     dispatch(back_step_action())
+    // setTimeout(() => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    // }, 500);
   };
 
   const handleReset = () => {
@@ -272,6 +345,17 @@ export default function AdoptStepper() {
   //     setClickPet()
   //   }
 
+  // const [checkClose, setCheckClose] = useState(false);
+
+
+
+  //  const handleConfirmClose = () => {
+  //   setCheckClose(true)
+  // }
+
+  // const openConfirmCloseDialog = () => {
+  //   setCheckClose(true)
+  // }
 
 
 
@@ -311,6 +395,14 @@ export default function AdoptStepper() {
 
       {user ?
         <>
+          <Dialog open={openConfirmCloseDialog} close={handleClickCloseModal}>
+            <Typography>
+              ¿Desea cancelar el formulario de Adopción?
+            </Typography>
+            <Button onClick={handleClickCloseModal}>Si</Button>
+            <Button onClick={handleClickCloseConfirm}>No</Button>
+          </Dialog>
+
           <Dialog
             open={openModal}
             onClose={handleClickCloseModal}
@@ -322,7 +414,7 @@ export default function AdoptStepper() {
               container
               justify="flex-end"
               alignItems="flex-start">
-              <IconButton className={classes.closeIconButton} edge="end" color="inherit" aria-label="close" onClick={handleClickCloseModal}>
+              <IconButton className={classes.closeIconButton} edge="end" color="inherit" aria-label="close" onClick={handleCheckClose}>
                 <CloseIcon className={classes.closeButton} />
               </IconButton>
             </Grid>
@@ -357,26 +449,26 @@ export default function AdoptStepper() {
                     </Grid>
                   </div>
                 ) : (
-                  <div>
-                    <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
                     <div>
-                      <Grid container justify="center">
-                        <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                          Atrás
+                      <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+                      <div>
+                        <Grid container justify="center">
+                          <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                            Atrás
                           </Button>
-                        <Button
-                          disabled={petType === 0}
-                          variant="contained"
-                          color="primary"
-                          onClick={handleNext}
-                          className={classes.button}
-                        >
-                          {activeStep === steps.length - 1 ? 'Siguiente' : 'Siguiente'}
-                        </Button>
-                      </Grid>
+                          <Button
+                            disabled={allowContent === false}
+                            variant="contained"
+                            color="primary"
+                            onClick={handleNext}
+                            className={classes.button}
+                          >
+                            {activeStep === steps.length - 1 ? 'Siguiente' : 'Siguiente'}
+                          </Button>
+                        </Grid>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
               </div>
             </div>
           </Dialog>
@@ -429,6 +521,8 @@ export default function AdoptStepper() {
               </Grid>
             </div>
           </Dialog>
+
+
 
         </>
       }
