@@ -191,7 +191,7 @@ export default function PrimarySearchAppBar() {
                 <Hidden only={'xs'}>
 
                   <Typography className={classes.title} variant="h5">
-                    SACI Pet
+                    PET SACI
                     </Typography>
 
                 </Hidden>
@@ -231,7 +231,7 @@ export default function PrimarySearchAppBar() {
                 </Hidden>
 
                 <Hidden mdUp>
-                {/* <Grid container justify="flex-end"> */}
+                  {/* <Grid container justify="flex-end"> */}
                   <SectionMobile />
                   {/* </Grid> */}
                 </Hidden>

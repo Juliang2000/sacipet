@@ -30,3 +30,4 @@ export const reset_action = (petType) => {
         payload: petType
     }
 }
+
