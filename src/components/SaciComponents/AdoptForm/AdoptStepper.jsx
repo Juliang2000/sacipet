@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import StepConnector from '@material-ui/core/StepConnector';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Swal from 'sweetalert2';
 // import { PetType} from '../AdoptForm/PetType';
 
 //Redux
@@ -273,31 +274,42 @@ export default function AdoptStepper() {
      */
     icon: PropTypes.node,
   };
-  const [openConfirmCloseDialog, setOpenConfirmCloseDialog] = useState(false);
+
   const [openModal, setOpenModal] = useState(false);
   // const [cancelForm, setCancelForm] = useState(false);
-
-
-  const handleCheckClose = () => {
-    //  setCheckClose(true)
-    setOpenConfirmCloseDialog(true);
-  };
 
   const handleClickOpenModal = () => {
     setOpenModal(true);
   };
 
   const handleClickCloseModal = () => {
-      setOpenModal(false);
-      setOpenConfirmCloseDialog(false);
-      
-    dispatch(reset_action(petType));
+
+    return (
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: "No podrás revertir los cambios!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#D33',
+        cancelButtonColor: '#63C132',
+        confirmButtonText: 'Sí, salir!',
+        cancelButtonText: "No, cancelar!",
+        customClass: 'swal-wide',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setOpenModal(false);
+          dispatch(reset_action(petType));
+          Swal.close()
+        }
+      })
+    )
   };
-
-  const handleClickCloseConfirm = () => {
-    setOpenConfirmCloseDialog(false);
-};
-
 
 
   const [activeStep, setActiveStep] = useState(0);
@@ -357,7 +369,64 @@ export default function AdoptStepper() {
   //   setCheckClose(true)
   // }
 
+  // const prueba = () => {
+  //   return (
+  //       Swal.fire({
+  //         customClass: {
+  //           container: 'my-swal'
+  //         },
+  //         title: 'Are you sure?',
+  //         text: "You won't be able to revert this!",
+  //         icon: 'warning',
+  //         showCancelButton: true,
+  //         confirmButtonColor: '#3085d6',
+  //         cancelButtonColor: '#d33',
+  //         confirmButtonText: 'Yes, delete it!'
+  //       }).then((result) => {
+  //         if (result.isConfirmed) {
+  //           Swal.fire(
+  //             'Deleted!',
+  //             'Your file has been deleted.',
+  //             'success'
+  //           )
+  //             (handleClickCloseModal)
 
+  //         } else if (result.isDenied) {
+  //           Swal.fire('Changes are not saved', '', 'info')
+  //             (handleClickCloseConfirm)
+  //         }
+  //       })
+  //   )
+  // }
+
+  // if (openConfirmCloseDialog === true) {
+  //   Swal.fire({
+  //     title: '¿Estás seguro?',
+  //     text: "¡No podrás revertir los cambios!",
+  //     icon: 'warning',
+  //     showCancelButton: true,
+  //     confirmButtonColor: '#3085d6',
+  //     cancelButtonColor: '#d33',
+  //     confirmButtonText: '¡Sí, salir!',
+  //     customClass: 'swal-wide',
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       // Swal.fire(
+  //       //   'Eliminado!',
+  //       //   'Tu archivo ha sido eliminado',
+  //       //   'success'
+  //       // )
+  //       handleClickCloseModal()
+  //       Swal.close()
+  //         // (handleClickCloseModal)
+  //         // setOpenModal(false)
+  //         // handleClickCloseConfirm(false)
+  //         // setOpenConfirmCloseDialog(false);
+  //     }else{
+  //       handleClickCloseConfirm()
+  //     }
+  //   })
+  // }
 
 
   return (
@@ -395,15 +464,18 @@ export default function AdoptStepper() {
 
       {user ?
         <>
-          <Dialog open={openConfirmCloseDialog} close={handleClickCloseModal}>
-            <Typography>
+          {/* <Dialog open={openConfirmCloseDialog} close={handleClickCloseModal}> 
+             <Typography>
               ¿Desea cancelar el formulario de Adopción?
             </Typography>
             <Button onClick={handleClickCloseModal}>Si</Button>
-            <Button onClick={handleClickCloseConfirm}>No</Button>
-          </Dialog>
+            <Button onClick={handleClickCloseConfirm}>No</Button> 
+           </Dialog>  */}
+
+
 
           <Dialog
+            style={{ zIndex: 2 }}
             open={openModal}
             onClose={handleClickCloseModal}
             fullWidth
@@ -414,7 +486,7 @@ export default function AdoptStepper() {
               container
               justify="flex-end"
               alignItems="flex-start">
-              <IconButton className={classes.closeIconButton} edge="end" color="inherit" aria-label="close" onClick={handleCheckClose}>
+              <IconButton className={classes.closeIconButton} edge="end" color="inherit" aria-label="close" onClick={handleClickCloseModal}>
                 <CloseIcon className={classes.closeButton} />
               </IconButton>
             </Grid>
@@ -449,26 +521,26 @@ export default function AdoptStepper() {
                     </Grid>
                   </div>
                 ) : (
+                  <div>
+                    <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
                     <div>
-                      <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-                      <div>
-                        <Grid container justify="center">
-                          <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                            Atrás
+                      <Grid container justify="center">
+                        <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                          Atrás
                           </Button>
-                          <Button
-                            disabled={allowContent === false}
-                            variant="contained"
-                            color="primary"
-                            onClick={handleNext}
-                            className={classes.button}
-                          >
-                            {activeStep === steps.length - 1 ? 'Siguiente' : 'Siguiente'}
-                          </Button>
-                        </Grid>
-                      </div>
+                        <Button
+                          disabled={allowContent === false}
+                          variant="contained"
+                          color="primary"
+                          onClick={handleNext}
+                          className={classes.button}
+                        >
+                          {activeStep === steps.length - 1 ? 'Siguiente' : 'Siguiente'}
+                        </Button>
+                      </Grid>
                     </div>
-                  )}
+                  </div>
+                )}
               </div>
             </div>
           </Dialog>
@@ -476,6 +548,7 @@ export default function AdoptStepper() {
         :
         <>
           <Dialog
+            style={{ zIndex: 2 }}
             open={openModal}
             onClose={handleClickCloseModal}
           >
