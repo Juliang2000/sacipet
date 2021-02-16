@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import Lottie from 'react-lottie';
-import { Grid, IconButton, Typography, Hidden, Button, Box } from '@material-ui/core'
+import { Grid, Typography, Hidden, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 
 //Redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 //Redux Actions
 import { dog_action, cat_action, hamster_action } from '../../../redux/actions/petTypeAction';
-import { sizePetData } from '../../../redux/actions/adoptFormAction';
+// import { sizePetData } from '../../../redux/actions/adoptFormAction';
 
 //loties
 import dogPet from '../../../assets/lotties/lottieDog.json'
@@ -47,6 +47,8 @@ const useStyles = makeStyles(() => ({
         marginBottom: '10%',
         marginLeft: '10%',
         marginRight: '10%',
+        // position: 'absolute'
+
 
     },
 
@@ -99,6 +101,8 @@ export default function PetType() {
     // let selection = classes.cards;
 
     const dispatch = useDispatch();
+    const petTypeState = useSelector(state => state.petType.petType);
+
 
     //State to select pet
     const [classSelectDog, setClassSelectDog] = useState(classes.cards);
@@ -114,9 +118,7 @@ export default function PetType() {
     //     petType: '',
     // });
 
-    // const petTypeData = handleClickDog;
-    
-
+    // const petTypeData = handleClickDog; 
 
     const handleClickDog = () => {
         setClassSelectDog(classes.cards2);
@@ -149,6 +151,24 @@ export default function PetType() {
         dispatch(hamster_action(petType));
 
     };
+
+    const [checkClassSelected, setCheckClassSelected] = useState(true);
+
+    if (petTypeState === 1)
+        if (checkClassSelected === true) {
+            setClassSelectCat(classes.cards2);
+            setCheckClassSelected(false);
+        }
+    if (petTypeState === 2)
+        if (checkClassSelected === true) {
+            setClassSelectDog(classes.cards2);
+            setCheckClassSelected(false);
+        }
+    if (petTypeState === 3)
+        if (checkClassSelected === true) {
+            setClassSelectHamster(classes.cards2);
+            setCheckClassSelected(false);
+        }
 
 
     return (
