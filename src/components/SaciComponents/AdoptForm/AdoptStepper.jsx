@@ -21,6 +21,7 @@ import { next_step_action, back_step_action, sizePetData, update_form_data_actio
 import PetType from './PetType'
 import PetDescription from './PetDescription';
 import PetImages from './PetImages';
+import swal from 'sweetalert2'
 
 
 //icons
@@ -60,6 +61,9 @@ const ColorlibConnector = withStyles({
 
 
 const useColorlibStepIconStyles = makeStyles({
+  test: {
+    position: 'relative'
+  },
   root: {
     backgroundColor: '#ccc',
     zIndex: 1,
@@ -188,15 +192,6 @@ function getStepContent(step) {
   }
 }
 
-export function SecureCloseModal() {
-  return (
-    <>
-
-    </>
-  )
-}
-
-
 export default function AdoptStepper() {
   const { user } = useSelector(state => state.login);
   const { petType } = useSelector(state => state.petType);
@@ -225,6 +220,7 @@ export default function AdoptStepper() {
     if (activeStepState === 1) {
       if (petType !== 0) {
         setAllowContent(true)
+        setCheckedStepTwo(true);
         setCheckedStepOne(false);
       }
     }
@@ -232,14 +228,15 @@ export default function AdoptStepper() {
 
   if (petDescription === true) {
     if (checkedStepTwo === false) {
-      setAllowContent(true)
-      setCheckedStepTwo(null)
+      setAllowContent(true);
+      setCheckedStepTwo(null);
     }
   }
 
-  if (activeStepState === 2)
-    if (checkedStepTwo === true) {
+  if (checkedStepTwo === true)
+    if (activeStepState === 2) {
       setAllowContent(false)
+      setCheckedStepOne(true)
       setCheckedStepTwo(false)
     }
 
@@ -288,15 +285,15 @@ export default function AdoptStepper() {
   };
 
   const handleClickCloseModal = () => {
-      setOpenModal(false);
-      setOpenConfirmCloseDialog(false);
-      
+    setOpenModal(false);
+    setOpenConfirmCloseDialog(false);
+
     dispatch(reset_action(petType));
   };
 
   const handleClickCloseConfirm = () => {
     setOpenConfirmCloseDialog(false);
-};
+  };
 
 
 
@@ -319,6 +316,10 @@ export default function AdoptStepper() {
     }
   }
 
+  // const showAlert = () => {
+  //   swal("This is an alert")
+  // }
+
 
 
 
@@ -336,7 +337,7 @@ export default function AdoptStepper() {
 
   const theme = useTheme();
 
-  const fullScreenResponsive = useMediaQuery(theme.breakpoints.down('sm'));
+  const fullScreenResponsive = useMediaQuery(theme.breakpoints.down('lg'));
 
   // const [clickPet, setClickPet] = React.useState(false);
 
@@ -402,76 +403,87 @@ export default function AdoptStepper() {
             <Button onClick={handleClickCloseModal}>Si</Button>
             <Button onClick={handleClickCloseConfirm}>No</Button>
           </Dialog>
-
-          <Dialog
-            open={openModal}
-            onClose={handleClickCloseModal}
-            fullWidth
-            maxWidth='md'
-            fullScreen={fullScreenResponsive}
-          >
-            <Grid
-              container
-              justify="flex-end"
-              alignItems="flex-start">
-              <IconButton className={classes.closeIconButton} edge="end" color="inherit" aria-label="close" onClick={handleCheckClose}>
-                <CloseIcon className={classes.closeButton} />
-              </IconButton>
-            </Grid>
-            <div className={classes.root}>
-              <Hidden only={'xs'}>
-                <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
-                  {steps.map((label) => (
-                    <Step key={label}>
-                      <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
-                    </Step>
-                  ))}
-                </Stepper>
-              </Hidden>
-              <div>
-                {activeStep === steps.length ? (
-                  <div>
-                    <Box m={10}>
-                      <Typography variant="h6" className={classes.instructions}>
-                        Confirma el formulario de adopción
-            </Typography>
-                    </Box>
-                    <Grid container justify="center">
-                      <Button onClick={handleReset} className={classes.button}>
-                        Reiniciar
-            </Button>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        className={classes.button}>
-                        Enviar
-            </Button>
-                    </Grid>
-                  </div>
-                ) : (
+          <div className={classes.test}>
+            <Dialog
+              open={openModal}
+              onClose={handleClickCloseModal}
+              fullWidth
+              maxWidth='md'
+              fullScreen={fullScreenResponsive}
+            >
+              <Grid
+                container
+                justify="flex-end"
+                alignItems="flex-start">
+                <IconButton className={classes.closeIconButton} edge="end" color="inherit" aria-label="close" onClick={handleCheckClose}>
+                  <CloseIcon className={classes.closeButton} />
+                </IconButton>
+              </Grid>
+              <div className={classes.root}>
+                <Hidden only={'xs'}>
+                  <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
+                    {steps.map((label) => (
+                      <Step key={label}>
+                        <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+                      </Step>
+                    ))}
+                  </Stepper>
+                </Hidden>
+                <div>
+                  {activeStep === steps.length ? (
                     <div>
-                      <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-                      <div>
-                        <Grid container justify="center">
-                          <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                            Atrás
-                          </Button>
-                          <Button
-                            disabled={allowContent === false}
-                            variant="contained"
-                            color="primary"
-                            onClick={handleNext}
-                            className={classes.button}
-                          >
-                            {activeStep === steps.length - 1 ? 'Siguiente' : 'Siguiente'}
-                          </Button>
-                        </Grid>
-                      </div>
+                      <Box m={10}>
+                        <Typography variant="h4" className={classes.instructions}>
+                          ¿Todos los datos son correctos? 
+                        </Typography>
+
+                        <Lottie
+                            options={registerPetFormOptions}
+                            height={150}
+                            width={150}
+                            isPaused={playLottie.registerPetForm}
+                        />
+                        <Typography variant="h6" className={classes.instructions}>
+                          Pulsa el botón enviar para completar el registro del formulario
+                        </Typography>
+                      </Box>
+                      <Grid container justify="center">
+                        <Button onClick={handleBack} className={classes.button}>
+                          Atrás
+            </Button>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          className={classes.button}>
+                          Enviar
+            </Button>
+                      </Grid>
                     </div>
-                  )}
+                  ) : (
+                      <div>
+                        <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+                        <div>
+                          <Grid container justify="center">
+                            <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                              Atrás
+                          </Button>
+                            <Button
+                              disabled={allowContent === false}
+                              variant="contained"
+                              color="primary"
+                              onClick={handleNext}
+                              className={classes.button}
+                            >
+                              {activeStep === steps.length - 1 ? 'Siguiente' : 'Siguiente'}
+                            </Button>
+                          </Grid>
+                        </div>
+                      </div>
+                    )}
+                </div>
               </div>
-            </div>
-          </Dialog>
+            </Dialog>
+          </div>
         </>
         :
         <>
@@ -515,7 +527,7 @@ export default function AdoptStepper() {
                       className={classes.buttonSecondary2}
                     >
                       ¿No tienes una cuenta? Regístrate
-                            </Button>
+                    </Button>
                   </Grid>
                 </Link>
               </Grid>
