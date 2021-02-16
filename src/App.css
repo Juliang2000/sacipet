@@ -2,3 +2,7 @@
 button{
     outline: none !important;
   }
+
+  .swal-wide{
+     z-index:3 !important;
+}

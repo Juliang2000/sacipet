@@ -167,7 +167,7 @@ export default function PrimarySearchAppBar() {
   return (
     <div className={classes.grow}>
       <Box mb={10}>
-        <AppBar position="fixed">
+        <AppBar position="fixed" style={{zIndex: 1}}>
           <Toolbar>
             <Grid container alignItems="center" xs={12}>
               <Grid container xs={11} sm={11} md={3} lg={3} xl={2} alignItems="center">
