@@ -1,21 +1,17 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { fade, makeStyles, withStyles } from '@material-ui/core/styles';
+import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import Drawer from '@material-ui/core/Drawer';
-import { useMediaQuery, Hidden, Button, Grid } from '@material-ui/core';
+import { Hidden, Grid } from '@material-ui/core';
 import Box from '@material-ui/core/Box'
-//Redux
-import { useSelector } from 'react-redux';
+
 
 
 //components
@@ -29,10 +25,11 @@ import SectionMobile from './SectionMobile';
 
 //icons
 // import logo from './../../assets/svg/Pininawhite.png'
-import logo from './../../assets/svg/Pininawhite.png';
+import logo from './../../assets/svg/logo-pinina.svg';
 import servicesIcon from '../../assets/icons/drawer/services.svg'
 import storeIcon from '../../assets/icons/drawer/store.svg'
-import iconsend from './../../assets/icons/send.svg';
+
+import iconMenu from '../../assets/icons/menu-final.svg'
 
 
 
@@ -53,6 +50,14 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     color: '#ffff',
+    fontSize: '1.2rem',
+    marginRight: '5px',
+    [theme.breakpoints.up('xs')]: {
+      display: 'block',
+    },
+  },
+  title2: {
+    color: '#black',
     fontSize: '1.2rem',
     [theme.breakpoints.up('xs')]: {
       display: 'block',
@@ -167,7 +172,7 @@ export default function PrimarySearchAppBar() {
   return (
     <div className={classes.grow}>
       <Box mb={10}>
-        <AppBar position="fixed" style={{zIndex: 1}}>
+        <AppBar position="fixed" style={{ zIndex: 1 }}>
           <Toolbar>
             <Grid container alignItems="center" xs={12}>
               <Grid container xs={11} sm={11} md={3} lg={3} xl={2} alignItems="center">
@@ -178,8 +183,9 @@ export default function PrimarySearchAppBar() {
                   aria-label="open drawer"
                   onClick={handleDrawerOpen}
                 >
-                  <MenuIcon
-                    onClick={handleDrawerClose} />
+
+                  <img src={iconMenu} alt="Menu" style={{ width: '25px' }} />
+
                 </IconButton>
 
                 {/* </Grid> */}
@@ -190,9 +196,9 @@ export default function PrimarySearchAppBar() {
 
                 <Hidden only={'xs'}>
 
-                  <Typography className={classes.title} variant="h5">
-                    PET SACI
-                    </Typography>
+                  <Typography className={classes.title} variant="h5">PET</Typography>
+
+                  <Typography className={classes.title2} variant="h5">SACI</Typography>
 
                 </Hidden>
               </Grid>
@@ -256,11 +262,14 @@ export default function PrimarySearchAppBar() {
               aria-label="open drawer"
               onClick={handleDrawerClose}
             >
-              <MenuIcon />
+              <img src={iconMenu} alt="Menu" style={{ width: '25px' }}/>
             </IconButton>
             <IconButton className={classes.upper}><img width={40} src={logo} alt="logo"></img></IconButton>
             <Typography className={classes.title} variant="h5" noWrap>
-              SACI Pet
+              PET
+          </Typography>
+            <Typography className={classes.title2} variant="h5" noWrap>
+              SACI
           </Typography>
           </Toolbar>
         </AppBar>

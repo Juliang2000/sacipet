@@ -1,50 +1,71 @@
+// Hooks
 import React, { useEffect, useState, useRef } from 'react';
+
+// Router
 import { Link, useHistory } from 'react-router-dom';
+
 // Clsx
 import clsx from 'clsx';
+
 // Form Validation
 import { useForm } from "react-hook-form";
+
 // Dispach Redux
 import { useDispatch, useSelector } from 'react-redux';
+
 // redux Actions
 import { registerAction } from '../redux/actions/registerAction';
 import { loginGoogleAction } from '../redux/actions/googleAction';
 import { loginFacebookAction } from '../redux/actions/facebookAction';
 import Loader from './Loader';
+
 // Alerts
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
+
 // Material UI
-import { 
-  FormControlLabel, 
-  TextField, 
-  Grid, 
-  Checkbox, 
-  Button, 
-  Typography, 
-  Card, 
-  Hidden } from '@material-ui/core';
+import {
+  FormControlLabel,
+  TextField,
+  Grid,
+  Checkbox,
+  Button,
+  Typography,
+  Card,
+  Hidden
+} from '@material-ui/core';
+
 //Styles
 import registerStyles from './../assets/css/js/registerStyles';
-// Logos
-import logoName from '../assets/icons/pets.svg';
-import logoPhone from '../assets/icons/phone.svg';
-import logoEmail from '../assets/icons/email.svg';
-import logoPassword from '../assets/icons/lock.svg';
-import logoPassword2 from '../assets/icons/lock_2.svg';
+
+// Icons
+import iconName from '../assets/icons/pet-final.svg';
+import iconPhone from '../assets/icons/phone-final.svg';
+import iconEmail from '../assets/icons/email-final.svg';
+import iconPassword from '../assets/icons/lock-final.svg';
+import iconPassword2 from '../assets/icons/lock-2-final.svg';
 import logoSend from '../assets/icons/registration.svg';
+
 // Tittle
-import titlepinina from '../assets/images/titlepinina.png';
+import titlepinina from '../assets/images/titulo.png';
+
 // Google Button
 import GoogleLogin from 'react-google-login';
+
 // Facebook Button
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+
+// useMediaQuery
+import { useTheme } from '@material-ui/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+
 ////////////////////////////////////////////////////////////////////////////////////
+
 export default function Register() {
-//Styles
+
+  // Styles
   const classes = registerStyles();
-  //Validation Form Register
-  const { register, errors, handleSubmit, watch } = useForm();
-  //Field Validation
+
+  // Field Validation
   const [newUser, setnewUser] = useState({
     nombres: '',
     apellidos: 'test',
@@ -56,46 +77,39 @@ export default function Register() {
     id_rol: '1',
     origen_cuenta: 'Registro Normal'
   });
+
+  // Input Event
   const handleChange = (event) => {
     const { name, value } = event.target
     setnewUser({ ...newUser, [name]: value })
   };
 
+  // Input Submit
   const onSubmit = (data, e) => {
-    // if (isChecked === true) {
-    //   setIsChecked(false)
+    if (isChecked === true) {
+      setIsChecked(false)
       _handleSubmit({ ...newUser })
       console.log(newUser)
       e.target.reset();
-    // } else {
-    //   return
-    // }
+    } else {
+      return
+    }
   };
 
-  // const _handleSubmit = (data) => {
-  //   saveUserRegister(data)
-  //   swal.fire("Muy Bien!", "Registro Exitoso!", "success");
-  // };
+  // Validation Form Register
+  const { register, errors, handleSubmit, watch } = useForm({
+    mode: 'onChange'
+  });
 
- 
-
+  // Password Validation
   const password = useRef({});
   password.current = watch("password", "");
 
-  // const responseFacebook = (response) => {
-  //   console.log(response);
-  //   saveFbUser(response);
-  // };
-
-  // const responseGoogle = (response) => {
-  //   console.log(response);
-  //   saveUserGoogle(response)
-  // };
-
+  // Check Validation
   const [isChecked, setIsChecked] = useState(false);
-
   const [checkRed, setCheckRed] = useState(false);
 
+  // Check Validation
   const handleCheckRegister = () => {
     if (isChecked === true) {
       setCheckRed(false)
@@ -104,6 +118,7 @@ export default function Register() {
     }
   };
 
+  // Check Validation
   const handleCheckbox = () => {
     if (isChecked === false) {
       setCheckRed(false)
@@ -112,40 +127,59 @@ export default function Register() {
     }
   };
 
- // redux implementation
- const { user, loader, ok } = useSelector( state => state.register );
- const dispatch = useDispatch();
- const history = useHistory();
- // redux Actions
- const _handleSubmit = async(data) => {
-   dispatch(registerAction(data));
-   //swal("Muy Bien!", "Inicio Sesión Exitoso!", "success");
- };
+  // Redux implementation
+  const { loader, ok } = useSelector(state => state.register);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
- const responseGoogle = (data) => {
-   //console.log(data);
-   dispatch(loginGoogleAction(data));
- };
- const responseFacebook = (data) => {
-   dispatch(loginFacebookAction(data));
- };
- // Push to SaciDashboard
- useEffect(() => {
-   if (ok !== false) {
-       history.push('/');
-   }
- }, [user]);
+  // Redux Actions
+  const _handleSubmit = async (data) => {
+    dispatch(registerAction(data));
+    //swal("Muy Bien!", "Inicio Sesión Exitoso!", "success");
+  };
+
+  // Redux Google
+  const responseGoogle = (data) => {
+    dispatch(loginGoogleAction(data));
+  };
+
+  // Redux Facebook
+  const responseFacebook = (data) => {
+    dispatch(loginFacebookAction(data));
+  };
+
+  // Push to SaciDashboard
+  useEffect(() => {
+    if (ok !== false) {
+      history.push('/');
+      Swal.fire({
+        icon: 'success',
+        title: `Muy Bien! ${ok.nombres}`,
+        text: 'Registro Exitoso!',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown',
+          icon: 'swal2-icon-show'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        }
+      })
+    }
+  });
+
+  // Container Justify Responsive
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'), {
+    defaultMatches: true
+  });
 
   return (
-
     <>
-
-    { loader && (
-      <Loader />
-    ) }
-
+      { loader && (
+        <Loader />
+      )}
       <div className={classes.containerLogin}>
-        <Grid container alignItems="center" justify="center">
+        <Grid container alignItems="center" justify={isMobile ? 'center' : 'flex-end'}>
           <Grid item xs={12} sm={8} md={5} lg={4} xl={3} >
             <Card className={classes.containerForm}>
               <form onSubmit={handleSubmit(onSubmit)}>
@@ -153,10 +187,10 @@ export default function Register() {
                   REGISTRARSE
               </Typography>
                 <Grid container alignItems="center" spacing={2}>
-                  <Grid item xs={1}>
-                    <img src={logoName} alt="username" className={classes.icons2} />
+                  <Grid item xs={2} className={classes.iconsCenter}>
+                    <img src={iconName} alt="username" className={classes.icons1} />
                   </Grid>
-                  <Grid item xs={11}>
+                  <Grid item xs={10}>
                     <TextField
                       label="Nombre de usuario"
                       type="text"
@@ -176,10 +210,10 @@ export default function Register() {
                       onChange={handleChange}
                     />
                   </Grid>
-                  <Grid item xs={1}>
-                    <img src={logoPhone} alt="Teléfono" className={classes.icons1} />
+                  <Grid item xs={2} className={classes.iconsCenter}>
+                    <img src={iconPhone} alt="Teléfono" className={classes.icons1} />
                   </Grid>
-                  <Grid item xs={11}>
+                  <Grid item xs={10}>
                     <TextField
                       label="Télefono"
                       type="tel"
@@ -197,10 +231,10 @@ export default function Register() {
                       onChange={handleChange}
                     />
                   </Grid>
-                  <Grid item xs={1}>
-                    <img src={logoEmail} alt="Email" className={classes.icons1} />
+                  <Grid item xs={2} className={classes.iconsCenter}>
+                    <img src={iconEmail} alt="Email" className={classes.icons1} />
                   </Grid>
-                  <Grid item xs={11}>
+                  <Grid item xs={10}>
                     <TextField
                       label="Email"
                       type="email"
@@ -221,10 +255,10 @@ export default function Register() {
                       onChange={handleChange}
                     />
                   </Grid>
-                  <Grid item xs={1}>
-                    <img src={logoPassword} alt="Contraseña" className={classes.icons2} />
+                  <Grid item xs={2} className={classes.iconsCenter}>
+                    <img src={iconPassword} alt="Contraseña" className={classes.icons2} />
                   </Grid>
-                  <Grid item xs={11}>
+                  <Grid item xs={10}>
                     <TextField
                       label="Contraseña"
                       type="password"
@@ -245,10 +279,10 @@ export default function Register() {
                       onChange={handleChange}
                     />
                   </Grid>
-                  <Grid item xs={1}>
-                    <img src={logoPassword2} alt="Contraseña" className={classes.icons1} />
+                  <Grid item xs={2} className={classes.iconsCenter}>
+                    <img src={iconPassword2} alt="Contraseña" className={classes.icons1} />
                   </Grid>
-                  <Grid item xs={11}>
+                  <Grid item xs={10}>
                     <TextField
                       label="Repetir Contraseña"
                       type="password"
@@ -348,7 +382,7 @@ export default function Register() {
               </form>
             </Card>
           </Grid>
-          <Grid item md={5} lg={6} xl={7}>
+          <Grid item md={5} lg={6} xl={8}>
             <Grid container justify="flex-end">
               <Hidden smDown>
                 <img src={titlepinina} alt="hola" className={classes.titlePinina} />
@@ -357,6 +391,6 @@ export default function Register() {
           </Grid>
         </Grid>
       </div>
-      </>
+    </>
   )
 };

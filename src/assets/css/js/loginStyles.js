@@ -1,13 +1,13 @@
 import { makeStyles } from '@material-ui/core/styles';
-// import Image from '../../../assets/images/fondo.jpg';
+import Image from '../../../assets/images/fondo.jpg';
 
 const loginStyles = makeStyles((theme) => ({
 
   containerLogin: {
-    // backgroundImage: `url(${Image})`,
-    // backgroundRepeat: 'no-repeat',
-    // backgroundSize: 'cover',
-    // width: '100%',
+    backgroundImage: `url(${Image})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    width: '100%',
     position: 'absolute',
     minHeight: '100%',
     '& .MuiButton-root': {
@@ -28,7 +28,7 @@ const loginStyles = makeStyles((theme) => ({
   },
 
   titlePinina: {
-    width: '80%',
+    width: '100%',
   },
 
   titleForm: {
@@ -85,12 +85,21 @@ const loginStyles = makeStyles((theme) => ({
   },
 
   icons1: {
-    width: '20px',
+    width: '35px',
   },
 
   icons2: {
-    width: '25px',
+    width: '30px',
   },
+
+  icons3: {
+    width: '40px',
+  },
+
+  iconsCenter: {
+    display: 'flex',
+    justifyContent: 'center'
+  }
 
 }));
 

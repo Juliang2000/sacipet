@@ -1,13 +1,13 @@
 import { makeStyles } from '@material-ui/core/styles';
-// import Image from '../../../assets/images/wallpaper.svg';
+import Image from '../../../assets/images/fondo.jpg';
 
 const registerStyles = makeStyles((theme) => ({
 
   containerLogin: {
-    // backgroundImage: `url(${Image})`,
-    // backgroundRepeat: 'no-repeat',
-    // backgroundSize: 'cover',
-    // width: '100%',
+    backgroundImage: `url(${Image})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    width: '100%',
     position: 'absolute',
     minHeight: '100%',
     '& .MuiButton-root': {
@@ -16,7 +16,6 @@ const registerStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-
   },
 
   containerForm: {
@@ -28,7 +27,7 @@ const registerStyles = makeStyles((theme) => ({
   },
 
   titlePinina: {
-    width: '80%',
+    width: '100%',
   },
 
   titleForm: {
@@ -94,12 +93,17 @@ const registerStyles = makeStyles((theme) => ({
   },
 
   icons1: {
-    width: '20px',
+    width: '35px',
   },
 
   icons2: {
-    width: '25px',
+    width: '30px',
   },
+
+  iconsCenter: {
+    display: 'flex',
+    justifyContent: 'center'
+  }
 
 }));
 

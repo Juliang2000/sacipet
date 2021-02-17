@@ -1,7 +1,7 @@
 import React, { useEffect, useState, } from 'react';
 import { Link, useHistory, } from 'react-router-dom';
 // Alerts
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 // Form Validation
 import { useForm } from "react-hook-form";
 // Dispach Redux
@@ -13,18 +13,23 @@ import { loginFacebookAction } from '../redux/actions/facebookAction';
 import Loader from './Loader';
 // Material UI
 import { TextField, Grid, Button, Typography, Card, Hidden } from '@material-ui/core';
-// Icons 
-import iconEmail from '../assets/icons/email.svg';
-import iconPassword from '../assets/icons/lock.svg';
-import iconSend from '../assets/icons/send.svg';
+// Icons
+import iconEmail from '../assets/icons/email-final.svg';
+import iconPassword from '../assets/icons/lock-final.svg';
+import iconSend from '../assets/icons/send-final.svg';
+import iconFacebook from '../assets/icons/facebook-final.svg';
+import iconGoogle from '../assets/icons/google-final.svg';
 // Styles
 import loginStyles from './../assets/css/js/loginStyles';
 // Tittle
-import titlepinina from '../assets/images/titlepinina.png';
+import titlepinina from '../assets/images/titulo.png';
 // Google Button
 import GoogleLogin from 'react-google-login';
 // Facebook Button
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+// useMediaQuery
+import { useTheme } from '@material-ui/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 ////////////////////////////////////////////////////////////////////////////////////
 export default function Login() {
 
@@ -32,7 +37,9 @@ export default function Login() {
   const classes = loginStyles();
 
   // Validation Form Login
-  const { register, errors, handleSubmit } = useForm();
+  const { register, errors, handleSubmit } = useForm({
+    mode: "onChange",
+  });
 
   // Field Validation
   const [newUser, setnewUser] = useState({
@@ -77,9 +84,29 @@ export default function Login() {
   useEffect(() => {
     if (user.length !== 0) {
       history.push('/');
-      swal.fire(`Bienvenid@ ${user.nombres}`, `Sesión Iniciada`, "success");
+      Swal.fire({
+        icon: 'success',
+        title: `Bienvenid@ ${user.nombres}`,
+        text: 'Sesión Iniciada',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown',
+          icon: 'swal2-icon-show'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        }
+      })
     }
-  }, [user]);
+  });
+
+
+
+
+  // Container Justify Responsive
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'), {
+    defaultMatches: true
+  });
 
   return (
     // <ThemeProvider theme={pininaTheme}>
@@ -89,7 +116,7 @@ export default function Login() {
       )}
 
       <div className={classes.containerLogin}>
-        <Grid container alignItems="center" justify="center">
+        <Grid container alignItems="center" justify={isMobile ? 'center' : 'flex-end'}>
           <Grid item xs={12} sm={8} md={5} lg={4} xl={3} >
             <Card className={classes.containerForm}>
               <form onSubmit={handleSubmit(onSubmit)}>
@@ -97,10 +124,10 @@ export default function Login() {
                   INICIAR SESIÓN
               </Typography>
                 <Grid container alignItems="center" spacing={2}>
-                  <Grid item xs={1}>
-                    <img src={iconEmail} alt="Email" className={classes.icons1} />
+                  <Grid item xs={2} className={classes.iconsCenter}>
+                    <img src={iconEmail} alt="Contraseña" className={classes.icons1} />
                   </Grid>
-                  <Grid item xs={11}>
+                  <Grid item xs={10}>
                     <TextField
                       label="Email"
                       type="email"
@@ -121,10 +148,10 @@ export default function Login() {
                       onChange={handleChange}
                     />
                   </Grid>
-                  <Grid item xs={1}>
+                  <Grid item xs={2} className={classes.iconsCenter} >
                     <img src={iconPassword} alt="Contraseña" className={classes.icons2} />
                   </Grid>
-                  <Grid item xs={11}>
+                  <Grid item xs={10} >
                     <TextField
                       label="Contraseña"
                       type="password"
@@ -165,7 +192,7 @@ export default function Login() {
                     className={classes.buttonPrimary}
                     variant="contained"
                     size="large"
-                    endIcon={<img src={iconSend} alt="LogIn" className={classes.icons2} />}
+                    endIcon={<img src={iconSend} alt="LogIn" className={classes.icons1} />}
                     fullWidth
                     type="submit"
                   >
@@ -183,7 +210,7 @@ export default function Login() {
                         variant="contained"
                         size="large"
                         fullWidth
-                        startIcon={<i className="fab fa-facebook-f"></i>}
+                        startIcon={<img src={iconFacebook} alt="Facebook" className={classes.icons1} />}
                         onClick={renderProps.onClick}
                       >
                         <Grid container justify="center">Entrar con Facebook</Grid>
@@ -202,7 +229,7 @@ export default function Login() {
                         variant="contained"
                         size="large"
                         fullWidth
-                        startIcon={<i className="fab fa-google-plus-g"></i>}
+                        startIcon={<img src={iconGoogle} alt="Google" className={classes.icons3} />}
                         onClick={renderProps.onClick}
                       >
                         <Grid container justify="center">Entrar con  Google</Grid>
@@ -225,8 +252,8 @@ export default function Login() {
               </form>
             </Card>
           </Grid>
-          <Grid item md={5} lg={6} xl={7}>
-            <Grid container justify="flex-end">
+          <Grid item md={5} lg={6} xl={8}>
+            <Grid container justify="flex-start">
               <Hidden smDown>
                 <img src={titlepinina} alt="hola" className={classes.titlePinina} />
               </Hidden>
