@@ -30,6 +30,9 @@ import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props
 // useMediaQuery
 import { useTheme } from '@material-ui/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+
+
+// import { HandleClickOpenRegister } from '../components/SaciComponents/SectionDesktop'
 ////////////////////////////////////////////////////////////////////////////////////
 export default function Login() {
 
@@ -115,143 +118,146 @@ export default function Login() {
         <Loader />
       )}
 
-      <div className={classes.containerLogin}>
-        <Grid container alignItems="center" justify={isMobile ? 'center' : 'flex-end'}>
-          <Grid item xs={12} sm={8} md={5} lg={4} xl={3} >
-            <Card className={classes.containerForm}>
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <Typography align="center" variant="h4" gutterBottom className={classes.titleForm}>
-                  INICIAR SESIÓN
+      {/* <div className={classes.containerLogin}> */}
+      {/* <Grid container alignItems="center" justify={isMobile ? 'center' : 'flex-end'}>
+          <Grid item xs={12} sm={8} md={5} lg={4} xl={3} > */}
+      <Card className={classes.containerForm}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Typography align="center" variant="h4" gutterBottom className={classes.titleForm}>
+            INICIAR SESIÓN
               </Typography>
-                <Grid container alignItems="center" spacing={2}>
-                  <Grid item xs={2} className={classes.iconsCenter}>
-                    <img src={iconEmail} alt="Contraseña" className={classes.icons1} />
-                  </Grid>
-                  <Grid item xs={10}>
-                    <TextField
-                      label="Email"
-                      type="email"
-                      name="correo"
-                      variant="outlined"
-                      fullWidth
-                      inputRef={
-                        register({
-                          required: { value: true, message: 'Completa este dato' },
-                          pattern: {
-                            value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-                            message: 'Digite un correo electronico valido'
-                          }
-                        })
-                      }
-                      helperText={errors?.correo?.message}
-                      error={errors?.correo?.message ? true : false}
-                      onChange={handleChange}
-                    />
-                  </Grid>
-                  <Grid item xs={2} className={classes.iconsCenter} >
-                    <img src={iconPassword} alt="Contraseña" className={classes.icons2} />
-                  </Grid>
-                  <Grid item xs={10} >
-                    <TextField
-                      label="Contraseña"
-                      type="password"
-                      name="password"
-                      variant="outlined"
-                      fullWidth
-                      inputRef={
-                        register({
-                          required: { value: true, message: 'Completa este dato' },
-                          pattern: {
-                            value: /^.{4,12}$/,
-                            message: 'Digite una contraseña de 4 a 12 digitos'
-                          }
-                        })
-                      }
-                      helperText={errors?.password?.message}
-                      error={errors?.password?.message ? true : false}
-                      onChange={handleChange}
-                    />
-                  </Grid>
-                </Grid>
-                <Grid container justify="flex-end">
-                  <Link
-                    to="/RecuperarContraseña"
-                    style={{ textDecoration: "none", filter: "contrast(1)" }}
-                  >
-                    <Button
-                      variant="text"
-                      size="small"
-                      className={classes.buttonSecondary1}
-                    >
-                      ¿Olvidaste tu contraseña?
+          <Grid container alignItems="center" spacing={2}>
+            <Grid item xs={2} className={classes.iconsCenter}>
+              <img src={iconEmail} alt="Contraseña" className={classes.icons1} />
+            </Grid>
+            <Grid item xs={10}>
+              <TextField
+                label="Email"
+                type="email"
+                name="correo"
+                variant="outlined"
+                fullWidth
+                inputRef={
+                  register({
+                    required: { value: true, message: 'Completa este dato' },
+                    pattern: {
+                      value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                      message: 'Digite un correo electronico valido'
+                    }
+                  })
+                }
+                helperText={errors?.correo?.message}
+                error={errors?.correo?.message ? true : false}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={2} className={classes.iconsCenter} >
+              <img src={iconPassword} alt="Contraseña" className={classes.icons2} />
+            </Grid>
+            <Grid item xs={10} >
+              <TextField
+                label="Contraseña"
+                type="password"
+                name="password"
+                variant="outlined"
+                fullWidth
+                inputRef={
+                  register({
+                    required: { value: true, message: 'Completa este dato' },
+                    pattern: {
+                      value: /^.{4,12}$/,
+                      message: 'Digite una contraseña de 4 a 12 digitos'
+                    }
+                  })
+                }
+                helperText={errors?.password?.message}
+                error={errors?.password?.message ? true : false}
+                onChange={handleChange}
+              />
+            </Grid>
+          </Grid>
+          <Grid container justify="flex-end">
+            <Link
+              to="/RecuperarContraseña"
+              style={{ textDecoration: "none", filter: "contrast(1)" }}
+            >
+              <Button
+                variant="text"
+                size="small"
+                className={classes.buttonSecondary1}
+              >
+                ¿Olvidaste tu contraseña?
                 </Button>
-                  </Link>
-                </Grid>
-                <Grid container justify="center">
-                  <Button
-                    className={classes.buttonPrimary}
-                    variant="contained"
-                    size="large"
-                    endIcon={<img src={iconSend} alt="LogIn" className={classes.icons1} />}
-                    fullWidth
-                    type="submit"
-                  >
-                    Entrar
+            </Link>
+          </Grid>
+          <Grid container justify="center">
+            <Button
+              className={classes.buttonPrimary}
+              variant="contained"
+              size="large"
+              endIcon={<img src={iconSend} alt="LogIn" className={classes.icons1} />}
+              fullWidth
+              type="submit"
+            >
+              Entrar
                </Button>
-                  <span > --------------- O ---------------</span>
-                  <FacebookLogin
-                    appId="398513521394376"
-                    autoLoad={false}
-                    fields="name,email,picture"
-                    callback={responseFacebook}
-                    render={renderProps => (
-                      <Button
-                        className={classes.buttonFacebook}
-                        variant="contained"
-                        size="large"
-                        fullWidth
-                        startIcon={<img src={iconFacebook} alt="Facebook" className={classes.icons1} />}
-                        onClick={renderProps.onClick}
-                      >
-                        <Grid container justify="center">Entrar con Facebook</Grid>
-                      </Button>
-                    )}
-                  />
-                  <GoogleLogin
-                    clientId="455409927963-pjq50ke82as4i9mv4163pimvcj5889r6.apps.googleusercontent.com"
-                    buttonText="Login"
-                    onSuccess={responseGoogle}
-                    onFailure={responseGoogle}
-                    cookiePolicy={'single_host_origin'}
-                    render={renderProps => (
-                      <Button
-                        className={classes.buttonGmail}
-                        variant="contained"
-                        size="large"
-                        fullWidth
-                        startIcon={<img src={iconGoogle} alt="Google" className={classes.icons3} />}
-                        onClick={renderProps.onClick}
-                      >
-                        <Grid container justify="center">Entrar con  Google</Grid>
-                      </Button>
-                    )}
-                  />
-                  <Link
+            <span > --------------- O ---------------</span>
+            <FacebookLogin
+              appId="398513521394376"
+              autoLoad={false}
+              fields="name,email,picture"
+              callback={responseFacebook}
+              render={renderProps => (
+                <Button
+                  className={classes.buttonFacebook}
+                  variant="contained"
+                  size="large"
+                  fullWidth
+                  startIcon={<img src={iconFacebook} alt="Facebook" className={classes.icons2} />}
+                  onClick={renderProps.onClick}
+                >
+                  <Grid container justify="center">Entrar con Facebook</Grid>
+                </Button>
+              )}
+            />
+            <GoogleLogin
+              clientId="455409927963-pjq50ke82as4i9mv4163pimvcj5889r6.apps.googleusercontent.com"
+              buttonText="Login"
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+              cookiePolicy={'single_host_origin'}
+              render={renderProps => (
+                <Button
+                  className={classes.buttonGmail}
+                  variant="contained"
+                  size="large"
+                  fullWidth
+                  startIcon={<img src={iconGoogle} alt="Google" className={classes.icons1} />}
+                  onClick={renderProps.onClick}
+                >
+                  <Grid container justify="center">Entrar con  Google</Grid>
+                </Button>
+              )}
+            />
+            {/* <Link
                     to="/Register"
                     style={{ textDecoration: "none", filter: "contrast(1)" }}
-                  >
-                    <Button
-                      variant="text"
-                      size="small"
-                      className={classes.buttonSecondary2}
-                    >
-                      ¿No tienes una cuenta? Regístrate
+                  > */}
+            <Button
+              variant="text"
+              size="small"
+              className={classes.buttonSecondary2}
+            // onClick={HandleClickOpenRegister}
+            >
+              ¿No tienes una cuenta? Regístrate
                 </Button>
-                  </Link>
-                </Grid>
-              </form>
-            </Card>
+            {/* </Link> */}
           </Grid>
+          {/* <HandleClickOpenRegister/> */}
+        </form>
+
+      </Card>
+      {/* </Grid>
           <Grid item md={5} lg={6} xl={8}>
             <Grid container justify="flex-start">
               <Hidden smDown>
@@ -259,8 +265,8 @@ export default function Login() {
               </Hidden>
             </Grid>
           </Grid>
-        </Grid>
-      </div>
+        </Grid> */}
+      {/* </div> */}
     </>
   )
 };

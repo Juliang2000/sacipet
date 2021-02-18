@@ -178,9 +178,9 @@ export default function Register() {
       { loader && (
         <Loader />
       )}
-      <div className={classes.containerLogin}>
+      {/* <div className={classes.containerLogin}>
         <Grid container alignItems="center" justify={isMobile ? 'center' : 'flex-end'}>
-          <Grid item xs={12} sm={8} md={5} lg={4} xl={3} >
+          <Grid item xs={12} sm={8} md={5} lg={4} xl={3} > */}
             <Card className={classes.containerForm}>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Typography align="center" variant="h4" gutterBottom className={classes.titleForm}>
@@ -381,7 +381,7 @@ export default function Register() {
                 </Grid>
               </form>
             </Card>
-          </Grid>
+          {/* </Grid>
           <Grid item md={5} lg={6} xl={8}>
             <Grid container justify="flex-end">
               <Hidden smDown>
@@ -390,7 +390,7 @@ export default function Register() {
             </Grid>
           </Grid>
         </Grid>
-      </div>
+      </div> */}
     </>
   )
 };
