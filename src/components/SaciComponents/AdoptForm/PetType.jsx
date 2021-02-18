@@ -96,13 +96,10 @@ export default function PetType() {
         loop: true,
         autoplay: true,
         animationData: hamsterPet,
-    };
-
-    // let selection = classes.cards;
+    };   
 
     const dispatch = useDispatch();
     const petTypeState = useSelector(state => state.petType.petType);
-
 
     //State to select pet
     const [classSelectDog, setClassSelectDog] = useState(classes.cards);
@@ -113,35 +110,19 @@ export default function PetType() {
     const selectClassCat = classSelectCat;
     const selectClassHamster = classSelectHamster;
 
-    //Pet Validation
-    // const [pet, setPet] = useState({
-    //     petType: '',
-    // });
-
-    // const petTypeData = handleClickDog; 
-
     const handleClickDog = () => {
         setClassSelectDog(classes.cards2);
         setClassSelectCat(classes.cards);
         setClassSelectHamster(classes.cards);
         dispatch(dog_action(petType));
         console.log()
-
-        // setPet({...pet})
-        // dispatch(saveAdoptForm(newPet));
-        // console.log(newPet)
     };
-
-    // const _handleSubmit = async (data) => {
-    //     dispatch(saveAdoptForm(data));
-    // }
 
     const handleClickCat = () => {
         setClassSelectDog(classes.cards);
         setClassSelectCat(classes.cards2);
         setClassSelectHamster(classes.cards);
         dispatch(cat_action(petType));
-
     };
 
     const handleClickHamster = () => {
@@ -149,27 +130,25 @@ export default function PetType() {
         setClassSelectCat(classes.cards);
         setClassSelectHamster(classes.cards2);
         dispatch(hamster_action(petType));
-
     };
 
     const [checkClassSelected, setCheckClassSelected] = useState(true);
 
-    if (petTypeState === 1)
+    if (petTypeState === 1) {
         if (checkClassSelected === true) {
             setClassSelectCat(classes.cards2);
             setCheckClassSelected(false);
-        }
-    if (petTypeState === 2)
+        }}
+    if (petTypeState === 2) {
         if (checkClassSelected === true) {
             setClassSelectDog(classes.cards2);
             setCheckClassSelected(false);
-        }
-    if (petTypeState === 3)
+        }}
+    if (petTypeState === 3) {
         if (checkClassSelected === true) {
             setClassSelectHamster(classes.cards2);
             setCheckClassSelected(false);
-        }
-
+        }}
 
     return (
         <div className={classes.root} >
@@ -178,8 +157,7 @@ export default function PetType() {
                     <Grid container justify="center" alignItems="flex-start">
                         <div className={classes.title}>
 
-
-                            <Typography variant="h5">
+                            <Typography variant="h5" fontFamily>
                                 ¿Qué tipo de mascota deseas dar en adopción?
                             </Typography>
 

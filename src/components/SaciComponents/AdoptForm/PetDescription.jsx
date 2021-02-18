@@ -90,15 +90,6 @@ export default function PetDescription() {
 
   const [saveFormDescription, setSaveFormDescription] = useState(true);
 
-  // if (saveFormDescription === true) {
-  //   if (activeStepState === 2) {
-  //     // dispatch(savePetFormAction(newPet));
-  //     dispatch(update_form_data_action());
-
-  //     setSaveFormDescription(false);
-  //   }
-  // }
-
   const [newPet, setnewPet] = useState({
     id_usuario: user.id,
     tipo_tramite: 1,
@@ -160,22 +151,12 @@ export default function PetDescription() {
     const { name, value } = event.target;
     setPetData({ ...petData, [name]: value });
     setnewPet({ ...newPet, [name]: value });
-    // setSendDepartment({ ...sendDepartment, [name]: value })
   }
+
   const [sendPetData, setSendPetData] = useState(false);
   const [sendCityData, setSendCityData] = useState(true);
   const [fullPetDescription, setFullPetDescription] = useState(false);
   const [checkForm, setCheckForm] = useState(true);
-
-  //Save PetSize selected on local Storage
-
-  // const saveScaleData = () => {
-  //   dispatch(push_data_action());
-  //   setSendPetData(true);
-  //   setRacesContent(true);
-  //   dispatch(get_form_data_action(newPet));
-  //   dispatch(update_form_data_action());
-  // }
 
   const saveData = () => {
     dispatch(push_data_action());
@@ -221,7 +202,6 @@ export default function PetDescription() {
       (dispatch(get_city_data_action(depData)))
       dispatch(get_form_data_action(newPet));
       dispatch(update_form_data_action());
-      // setCityContent(true);
     }
     setSendCityData(false);
   }
@@ -233,10 +213,6 @@ export default function PetDescription() {
     }
     setRacesContent(false);
   }
-
-  // if (id_unde.length !== 0) {
-  //   setCityContent(true);
-  // }
 
   if (sendPetData === true) {
     if (petData.id_tamanio.length !== 0) {
@@ -305,7 +281,8 @@ export default function PetDescription() {
 
   if (checkForm === true) {
     if (
-      nombre_mascota.length &&
+      nombre_mascota.length 
+      &&
       edad_mascota.length &&
       escala_edad &&
       id_tamanio &&

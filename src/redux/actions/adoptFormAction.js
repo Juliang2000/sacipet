@@ -7,11 +7,32 @@ import {
     GET_CITY_DATA,
     PET_DESCRIPTION_OK,
     GET_ADOPT_FORM_DESCRIPTION_DATA,
-    PUSH_DATA_ACTION
+    PUSH_DATA_ACTION,
+    GET_DATA_BY_FORM_REGISTERED,
+    SUCCESS_PET_IMAGE_1,
+    SUCCESS_PET_IMAGE_2,
+    SUCCESS_PET_IMAGE_3,
+    SUCCESS_PET_IMAGE_4,
+    SUCCESS_PET_IMAGE_5,
+    RESET_FORM,
+    SAVE_PET_IMAGE_1,
+    SAVE_PET_IMAGE_2,
+    SAVE_PET_IMAGE_3,
+    SAVE_PET_IMAGE_4,
+    SAVE_PET_IMAGE_5
 } from "../types";
 
 //axios
-import { getDepartmentData, getCityData } from "../../configAxios/petFormAdoption"
+import {
+    getDepartmentData,
+    getCityData,
+    registryPetAdoption,
+    uploadImagesAdoption,
+    uploadPetImage2,
+    uploadPetImage3,
+    uploadPetImage4,
+    uploadPetImage5
+} from "../../configAxios/petFormAdoption"
 
 ///////////////redux actions///////////
 
@@ -52,39 +73,12 @@ export const get_city_data_action = (depData) => async (dispatch, getState) => {
     }
 }
 
-// get changes to the description data 
-// export const get_form_data_action = (newPet) => async (dispatch, getState) => {
-//     try {
-//         dispatch({
-//             type: GET_ADOPT_FORM_DESCRIPTION_DATA,
-//             payload: newPet
-
-//         })
-//     } catch (error) {
-//         console.log(error)
-//     }
-// }
-
 export const get_form_data_action = (newPet) => {
     return {
         type: GET_ADOPT_FORM_DESCRIPTION_DATA,
         payload: newPet
     }
 }
-
-
-// update changes to the description data
-// export const update_form_data_action = () => async (dispatch, getState) => {
-//     try {
-//         dispatch({
-//             type: UPDATE_ADOPT_FORM_DESCRIPTION_DATA,
-//             payload: updateDescriptionData
-//         })
-//     } catch (error) {
-//         console.log(error)
-//     }
-// }
-
 
 export const update_form_data_action = (updateDescriptionData) => {
     return {
@@ -106,12 +100,134 @@ export const full_pet_description_action = () => async (dispatch, getState) => {
     }
 }
 
+export const reset_form_action = () => {
+    return {
+        type: RESET_FORM,
+        
+    }
+}
+
 export const push_data_action = (pushData) => {
     return {
         type: PUSH_DATA_ACTION,
         payload: pushData
     }
 }
+
+// get changes to the description data 
+export const registry_form_adopt = (newPet) => async (dispatch, getState) => {
+    try {
+        const registeredFormData = await registryPetAdoption(newPet)
+        dispatch({
+            type: GET_DATA_BY_FORM_REGISTERED,
+            payload: registeredFormData
+
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const save_pet_image_1 = (petimage1) => {
+    return {
+        type: SAVE_PET_IMAGE_1,
+        payload: petimage1,
+    }
+}
+
+export const save_pet_image_2 = (petimage2) => {
+    return {
+        type: SAVE_PET_IMAGE_2,
+        payload: petimage2,
+    }
+}
+
+export const save_pet_image_3 = (petimage3) => {
+    return {
+        type: SAVE_PET_IMAGE_3,
+        payload: petimage3,
+    }
+}
+
+export const save_pet_image_4 = (petimage4) => {
+    return {
+        type: SAVE_PET_IMAGE_4,
+        payload: petimage4,
+    }
+}
+
+export const save_pet_image_5 = (petimage5) => {
+    return {
+        type: SAVE_PET_IMAGE_5,
+        payload: petimage5,
+    }
+}
+
+export const upload_pet_image_1 = (petimage1, id_mascota) => async (dispatch, getState) => {
+    try {
+        const responsePhotoUpload = await uploadImagesAdoption(petimage1, id_mascota)
+        dispatch({
+            type: SUCCESS_PET_IMAGE_1,
+            payload: responsePhotoUpload
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const upload_pet_image_2 = (petimage2, id_mascota) => async (dispatch, getState) => {
+    try {
+        const responsePhotoUpload = await uploadPetImage2(petimage2, id_mascota)
+        dispatch({
+            type: SUCCESS_PET_IMAGE_2,
+            payload: responsePhotoUpload
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const upload_pet_image_3 = (petimage3, id_mascota) => async (dispatch, getState) => {
+    try {
+        const responsePhotoUpload = await uploadPetImage3(petimage3, id_mascota)
+        dispatch({
+            type: SUCCESS_PET_IMAGE_3,
+            payload: responsePhotoUpload
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const upload_pet_image_4 = (petimage4, id_mascota) => async (dispatch, getState) => {
+    try {
+        const responsePhotoUpload = await uploadPetImage4(petimage4, id_mascota)
+        dispatch({
+            type: SUCCESS_PET_IMAGE_4,
+            payload: responsePhotoUpload
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const upload_pet_image_5 = (petimage5, id_mascota) => async (dispatch, getState) => {
+    try {
+        const responsePhotoUpload = await uploadPetImage5(petimage5, id_mascota)
+        dispatch({
+            type: SUCCESS_PET_IMAGE_5,
+            payload: responsePhotoUpload
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
+
+
+
 
 
 

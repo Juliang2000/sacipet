@@ -17,10 +17,6 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = makeStyles((theme) => ({
 
-  dialog: {
-    marginTop:'65px',
-  },
-
     appBar: {
         position: 'relative',
       },
@@ -66,7 +62,7 @@ export default function SectionMobile() {
           <MoreIcon />
         </IconButton>
         
-        <Dialog fullScreen open={open} onClose={handleClose}  TransitionComponent={Transition} className={classes.dialog}>
+        <Dialog fullScreen open={open} onClose={handleClose}  TransitionComponent={Transition} style={{ zIndex: 1 }}>
           <Toolbar>
             <IconButton className={classes.closeButton} edge="end" color="inherit" onClick={handleClose} aria-label="close">
               <CloseIcon />

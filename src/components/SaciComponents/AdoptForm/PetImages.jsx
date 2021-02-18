@@ -4,12 +4,17 @@ import { Card, Grid, CardActionArea, CardMedia, IconButton } from '@material-ui/
 
 import CloseIcon from '@material-ui/icons/Close';
 
+//redux
+import { useDispatch } from 'react-redux';
+
 
 import petImage1 from '../../../assets/images/cardsPets/pet1.png';
 import petImage2 from '../../../assets/images/cardsPets/pet2.png';
 import petImage3 from '../../../assets/images/cardsPets/pet3.png';
 import petImage4 from '../../../assets/images/cardsPets/pet4.png';
 import petImage5 from '../../../assets/images/cardsPets/pet5.png';
+import { ImageOutlined } from '@material-ui/icons';
+import { save_pet_image_1, save_pet_image_2, save_pet_image_3, save_pet_image_4, save_pet_image_5 } from '../../../redux/actions/adoptFormAction';
 
 
 const useStyles = makeStyles({
@@ -34,7 +39,7 @@ const useStyles = makeStyles({
         '-webkit-transition': 'all 500ms ease-in-out',
 
         transform: 'scale(1)',
-        
+
     },
 
     containerPetimages: {
@@ -46,6 +51,7 @@ const useStyles = makeStyles({
 
 const PetImages = () => {
 
+    const dispatch = useDispatch();
     const classes = useStyles();
 
     const [petimage1, setPetimage1] = useState();
@@ -69,70 +75,111 @@ const PetImages = () => {
     const fileInputRef4 = useRef();
     const fileInputRef5 = useRef();
 
+    const [checked1, setChecked1] = useState(false)
+    const [checked2, setChecked2] = useState(false)
+    const [checked3, setChecked3] = useState(false)
+    const [checked4, setChecked4] = useState(false)
+    const [checked5, setChecked5] = useState(false)
 
     useEffect(() => {
         if (petimage1) {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setPreview1(reader.result);
+                
             };
             reader.readAsDataURL(petimage1);
+            setChecked1(true);
         } else {
             setPreview1(null);
         }
     }, [petimage1]);
 
+    if (checked1 === true) {
+        dispatch(save_pet_image_1(petimage1))
+        setChecked1(false)
+    }
 
     useEffect(() => {
         if (petimage2) {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setPreview2(reader.result);
+               
             };
             reader.readAsDataURL(petimage2);
+            setChecked2(true);
+            // dispatch(save_adopt_form_photos(petimage2))
         } else {
             setPreview2(null);
         }
     }, [petimage2]);
 
+    if (checked2 === true) {
+        dispatch(save_pet_image_2(petimage2))
+        setChecked2(false)
+    }
 
     useEffect(() => {
         if (petimage3) {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setPreview3(reader.result);
+
             };
             reader.readAsDataURL(petimage3);
+            setChecked3(true);
+            // dispatch(save_adopt_form_photos(petimage3))
         } else {
             setPreview3(null);
         }
     }, [petimage3]);
 
+    if (checked3 === true) {
+        dispatch(save_pet_image_3(petimage3))
+        setChecked3(false)
+    }
 
     useEffect(() => {
         if (petimage4) {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setPreview4(reader.result);
+                
             };
             reader.readAsDataURL(petimage4);
+            setChecked4(true);
+            // dispatch(save_adopt_form_photos(petimage4))
         } else {
             setPreview4(null);
         }
     }, [petimage4]);
 
+    if (checked4 === true) {
+        dispatch(save_pet_image_4(petimage4))
+        setChecked4(false)
+    }
 
     useEffect(() => {
         if (petimage5) {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setPreview5(reader.result);
+                
             };
             reader.readAsDataURL(petimage5);
+            setChecked5(true);
+            // dispatch(save_adopt_form_photos(petimage5))
         } else {
             setPreview5(null);
         }
     }, [petimage5]);
+
+    if (checked5 === true) {
+        dispatch(save_pet_image_5(petimage5))
+        setChecked5(false)
+    }
+
 
 
     return (

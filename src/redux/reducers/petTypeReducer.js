@@ -15,7 +15,7 @@ const petType = (state = default_petType, action) => {
                 petType: 2,
                 dog: true,
                 cat: false,
-                hasmter: false,
+                hamster: false,
             }
         }
         case CAT_ACTION: {

@@ -1,6 +1,7 @@
 import { INICIAR_SESION_ERROR, INICIAR_SESION_EXITO, INICIAR_SESION_START } from "../types"
 
 const initialState = {
+    // user: 'developer',
     user: '',
     loader: false,
     error: false,
