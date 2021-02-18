@@ -443,7 +443,7 @@ export default function AdoptStepper() {
           // color="primary"
           startIcon={<img src={petIcon} alt="LogIn" style={{ width: '30px' }} />}
         >
-          Adoptar
+          Dar en adopción
               </Button>
         {/* </Grid> */}
       </Hidden>

@@ -62,11 +62,7 @@ export default function SectionMobile() {
           <MoreIcon />
         </IconButton>
         
-<<<<<<< HEAD
-        <Dialog fullScreen open={open} onClose={handleClose}  TransitionComponent={Transition} style={{ zIndex: 1 }}>
-=======
         <Dialog fullScreen open={open} onClose={handleClose}  TransitionComponent={Transition} className={classes.dialog} style={{ zIndex: 2 }}>
->>>>>>> 1ca434e89e38e9fd9eb73294cf22f9c808be0c4c
           <Toolbar>
             <IconButton className={classes.closeButton} edge="end" color="inherit" onClick={handleClose} aria-label="close">
               <CloseIcon />
