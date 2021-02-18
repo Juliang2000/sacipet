@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Lottie from 'react-lottie';
 import { Link } from 'react-router-dom';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { Stepper, Step, StepLabel, Button, Grid, Typography, Box, Hidden, Dialog, IconButton } from '@material-ui/core';
@@ -16,7 +17,7 @@ import { useDispatch } from 'react-redux';
 
 //Redux actions
 import { reset_action } from '../../../redux/actions/petTypeAction'
-import { next_step_action, back_step_action, sizePetData, update_form_data_action } from '../../../redux/actions/adoptFormAction'
+import { next_step_action, back_step_action, sizePetData, update_form_data_action, registry_form_adopt, upload_pet_image_1, upload_pet_image_2, upload_pet_image_3, upload_pet_image_4, upload_pet_image_5, reset_form_action } from '../../../redux/actions/adoptFormAction'
 
 //components
 import PetType from './PetType'
@@ -34,6 +35,9 @@ import iconSend from '../../../assets/icons/send.svg';
 import SettingsIcon from '@material-ui/icons/Settings';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import VideoLabelIcon from '@material-ui/icons/VideoLabel';
+
+//lotties
+import registerPetForm from '../../../assets/lotties/registerPetForm.json'
 
 
 const ColorlibConnector = withStyles({
@@ -59,7 +63,6 @@ const ColorlibConnector = withStyles({
     borderRadius: 1,
   },
 })(StepConnector);
-
 
 const useColorlibStepIconStyles = makeStyles({
   test: {
@@ -195,9 +198,18 @@ function getStepContent(step) {
 
 export default function AdoptStepper() {
   const { user } = useSelector(state => state.login);
-  const { petType } = useSelector(state => state.petType);
+  const { petType } = useSelector(store => store.petType);
   const { activeStepState } = useSelector(state => state.adoptFormData);
   const { petDescription } = useSelector(state => state.adoptFormData);
+  const newPet = useSelector(state => state.adoptFormData.updateDescriptionData);
+  const { petimage1, petimage2, petimage3, petimage4, petimage5 } = useSelector(state => state.adoptFormData);;
+  const id_mascota = useSelector(state => state.adoptFormData.registeredFormData.data.mascota.id_mascota);
+  // const successPetImage1 = useSelector(state => state.adoptFormData.successPetImage1.data.sucess)
+  // const successPetImage2 = useSelector(state => state.adoptFormData.successPetImage2.data.sucess)
+  // const successPetImage3 = useSelector(state => state.adoptFormData.successPetImage3.data.sucess)
+  // const successPetImage4 = useSelector(state => state.adoptFormData.successPetImage4.data.sucess)
+  // const successPetImage5 = useSelector(state => state.adoptFormData.successPetImage5.data.sucess)
+  // const petimage2 = useSelector(state => state.adoptFormData.petimage2);
   const dispatch = useDispatch();
   // const user = true;
   const classes = useStyles();
@@ -208,10 +220,11 @@ export default function AdoptStepper() {
   const [allowContent, setAllowContent] = useState(false);
   const [checkedStepOne, setCheckedStepOne] = useState(true)
   const [checkedStepTwo, setCheckedStepTwo] = useState(true)
+  const [checkStepThree, setCheckStepThree] = useState(true)
+  // const [checkStepFour, setCheckStepFour] = useState(true)
 
   if (saveFormDescription === true) {
     if (activeStepState === 2) {
-      // dispatch(savePetFormAction(newPet));
       dispatch(update_form_data_action());
       setSaveFormDescription(false);
     }
@@ -229,32 +242,28 @@ export default function AdoptStepper() {
 
   if (petDescription === true) {
     if (checkedStepTwo === false) {
-      setAllowContent(true);
+      setAllowContent(true);      
+      setCheckedStepOne(true);
       setCheckedStepTwo(null);
     }
   }
 
-  if (checkedStepTwo === true)
+  if (checkedStepTwo === true) {
     if (activeStepState === 2) {
       setAllowContent(false)
       setCheckedStepOne(true)
       setCheckedStepTwo(false)
     }
+  }
 
-
-  // if (activeStepState === 1) {
-  //   if (petType === 2) {
-  //     setAllowContent(true);
-  //   }
-  // }
-
-  // const isStepOptional = (step) => {
-  //   return step === 1;
-  // };
-
-  // const isStepSkipped = (step) => {
-  //   return skipped.has(step);
-  // };
+  if (checkStepThree === true) {
+    if (activeStepState === 3) {
+      setAllowContent(false)
+      setCheckedStepTwo(true)
+      setCheckedStepOne(true)
+      setCheckStepThree(false)
+    }
+  }
 
 
   ColorlibStepIcon.propTypes = {
@@ -301,17 +310,25 @@ export default function AdoptStepper() {
       }).then((result) => {
         if (result.isConfirmed) {
           setOpenModal(false);
-          dispatch(reset_action(petType));
+          dispatch(reset_action());
+          dispatch(reset_form_action());
+          setActiveStep(0);
+          setAllowContent(false)
           Swal.close()
         }
       })
     )
   };
 
-
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
 
+  // if (checkActiveStep === true) {
+  //   if (activeStepState === 1) {
+  //     setActiveStep(0);
+  //     setCheckActiveStep(false)
+  //   }
+  // }
 
   const handleNext = () => {
     dispatch(next_step_action())
@@ -328,107 +345,80 @@ export default function AdoptStepper() {
     }
   }
 
-  // const showAlert = () => {
-  //   swal("This is an alert")
-  // }
-
-
-
-
-
   const handleBack = () => {
     dispatch(back_step_action())
+    console.log(id_mascota);
     // setTimeout(() => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
     // }, 500);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
+  // const handleReset = () => {
+  //   setActiveStep(0);
+  // };
+
+  const [sendPhotos, setSendPhotos] = useState(null)
 
   const theme = useTheme();
 
   const fullScreenResponsive = useMediaQuery(theme.breakpoints.down('lg'));
 
-  // const [clickPet, setClickPet] = React.useState(false);
+  const formRegisterLottieOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: registerPetForm,
+  };
 
+  const handleRegisterForm = () => {
+    return (
+      Swal.fire({
+        title: '¿Deseas registrar los datos anteriores?',
+        showDenyButton: true,
+        confirmButtonColor: '#63C132',
+        denyButtonColor: '#D33',
+        confirmButtonText: 'Guardar',
+        denyButtonText: "No Guardar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(registry_form_adopt(newPet))
+          setSendPhotos(true);
+          Swal.fire('Registro exitoso!', '', 'success').then((result) => {
+            if (result.isConfirmed) {
+              setOpenModal(false);
+              dispatch(reset_action());
+              dispatch(reset_form_action());
+              setActiveStep(0);
+              setAllowContent(false)
+              Swal.close()
+            }
+          })
+        } else if (result.isDenied) {
+          Swal.fire('Los cambios no han sido guardados', '', 'info')
+        }
+      })
+    )
+  }
 
-  //   if (petType == 2) {
-  //     setClickPet()
-  //   }
-
-  // const [checkClose, setCheckClose] = useState(false);
-
-
-
-  //  const handleConfirmClose = () => {
-  //   setCheckClose(true)
-  // }
-
-  // const openConfirmCloseDialog = () => {
-  //   setCheckClose(true)
-  // }
-
-  // const prueba = () => {
-  //   return (
-  //       Swal.fire({
-  //         customClass: {
-  //           container: 'my-swal'
-  //         },
-  //         title: 'Are you sure?',
-  //         text: "You won't be able to revert this!",
-  //         icon: 'warning',
-  //         showCancelButton: true,
-  //         confirmButtonColor: '#3085d6',
-  //         cancelButtonColor: '#d33',
-  //         confirmButtonText: 'Yes, delete it!'
-  //       }).then((result) => {
-  //         if (result.isConfirmed) {
-  //           Swal.fire(
-  //             'Deleted!',
-  //             'Your file has been deleted.',
-  //             'success'
-  //           )
-  //             (handleClickCloseModal)
-
-  //         } else if (result.isDenied) {
-  //           Swal.fire('Changes are not saved', '', 'info')
-  //             (handleClickCloseConfirm)
-  //         }
-  //       })
-  //   )
-  // }
-
-  // if (openConfirmCloseDialog === true) {
-  //   Swal.fire({
-  //     title: '¿Estás seguro?',
-  //     text: "¡No podrás revertir los cambios!",
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonColor: '#3085d6',
-  //     cancelButtonColor: '#d33',
-  //     confirmButtonText: '¡Sí, salir!',
-  //     customClass: 'swal-wide',
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       // Swal.fire(
-  //       //   'Eliminado!',
-  //       //   'Tu archivo ha sido eliminado',
-  //       //   'success'
-  //       // )
-  //       handleClickCloseModal()
-  //       Swal.close()
-  //         // (handleClickCloseModal)
-  //         // setOpenModal(false)
-  //         // handleClickCloseConfirm(false)
-  //         // setOpenConfirmCloseDialog(false);
-  //     }else{
-  //       handleClickCloseConfirm()
-  //     }
-  //   })
-  // }
-
+  if (sendPhotos === true) {
+    if (id_mascota !== 0) {
+      setTimeout(() => {
+        dispatch(upload_pet_image_1(petimage1, id_mascota))
+      }, 100);
+      setTimeout(() => {
+        dispatch(upload_pet_image_2(petimage2, id_mascota))
+      }, 100);
+      setTimeout(() => {
+        dispatch(upload_pet_image_3(petimage3, id_mascota))
+      }, 100);
+      setTimeout(() => {
+        dispatch(upload_pet_image_4(petimage4, id_mascota))
+      }, 100);
+      setTimeout(() => {
+        dispatch(upload_pet_image_5(petimage5, id_mascota))
+      }, 100);
+      setSendPhotos(false);
+    }
+  }
 
   return (
 
@@ -465,16 +455,6 @@ export default function AdoptStepper() {
 
       {user ?
         <>
-          {/* <Dialog open={openConfirmCloseDialog} close={handleClickCloseModal}> 
-             <Typography>
-              ¿Desea cancelar el formulario de Adopción?
-            </Typography>
-            <Button onClick={handleClickCloseModal}>Si</Button>
-            <Button onClick={handleClickCloseConfirm}>No</Button> 
-           </Dialog>  */}
-
-
-
           <Dialog
             style={{ zIndex: 2 }}
             open={openModal}
@@ -505,46 +485,59 @@ export default function AdoptStepper() {
                 {activeStep === steps.length ? (
                   <div>
                     <Box m={10}>
-                      <Typography variant="h6" className={classes.instructions}>
-                        Confirma el formulario de adopción
+                      <Typography variant="h5" className={classes.instructions}>
+                        ¿Todo está listo?
             </Typography>
+                      <Lottie
+                        options={formRegisterLottieOptions}
+                        height={200}
+                        width={200}
+                      // isPaused={playLottie.registerPetForm}
+                      />
+                      <Grid container justify="center">
+                        Pulsa el botón enviar para registrar tu formulario,
+                        </Grid>
+                      <Grid container justify="center">
+                        Si deseas cambiar algún dato pulsa el botón de atrás
+                        </Grid>
                     </Box>
                     <Grid container justify="center">
-                      <Button onClick={handleReset} className={classes.button}>
-                        Reiniciar
+                      <Button onClick={handleBack} className={classes.button}>
+                        Atrás
             </Button>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          className={classes.button}>
-                          Enviar
+                      <Button
+                        onClick={handleRegisterForm}
+                        variant="contained"
+                        color="primary"
+                        className={classes.button}>
+                        Enviar
             </Button>
-                      </Grid>
-                    </div>
-                  ) : (
+                    </Grid>
+                  </div>
+                ) : (
+                    <div>
+                      <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
                       <div>
-                        <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-                        <div>
-                          <Grid container justify="center">
-                            <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                              Atrás
+                        <Grid container justify="center">
+                          <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                            Atrás
                           </Button>
-                            <Button
-                              disabled={allowContent === false}
-                              variant="contained"
-                              color="primary"
-                              onClick={handleNext}
-                              className={classes.button}
-                            >
-                              {activeStep === steps.length - 1 ? 'Siguiente' : 'Siguiente'}
-                            </Button>
-                          </Grid>
-                        </div>
+                          <Button
+                            disabled={allowContent === false}
+                            variant="contained"
+                            color="primary"
+                            onClick={handleNext}
+                            className={classes.button}
+                          >
+                            {activeStep === steps.length - 1 ? 'Siguiente' : 'Siguiente'}
+                          </Button>
+                        </Grid>
                       </div>
-                    )}
-                </div>
+                    </div>
+                  )}
               </div>
-            </Dialog>
+            </div>
+          </Dialog>
         </>
         :
         <>
@@ -595,9 +588,6 @@ export default function AdoptStepper() {
               </Grid>
             </div>
           </Dialog>
-
-
-
         </>
       }
     </>
