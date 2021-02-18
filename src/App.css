@@ -6,3 +6,7 @@ button{
   .swal-wide{
      z-index:3 !important;
 }
+
+*{
+  user-select: none;
+}
