@@ -92,10 +92,6 @@ const loginStyles = makeStyles((theme) => ({
     width: '30px',
   },
 
-  icons3: {
-    width: '40px',
-  },
-
   iconsCenter: {
     display: 'flex',
     justifyContent: 'center'
