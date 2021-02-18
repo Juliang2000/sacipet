@@ -202,7 +202,8 @@ export default function AdoptStepper() {
   const { activeStepState } = useSelector(state => state.adoptFormData);
   const { petDescription } = useSelector(state => state.adoptFormData);
   const newPet = useSelector(state => state.adoptFormData.updateDescriptionData);
-  const { petimage1, petimage2, petimage3, petimage4, petimage5 } = useSelector(state => state.adoptFormData);;
+  const { petimage1, petimage2, petimage3, petimage4, petimage5 } = useSelector(state => state.adoptFormData);
+  const { savePetImage1, savePetImage2, savePetImage3, savePetImage4, savePetImage5 } = useSelector(state => state.adoptFormData);
   const id_mascota = useSelector(state => state.adoptFormData.registeredFormData.data.mascota.id_mascota);
   // const successPetImage1 = useSelector(state => state.adoptFormData.successPetImage1.data.sucess)
   // const successPetImage2 = useSelector(state => state.adoptFormData.successPetImage2.data.sucess)
@@ -242,7 +243,7 @@ export default function AdoptStepper() {
 
   if (petDescription === true) {
     if (checkedStepTwo === false) {
-      setAllowContent(true);      
+      setAllowContent(true);
       setCheckedStepOne(true);
       setCheckedStepTwo(null);
     }
@@ -265,6 +266,14 @@ export default function AdoptStepper() {
     }
   }
 
+  const [checkSavedPhotos, setCheckSavedPhotos] = useState(true)
+
+  if (checkSavedPhotos === true) {
+    if (savePetImage1 || savePetImage2 || savePetImage3 || savePetImage4 || savePetImage5 === true) {
+      setAllowContent(true);
+      setCheckSavedPhotos(false);
+    }
+  }
 
   ColorlibStepIcon.propTypes = {
     /**

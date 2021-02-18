@@ -79,6 +79,12 @@ const initialState = {
     petimage4: null,
     petimage5: null,
 
+    savePetImage1: false,
+    savePetImage2: false,
+    savePetImage3: false,
+    savePetImage4: false,
+    savePetImage5: false,
+
     successPetImage1: {
         data: {
             sucess: false,
@@ -169,26 +175,31 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 petimage1: action.payload,
+                savePetImage1: true,
             }
         case SAVE_PET_IMAGE_2:
             return {
                 ...state,
                 petimage2: action.payload,
+                savePetImage2: true,
             }
             case SAVE_PET_IMAGE_3:
             return {
                 ...state,
                 petimage3: action.payload,
+                savePetImage3: true,
             }
             case SAVE_PET_IMAGE_4:
             return {
                 ...state,
                 petimage4: action.payload,
+                savePetImage4: true,
             }
             case SAVE_PET_IMAGE_5:
             return {
                 ...state,
                 petimage5: action.payload,
+                savePetImage5: true,
             }
         case SUCCESS_PET_IMAGE_1:
             return {
