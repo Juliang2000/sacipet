@@ -20,6 +20,24 @@ export async function saveUserLogin(userData) {
 
 }
 
+export async function LoginUserRegistered(userLog) {
+    try {
+        const formData = new FormData();
+
+        formData.append('password', userLog.password)
+        formData.append('correo', userLog.correo)
+        formData.append('origen_cuenta', 'Registro_normal')
+        
+
+        const response = await axiosClient.post('/login', formData);
+        console.log(response)
+        return response
+    } catch (e) {
+        console.log(e)
+    }
+
+}
+
 // export async function saveGoogleUser(userData) {
 //     try {
 //         console.log(userData)

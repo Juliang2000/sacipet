@@ -13,12 +13,15 @@ import Person from '@material-ui/icons/Person';
 import petUser from '../../assets/icons/drawer/petUser.svg';
 
 //Redux
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { Dialog, /* AppBar, Toolbar, IconButton */ } from '@material-ui/core';
+import Swal from 'sweetalert2';
 
 import Login from '../../pages/Login'
 import Register from '../../pages/Register'
+import { LoginRegisteredAction, LoginUserRegistered, login_dialog_action, login_dialog_close_action, login_dialog_open_action, register_to_login_action } from '../../redux/actions/loginAction';
+import { register_dialog_close_action } from '../../redux/actions/registerAction';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -81,8 +84,11 @@ const StyledMenuItem = withStyles((theme) => ({
 
 const SectionDesktop = () => {
 
-
+    const dispatch = useDispatch();
     const { user } = useSelector(state => state.login);
+    const { loginDialog } = useSelector(state => state.login);
+    const { registerDialog } = useSelector(state => state.register);
+    const userLog = useSelector(state => state.register.registerLoginData);
 
 
     ///////////////Constantes Botón Encuentra tu mascota////////////////
@@ -101,29 +107,124 @@ const SectionDesktop = () => {
 
 
     //////////////////////////////////////////////////////////////////////
-    const [openLogin, setOpenLogin] = React.useState(false);
+    // const [openLogin, setOpenLogin] = React.useState(false);
 
     const handleClickOpenLogin = () => {
-        setOpenLogin(true);
+        // setOpenLogin(true);
+        dispatch(login_dialog_open_action())
     };
 
     const handleClickCloseLogin = () => {
-        setOpenLogin(false);
+        // setOpenLogin(false);
+        dispatch(login_dialog_close_action())
     };
     //////////////////////////////////////////////////////////////////////
 
     //////////////////////////////////////////////////////////////////////
-    const [openRegister, setOpenRegister] = React.useState(false);
+    // const [openRegister, setOpenRegister] = React.useState(false);
 
-    const handleClickOpenRegister = () => {
-        setOpenRegister(true);
-    };
+    // const handleClickOpenRegister = () => {
+    //     setOpenRegister(true);
+    // };
 
     const handleClickCloseRegister = () => {
-        setOpenRegister(false);
+        // setOpenRegister(false);
+        dispatch(register_dialog_close_action())
     };
     //////////////////////////////////////////////////////////////////////
 
+    const [checkLogin, setCheckLogin] = React.useState(true);
+    const { ok } = useSelector(state => state.register);
+    const { success, mensaje } = useSelector(state => state.login);
+    const [registerToLogin, setRegisterToLogin] = React.useState(false)
+
+    if (registerToLogin === true) {
+        dispatch(LoginRegisteredAction(userLog));
+        setRegisterToLogin(false);
+    }
+
+    if (checkLogin === true) {
+        if (ok === false) {
+            if (user.length !== 0) {
+                Swal.fire({
+                    icon: 'success',
+                    title: `Bienvenid@ ${user.data.user.nombres}`,
+                    text: 'Sesión Iniciada',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // setOpenLogin(false)
+                        setCheckLogin(false);
+                        dispatch(login_dialog_close_action())
+                        Swal.close()
+                    }
+                })
+            } else if(user === null) {
+                Swal.fire({
+                    icon: 'error',
+                    title: `Contraseña incorrecta`,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.close()
+                    }
+                })
+            }
+        }
+        else {
+            setRegisterToLogin(true);
+            setCheckLogin(false);
+            Swal.fire({
+                icon: 'success',
+                title: `Registro Exitoso`,
+                // text: 'Sesión Iniciada',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown',
+                    icon: 'swal2-icon-show'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // setOpenLogin(false)                    
+                    dispatch(register_dialog_close_action())
+                    // Swal.close()
+                    Swal.fire({
+                        icon: 'success',
+                        title: `Sesión Iniciada`,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // setOpenLogin(false)
+                            setCheckLogin(false);
+                            dispatch(register_dialog_close_action())
+                            // Swal.close()
+                        }
+                    })
+                }
+            })
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+    // if (registerDialog === true) {
+    //     setOpenLogin(false);
+    //     setCheckLogin(false);
+    // }        
+
+
+    // if (checkRegister === true) {
+    //     if (loginDialog === true) {
+    //         setOpenRegister(false);
+    //         setCheckRegister(false);
+    //     }
+    // }
 
     //////////////////////////////////////////////////////////////////////
     // const history = useHistory();
@@ -136,10 +237,11 @@ const SectionDesktop = () => {
     //////////////////////////////////////////////////////////////////////
 
 
+
+
     return (
         <>
             { user ?
-
                 <>
                     <Grid container justify="center">
                         <Button
@@ -151,7 +253,7 @@ const SectionDesktop = () => {
                             onClick={handleClick}
                             startIcon={<img src={petUser} alt="Login" style={{ width: '30px' }} />}
                         >
-                            {`${user.nombres}`}
+                            {`${user.data.user.nombres}`}
                         </Button>
                     </Grid>
 
@@ -192,9 +294,9 @@ const SectionDesktop = () => {
             }
 
             <Dialog
-                open={openLogin}
+                open={loginDialog === true}
                 onClose={handleClickCloseLogin}
-                // style={{ zIndex: 2 }}
+                style={{ zIndex: 1 }}
             >
                 {/* <AppBar>
                     <Toolbar>
@@ -203,13 +305,14 @@ const SectionDesktop = () => {
                         </IconButton>
                     </Toolbar>
                 </AppBar> */}
-                <Login/>
+                <Login />
 
             </Dialog>
 
             <Dialog
-                open={openRegister}
+                open={registerDialog === true}
                 onClose={handleClickCloseRegister}
+                style={{ zIndex: 1 }}
             >
                 {/* <AppBar>
                     <Toolbar>

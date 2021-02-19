@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 // Dispach Redux
 import { useDispatch, useSelector } from 'react-redux';
 // redux Actions
-import { loginNormalAction } from '../redux/actions/loginAction';
+import { loginNormalAction, login_dialog_close_action } from '../redux/actions/loginAction';
 import { loginGoogleAction } from '../redux/actions/googleAction';
 import { loginFacebookAction } from '../redux/actions/facebookAction';
 import Loader from './Loader';
@@ -30,6 +30,7 @@ import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props
 // useMediaQuery
 import { useTheme } from '@material-ui/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { register_dialog_action, register_dialog_open_action } from '../redux/actions/registerAction';
 
 
 // import { HandleClickOpenRegister } from '../components/SaciComponents/SectionDesktop'
@@ -66,7 +67,6 @@ export default function Login() {
   const { user, loader } = useSelector(state => state.login);
   // const { correo } = useSelector( state => state.login)
   const dispatch = useDispatch();
-  const history = useHistory();
 
   // redux Actions
   const _handleSubmit = async (data) => {
@@ -83,33 +83,41 @@ export default function Login() {
     dispatch(loginFacebookAction(data));
   };
 
-  // Push to SaciDashboard
-  useEffect(() => {
-    if (user.length !== 0) {
-      history.push('/');
-      Swal.fire({
-        icon: 'success',
-        title: `Bienvenid@ ${user.nombres}`,
-        text: 'Sesión Iniciada',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown',
-          icon: 'swal2-icon-show'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        }
-      })
-    }
-  });
+  const openRegister = () => {
+    dispatch(login_dialog_close_action())
+    dispatch(register_dialog_open_action())
+    
+  }
+
+  //   if (user.length !== 0) {
+  //     Swal.fire({
+  //       icon: 'success',
+  //       title: `Bienvenid@ ${user.nombres}`,
+  //       text: 'Sesión Iniciada',
+  //       showClass: {
+  //         popup: 'animate__animated animate__fadeInDown',
+  //         icon: 'swal2-icon-show'
+  //       },
+  //       hideClass: {
+  //         popup: 'animate__animated animate__fadeOutUp'
+  //       }
+  //     }).then((result) => {
+  //       if (result.isConfirmed) {
+  //         setOpenModal(false)
+  //         Swal.close()
+  //       }
+  //   }
+  // }
+
 
 
 
 
   // Container Justify Responsive
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'), {
-    defaultMatches: true
-  });
+  // const theme = useTheme();
+  // const isMobile = useMediaQuery(theme.breakpoints.down('sm'), {
+  //   defaultMatches: true
+  // });
 
   return (
     // <ThemeProvider theme={pininaTheme}>
@@ -247,7 +255,7 @@ export default function Login() {
               variant="text"
               size="small"
               className={classes.buttonSecondary2}
-            // onClick={HandleClickOpenRegister}
+              onClick={openRegister}
             >
               ¿No tienes una cuenta? Regístrate
                 </Button>
