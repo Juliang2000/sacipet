@@ -30,9 +30,9 @@ const registerSuccess = (username) => ({
     payload: username
 });
 
-const registerError = (error) => ({
+const registerError = (errorData) => ({
     type: REGISTRO_USUARIO_ERROR,
-    payload: error
+    payload: errorData
 });
 
 export const register_dialog_open_action = (registerDialog) => {

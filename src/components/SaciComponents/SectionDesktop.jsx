@@ -88,6 +88,7 @@ const SectionDesktop = () => {
     const { user } = useSelector(state => state.login);
     const { loginDialog } = useSelector(state => state.login);
     const { registerDialog } = useSelector(state => state.register);
+    const registerError = useSelector(state => state.register.error);
     const userLog = useSelector(state => state.register.registerLoginData);
 
 
@@ -145,64 +146,76 @@ const SectionDesktop = () => {
 
     if (checkLogin === true) {
         if (ok === false) {
-            if (user.length !== 0) {
+            if (registerError === true) {
                 Swal.fire({
                     icon: 'success',
-                    title: `Bienvenid@ ${user.data.user.nombres}`,
-                    text: 'Sesión Iniciada',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // setOpenLogin(false)
-                        setCheckLogin(false);
-                        dispatch(login_dialog_close_action())
-                        Swal.close()
+                    title: `Usuario ya registrado`,
+                    // text: 'Sesión Iniciada',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown',
+                        icon: 'swal2-icon-show'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
                     }
-                })
-            } else if(user === null) {
-                Swal.fire({
-                    icon: 'error',
-                    title: `Contraseña incorrecta`,
                 }).then((result) => {
                     if (result.isConfirmed) {
                         Swal.close()
                     }
                 })
-            }
-        }
-        else {
-            setRegisterToLogin(true);
-            setCheckLogin(false);
-            Swal.fire({
-                icon: 'success',
-                title: `Registro Exitoso`,
-                // text: 'Sesión Iniciada',
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown',
-                    icon: 'swal2-icon-show'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // setOpenLogin(false)                    
-                    dispatch(register_dialog_close_action())
-                    // Swal.close()
+
+                if (user.length !== 0) {
                     Swal.fire({
                         icon: 'success',
-                        title: `Sesión Iniciada`,
+                        title: `Bienvenid@ ${user.data.user.nombres}`,
+                        text: 'Sesión Iniciada',
                     }).then((result) => {
                         if (result.isConfirmed) {
                             // setOpenLogin(false)
                             setCheckLogin(false);
-                            dispatch(register_dialog_close_action())
-                            // Swal.close()
+                            dispatch(login_dialog_close_action())
+                            Swal.close()
                         }
                     })
                 }
-            })
+
+                else if(ok === true) {
+                    setRegisterToLogin(true);
+                    setCheckLogin(false);
+                    Swal.fire({
+                        icon: 'success',
+                        title: `Registro Exitoso`,
+                        // text: 'Sesión Iniciada',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeInDown',
+                            icon: 'swal2-icon-show'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOutUp'
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // setOpenLogin(false)                    
+                            dispatch(register_dialog_close_action())
+                            // Swal.close()
+                            Swal.fire({
+                                icon: 'success',
+                                title: `Sesión Iniciada`,
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // setOpenLogin(false)
+                                    setCheckLogin(false);
+                                    dispatch(register_dialog_close_action())
+                                    // Swal.close()
+                                }
+                            })
+                        }
+                    })
+                }
+            }
         }
     }
+
 
 
 

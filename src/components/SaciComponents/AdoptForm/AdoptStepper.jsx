@@ -38,6 +38,7 @@ import VideoLabelIcon from '@material-ui/icons/VideoLabel';
 
 //lotties
 import registerPetForm from '../../../assets/lotties/registerPetForm.json'
+import { get_saci_pets_action } from '../../../redux/actions/saciPets';
 
 
 const ColorlibConnector = withStyles({
@@ -396,6 +397,7 @@ export default function AdoptStepper() {
               setOpenModal(false);
               dispatch(reset_action());
               dispatch(reset_form_action());
+              dispatch(get_saci_pets_action());
               setActiveStep(0);
               setAllowContent(false)
               Swal.close()

@@ -64,7 +64,7 @@ import { loginNormalAction, login_dialog_action, login_dialog_open_action } from
 export default function Register() {
 
   const { loader } = useSelector(state => state.register);
-  const { ok } = useSelector(state => state.register.ok);
+  const { ok } = useSelector(state => state.register);
   const { registerToLogin } = useSelector(state => state.login);
   const dispatch = useDispatch();
   const history = useHistory();

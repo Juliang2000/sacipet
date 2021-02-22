@@ -7,6 +7,7 @@ const initialState = {
     errorMessage: '',
     ok: false,
     registerDialog: null,
+    errorData: '',
 
     registerLoginData: {
         password: null,
@@ -41,6 +42,7 @@ export default (state = initialState, action) => {
                 errorMessage: action.payload.error,
                 user: '',
                 ok: false,
+                errorData: action.payload
             }
         case REGISTER_DIALOG_OPEN:
             return {
