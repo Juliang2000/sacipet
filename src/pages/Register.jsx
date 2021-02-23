@@ -184,7 +184,6 @@ export default function Register() {
   // Push to SaciDashboard
   // useEffect(() => {
   //   if (ok !== false) {
-  //     history.push('/');
   //     Swal.fire({
   //       icon: 'success',
   //       title: `Muy Bien! ${ok.nombres}`,

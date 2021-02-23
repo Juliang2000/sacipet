@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 // import { useHistory } from 'react-router-dom';
 import { makeStyles, withStyles, Button, Grid } from '@material-ui/core'
 import Menu from '@material-ui/core/Menu';
@@ -20,7 +20,7 @@ import Swal from 'sweetalert2';
 
 import Login from '../../pages/Login'
 import Register from '../../pages/Register'
-import { LoginRegisteredAction, LoginUserRegistered, login_dialog_action, login_dialog_close_action, login_dialog_open_action, register_to_login_action } from '../../redux/actions/loginAction';
+import { loginNormalAction, LoginRegisteredAction, LoginUserRegistered, login_dialog_action, login_dialog_close_action, login_dialog_open_action, register_to_login_action } from '../../redux/actions/loginAction';
 import { register_dialog_close_action } from '../../redux/actions/registerAction';
 
 
@@ -90,6 +90,7 @@ const SectionDesktop = () => {
     const { registerDialog } = useSelector(state => state.register);
     const registerError = useSelector(state => state.register.error);
     const userLog = useSelector(state => state.register.registerLoginData);
+    const okRegister = useSelector(state => state.register.ok);
 
 
     ///////////////Constantes Botón Encuentra tu mascota////////////////
@@ -134,88 +135,175 @@ const SectionDesktop = () => {
     };
     //////////////////////////////////////////////////////////////////////
 
-    const [checkLogin, setCheckLogin] = React.useState(true);
-    const { ok } = useSelector(state => state.register);
+    const [checkLogin, setCheckLogin] = useState(true);
+    // const { ok } = useSelector(state => state.register);
     const { success, mensaje } = useSelector(state => state.login);
-    const [registerToLogin, setRegisterToLogin] = React.useState(false)
+    // const { ok } = useSelector(state => state.login.data);
+    const [registerToLogin, setRegisterToLogin] = useState()
 
+    // if (registerToLogin === true) {
+    //     dispatch(register_to_login_action(userLog));
+    //     setRegisterToLogin(false);
+    // }
+
+    // if (checkLogin === true) {
+    //     if (ok === false) {
+    //         if (registerError === true) {
+    //             Swal.fire({
+    //                 icon: 'success',
+    //                 title: `Usuario ya registrado`,
+    //                 // text: 'Sesión Iniciada',
+    //                 showClass: {
+    //                     popup: 'animate__animated animate__fadeInDown',
+    //                     icon: 'swal2-icon-show'
+    //                 },
+    //                 hideClass: {
+    //                     popup: 'animate__animated animate__fadeOutUp'
+    //                 }
+    //             }).then((result) => {
+    //                 if (result.isConfirmed) {
+    //                     Swal.close()
+    //                 }
+    //             })
+
+    //             if (user.length !== 0) {
+    //                 Swal.fire({
+    //                     icon: 'success',
+    //                     title: `Bienvenid@ ${user.data.user.nombres}`,
+    //                     text: 'Sesión Iniciada',
+    //                 }).then((result) => {
+    //                     if (result.isConfirmed) {
+    //                         // setOpenLogin(false)
+    //                         setCheckLogin(false);
+    //                         dispatch(login_dialog_close_action())
+    //                         Swal.close()
+    //                     }
+    //                 })
+    //             }
+
+    //             else if(ok === true) {
+    //                 setRegisterToLogin(true);
+    //                 setCheckLogin(false);
+    //                 Swal.fire({
+    //                     icon: 'success',
+    //                     title: `Registro Exitoso`,
+    //                     // text: 'Sesión Iniciada',
+    //                     showClass: {
+    //                         popup: 'animate__animated animate__fadeInDown',
+    //                         icon: 'swal2-icon-show'
+    //                     },
+    //                     hideClass: {
+    //                         popup: 'animate__animated animate__fadeOutUp'
+    //                     }
+    //                 }).then((result) => {
+    //                     if (result.isConfirmed) {
+    //                         // setOpenLogin(false)                    
+    //                         dispatch(register_dialog_close_action())
+    //                         // Swal.close()
+    //                         Swal.fire({
+    //                             icon: 'success',
+    //                             title: `Sesión Iniciada`,
+    //                         }).then((result) => {
+    //                             if (result.isConfirmed) {
+    //                                 // setOpenLogin(false)
+    //                                 setCheckLogin(false);
+    //                                 dispatch(register_dialog_close_action())
+    //                                 // Swal.close()
+    //                             }
+    //                         })
+    //                     }
+    //                 })
+    //             }
+    //         }
+    //     }
+    // }
+
+    useEffect(() => {
+        if (user.length !== 0) {
+            Swal.fire({
+                icon: 'success',
+                title: `Bienvenid@ ${user.nombres}`,
+                text: 'Sesión Iniciada',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // setOpenLogin(false)
+                    setCheckLogin(false);
+                    dispatch(login_dialog_close_action())
+                    Swal.close()
+                }
+            })
+        }
+    },[])
+
+    useEffect(() => {
+        if (registerError === true) {
+            Swal.fire({
+                icon: 'success',
+                title: `Bienvenid@ ${user.nombres}`,
+                text: 'Sesión Iniciada',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // setOpenLogin(false)
+                    // setRegisterToLogin(true);
+                    dispatch(login_dialog_close_action())
+                    Swal.close()
+                }
+            })
+        }
+    },[])
+
+    useEffect(() => {
+    if (checkLogin === true) {
+        if (okRegister === true) {
+            Swal.fire({
+                icon: 'success',
+                // title: `Muy Bien! ${okRegister.nombres}`,
+                text: 'Registro Exitoso!',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown',
+                    icon: 'swal2-icon-show'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            }).then((result) => {                
+                if (result.isConfirmed) {
+                    setRegisterToLogin(true);
+                    dispatch(register_dialog_close_action())
+                    Swal.close()
+                    setCheckLogin(false)
+                }
+            })
+        }
+    }
+    },[])
+
+    useEffect(()  => {
     if (registerToLogin === true) {
         dispatch(LoginRegisteredAction(userLog));
         setRegisterToLogin(false);
     }
 
-    if (checkLogin === true) {
-        if (ok === false) {
-            if (registerError === true) {
-                Swal.fire({
-                    icon: 'success',
-                    title: `Usuario ya registrado`,
-                    // text: 'Sesión Iniciada',
-                    showClass: {
-                        popup: 'animate__animated animate__fadeInDown',
-                        icon: 'swal2-icon-show'
-                    },
-                    hideClass: {
-                        popup: 'animate__animated animate__fadeOutUp'
-                    }
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        Swal.close()
-                    }
-                })
+    },)
 
-                if (user.length !== 0) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: `Bienvenid@ ${user.data.user.nombres}`,
-                        text: 'Sesión Iniciada',
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            // setOpenLogin(false)
-                            setCheckLogin(false);
-                            dispatch(login_dialog_close_action())
-                            Swal.close()
-                        }
-                    })
-                }
 
-                else if(ok === true) {
-                    setRegisterToLogin(true);
+
+    useEffect(() => {
+        if (mensaje.length !== 0) {
+            Swal.fire({
+                icon: 'success',
+                title: `Bienvenid@ ${user.data.user.nombres}`,
+                text: 'Sesión Iniciada',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // setOpenLogin(false)
                     setCheckLogin(false);
-                    Swal.fire({
-                        icon: 'success',
-                        title: `Registro Exitoso`,
-                        // text: 'Sesión Iniciada',
-                        showClass: {
-                            popup: 'animate__animated animate__fadeInDown',
-                            icon: 'swal2-icon-show'
-                        },
-                        hideClass: {
-                            popup: 'animate__animated animate__fadeOutUp'
-                        }
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            // setOpenLogin(false)                    
-                            dispatch(register_dialog_close_action())
-                            // Swal.close()
-                            Swal.fire({
-                                icon: 'success',
-                                title: `Sesión Iniciada`,
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    // setOpenLogin(false)
-                                    setCheckLogin(false);
-                                    dispatch(register_dialog_close_action())
-                                    // Swal.close()
-                                }
-                            })
-                        }
-                    })
+                    dispatch(login_dialog_close_action())
+                    Swal.close()
                 }
-            }
-        }
-    }
-
+            })
+        }   
+    })
 
 
 
@@ -266,7 +354,7 @@ const SectionDesktop = () => {
                             onClick={handleClick}
                             startIcon={<img src={petUser} alt="Login" style={{ width: '30px' }} />}
                         >
-                            {`${user.data.user.nombres}`}
+                            {`${user.nombres}`}
                         </Button>
                     </Grid>
 

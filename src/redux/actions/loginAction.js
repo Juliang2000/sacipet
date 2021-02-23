@@ -1,5 +1,13 @@
 import { LoginUserRegistered, saveUserLogin } from "../../configAxios/Login";
-import { INICIAR_SESION_ERROR, INICIAR_SESION_EXITO, INICIAR_SESION_START, LOGIN_DIALOG_CLOSE, LOGIN_DIALOG_OPEN, REGISTER_TO_LOGIN, PASSWORD_ERROR } from "../types";
+import {
+    INICIAR_SESION_ERROR,
+    INICIAR_SESION_EXITO,
+    INICIAR_SESION_START,
+    LOGIN_DIALOG_CLOSE,
+    LOGIN_DIALOG_OPEN,
+    REGISTER_TO_LOGIN,
+    PASSWORD_ERROR
+} from "../types";
 import swal from 'sweetalert2';
 
 // Get Data to localStorage
@@ -10,10 +18,10 @@ export function loginNormalAction(data) {
         try {
             const response = await saveUserLogin(data)
 
-            setTimeout(() => {
-                dispatch(loginNormalSuccess(response));
+            // setTimeout(() => {
+                dispatch(loginNormalSuccess(response.data.user));
                 // dispatch(loginPasswordError(response));
-            }, 2000)
+            // }, 2000)
 
         } catch (error) {
             dispatch(loginNormalError(error))
@@ -33,12 +41,19 @@ export function LoginRegisteredAction(userLog) {
 
             setTimeout(() => {
                 dispatch(loginNormalSuccess(response));
-                
+
             }, 2000)
         } catch (error) {
             dispatch(loginNormalError(error))
             console.log(error)
-            swal.fire('Error', `${userLog.correo} o contraseña incorrectos`, 'error')
+            // swal.fire('Error', `${userLog.correo} o contraseña incorrectos`, 'error').then((result) => {
+            //     if (result.isConfirmed) {
+            //         // setOpenLogin(false)
+            //         setCheckLogin(false);
+            //         dispatch(login_dialog_close_action())
+            //         Swal.close()
+            //     }
+            // })
         }
     }
 }

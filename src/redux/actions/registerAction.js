@@ -10,8 +10,8 @@ export function registerAction(data) {
             const response = await saveUserRegister(data)
 
 
-            dispatch(registerSuccess(response));
-            console.log(response.data)
+            dispatch(registerSuccess(response.data));
+            // console.log(response.user.data)
                    
         } catch (error) {
 
@@ -25,9 +25,9 @@ const registerStart = () => ({
     type: REGISTRO_USUARIO_START
 });
 
-const registerSuccess = (username) => ({
+const registerSuccess = (registerData) => ({
     type: REGISTRO_USUARIO_EXITO,
-    payload: username
+    payload: registerData
 });
 
 const registerError = (errorData) => ({
