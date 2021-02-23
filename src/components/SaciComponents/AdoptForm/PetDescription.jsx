@@ -91,7 +91,7 @@ export default function PetDescription() {
   const [saveFormDescription, setSaveFormDescription] = useState(true);
 
   const [newPet, setnewPet] = useState({
-    id_usuario: user.data.user.id,
+    id_usuario: user.id,
     tipo_tramite: 1,
     nombre_mascota: `${nombre_mascota}`,
     edad_mascota: `${edad_mascota}`,

@@ -235,75 +235,75 @@ const SectionDesktop = () => {
         }
     },[])
 
-    useEffect(() => {
-        if (registerError === true) {
-            Swal.fire({
-                icon: 'success',
-                title: `Bienvenid@ ${user.nombres}`,
-                text: 'Sesión Iniciada',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // setOpenLogin(false)
-                    // setRegisterToLogin(true);
-                    dispatch(login_dialog_close_action())
-                    Swal.close()
-                }
-            })
-        }
-    },[])
+    // useEffect(() => {
+    //     if (registerError === true) {
+    //         Swal.fire({
+    //             icon: 'success',
+    //             title: `Bienvenid@ ${user.nombres}`,
+    //             text: 'Sesión Iniciada',
+    //         }).then((result) => {
+    //             if (result.isConfirmed) {
+    //                 // setOpenLogin(false)
+    //                 // setRegisterToLogin(true);
+    //                 dispatch(login_dialog_close_action())
+    //                 Swal.close()
+    //             }
+    //         })
+    //     }
+    // },[])
 
-    useEffect(() => {
-    if (checkLogin === true) {
-        if (okRegister === true) {
-            Swal.fire({
-                icon: 'success',
-                // title: `Muy Bien! ${okRegister.nombres}`,
-                text: 'Registro Exitoso!',
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown',
-                    icon: 'swal2-icon-show'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                }
-            }).then((result) => {                
-                if (result.isConfirmed) {
-                    setRegisterToLogin(true);
-                    dispatch(register_dialog_close_action())
-                    Swal.close()
-                    setCheckLogin(false)
-                }
-            })
-        }
-    }
-    },[])
+    // useEffect(() => {
+    // if (checkLogin === true) {
+    //     if (okRegister === true) {
+    //         Swal.fire({
+    //             icon: 'success',
+    //             // title: `Muy Bien! ${okRegister.nombres}`,
+    //             text: 'Registro Exitoso!',
+    //             showClass: {
+    //                 popup: 'animate__animated animate__fadeInDown',
+    //                 icon: 'swal2-icon-show'
+    //             },
+    //             hideClass: {
+    //                 popup: 'animate__animated animate__fadeOutUp'
+    //             }
+    //         }).then((result) => {                
+    //             if (result.isConfirmed) {
+    //                 setRegisterToLogin(true);
+    //                 dispatch(register_dialog_close_action())
+    //                 Swal.close()
+    //                 setCheckLogin(false)
+    //             }
+    //         })
+    //     }
+    // }
+    // },[])
 
-    useEffect(()  => {
-    if (registerToLogin === true) {
-        dispatch(LoginRegisteredAction(userLog));
-        setRegisterToLogin(false);
-    }
+    // useEffect(()  => {
+    // if (registerToLogin === true) {
+    //     dispatch(LoginRegisteredAction(userLog));
+    //     setRegisterToLogin(false);
+    // }
 
-    },)
+    // },)
 
 
 
-    useEffect(() => {
-        if (mensaje.length !== 0) {
-            Swal.fire({
-                icon: 'success',
-                title: `Bienvenid@ ${user.data.user.nombres}`,
-                text: 'Sesión Iniciada',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // setOpenLogin(false)
-                    setCheckLogin(false);
-                    dispatch(login_dialog_close_action())
-                    Swal.close()
-                }
-            })
-        }   
-    })
+    // useEffect(() => {
+    //     if (mensaje.length !== 0) {
+    //         Swal.fire({
+    //             icon: 'success',
+    //             title: `Bienvenid@ ${user.data.user.nombres}`,
+    //             text: 'Sesión Iniciada',
+    //         }).then((result) => {
+    //             if (result.isConfirmed) {
+    //                 // setOpenLogin(false)
+    //                 setCheckLogin(false);
+    //                 dispatch(login_dialog_close_action())
+    //                 Swal.close()
+    //             }
+    //         })
+    //     }   
+    // })
 
 
 
