@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import LazyLoad from 'react-lazyload';
-
 import { makeStyles } from '@material-ui/core/styles';
 
 import { Card, CardHeader, CardActions, Avatar, IconButton, Button, Dialog, Grid, CardMedia } from '@material-ui/core';
@@ -12,9 +10,30 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
+import CarouselData from '../AdoptData/CarouselData';
+
+// Accordion
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Box from '@material-ui/core/Box';
+
+// Tablas
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+
+import Slide from '@material-ui/core/Slide';
+
 // import { Link } from 'react-router-dom';
 
-import Modal from './ModalData';
+// import Modal from './ModalData';
 
 // components
 import AdoptMeModal from '../AdoptMeForm/AdoptMeModal';
@@ -25,12 +44,12 @@ import { useDispatch, useSelector } from 'react-redux';
 // useMediaQuery
 import { useTheme } from '@material-ui/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import useModal from '../../../hooks/useModal';
+// import useModal from '../../../hooks/useModal';
 import { get_pet_photos_action, get_saci_pets_action } from '../../../redux/actions/saciPets';
-import { Height, LensTwoTone } from '@material-ui/icons';
+// import { Height, LensTwoTone } from '@material-ui/icons';
 
 //images
-import petImage1 from '../../../assets/images/cards/perro_con_peluca.jpg';
+import petSample from '../../../assets/images/cards/perro_con_peluca.jpg';
 
 // import mascota1 from '../assets/images/cards/perro_con_peluca.jpg'
 // import mascota2 from '../../assets/images/cards/pastor_aleman_navideño.jpg'
@@ -71,6 +90,14 @@ const useStyles = makeStyles((theme) => ({
     textTransform: 'none',
     fontSize: '18px',
   },
+
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightRegular,
+  },
+  paperContainer: {
+    padding: '50px',
+  },
   media: {
     height: 450,
     paddingTop: '56.25%', // 16:9
@@ -80,74 +107,104 @@ const useStyles = makeStyles((theme) => ({
 ////////////////////////////////////////////////////////////
 // Data
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+function createData(name, calories, sexo, fat, carbs, protein) {
+  return { name, calories, sexo, fat, carbs, protein };
+}
+
+const rows = [createData('Pinina', 10, 'Macho', 'Pastor Alemán', 'Perro', 80)];
+
 
 ////////////////////////////////////////////////////////////
 export default function RecipeReviewCard() {
 
   const dispatch = useDispatch();
 
-  const { mascotas } = useSelector(state => state.saciPets);
-  const { photos } = useSelector(state => state.saciPets);
+  const [open, setOpen] = React.useState(false);
 
-  const { open, handleClickOpen, handleClickClose } = useModal();
-  const [checkDBPets, setChecksDBPets] = useState(true);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClickClose = () => {
+    setOpen(false);
+  };
+
+  const { mascotas } = useSelector(state => state.saciPets);
+  // const { mascotas } = useSelector(state => state.saciPets);
+  const { petImage1 } = useSelector(state => state.adoptFormData);
+
+  // const { open, handleClickOpen, handleClickClose } = useModal();
 
   const classes = useStyles();
 
   const [modal, setModal] = useState(false);
 
-  const [petPhoto, setPetPhoto] = useState(petImage1);
+  const [petPhoto, setPetPhoto] = useState(petSample);
+  const [checkPets, setCheckPets] = useState(false);
+  // const [petPhotos, setPetPhotos] = useState([]);
 
+  // const [selectedImages, setSelectedImages] = useState([])
+
+
+  //   useEffect(() => {
+
+  //     if (photos) {
+  //       const fileArray = Array.from(photos).map((file) => (file))
+  //       console.log(fileArray)
+
+  //       setSelectedImages((prevImages) => prevImages.concat(fileArray))
+  //       Array.from(photos).map(
+  //         (file) => (file)
+  //       )
+  //     }  
+  // }, [photos])
+
+  // const fileArray = Array.from(e.target.files).map((file) => URL.createObjectURL(file))
+  // console.log(fileArray
+
+  useEffect(() => {
+    if (petImage1 === true) {
+      setPetPhoto(petImage1)
+    } else
+      setPetPhoto(petSample)
+  }, [petImage1])
+
+  // Array.from(photos).map()
 
   const openCloseAdopt = () => {
     setModal(!modal);
   };
 
-  if (checkDBPets === true) {
+  useEffect(() => {
     dispatch(get_saci_pets_action())
-    setChecksDBPets(false)
-  }
+  }, [dispatch])
 
-  // const [clog, setClog] = useState(true);
-
-  // if (checkDBPets === false) {
-  //   if (clog === true) {
-  //     console.log({mascotas})
-  //     setClog(false);
+  // useEffect(() => {
+  //   if (petPhoto) {
+  //     setPetPhotos()
   //   }
-
-  // }  
-
-  // mascotas.map((item) => {
-  //   const fileData = item.id_mascota
-  //   return fileData
-  // })
-
-  const [checkPhotos, setCheckPhotos] = useState(true);
-
-  mascotas.map((item) => {
-    const fileData = item.id_mascota
-    if (checkPhotos === true) {
-      for (let i in mascotas) {
-        console.log(mascotas[i])
-        dispatch(get_pet_photos_action(fileData));
-        setCheckPhotos(false);
-      }
-    }
-    return fileData
-  })
+  // }, [input])
 
   useEffect(() => {
-    if (photos) {
-      setPetPhoto(photos)
+    for (let i of mascotas) {
+      dispatch(get_pet_photos_action(i.id_mascota));
+      console.log(i)
+      console.log(i.id_mascota);
     }
-  },[]);
-
+  }, [mascotas, dispatch])
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'), {
     defaultMatches: true
   });
+
+  // const renderPhotos = (photo) => {
+  //   return <img src={photo} key={photo} alt={photo} />
+  // }
 
   return (
     <Grid container spacing={isMobile ? 1 : 3} xs={12} justify="center" className={classes.cardsPetsContainer}>
@@ -155,54 +212,153 @@ export default function RecipeReviewCard() {
         return (
 
           <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
-            <LazyLoad>
-              <Card className={classes.cardsPets} style={{ borderRadius: 10 }}>
-                <CardHeader
-                  avatar={
-                    <Avatar aria-label="recipe" className={classes.avatar}>
-                      R
+            <Card className={classes.cardsPets} style={{ borderRadius: 10 }}>
+              <CardHeader
+                avatar={
+                  <Avatar aria-label="recipe" className={classes.avatar}>
+                    R
                 </Avatar>
-                  }
-                  action={
-                    <IconButton aria-label="settings">
-                      <MoreVertIcon />
-                    </IconButton>
-                  }
-                  title={item.nombre_mascota}
-                  subheader={item.nombre_raza}
-                />
-                {/* <Modal /> */}
-                <CardMedia className={classes.media} image={petPhoto}>
-                </CardMedia>
-                <CardActions disableSpacing>
-                  <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
+                }
+                action={
+                  <IconButton aria-label="settings">
+                    <MoreVertIcon />
                   </IconButton>
-                  <IconButton aria-label="share">
-                    <ShareIcon />
-                  </IconButton>
-                  <Button
-                    onClick={() => openCloseAdopt()}
-                    className={classes.buttonPrimary}
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                    fullWidth
-                  >
-                    Adóptame
+                }
+                title={item.nombre_mascota}
+                subheader={item.raza}
+              />
+              {/* <Modal /> */}
+              {/* {renderPhotos(petPhoto)} */}
+              <CardMedia
+                className={classes.media}
+                title="Pinina"
+                onClick={handleClickOpen}
+                image={petSample}
+              />
+              <CardActions disableSpacing>
+                <IconButton aria-label="add to favorites">
+                  <FavoriteIcon />
+                </IconButton>
+                <IconButton aria-label="share">
+                  <ShareIcon />
+                </IconButton>
+                <Button
+                  onClick={() => openCloseAdopt()}
+                  className={classes.buttonPrimary}
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  fullWidth
+                >
+                  Adóptame
               </Button>
-                </CardActions>
-              </Card>
-            </LazyLoad>
+              </CardActions>
+            </Card>
           </Grid>
 
         );
       })}
 
+      <>
+        <Dialog
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClickClose}
+        >
+          <Paper elevation={3} className={classes.paperContainer}>
+            <Box display="flex" justifyContent="center">
+              <CarouselData />
+            </Box>
+            <Box display="flex" justifyContent="center" mb={5} my={5}>
+              <Typography variant="h4" color="initial">
+                Ficha De Mascota
+                      </Typography>
+            </Box>
+            <Box mb={5}>
+              <TableContainer component={Paper}>
+                <Table className={classes.table} aria-label="simple table">
+                  {/* style={{ border: 'blue 7px solid'}} */}
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Nombre</TableCell>
+                      <TableCell>Edad</TableCell>
+                      <TableCell>Sexo</TableCell>
+                      <TableCell>Raza</TableCell>
+                      <TableCell>Tipo</TableCell>
+                      <TableCell>Peso&nbsp;(Kg)</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {rows.map((row) => (
+                      <TableRow key={row.name}>
+                        <TableCell component="th" scope="row">
+                          {row.name}
+                        </TableCell>
+                        <TableCell>{row.calories}</TableCell>
+                        <TableCell>{row.sexo}</TableCell>
+                        <TableCell>{row.fat}</TableCell>
+                        <TableCell>{row.carbs}</TableCell>
+                        <TableCell>{row.protein}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Box>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography className={classes.heading}>Vacunas</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  <ol>
+                    <li>Vacuna</li>
+                    <li>Vacuna</li>
+                    <li>Vacuna</li>
+                  </ol>
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel2a-content"
+                id="panel2a-header"
+              >
+                <Typography className={classes.heading}>Documentación</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>Trae Cartilla Documentación</Typography>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel2a-content"
+                id="panel2a-header"
+              >
+                <Typography className={classes.heading}>Observaciones</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  Tratarle con mucho cariño <br />
+                Es enojón por todo
+                      </Typography>
+              </AccordionDetails>
+            </Accordion>
+          </Paper>
+        </Dialog>
+      </>
 
       <Dialog onclose={openCloseAdopt}>
         <AdoptMeModal />
       </Dialog>
+
     </Grid>
   );
 }

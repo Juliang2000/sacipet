@@ -1,4 +1,4 @@
-import { GET_SACI_PETS, GET_PET_PHOTOS } from "../types";
+import { GET_SACI_PETS, GET_PET_PHOTOS, SAVE_PET } from "../types";
 import { getPetPhotos, getSaciPets } from "../../configAxios/saciPets"
 
 
@@ -23,5 +23,12 @@ export const get_pet_photos_action = (petPhoto) => async (dispatch) => {
         })
     } catch (error) {
         console.log(error)
+    }
+}
+
+export const save_pet_action = (petFile) => {
+    return {
+        type: SAVE_PET,
+        payload: petFile
     }
 }

@@ -18,7 +18,9 @@ import {
     SAVE_PET_IMAGE_2,
     SAVE_PET_IMAGE_3,
     SAVE_PET_IMAGE_4,
-    SAVE_PET_IMAGE_5
+    SAVE_PET_IMAGE_5,
+    PET_DESCRIPTION_NOT_OK,
+    RESET_CITY_ACTION
 
 } from "../types"
 
@@ -160,6 +162,11 @@ export default (state = initialState, action) => {
                 ...state,
                 petDescription: true,
             }
+        case PET_DESCRIPTION_NOT_OK:
+            return {
+                ...state,
+                petDescription: false,
+            }
         case PUSH_DATA_ACTION:
             return {
                 ...state,
@@ -183,19 +190,19 @@ export default (state = initialState, action) => {
                 petimage2: action.payload,
                 savePetImage2: true,
             }
-            case SAVE_PET_IMAGE_3:
+        case SAVE_PET_IMAGE_3:
             return {
                 ...state,
                 petimage3: action.payload,
                 savePetImage3: true,
             }
-            case SAVE_PET_IMAGE_4:
+        case SAVE_PET_IMAGE_4:
             return {
                 ...state,
                 petimage4: action.payload,
                 savePetImage4: true,
             }
-            case SAVE_PET_IMAGE_5:
+        case SAVE_PET_IMAGE_5:
             return {
                 ...state,
                 petimage5: action.payload,
@@ -249,6 +256,13 @@ export default (state = initialState, action) => {
                     descripcion_mascota: '',
                 },
                 activeStepState: 1,
+            }
+        case RESET_CITY_ACTION:
+            return {
+                ...state,
+                updateDescriptionData: {
+                    id_codigo: '',
+                }
             }
         default: return state
     }

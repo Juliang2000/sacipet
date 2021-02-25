@@ -17,6 +17,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import PininaDashboard from './pages/PininaDashboard'
 import SaciDashboard from './pages/SaciDashboard'
+import ImagesExample from './pages/ImagesExample'
 
 
 // import classes from '*.module.css';
@@ -54,6 +55,7 @@ function App() {
             <Route path="/Register" component={Register}/>
             <Route path="/Login" component={Login}/>
             <Route path="/Pinina" component={PininaDashboard}/>
+            <Route path="/images" component={ImagesExample}/>
             {/* <PrivateRoute path="/menu-user" component={MenuUser} /> */}
             
           </Switch>

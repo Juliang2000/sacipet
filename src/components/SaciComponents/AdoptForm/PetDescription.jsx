@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   makeStyles,
@@ -30,7 +30,9 @@ import {
   update_form_data_action,
   full_pet_description_action,
   get_form_data_action,
-  push_data_action
+  push_data_action,
+  not_full_pet_description_action,
+  reset_city_action
 } from '../../../redux/actions/adoptFormAction';
 // import { Update } from '@material-ui/icons';
 
@@ -60,6 +62,7 @@ export default function PetDescription() {
   const [sendHamsterData, setSendHamsterData] = useState(true);
   const [racesContent, setRacesContent] = useState(false);
   const [getData, setGetData] = useState(true);
+  const [allowCities, setAllowCities] = useState(false);
 
   ///////////////////////INSERTS
   const raceData = useSelector(store => store.raceData.raceData);
@@ -123,16 +126,18 @@ export default function PetDescription() {
     const { name, value } = event.target
     setnewPet({ ...newPet, [name]: value })
     setDepData({ ...depData, [name]: value })
-    dispatch(get_form_data_action(newPet));
-    dispatch(update_form_data_action());
   }
 
-  if (activeStepState === 2) {
-    if (getData === true) {
-      dispatch(get_department_data_action());
-      setGetData(false);
+  useEffect(() => {
+    if (newPet) {
+      dispatch(get_form_data_action(newPet));
+      dispatch(update_form_data_action());
     }
-  }
+  }, [newPet, dispatch])
+
+  useEffect(() => {
+    dispatch(get_department_data_action());
+  }, [dispatch])
 
   const [petData, setPetData] = useState({
     id_tipo_mascota: petType,
@@ -154,9 +159,6 @@ export default function PetDescription() {
   }
 
   const [sendPetData, setSendPetData] = useState(false);
-  const [sendCityData, setSendCityData] = useState(true);
-  const [fullPetDescription, setFullPetDescription] = useState(false);
-  const [checkForm, setCheckForm] = useState(true);
 
   const saveData = () => {
     dispatch(push_data_action());
@@ -190,21 +192,13 @@ export default function PetDescription() {
     dispatch(update_form_data_action());
   };
 
-
-  const saveDepartment = () => {
-    setSendCityData(true);
-    dispatch(get_form_data_action(newPet));
-    dispatch(update_form_data_action());
-  };
-
-  if (sendCityData === true) {
-    if (id_unde !== 0) {
-      (dispatch(get_city_data_action(depData)))
-      dispatch(get_form_data_action(newPet));
-      dispatch(update_form_data_action());
+  useEffect(() => {
+    if (newPet.id_unde) {
+      dispatch(get_city_data_action(depData),
+        reset_city_action());
+      setAllowCities(true)
     }
-    setSendCityData(false);
-  }
+  }, [newPet.id_unde, dispatch, depData])
 
   if (racesContent === true) {
     if (id_tamanio !== 0) {
@@ -271,38 +265,60 @@ export default function PetDescription() {
 
   const { handleSubmit, register, errors } = useForm({
     defaultValues: {
-    nombre_mascota: nombre_mascota,
-    edad_mascota: edad_mascota,
+      nombre_mascota: nombre_mascota,
+      edad_mascota: edad_mascota,
     },
     mode: "onChange",
     resolver: yupResolver(schema),
   });
   ////////////////////////////////////
 
-  if (checkForm === true) {
-    if (
-      nombre_mascota.length 
-      &&
-      edad_mascota.length &&
-      escala_edad &&
-      id_tamanio &&
-      id_raza &&
-      id_color &&
-      id_unde &&
-      id_codigo &&
-      descripcion_mascota.length !== 0
-    ) {
-      setFullPetDescription(true)
+  // if (checkForm === true) {
+  useEffect(() => {
+    if (!errors.nombre_mascota && !errors.edad_mascota) {
+      if (nombre_mascota.length &&
+        // edad_mascota.length &&
+        // escala_edad &&
+        // esterilizado.length &&
+        // id_tamanio &&
+        // id_raza &&
+        // id_color &&
+        // id_unde &&
+        // id_codigo &&
+        descripcion_mascota.length !== 0
+      ) {
+        // setFullPetDescription(true)
+        dispatch(full_pet_description_action());
+        console.log(errors)
+      }
     }
-  }
+    else
+      dispatch(not_full_pet_description_action());
+  }, [nombre_mascota,
+    descripcion_mascota,
+    dispatch,
+    id_codigo,
+    id_unde,
+    errors,
+    edad_mascota,
+    escala_edad,
+    id_tamanio,
+    id_raza,
+    id_color,
+    esterilizado])
 
-  if (fullPetDescription === true) {
-    dispatch(full_pet_description_action());
-    setFullPetDescription(false);
-    dispatch(get_form_data_action(newPet));
+  useEffect(() => {
     dispatch(update_form_data_action());
-    setCheckForm(false);
-  }
+  }, [newPet, dispatch])
+  // }
+
+  // if (fullPetDescription === true) {
+  //   dispatch(full_pet_description_action());
+  //   setFullPetDescription(false);
+  //   dispatch(get_form_data_action(newPet));
+  //   dispatch(update_form_data_action());
+  //   setCheckForm(false);
+  // }
 
   // const handleChange = (event) => {
   //   const { name, value } = event.target
@@ -399,8 +415,8 @@ export default function PetDescription() {
               {/* <MenuItem>
                 <em>Seleccione:</em>
               </MenuItem> */}
-              <MenuItem value={1} onClick={saveData}>Si</MenuItem>
-              <MenuItem value={0} onClick={saveData}>No</MenuItem>
+              <MenuItem value="1" onClick={saveData}>Si</MenuItem>
+              <MenuItem value="0" onClick={saveData}>No</MenuItem>
             </Select>
           </FormControl>
         </Grid>
@@ -572,7 +588,6 @@ export default function PetDescription() {
               name="id_unde"
               label="Departamento"
               onChange={handleChange}
-              onClick={saveDepartment}
               defaultValue={id_unde}
             >
               {/* <MenuItem>
@@ -597,7 +612,7 @@ export default function PetDescription() {
               name="id_codigo"
               label="Ciudad o municipio"
               onChange={handleChange}
-              disabled={id_unde.length === 0}
+              disabled={allowCities === false}
               defaultValue={id_codigo}
             >
               {/* <MenuItem>

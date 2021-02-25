@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Lottie from 'react-lottie';
 import { Link } from 'react-router-dom';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
@@ -232,49 +232,80 @@ export default function AdoptStepper() {
     }
   }
 
-  if (checkedStepOne === true) {
-    if (activeStepState === 1) {
-      if (petType !== 0) {
-        setAllowContent(true)
-        setCheckedStepTwo(true);
-        setCheckedStepOne(false);
+  // if (checkedStepOne === true) {
+  //   if (activeStepState === 1) {
+  //     if (petType !== 0) {
+  //       setAllowContent(true)
+  //       setCheckedStepTwo(true);
+  //       setCheckedStepOne(false);
+  //     }
+  //   }
+  // }
+
+  // if (petDescription === true) {
+  //   if (checkedStepTwo === false) {
+  //     setAllowContent(true);
+  //     setCheckedStepOne(true);
+  //     setCheckedStepTwo(null);
+  //   }
+  // }
+
+  // if (checkedStepTwo === true) {
+  //   if (activeStepState === 2) {
+  //     setAllowContent(false)
+  //     setCheckedStepOne(true)
+  //     setCheckedStepTwo(false)
+  //   }
+  // }
+
+  // if (checkStepThree === true) {
+  //   if (activeStepState === 3) {
+  //     setAllowContent(false)
+  //     setCheckedStepTwo(true)
+  //     setCheckedStepOne(true)
+  //     setCheckStepThree(false)
+  //   }
+  // }
+
+  useEffect(() => {
+    if (activeStepState) {
+      switch (activeStepState) {
+        case 1: if (petType !== 0) {
+          setAllowContent(true)
+        } else {
+          setAllowContent(false)
+        }
+          break;
+        case 2: if (petDescription === true) {
+          setAllowContent(true);
+        } else {
+          setAllowContent(false);
+        }
+          break;
+        case 3: if (savePetImage1 === true) {
+          setAllowContent(true);
+        } else {
+          setAllowContent(false);
+        }
+          break;
+        default:
       }
     }
-  }
+  }, [activeStepState,
+    petDescription,
+    petType,
+    savePetImage1,
+    ]);
 
-  if (petDescription === true) {
-    if (checkedStepTwo === false) {
-      setAllowContent(true);
-      setCheckedStepOne(true);
-      setCheckedStepTwo(null);
-    }
-  }
 
-  if (checkedStepTwo === true) {
-    if (activeStepState === 2) {
-      setAllowContent(false)
-      setCheckedStepOne(true)
-      setCheckedStepTwo(false)
-    }
-  }
+  // const [checkSavedPhotos, setCheckSavedPhotos] = useState(true)
 
-  if (checkStepThree === true) {
-    if (activeStepState === 3) {
-      setAllowContent(false)
-      setCheckedStepTwo(true)
-      setCheckedStepOne(true)
-      setCheckStepThree(false)
-    }
-  }
-
-  const [checkSavedPhotos, setCheckSavedPhotos] = useState(true)
-
-  if (checkSavedPhotos === true) {
-    if (savePetImage1 || savePetImage2 || savePetImage3 || savePetImage4 || savePetImage5 === true) {
-      setAllowContent(true);
-      setCheckSavedPhotos(false);
-    }
-  }
+  // if (checkSavedPhotos === true) {
+  //   if (savePetImage1 || savePetImage2 || savePetImage3 || savePetImage4 || savePetImage5 === true) {
+  //     setAllowContent(true);
+  //     setCheckSavedPhotos(false);
+  //   }
+  // }
 
   ColorlibStepIcon.propTypes = {
     /**
@@ -526,26 +557,26 @@ export default function AdoptStepper() {
                     </Grid>
                   </div>
                 ) : (
+                  <div>
+                    <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
                     <div>
-                      <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-                      <div>
-                        <Grid container justify="center">
-                          <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                            Atrás
+                      <Grid container justify="center">
+                        <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                          Atrás
                           </Button>
-                          <Button
-                            disabled={allowContent === false}
-                            variant="contained"
-                            color="primary"
-                            onClick={handleNext}
-                            className={classes.button}
-                          >
-                            {activeStep === steps.length - 1 ? 'Siguiente' : 'Siguiente'}
-                          </Button>
-                        </Grid>
-                      </div>
+                        <Button
+                          disabled={allowContent === false}
+                          variant="contained"
+                          color="primary"
+                          onClick={handleNext}
+                          className={classes.button}
+                        >
+                          {activeStep === steps.length - 1 ? 'Siguiente' : 'Siguiente'}
+                        </Button>
+                      </Grid>
                     </div>
-                  )}
+                  </div>
+                )}
               </div>
             </div>
           </Dialog>

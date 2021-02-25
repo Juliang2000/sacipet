@@ -1,11 +1,13 @@
-import { GET_SACI_PETS, GET_PET_PHOTOS } from "../types"
+import { GET_SACI_PETS, GET_PET_PHOTOS, SAVE_PET } from "../types"
 
 const initialState = {
 
     mascotas: [],
     photos: '',
+    file: {},
 
 }
+    
 
 export default (state = initialState, action) => {
     switch (action.type) {
@@ -22,6 +24,13 @@ export default (state = initialState, action) => {
                 photos: action.payload
 
             }
+        case SAVE_PET:
+            return {
+                ...state,
+                file: action.payload
+
+            }
+
 
         default: return state
     }
