@@ -27,7 +27,7 @@ import swal from 'sweetalert2'
 
 
 //icons
-import petIcon from '../../../assets/icons/drawer/pet.svg'
+import iconAdopt from '../../../assets/icons/drawer/iconAdopt-final.svg'
 import petIconGray from '../../../assets/icons/drawer/pet_gray.svg'
 import CloseIcon from '@material-ui/icons/Close';
 import iconSend from '../../../assets/icons/send.svg';
@@ -39,6 +39,10 @@ import VideoLabelIcon from '@material-ui/icons/VideoLabel';
 //lotties
 import registerPetForm from '../../../assets/lotties/registerPetForm.json'
 import { get_saci_pets_action } from '../../../redux/actions/saciPets';
+
+// open dialog login
+import { login_dialog_open_action } from '../../../redux/actions/loginAction';
+import { register_dialog_open_action } from '../../../redux/actions/registerAction';
 
 
 const ColorlibConnector = withStyles({
@@ -462,6 +466,18 @@ export default function AdoptStepper() {
     }
   }
 
+  // Open dialog Login
+  const handleClickOpenLogin = () => {
+    setOpenModal(false);
+    dispatch(login_dialog_open_action())
+  };
+
+  // Open dialog Register
+  const openRegister = () => {
+    setOpenModal(false);
+    dispatch(register_dialog_open_action())
+  }
+
   return (
 
     <>
@@ -474,7 +490,7 @@ export default function AdoptStepper() {
           // variant="contained"
           color="secondary"
           // color="primary"
-          startIcon={<img src={petIcon} alt="LogIn" style={{ width: '30px' }} />}
+          startIcon={<img src={iconAdopt} alt="LogIn" style={{ width: '40px' }} />}
         >
           Dar en adopción
               </Button>
@@ -595,38 +611,30 @@ export default function AdoptStepper() {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <Link
-                    to="/login"
-                    style={{ textDecoration: "none", filter: "contrast(1)" }}
+                  <Button
+                    className={classes.buttonStart}
+                    color="primary"
+                    variant="contained"
+                    size="large"
+                    endIcon={<img src={iconSend} alt="LogIn" className={classes.icons2} />}
+                    fullWidth
+                    type="submit"
+                    onClick={handleClickOpenLogin}
                   >
-                    <Button
-                      className={classes.buttonStart}
-                      color="primary"
-                      variant="contained"
-                      size="large"
-                      endIcon={<img src={iconSend} alt="LogIn" className={classes.icons2} />}
-                      fullWidth
-                      type="submit"
-                    >
-                      Inicia Sesión
+                    Inicia Sesión
                         </Button>
-                  </Link>
                 </Grid>
 
-                <Link
-                  to="/Register"
-                  style={{ textDecoration: "none", filter: "contrast(1)" }}
-                >
-                  <Grid item xs={12} spacing={3} justifyContent="center" >
-                    <Button
-                      variant="text"
-                      size="small"
-                      className={classes.buttonSecondary2}
-                    >
-                      ¿No tienes una cuenta? Regístrate
+                <Grid item xs={12} spacing={3} justifyContent="center" >
+                  <Button
+                    variant="text"
+                    size="small"
+                    className={classes.buttonSecondary2}
+                    onClick={openRegister}
+                  >
+                    ¿No tienes una cuenta? Regístrate
                     </Button>
-                  </Grid>
-                </Link>
+                </Grid>
               </Grid>
             </div>
           </Dialog>

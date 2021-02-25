@@ -3,16 +3,16 @@ import { INICIAR_SESION_ERROR, INICIAR_SESION_EXITO, INICIAR_SESION_START } from
 
 // Get Data to localStorage
 export function loginFacebookAction(data) {
-    return async(dispatch) => {
+    return async (dispatch) => {
         dispatch(loginFacebookStart())
 
         try {
             const response = await saveFbUser(data)
 
-            dispatch(loginFacebookSuccess(response.data.user.nombres));
-                   
+            dispatch(loginFacebookSuccess(response.data.user));
+
         } catch (error) {
-           dispatch(loginFacebookError(error))
+            dispatch(loginFacebookError(error))
         }
     }
 }

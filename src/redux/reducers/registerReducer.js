@@ -4,18 +4,10 @@ const initialState = {
     registerData: '',
     loader: false,
     error: false,
-    errorMessage: '',
+    // errorMessage: '',
+    // errorData: '',
     registerDialog: null,
-    errorData: '',
-
-    registerLoginData: {
-        password: null,
-        correo: '',
-        origen_cuenta: 'Registro_normal'
-    }
 }
-
-
 
 export default (state = initialState, action) => {
     switch (action.type) {
@@ -29,7 +21,7 @@ export default (state = initialState, action) => {
                 ...state,
                 loader: false,
                 error: false,
-                errorMessage: '',
+                // errorMessage: '',
                 // user: action.payload,
                 registerData: action.payload
                 // ok: true,
@@ -39,17 +31,17 @@ export default (state = initialState, action) => {
                 ...state,
                 loader: false,
                 error: true,
-                errorMessage: action.payload.error,
+                // errorMessage: action.payload.error,
                 // user: '',
-                ok: false,
-                errorData: action.payload,
+                // ok: false,
+                // errorData: action.payload,
                 registerData: '',
             }
         case REGISTER_DIALOG_OPEN:
             return {
                 ...state,
                 registerDialog: true,
-                
+
             }
         case REGISTER_DIALOG_CLOSE:
             return {

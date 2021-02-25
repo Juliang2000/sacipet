@@ -1,20 +1,15 @@
-import { INICIAR_SESION_ERROR, INICIAR_SESION_EXITO, INICIAR_SESION_START, LOGIN_DIALOG_OPEN, LOGIN_DIALOG_CLOSE, REGISTER_TO_LOGIN, PASSWORD_ERROR } from "../types"
+import { INICIAR_SESION_ERROR, INICIAR_SESION_EXITO, INICIAR_SESION_START, LOGIN_DIALOG_OPEN, LOGIN_DIALOG_CLOSE, /* REGISTER_TO_LOGIN */ } from "../types"
 
 const initialState = {
     // user: 'developer',
-
-
-
     user: '',
     loader: false,
     error: false,
-    errorMessage: '',
     loginDialog: null,
-    registerToLogin: null,
-    success: false,
-    password: '',
-    mensaje: '',
-
+    // errorMessage: '',
+    // registerToLogin: null,
+    // success: false,
+    // mensaje: '',
 }
 
 export default (state = initialState, action) => {
@@ -34,10 +29,10 @@ export default (state = initialState, action) => {
                 ...state,
                 loader: false,
                 error: false,
-                errorMessage: '',
+                // errorMessage: '',
                 user: action.payload,
-                success: true,
-                mensaje: action.payload
+                // success: true,
+                // mensaje: action.payload
             }
 
         case INICIAR_SESION_ERROR:
@@ -63,18 +58,12 @@ export default (state = initialState, action) => {
                 ...state,
                 loginDialog: false,
             }
-        case REGISTER_TO_LOGIN:
+        // case REGISTER_TO_LOGIN:
 
-            return {
-                ...state,
-                registerToLogin: true,
-            }
-        case PASSWORD_ERROR:
-
-            return {
-                ...state,
-                password: action.payload,
-            }
+        //     return {
+        //         ...state,
+        //         registerToLogin: true,
+        //     }
 
         default: return state
     }
