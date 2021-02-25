@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-// import { useHistory } from 'react-router-dom';
-import { makeStyles, withStyles, Button, Grid } from '@material-ui/core'
+import React, { useEffect } from 'react';
+
+import { makeStyles, withStyles, Button, Grid, Dialog } from '@material-ui/core'
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -9,18 +9,17 @@ import ListItemText from '@material-ui/core/ListItemText';
 //icons
 import Home from '@material-ui/icons/Home';
 import Person from '@material-ui/icons/Person';
-// import CloseIcon from '@material-ui/icons/Close';
-import petUser from '../../assets/icons/drawer/petUser.svg';
+import petUser from '../../assets/icons/drawer/petUser-final.svg';
 
 //Redux
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Dialog, /* AppBar, Toolbar, IconButton */ } from '@material-ui/core';
+// Swal Alerts
 import Swal from 'sweetalert2';
 
 import Login from '../../pages/Login'
 import Register from '../../pages/Register'
-import { loginNormalAction, LoginRegisteredAction, LoginUserRegistered, login_dialog_action, login_dialog_close_action, login_dialog_open_action, register_to_login_action } from '../../redux/actions/loginAction';
+import { LoginRegisteredAction, login_dialog_close_action, login_dialog_open_action } from '../../redux/actions/loginAction';
 import { register_dialog_close_action } from '../../redux/actions/registerAction';
 
 
@@ -74,24 +73,17 @@ const StyledMenuItem = withStyles((theme) => ({
     },
 }))(MenuItem);
 
-//  const [openRegister, setOpenRegister] = React.useState(false);
-
-// export const HandleClickOpenRegister = () => {
-//     setOpenRegister(true)
-//     alert('hola')
-// }
-
-
 const SectionDesktop = () => {
 
     const dispatch = useDispatch();
+
     const { user } = useSelector(state => state.login);
+    const { registerData } = useSelector(state => state.register);
+
     const { loginDialog } = useSelector(state => state.login);
     const { registerDialog } = useSelector(state => state.register);
-    const registerError = useSelector(state => state.register.error);
-    const userLog = useSelector(state => state.register.registerLoginData);
-    const okRegister = useSelector(state => state.register.ok);
 
+    const newUser = useSelector(state => state.register.registerLoginData);
 
     ///////////////Constantes Botón Encuentra tu mascota////////////////
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -107,116 +99,17 @@ const SectionDesktop = () => {
 
     const classes = useStyles();
 
-
-    //////////////////////////////////////////////////////////////////////
-    // const [openLogin, setOpenLogin] = React.useState(false);
-
     const handleClickOpenLogin = () => {
-        // setOpenLogin(true);
         dispatch(login_dialog_open_action())
     };
 
     const handleClickCloseLogin = () => {
-        // setOpenLogin(false);
         dispatch(login_dialog_close_action())
     };
-    //////////////////////////////////////////////////////////////////////
-
-    //////////////////////////////////////////////////////////////////////
-    // const [openRegister, setOpenRegister] = React.useState(false);
-
-    // const handleClickOpenRegister = () => {
-    //     setOpenRegister(true);
-    // };
 
     const handleClickCloseRegister = () => {
-        // setOpenRegister(false);
         dispatch(register_dialog_close_action())
     };
-    //////////////////////////////////////////////////////////////////////
-
-    const [checkLogin, setCheckLogin] = useState(true);
-    // const { ok } = useSelector(state => state.register);
-    const { success, mensaje } = useSelector(state => state.login);
-    // const { ok } = useSelector(state => state.login.data);
-    const [registerToLogin, setRegisterToLogin] = useState()
-
-    // if (registerToLogin === true) {
-    //     dispatch(register_to_login_action(userLog));
-    //     setRegisterToLogin(false);
-    // }
-
-    // if (checkLogin === true) {
-    //     if (ok === false) {
-    //         if (registerError === true) {
-    //             Swal.fire({
-    //                 icon: 'success',
-    //                 title: `Usuario ya registrado`,
-    //                 // text: 'Sesión Iniciada',
-    //                 showClass: {
-    //                     popup: 'animate__animated animate__fadeInDown',
-    //                     icon: 'swal2-icon-show'
-    //                 },
-    //                 hideClass: {
-    //                     popup: 'animate__animated animate__fadeOutUp'
-    //                 }
-    //             }).then((result) => {
-    //                 if (result.isConfirmed) {
-    //                     Swal.close()
-    //                 }
-    //             })
-
-    //             if (user.length !== 0) {
-    //                 Swal.fire({
-    //                     icon: 'success',
-    //                     title: `Bienvenid@ ${user.data.user.nombres}`,
-    //                     text: 'Sesión Iniciada',
-    //                 }).then((result) => {
-    //                     if (result.isConfirmed) {
-    //                         // setOpenLogin(false)
-    //                         setCheckLogin(false);
-    //                         dispatch(login_dialog_close_action())
-    //                         Swal.close()
-    //                     }
-    //                 })
-    //             }
-
-    //             else if(ok === true) {
-    //                 setRegisterToLogin(true);
-    //                 setCheckLogin(false);
-    //                 Swal.fire({
-    //                     icon: 'success',
-    //                     title: `Registro Exitoso`,
-    //                     // text: 'Sesión Iniciada',
-    //                     showClass: {
-    //                         popup: 'animate__animated animate__fadeInDown',
-    //                         icon: 'swal2-icon-show'
-    //                     },
-    //                     hideClass: {
-    //                         popup: 'animate__animated animate__fadeOutUp'
-    //                     }
-    //                 }).then((result) => {
-    //                     if (result.isConfirmed) {
-    //                         // setOpenLogin(false)                    
-    //                         dispatch(register_dialog_close_action())
-    //                         // Swal.close()
-    //                         Swal.fire({
-    //                             icon: 'success',
-    //                             title: `Sesión Iniciada`,
-    //                         }).then((result) => {
-    //                             if (result.isConfirmed) {
-    //                                 // setOpenLogin(false)
-    //                                 setCheckLogin(false);
-    //                                 dispatch(register_dialog_close_action())
-    //                                 // Swal.close()
-    //                             }
-    //                         })
-    //                     }
-    //                 })
-    //             }
-    //         }
-    //     }
-    // }
 
     useEffect(() => {
         if (user.length !== 0) {
@@ -225,120 +118,30 @@ const SectionDesktop = () => {
                 title: `Bienvenid@ ${user.nombres}`,
                 text: 'Sesión Iniciada',
             }).then((result) => {
+                dispatch(login_dialog_close_action())
+                dispatch(register_dialog_close_action())
                 if (result.isConfirmed) {
-                    // setOpenLogin(false)
-                    setCheckLogin(false);
-                    dispatch(login_dialog_close_action())
                     Swal.close()
                 }
             })
         }
-    },[])
+    }, [dispatch, user])
 
     useEffect(() => {
-        if (registerError === true) {
+        if (registerData.length !== 0) {
             Swal.fire({
                 icon: 'success',
-                title: `Bienvenid@ ${user.nombres}`,
-                text: 'Sesión Iniciada',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // setOpenLogin(false)
-                    // setRegisterToLogin(true);
-                    dispatch(login_dialog_close_action())
-                    Swal.close()
-                }
-            })
-        }
-    },[])
-
-    useEffect(() => {
-    if (checkLogin === true) {
-        if (okRegister === true) {
-            Swal.fire({
-                icon: 'success',
-                // title: `Muy Bien! ${okRegister.nombres}`,
+                title: `Muy Bien! ${newUser.nombres}`,
                 text: 'Registro Exitoso!',
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown',
-                    icon: 'swal2-icon-show'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                }
-            }).then((result) => {                
+            }).then((result) => {
+                dispatch(LoginRegisteredAction(newUser));
+                dispatch(register_dialog_close_action())
                 if (result.isConfirmed) {
-                    setRegisterToLogin(true);
-                    dispatch(register_dialog_close_action())
                     Swal.close()
-                    setCheckLogin(false)
                 }
             })
         }
-    }
-    },[])
-
-    useEffect(()  => {
-    if (registerToLogin === true) {
-        dispatch(LoginRegisteredAction(userLog));
-        setRegisterToLogin(false);
-    }
-
-    },)
-
-
-
-    useEffect(() => {
-        if (mensaje.length !== 0) {
-            Swal.fire({
-                icon: 'success',
-                title: `Bienvenid@ ${user.data.user.nombres}`,
-                text: 'Sesión Iniciada',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // setOpenLogin(false)
-                    setCheckLogin(false);
-                    dispatch(login_dialog_close_action())
-                    Swal.close()
-                }
-            })
-        }   
-    })
-
-
-
-
-
-
-
-
-
-
-    // if (registerDialog === true) {
-    //     setOpenLogin(false);
-    //     setCheckLogin(false);
-    // }        
-
-
-    // if (checkRegister === true) {
-    //     if (loginDialog === true) {
-    //         setOpenRegister(false);
-    //         setCheckRegister(false);
-    //     }
-    // }
-
-    //////////////////////////////////////////////////////////////////////
-    // const history = useHistory();
-
-    // const [pushLogin, setPushLogin] = React.useState(null);
-
-    // const handlePushLogin = () => {
-    //     setPushLogin(history.push('/Login'));
-    // };
-    //////////////////////////////////////////////////////////////////////
-
-
-
+    }, [registerData, dispatch, newUser])
 
     return (
         <>
@@ -386,7 +189,7 @@ const SectionDesktop = () => {
                         fullWidth
                         className={classes.loginButton}
                         onClick={handleClickOpenLogin}
-                        startIcon={<img src={petUser} alt="Login" style={{ width: '30px' }} />}
+                        startIcon={<img src={petUser} alt="Login" style={{ width: '40px' }} />}
                     >
                         Ingresar
                     </Button>

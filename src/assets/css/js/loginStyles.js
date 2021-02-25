@@ -1,23 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
-import Image from '../../../assets/images/fondo.jpg';
 
 const loginStyles = makeStyles((theme) => ({
-
-  containerLogin: {
-    backgroundImage: `url(${Image})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    width: '100%',
-    position: 'absolute',
-    minHeight: '100%',
-    '& .MuiButton-root': {
-      fontWeight: 'bold',
-    },
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-
-  },
 
   containerForm: {
     padding: theme.spacing(5, 5, 2, 5),
@@ -25,10 +8,6 @@ const loginStyles = makeStyles((theme) => ({
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
     boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)',
     borderRadius: '20px',
-  },
-
-  titlePinina: {
-    width: '100%',
   },
 
   titleForm: {

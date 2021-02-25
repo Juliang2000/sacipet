@@ -5,28 +5,25 @@ import {
     INICIAR_SESION_START,
     LOGIN_DIALOG_CLOSE,
     LOGIN_DIALOG_OPEN,
-    REGISTER_TO_LOGIN,
-    PASSWORD_ERROR
+    // REGISTER_TO_LOGIN
 } from "../types";
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 
 // Get Data to localStorage
 export function loginNormalAction(data) {
     return async (dispatch) => {
+
         dispatch(loginNormalStart())
 
         try {
             const response = await saveUserLogin(data)
-
             // setTimeout(() => {
-                dispatch(loginNormalSuccess(response.data.user));
-                // dispatch(loginPasswordError(response));
+            dispatch(loginNormalSuccess(response.data.user));
             // }, 2000)
-
         } catch (error) {
             dispatch(loginNormalError(error))
-            console.log(data.msg)
-            swal.fire('Error', `${data.correo} o contraseña incorrectos`, 'error')
+            console.log(data)
+            Swal.fire('Error', `${data.correo} o contraseña incorrectos`, 'error')
         }
 
     }
@@ -34,26 +31,17 @@ export function loginNormalAction(data) {
 
 export function LoginRegisteredAction(userLog) {
     return async (dispatch) => {
+
         dispatch(loginNormalStart())
 
         try {
             const response = await LoginUserRegistered(userLog)
-
-            setTimeout(() => {
-                dispatch(loginNormalSuccess(response));
-
-            }, 2000)
+            // setTimeout(() => {
+            dispatch(loginNormalSuccess(response.data.user));
+            // }, 2000)
         } catch (error) {
             dispatch(loginNormalError(error))
             console.log(error)
-            // swal.fire('Error', `${userLog.correo} o contraseña incorrectos`, 'error').then((result) => {
-            //     if (result.isConfirmed) {
-            //         // setOpenLogin(false)
-            //         setCheckLogin(false);
-            //         dispatch(login_dialog_close_action())
-            //         Swal.close()
-            //     }
-            // })
         }
     }
 }
@@ -72,11 +60,6 @@ const loginNormalError = (error) => ({
     payload: error
 });
 
-const loginPasswordError = (password) => ({
-    type: PASSWORD_ERROR,
-    payload: password
-});
-
 export const login_dialog_open_action = (loginDialog) => {
     return {
         type: LOGIN_DIALOG_OPEN,
@@ -91,10 +74,10 @@ export const login_dialog_close_action = (loginDialog) => {
     }
 }
 
-export const register_to_login_action = (registerToLogin) => {
-    return {
-        type: REGISTER_TO_LOGIN,
-        payload: registerToLogin
-    }
-}
+// export const register_to_login_action = (registerToLogin) => {
+//     return {
+//         type: REGISTER_TO_LOGIN,
+//         payload: registerToLogin
+//     }
+// }
 

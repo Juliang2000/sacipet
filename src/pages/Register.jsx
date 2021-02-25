@@ -1,8 +1,5 @@
 // Hooks
-import React, { useEffect, useState, useRef } from 'react';
-
-// Router
-import { Link, useHistory } from 'react-router-dom';
+import React, { useState, useRef } from 'react';
 
 // Clsx
 import clsx from 'clsx';
@@ -19,9 +16,6 @@ import { loginGoogleAction } from '../redux/actions/googleAction';
 import { loginFacebookAction } from '../redux/actions/facebookAction';
 import Loader from './Loader';
 
-// Alerts
-import Swal from 'sweetalert2';
-
 // Material UI
 import {
   FormControlLabel,
@@ -31,7 +25,6 @@ import {
   Button,
   Typography,
   Card,
-  Hidden
 } from '@material-ui/core';
 
 //Styles
@@ -44,9 +37,8 @@ import iconEmail from '../assets/icons/email-final.svg';
 import iconPassword from '../assets/icons/lock-final.svg';
 import iconPassword2 from '../assets/icons/lock-2-final.svg';
 import logoSend from '../assets/icons/registration.svg';
-
-// Tittle
-import titlepinina from '../assets/images/titulo.png';
+import iconFacebook from '../assets/icons/facebook-final.svg';
+import iconGoogle from '../assets/icons/google-final.svg';
 
 // Google Button
 import GoogleLogin from 'react-google-login';
@@ -54,23 +46,15 @@ import GoogleLogin from 'react-google-login';
 // Facebook Button
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
-// useMediaQuery
-import { useTheme } from '@material-ui/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { loginNormalAction, login_dialog_action, login_dialog_open_action } from '../redux/actions/loginAction';
+// reduc login
+import { login_dialog_open_action } from '../redux/actions/loginAction';
 
 ////////////////////////////////////////////////////////////////////////////////////
 
 export default function Register() {
 
   const { loader } = useSelector(state => state.register);
-  const { ok } = useSelector(state => state.register);
-  const { registerToLogin } = useSelector(state => state.login);
   const dispatch = useDispatch();
-  const history = useHistory();
-
-  const [checkRegister, setCheckRegister] = useState(true)
-  const [sendLoginData, setSendLoginData] = useState(false);
 
   // Styles
   const classes = registerStyles();
@@ -88,16 +72,10 @@ export default function Register() {
     origen_cuenta: 'Registro Normal'
   });
 
-  const [userLog, setUserLog] = useState({
-    password: '',
-    correo: ''
-  })
-
   // Input Event
   const handleChange = (event) => {
     const { name, value } = event.target
     setnewUser({ ...newUser, [name]: value })
-    setUserLog({ ...userLog, [name]: value })
   };
 
   // Input Submit
@@ -111,21 +89,6 @@ export default function Register() {
       return
     }
   };
-
-  if (sendLoginData === true) {
-    dispatch(save_register_to_login(userLog))
-    setSendLoginData(false);
-  }
-
-  if (checkRegister === true) {
-    if (ok === true) {
-      if (registerToLogin === true) {
-        dispatch(loginNormalAction(newUser))
-        console.log(newUser)
-        setCheckRegister(false);
-      }
-    }
-  }
 
   // Validation Form Register
   const { register, errors, handleSubmit, watch } = useForm({
@@ -158,18 +121,11 @@ export default function Register() {
     }
   };
 
-  // Redux implementation
-
-
-
   // Redux Actions
   const _handleSubmit = async (data) => {
     dispatch(registerAction(data));
-    setSendLoginData(true);
-
+    dispatch(save_register_to_login(newUser))
   };
-
-
 
   // Redux Google
   const responseGoogle = (data) => {
@@ -181,33 +137,10 @@ export default function Register() {
     dispatch(loginFacebookAction(data));
   };
 
-  // Push to SaciDashboard
-  // useEffect(() => {
-  //   if (ok !== false) {
-  //     Swal.fire({
-  //       icon: 'success',
-  //       title: `Muy Bien! ${ok.nombres}`,
-  //       text: 'Registro Exitoso!',
-  //       showClass: {
-  //         popup: 'animate__animated animate__fadeInDown',
-  //         icon: 'swal2-icon-show'
-  //       },
-  //       hideClass: {
-  //         popup: 'animate__animated animate__fadeOutUp'
-  //       }
-  //     })
-  //   }
-  // });
-
-  // Container Justify Responsive
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'), {
-    defaultMatches: true
-  });
-
+  // Redux Open Dialogs
   const openLogin = () => {
-    dispatch(login_dialog_open_action())
     dispatch(register_dialog_close_action())
+    dispatch(login_dialog_open_action())
   }
 
   return (
@@ -215,9 +148,6 @@ export default function Register() {
       { loader && (
         <Loader />
       )}
-      {/* <div className={classes.containerLogin}>
-        <Grid container alignItems="center" justify={isMobile ? 'center' : 'flex-end'}>
-          <Grid item xs={12} sm={8} md={5} lg={4} xl={3} > */}
       <Card className={classes.containerForm}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Typography align="center" variant="h4" gutterBottom className={classes.titleForm}>
@@ -377,7 +307,7 @@ export default function Register() {
                   variant="contained"
                   size="large"
                   fullWidth
-                  startIcon={<i className="fab fa-facebook-f"></i>}
+                  startIcon={<img src={iconFacebook} alt="Facebook" className={classes.icons2} />}
                   onClick={renderProps.onClick}
                 >
                   <Grid container justify="center">Registrar Con Facebook</Grid>
@@ -396,17 +326,13 @@ export default function Register() {
                   variant="contained"
                   size="large"
                   fullWidth
-                  startIcon={<i className="fab fa-google-plus-g"></i>}
+                  startIcon={<img src={iconGoogle} alt="Google" className={classes.icons1} />}
                   onClick={renderProps.onClick}
                 >
                   <Grid container justify="center">Registrar Con Google</Grid>
                 </Button>
               )}
             />
-            {/* <Link
-                    to="/Login"
-                    style={{ textDecoration: "none", filter: "contrast(1)" }}
-                  > */}
             <Button
               variant="text"
               size="small"
@@ -415,20 +341,9 @@ export default function Register() {
             >
               ¿Tienes una cuenta? Inicia Sesión
                 </Button>
-            {/* </Link> */}
           </Grid>
         </form>
       </Card>
-      {/* </Grid>
-          <Grid item md={5} lg={6} xl={8}>
-            <Grid container justify="flex-end">
-              <Hidden smDown>
-                <img src={titlepinina} alt="hola" className={classes.titlePinina} />
-              </Hidden>
-            </Grid>
-          </Grid>
-        </Grid>
-      </div> */}
     </>
   )
 };

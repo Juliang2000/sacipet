@@ -1,22 +1,20 @@
 import { saveUserRegister } from "../../configAxios/Register";
 import { REGISTRO_USUARIO_ERROR, REGISTRO_USUARIO_EXITO, REGISTRO_USUARIO_START, REGISTER_DIALOG_OPEN, REGISTER_DIALOG_CLOSE, SAVE_REGISTER_TO_LOGIN } from "../types";
+import Swal from 'sweetalert2';
 
 // Get Data to localStorage
 export function registerAction(data) {
-    return async(dispatch) => {
+    return async (dispatch) => {
         dispatch(registerStart())
 
         try {
             const response = await saveUserRegister(data)
-
-
             dispatch(registerSuccess(response.data));
-            // console.log(response.user.data)
-                   
+            console.log(response.data)
         } catch (error) {
-
-            
-           dispatch(registerError(error))
+            dispatch(registerError(error))
+            console.log(data)
+            Swal.fire('Error', `correo ${data.correo} ya se encuentra registrado`, 'error')
         }
     }
 }
@@ -30,9 +28,9 @@ const registerSuccess = (registerData) => ({
     payload: registerData
 });
 
-const registerError = (errorData) => ({
+const registerError = (error) => ({
     type: REGISTRO_USUARIO_ERROR,
-    payload: errorData
+    payload: error
 });
 
 export const register_dialog_open_action = (registerDialog) => {

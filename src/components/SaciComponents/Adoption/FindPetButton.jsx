@@ -1,17 +1,14 @@
 import React from 'react'
-import { Button, makeStyles, withStyles, Hidden, Typography, Accordion, AccordionSummary, AccordionDetails, Grid } from '@material-ui/core';
-import PetsIcon from '@material-ui/icons/Pets';
+import { Button, makeStyles, withStyles, Hidden, Typography, Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import SvgIcon from '@material-ui/core/SvgIcon';
 
 
 //icons
-import petIcon from '../../../assets/icons/drawer/pet.svg'
 import findPetIcon from '../../../assets/icons/drawer/findPet.svg'
-import findPetIconWhite from '../../../assets/icons/drawer/findPetWhite.svg'
+import iconFind from '../../../assets/icons/drawer/iconFind-final.svg'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
@@ -101,7 +98,7 @@ export default function FindPetButton() {
           fullWidth
           className={classes.findPetButtonDesktop}
           onClick={handleClick}
-          startIcon={<img src={findPetIconWhite} alt="LogIn" style={{ width: '30px' }} />}
+          startIcon={<img src={iconFind} alt="LogIn" style={{ width: '40px' }} />}
 
         >
 
@@ -117,13 +114,13 @@ export default function FindPetButton() {
         >
           <StyledMenuItem>
             <ListItemIcon>
-              <img src={findPetIconWhite} alt="Lost Pets" style={{ width: '40px' }} />
+              <img src={iconFind} alt="Lost Pets" style={{ width: '40px' }} />
             </ListItemIcon>
             <ListItemText primary="Mascotas recuperadas" />
           </StyledMenuItem>
           <StyledMenuItem>
             <ListItemIcon>
-              <img src={findPetIconWhite} alt="Lost Pets" style={{ width: '40px' }} />
+              <img src={iconFind} alt="Lost Pets" style={{ width: '40px' }} />
             </ListItemIcon>
             <ListItemText primary="Publica tu mascota como perdida" />
           </StyledMenuItem>
