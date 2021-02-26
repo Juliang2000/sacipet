@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Card, CardHeader, CardActions, Avatar, IconButton, Button, Dialog, Grid, CardMedia } from '@material-ui/core';
+import { Card, CardHeader, CardActions, Avatar, IconButton, Button, Dialog, Grid, CardMedia, Fab } from '@material-ui/core';
 
 import { red } from '@material-ui/core/colors';
+
 
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-import CarouselData from '../AdoptData/CarouselData';
 
 // Accordion
 import Accordion from '@material-ui/core/Accordion';
@@ -50,6 +50,19 @@ import { get_pet_photos_action, get_saci_pets_action } from '../../../redux/acti
 
 //images
 import petSample from '../../../assets/images/cards/perro_con_peluca.jpg';
+
+// Carousel
+import Carousel from 'react-material-ui-carousel'
+
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+
+import pug1 from '../../../assets/images/cardsModal/pug1.jpg'
+import pug2 from '../../../assets/images/cardsModal/pug2.jpg'
+import pug3 from '../../../assets/images/cardsModal/pug3.png'
+import pug4 from '../../../assets/images/cardsModal/pug4.jpg'
+import pug5 from '../../../assets/images/cardsModal/pug5.jpg'
+
 
 // import mascota1 from '../assets/images/cards/perro_con_peluca.jpg'
 // import mascota2 from '../../assets/images/cards/pastor_aleman_navideño.jpg'
@@ -119,7 +132,7 @@ const rows = [createData('Pinina', 10, 'Macho', 'Pastor Alemán', 'Perro', 80)];
 
 
 ////////////////////////////////////////////////////////////
-export default function RecipeReviewCard() {
+export default function RecipeReviewCard(props) {
 
   const dispatch = useDispatch();
 
@@ -206,10 +219,43 @@ export default function RecipeReviewCard() {
   //   return <img src={photo} key={photo} alt={photo} />
   // }
 
+  var items = [
+    {
+      imgPath: pug1,
+    },
+    {
+      imgPath: pug2,
+    },
+    {
+      imgPath: pug3,
+    },
+    {
+      imgPath: pug4,
+    },
+    {
+      imgPath: pug5
+    },
+  ]
+
+  function Item(props) {
+
+    return (
+      <CardMedia
+        className={classes.media}
+        title="Pinina"
+        onClick={handleClickOpen}
+        image={props.item.imgPath}
+      />
+    )
+
+  }
+
+
   return (
     <Grid container spacing={isMobile ? 1 : 3} xs={12} justify="center" className={classes.cardsPetsContainer}>
       { mascotas.map((item) => {
         return (
+
 
           <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
             <Card className={classes.cardsPets} style={{ borderRadius: 10 }}>
@@ -229,12 +275,60 @@ export default function RecipeReviewCard() {
               />
               {/* <Modal /> */}
               {/* {renderPhotos(petPhoto)} */}
-              <CardMedia
+
+
+              <Carousel
+                animation="fade"
+                autoPlay={false}
+                cycleNavigation={false}
+                // IndicatorIcon={<PetsIcon/>}
+                indicatorIconButtonProps={{
+                  style: {
+                    padding: '5px',
+                    color: 'white'
+                  }
+                }}
+
+                activeIndicatorIconButtonProps={{
+                  style: {
+                    color: '#63C132'
+                  }
+                }}
+
+                indicatorContainerProps={{
+                  style: {
+                    marginTop: '-50px',
+                  }
+                }}
+
+                navButtonsProps={{
+                  style: {
+                    // backgroundColor: 'cornflowerblue',
+                    // borderRadius: 0,
+                    width: 10,
+                    height: 10
+                  }
+                }}
+
+                NextIcon={<KeyboardArrowRight />}
+                PrevIcon={<KeyboardArrowLeft />}
+              >
+                {
+                  items.map((item, i) => <Item key={i} item={item} />)
+                }
+              </Carousel>
+
+              {/* <CardMedia
                 className={classes.media}
                 title="Pinina"
                 onClick={handleClickOpen}
-                image={petSample}
-              />
+                image={images}
+              /> */}
+
+              {/* <CarouselPets /> */}
+
+              {/* <CarouselData /> */}
+
               <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites">
                   <FavoriteIcon />
@@ -259,6 +353,7 @@ export default function RecipeReviewCard() {
         );
       })}
 
+
       <>
         <Dialog
           open={open}
@@ -268,7 +363,6 @@ export default function RecipeReviewCard() {
         >
           <Paper elevation={3} className={classes.paperContainer}>
             <Box display="flex" justifyContent="center">
-              <CarouselData />
             </Box>
             <Box display="flex" justifyContent="center" mb={5} my={5}>
               <Typography variant="h4" color="initial">
