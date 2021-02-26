@@ -352,7 +352,7 @@ export default function PetDescription() {
             Describe Tu Mascota
       </Typography>
         </Grid>
-        <Grid item xs={12} xl={6}>
+        <Grid item xs={12} sm={6}>
           <TextField
             label="Nombre De Mascota"
             type="text"
@@ -366,7 +366,7 @@ export default function PetDescription() {
             helperText={errors?.nombre_mascota?.message}
           />
         </Grid>
-        <Grid item xs={12} xl={2}>
+        <Grid item xs={12} sm={2}>
           <TextField
             label="Edad"
             type="number"
@@ -380,7 +380,7 @@ export default function PetDescription() {
             helperText={errors?.edad_mascota?.message}
           />
         </Grid>
-        <Grid item xs={12} xl={4}>
+        <Grid item xs={12} sm={4}>
           <FormControl variant="outlined" fullWidth>
             <InputLabel id="demo-simple-select-outlined-label">Escala Edad</InputLabel>
             <Select
@@ -401,7 +401,7 @@ export default function PetDescription() {
           </FormControl>
         </Grid>
 
-        <Grid item xs={12} xl={4}>
+        <Grid item xs={12} sm={4}>
           <FormControl variant="outlined" fullWidth>
             <InputLabel id="demo-simple-select-outlined-label">Mascota esterilizada</InputLabel>
             <Select
@@ -421,7 +421,7 @@ export default function PetDescription() {
           </FormControl>
         </Grid>
 
-        <Grid item xs={12} xl={4}>
+        <Grid item xs={12} sm={4}>
           <FormControl variant="outlined" fullWidth>
             <InputLabel id="demo-simple-select-outlined-label">Tamaño De Mascota</InputLabel>
             <Select
@@ -443,7 +443,7 @@ export default function PetDescription() {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={12} xl={4}>
+        <Grid item xs={12} sm={4}>
           <FormControl variant="outlined" fullWidth>
             <InputLabel id="demo-simple-select-outlined-label">Raza De Mascota</InputLabel>
             <Select
@@ -475,7 +475,7 @@ export default function PetDescription() {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={12} xl={4}>
+        <Grid item xs={12} sm={4}>
           <FormControl variant="outlined" fullWidth>
             <InputLabel id="demo-simple-select-outlined-label">Genéro De Macota</InputLabel>
             <Select
@@ -495,7 +495,7 @@ export default function PetDescription() {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={12} xl={4}>
+        <Grid item xs={12} sm={4}>
           <FormControl variant="outlined" fullWidth>
             <InputLabel id="demo-simple-select-outlined-label">Color De Mascota</InputLabel>
             <Select
@@ -517,7 +517,7 @@ export default function PetDescription() {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={12} xl={4}>
+        <Grid item xs={12} sm={4}>
           <FormControl variant="outlined" fullWidth>
             <InputLabel id="demo-mutiple-checkbox-label">Vacunas De Mascota</InputLabel>
             <Select
@@ -579,7 +579,7 @@ export default function PetDescription() {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={12} xl={6}>
+        <Grid item xs={12} sm={6}>
           <FormControl variant="outlined" fullWidth>
             <InputLabel id="demo-simple-select-outlined-label">Departamento</InputLabel>
             <Select
@@ -603,7 +603,7 @@ export default function PetDescription() {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={12} xl={6}>
+        <Grid item xs={12} sm={6}>
           <FormControl variant="outlined" fullWidth>
             <InputLabel id="demo-simple-select-outlined-label">Ciudad o municipio</InputLabel>
             <Select
@@ -628,7 +628,7 @@ export default function PetDescription() {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={12} xl={12}>
+        <Grid item xs={12} sm={12}>
           <TextField
             fullWidth
             variant="outlined"

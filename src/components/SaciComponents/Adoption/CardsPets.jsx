@@ -257,7 +257,7 @@ export default function RecipeReviewCard(props) {
         return (
 
 
-          <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
+          <Grid item xs={12} sm={6} md={6} lg={4} xl={3}>
             <Card className={classes.cardsPets} style={{ borderRadius: 10 }}>
               <CardHeader
                 avatar={
