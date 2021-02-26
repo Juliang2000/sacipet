@@ -236,41 +236,6 @@ export default function AdoptStepper() {
     }
   }
 
-  // if (checkedStepOne === true) {
-  //   if (activeStepState === 1) {
-  //     if (petType !== 0) {
-  //       setAllowContent(true)
-  //       setCheckedStepTwo(true);
-  //       setCheckedStepOne(false);
-  //     }
-  //   }
-  // }
-
-  // if (petDescription === true) {
-  //   if (checkedStepTwo === false) {
-  //     setAllowContent(true);
-  //     setCheckedStepOne(true);
-  //     setCheckedStepTwo(null);
-  //   }
-  // }
-
-  // if (checkedStepTwo === true) {
-  //   if (activeStepState === 2) {
-  //     setAllowContent(false)
-  //     setCheckedStepOne(true)
-  //     setCheckedStepTwo(false)
-  //   }
-  // }
-
-  // if (checkStepThree === true) {
-  //   if (activeStepState === 3) {
-  //     setAllowContent(false)
-  //     setCheckedStepTwo(true)
-  //     setCheckedStepOne(true)
-  //     setCheckStepThree(false)
-  //   }
-  // }
-
   useEffect(() => {
     if (activeStepState) {
       switch (activeStepState) {
@@ -300,16 +265,6 @@ export default function AdoptStepper() {
     petType,
     savePetImage1,
     ]);
-
-
-  // const [checkSavedPhotos, setCheckSavedPhotos] = useState(true)
-
-  // if (checkSavedPhotos === true) {
-  //   if (savePetImage1 || savePetImage2 || savePetImage3 || savePetImage4 || savePetImage5 === true) {
-  //     setAllowContent(true);
-  //     setCheckSavedPhotos(false);
-  //   }
-  // }
 
   ColorlibStepIcon.propTypes = {
     /**
@@ -368,13 +323,6 @@ export default function AdoptStepper() {
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
 
-  // if (checkActiveStep === true) {
-  //   if (activeStepState === 1) {
-  //     setActiveStep(0);
-  //     setCheckActiveStep(false)
-  //   }
-  // }
-
   const handleNext = () => {
     dispatch(next_step_action())
     if (activeStepState === 2) {
@@ -393,14 +341,9 @@ export default function AdoptStepper() {
   const handleBack = () => {
     dispatch(back_step_action())
     console.log(id_mascota);
-    // setTimeout(() => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    // }, 500);
   };
 
-  // const handleReset = () => {
-  //   setActiveStep(0);
-  // };
 
   const [sendPhotos, setSendPhotos] = useState(null)
 
