@@ -277,17 +277,16 @@ export default function PetDescription() {
   useEffect(() => {
     if (!errors.nombre_mascota && !errors.edad_mascota) {
       if (nombre_mascota.length &&
-        // edad_mascota.length &&
-        // escala_edad &&
-        // esterilizado.length &&
-        // id_tamanio &&
-        // id_raza &&
-        // id_color &&
-        // id_unde &&
-        // id_codigo &&
+        edad_mascota.length &&
+        escala_edad &&
+        esterilizado.length &&
+        id_tamanio &&
+        id_raza &&
+        id_color &&
+        id_unde &&
+        id_codigo &&
         descripcion_mascota.length !== 0
       ) {
-        // setFullPetDescription(true)
         dispatch(full_pet_description_action());
         console.log(errors)
       }
