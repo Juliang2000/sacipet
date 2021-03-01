@@ -25,6 +25,9 @@ const useStyles = makeStyles({
         },
         maxWidth: 145,
         border: '3px solid  #fff',
+
+        marginLeft: 'auto',
+        marginRight: 'auto',
     },
 
     media: {
@@ -45,6 +48,7 @@ const useStyles = makeStyles({
     containerPetimages: {
         // marginTop: 50,
         // marginBottom: 50,
+
         height: 200,
     }
 });
@@ -86,7 +90,7 @@ const PetImages = () => {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setPreview1(reader.result);
-                
+
             };
             reader.readAsDataURL(petimage1);
             setChecked1(true);
@@ -105,7 +109,7 @@ const PetImages = () => {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setPreview2(reader.result);
-               
+
             };
             reader.readAsDataURL(petimage2);
             setChecked2(true);
@@ -145,7 +149,7 @@ const PetImages = () => {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setPreview4(reader.result);
-                
+
             };
             reader.readAsDataURL(petimage4);
             setChecked4(true);
@@ -165,7 +169,7 @@ const PetImages = () => {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setPreview5(reader.result);
-                
+
             };
             reader.readAsDataURL(petimage5);
             setChecked5(true);
@@ -184,15 +188,18 @@ const PetImages = () => {
 
     return (
         <>
-            <Grid container spacing={2}
-                alignItems="center"
+            <Grid
+                container
+                direction="row"
                 justify="center"
+                alignItems="center"
+                spacing={2}
                 className={classes.containerPetimages}
             >
 
 
                 {preview1 ? (
-                    <Grid item xs={2}>
+                    <Grid item xs={12} sm={2}>
                         <Card className={classes.root} >
                             <IconButton aria-label="close"
                                 onClick={() => {
@@ -211,25 +218,25 @@ const PetImages = () => {
                         </Card>
                     </Grid>
                 ) : (
-                        <Grid item xs={2}>
-                            <Card className={classes.root}>
-                                <CardActionArea>
-                                    <CardMedia
-                                        onClick={(event) => {
-                                            event.preventDefault();
-                                            fileInputRef1.current.click();
-                                        }}
-                                        className={classes.media}
-                                        image={petImage1}
-                                        title="Subir Imagen 1"
-                                    />
-                                </CardActionArea>
-                            </Card>
-                        </Grid>
-                    )}
+                    <Grid item xs={12} sm={2}>
+                        <Card className={classes.root}>
+                            <CardActionArea>
+                                <CardMedia
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        fileInputRef1.current.click();
+                                    }}
+                                    className={classes.media}
+                                    image={petImage1}
+                                    title="Subir Imagen 1"
+                                />
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
+                )}
 
                 {preview2 ? (
-                    <Grid item xs={2}>
+                    <Grid item xs={12} sm={2}>
                         <Card className={classes.root} >
                             <IconButton aria-label="close"
                                 onClick={() => {
@@ -248,25 +255,25 @@ const PetImages = () => {
                         </Card>
                     </Grid>
                 ) : (
-                        <Grid item xs={2}>
-                            <Card className={classes.root}>
-                                <CardActionArea>
-                                    <CardMedia
-                                        onClick={(event) => {
-                                            event.preventDefault();
-                                            fileInputRef2.current.click();
-                                        }}
-                                        className={classes.media}
-                                        image={petImage2}
-                                        title="Subir Imagen 2"
-                                    />
-                                </CardActionArea>
-                            </Card>
-                        </Grid>
-                    )}
+                    <Grid item xs={12} sm={2}>
+                        <Card className={classes.root}>
+                            <CardActionArea>
+                                <CardMedia
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        fileInputRef2.current.click();
+                                    }}
+                                    className={classes.media}
+                                    image={petImage2}
+                                    title="Subir Imagen 2"
+                                />
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
+                )}
 
                 {preview3 ? (
-                    <Grid item xs={2}>
+                    <Grid item xs={12} sm={2}>
                         <Card className={classes.root} >
                             <IconButton aria-label="close"
                                 onClick={() => {
@@ -285,25 +292,25 @@ const PetImages = () => {
                         </Card>
                     </Grid>
                 ) : (
-                        <Grid item xs={2}>
-                            <Card className={classes.root}>
-                                <CardActionArea>
-                                    <CardMedia
-                                        onClick={(event) => {
-                                            event.preventDefault();
-                                            fileInputRef3.current.click();
-                                        }}
-                                        className={classes.media}
-                                        image={petImage3}
-                                        title="Subir Imagen 3"
-                                    />
-                                </CardActionArea>
-                            </Card>
-                        </Grid>
-                    )}
+                    <Grid item xs={12} sm={2}>
+                        <Card className={classes.root}>
+                            <CardActionArea>
+                                <CardMedia
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        fileInputRef3.current.click();
+                                    }}
+                                    className={classes.media}
+                                    image={petImage3}
+                                    title="Subir Imagen 3"
+                                />
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
+                )}
 
                 {preview4 ? (
-                    <Grid item xs={2}>
+                    <Grid item xs={12} sm={2}>
                         <Card className={classes.root} >
                             <IconButton aria-label="close"
                                 onClick={() => {
@@ -322,26 +329,26 @@ const PetImages = () => {
                         </Card>
                     </Grid>
                 ) : (
-                        <Grid item xs={2}>
-                            <Card className={classes.root}>
-                                <CardActionArea>
-                                    <CardMedia
-                                        onClick={(event) => {
-                                            event.preventDefault();
-                                            fileInputRef4.current.click();
-                                        }}
-                                        className={classes.media}
-                                        image={petImage4}
-                                        title="Subir Imagen 4"
-                                    />
-                                </CardActionArea>
-                            </Card>
-                        </Grid>
-                    )}
+                    <Grid item xs={12} sm={2}>
+                        <Card className={classes.root}>
+                            <CardActionArea>
+                                <CardMedia
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        fileInputRef4.current.click();
+                                    }}
+                                    className={classes.media}
+                                    image={petImage4}
+                                    title="Subir Imagen 4"
+                                />
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
+                )}
 
 
                 {preview5 ? (
-                    <Grid item xs={2}>
+                    <Grid item xs={12} sm={2}>
                         <Card className={classes.root} >
                             <IconButton aria-label="close"
                                 onClick={() => {
@@ -360,22 +367,22 @@ const PetImages = () => {
                         </Card>
                     </Grid>
                 ) : (
-                        <Grid item xs={2}>
-                            <Card className={classes.root}>
-                                <CardActionArea>
-                                    <CardMedia
-                                        onClick={(event) => {
-                                            event.preventDefault();
-                                            fileInputRef5.current.click();
-                                        }}
-                                        className={classes.media}
-                                        image={petImage5}
-                                        title="Subir Imagen 5"
-                                    />
-                                </CardActionArea>
-                            </Card>
-                        </Grid>
-                    )}
+                    <Grid item xs={12} sm={2}>
+                        <Card className={classes.root}>
+                            <CardActionArea>
+                                <CardMedia
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        fileInputRef5.current.click();
+                                    }}
+                                    className={classes.media}
+                                    image={petImage5}
+                                    title="Subir Imagen 5"
+                                />
+                            </CardActionArea>
+                        </Card>
+                    </Grid>
+                )}
 
 
 
