@@ -99,14 +99,13 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create('width'),
     [theme.breakpoints.up('md')]: {
-      // width: '5rem',
-    },
-    [theme.breakpoints.up('sm')]: {
-      width: '5rem',
-      // alignItems: 'left'
+      width: '15rem auto',
     },
     [theme.breakpoints.up('lg')]: {
-      // width: '35rem',
+      width: '25rem auto',
+    },
+    [theme.breakpoints.up('xl')]: {
+      width: '35rem auto',
     },
   },
 
@@ -175,7 +174,7 @@ export default function PrimarySearchAppBar() {
         <AppBar position="fixed" style={{ zIndex: 1 }}>
           <Toolbar>
             <Grid container alignItems="center" xs={12}>
-              <Grid container xs={11} sm={11} md={3} lg={3} xl={2} alignItems="center">
+              <Grid container xs={4} sm={4} md={3} lg={3} xl={3} alignItems="center">
                 {/* <Grid item xs={1}> */}
                 <IconButton
                   edge="start"
@@ -190,20 +189,16 @@ export default function PrimarySearchAppBar() {
 
                 {/* </Grid> */}
 
-
-
                 <IconButton><img width={40} src={logo} alt="logo"></img></IconButton>
 
-                <Hidden only={'xs'}>
-
+                <Hidden only="xs">
                   <Typography className={classes.title} variant="h5">PET</Typography>
-
                   <Typography className={classes.title2} variant="h5">SACI</Typography>
-
                 </Hidden>
+
               </Grid>
               <Hidden smDown>
-                <Grid item xs={1} sm={2} md={4} lg={3} xl={4} >
+                <Grid item sm={2} md={3} lg={3} xl={3} >
 
                   <div className={classes.search} >
                     <div className={classes.searchIcon} >
@@ -221,26 +216,26 @@ export default function PrimarySearchAppBar() {
                   {/* </Grid> */}
                 </Grid>
               </Hidden>
-              <Grid container justify="flex-end" alignItems="center" xs={1} sm={1} md={5} lg={6} xl={6}>
-                <Hidden smDown>
+              <Grid container justify="flex-end" alignItems="center" xs={8} sm={8} md={6} lg={6} xl={6}>
+                {/* <Hidden smDown> */}
 
-                  <Grid item sm={2} md={3} lg={2} xl={2}>
-                    <FindPetButton />
-                  </Grid>
-                  <Grid item sm={2} md={3} lg={2} xl={2}>
-                    <AdoptStepper />
-                  </Grid>
-                  <Grid item sm={4} md={3} lg={2} xl={2}>
-                    <SectionDesktop />
-                  </Grid>
+                <Grid item /* xs={3} */ sm={2} md={4} lg={4} xl={3}>
+                  <FindPetButton />
+                </Grid>
+                <Grid item /* xs={4} */ sm={2} md={4} lg={4} xl={3}>
+                  <AdoptStepper />
+                </Grid>
+                <Grid item /* xs={5} */ sm={4} md={4} lg={4} xl={3}>
+                  <SectionDesktop />
+                </Grid>
 
-                </Hidden>
+                {/* </Hidden> */}
 
-                <Hidden mdUp>
-                  {/* <Grid container justify="flex-end"> */}
-                  <SectionMobile />
-                  {/* </Grid> */}
-                </Hidden>
+                {/* <Hidden smUp> */}
+                {/* <Grid container justify="flex-end"> */}
+                {/* <SectionMobile /> */}
+                {/* </Grid> */}
+                {/* </Hidden> */}
               </Grid>
             </Grid>
           </Toolbar>
@@ -262,7 +257,7 @@ export default function PrimarySearchAppBar() {
               aria-label="open drawer"
               onClick={handleDrawerClose}
             >
-              <img src={iconMenu} alt="Menu" style={{ width: '25px' }}/>
+              <img src={iconMenu} alt="Menu" style={{ width: '25px' }} />
             </IconButton>
             <IconButton className={classes.upper}><img width={40} src={logo} alt="logo"></img></IconButton>
             <Typography className={classes.title} variant="h5" noWrap>

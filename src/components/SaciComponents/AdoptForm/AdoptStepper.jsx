@@ -264,7 +264,7 @@ export default function AdoptStepper() {
     petDescription,
     petType,
     savePetImage1,
-    ]);
+  ]);
 
   ColorlibStepIcon.propTypes = {
     /**
@@ -424,23 +424,26 @@ export default function AdoptStepper() {
   return (
 
     <>
-      <Hidden smDown>
-        {/* <Grid container justify="center"> */}
-        <Button
-          fullWidth
-          onClick={handleClickOpenModal}
-          className={classes.adoptionButton}
-          // variant="contained"
-          color="secondary"
-          // color="primary"
-          startIcon={<img src={iconAdopt} alt="LogIn" style={{ width: '40px' }} />}
-        >
+      {/* <Hidden smDown> */}
+      {/* <Grid container justify="center"> */}
+      <Button
+        fullWidth
+        onClick={handleClickOpenModal}
+        className={classes.adoptionButton}
+        // variant="contained"
+        color="secondary"
+        // color="primary"
+        startIcon={<img src={iconAdopt} alt="LogIn" style={{ width: '40px' }} />}
+      >
+        <Hidden smDown>
           Dar en adopción
-              </Button>
-        {/* </Grid> */}
-      </Hidden>
+          </Hidden>
 
-      <Hidden mdUp>
+      </Button>
+      {/* </Grid> */}
+      {/* </Hidden> */}
+
+      {/* <Hidden mdUp>
         <Button
           onClick={handleClickOpenModal}
           className={classes.adoptionMobileButton}
@@ -452,7 +455,7 @@ export default function AdoptStepper() {
             Adopciones
             </Typography>
         </Button>
-      </Hidden>
+      </Hidden> */}
 
       {user ?
         <>
@@ -460,7 +463,7 @@ export default function AdoptStepper() {
             style={{ zIndex: 2 }}
             open={openModal}
             onClose={handleClickCloseModal}
-            fullWidth
+            // fullWidth
             maxWidth='md'
             fullScreen={fullScreenResponsive}
           >

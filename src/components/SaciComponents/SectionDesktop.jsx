@@ -1,15 +1,30 @@
 import React, { useEffect } from 'react';
 
-import { makeStyles, withStyles, Button, Grid, Dialog } from '@material-ui/core'
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import {
+    makeStyles,
+    withStyles,
+    Button,
+    Grid,
+    Dialog,
+    Hidden,
+    AppBar,
+    Toolbar,
+    IconButton,
+    Menu,
+    MenuItem,
+    ListItemIcon,
+    ListItemText,
+    useMediaQuery
+} from '@material-ui/core'
+
+import { useTheme } from '@material-ui/core/styles';
+
 
 //icons
 import Home from '@material-ui/icons/Home';
 import Person from '@material-ui/icons/Person';
 import petUser from '../../assets/icons/drawer/petUser-final.svg';
+import CloseIcon from '@material-ui/icons/Close';
 
 //Redux
 import { useSelector, useDispatch } from 'react-redux';
@@ -73,7 +88,10 @@ const StyledMenuItem = withStyles((theme) => ({
     },
 }))(MenuItem);
 
-const SectionDesktop = () => {
+export default function SectionDesktop() {
+
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
 
     const dispatch = useDispatch();
 
@@ -191,48 +209,31 @@ const SectionDesktop = () => {
                         onClick={handleClickOpenLogin}
                         startIcon={<img src={petUser} alt="Login" style={{ width: '40px' }} />}
                     >
-                        Ingresar
+                        <Hidden xsDown>
+                            Ingresar
+                        </Hidden>
                     </Button>
                 </>
-
             }
 
             <Dialog
                 open={loginDialog === true}
                 onClose={handleClickCloseLogin}
                 style={{ zIndex: 1 }}
+                fullScreen={fullScreen}
             >
-                {/* <AppBar>
-                    <Toolbar>
-                        <IconButton edge="start" color="inherit" onClick={handleClickClose} aria-label="close">
-                            <CloseIcon />
-                        </IconButton>
-                    </Toolbar>
-                </AppBar> */}
+
                 <Login />
-
             </Dialog>
-
             <Dialog
                 open={registerDialog === true}
                 onClose={handleClickCloseRegister}
                 style={{ zIndex: 1 }}
+                fullScreen={fullScreen}
             >
-                {/* <AppBar>
-                    <Toolbar>
-                        <IconButton edge="start" color="inherit" onClick={handleClickClose} aria-label="close">
-                            <CloseIcon />
-                        </IconButton>
-                    </Toolbar>
-                </AppBar> */}
                 <Register />
             </Dialog>
-
         </>
 
     )
 }
-
-export default SectionDesktop
-
-

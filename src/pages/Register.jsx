@@ -24,7 +24,8 @@ import {
   Checkbox,
   Button,
   Typography,
-  Card,
+  Toolbar,
+  IconButton
 } from '@material-ui/core';
 
 //Styles
@@ -39,6 +40,7 @@ import iconPassword2 from '../assets/icons/lock-2-final.svg';
 import logoSend from '../assets/icons/registration.svg';
 import iconFacebook from '../assets/icons/facebook-final.svg';
 import iconGoogle from '../assets/icons/google-final.svg';
+import CloseIcon from '@material-ui/icons/Close';
 
 // Google Button
 import GoogleLogin from 'react-google-login';
@@ -143,16 +145,27 @@ export default function Register() {
     dispatch(login_dialog_open_action())
   }
 
+  const handleClickCloseRegister = () => {
+    dispatch(register_dialog_close_action())
+  }
+
   return (
     <>
       { loader && (
         <Loader />
       )}
-      <Card className={classes.containerForm}>
+      <Grid container className={classes.containerForm}>
         <form onSubmit={handleSubmit(onSubmit)}>
+          <Grid container justify="flex-end">
+            <Toolbar>
+              <IconButton edge="end" color="primary" aria-label="close" onClick={handleClickCloseRegister}>
+                <CloseIcon />
+              </IconButton>
+            </Toolbar>
+          </Grid>
           <Typography align="center" variant="h4" gutterBottom className={classes.titleForm}>
             REGISTRARSE
-              </Typography>
+          </Typography>
           <Grid container alignItems="center" spacing={2}>
             <Grid item xs={2} className={classes.iconsCenter}>
               <img src={iconName} alt="username" className={classes.icons1} />
@@ -343,7 +356,7 @@ export default function Register() {
                 </Button>
           </Grid>
         </form>
-      </Card>
+      </Grid>
     </>
   )
 };

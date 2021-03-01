@@ -3,11 +3,19 @@ import { makeStyles } from '@material-ui/core/styles';
 const registerStyles = makeStyles((theme) => ({
 
   containerForm: {
+    overflowX: 'hidden',
     padding: theme.spacing(5, 5, 2, 5),
-    backdropFilter: 'blur(10px)',
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
-    boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)',
-    borderRadius: '20px',
+    [theme.breakpoints.only('xs')]: {
+      padding: theme.spacing(0, 0, 0, 0),
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100%',
+    },
+    // backdropFilter: 'blur(10px)',
+    // backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    // boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)',
+    // borderRadius: '20px',
   },
 
   titleForm: {
@@ -31,14 +39,12 @@ const registerStyles = makeStyles((theme) => ({
     color: '#707070',
     textTransform: 'none',
     margin: theme.spacing(0, 0, 2, 0),
-    userSelect: 'none'
   },
 
   buttonSecondary2: {
     color: '#707070',
     textTransform: 'none',
-    margin: theme.spacing(1, 0, 1, 0),
-    userSelect: 'none',
+    margin: theme.spacing(1, 0, 3, 0),
   },
 
   checkboxRojo: {

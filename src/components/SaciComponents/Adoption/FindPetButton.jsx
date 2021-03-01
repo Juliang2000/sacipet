@@ -90,7 +90,7 @@ export default function FindPetButton() {
   const classes = useStyles();
   return (
     <div>
-      <Hidden xsDown>
+      {/* <Hidden xsDown> */}
         {/* <Grid container justify="center"> */}
         <Button
           // variant="contained"
@@ -101,8 +101,10 @@ export default function FindPetButton() {
           startIcon={<img src={iconFind} alt="LogIn" style={{ width: '40px' }} />}
 
         >
+          <Hidden smDown>
+            Encontrar
+          </Hidden>
 
-          Encontrar
                 </Button>
         {/* </Grid> */}
         <StyledMenu
@@ -125,8 +127,8 @@ export default function FindPetButton() {
             <ListItemText primary="Publica tu mascota como perdida" />
           </StyledMenuItem>
         </StyledMenu>
-      </Hidden>
-      <Hidden mdUp>
+      {/* </Hidden> */}
+      {/* <Hidden mdUp>
         <div className={classes.mobile}>
           <Accordion>
             <AccordionSummary
@@ -172,7 +174,7 @@ export default function FindPetButton() {
 
           </Accordion>
         </div>
-      </Hidden>
+      </Hidden> */}
 
 
     </div>
