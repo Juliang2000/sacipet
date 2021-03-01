@@ -287,7 +287,6 @@ export default function PetDescription() {
         id_codigo &&
         descripcion_mascota.length !== 0
       ) {
-        // setFullPetDescription(true)
         dispatch(full_pet_description_action());
         console.log(errors)
       }
