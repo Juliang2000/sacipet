@@ -54,9 +54,9 @@ export default function PetImages() {
     }, [mascotas])
 
     useEffect(() => {
-        console.log(petIndex)
         if (petIndex >= 0) {
             setGetPet(mascotas[petIndex])
+            console.log(petIndex)
         }
     }, [petIndex])
 
@@ -66,21 +66,22 @@ export default function PetImages() {
 
 
     const handleClickOpen = (value) => {
-        setNewPet(value)
-        setOpen(true)
+        setNewPet("" + value)
         console.log(value)
+        setOpen(true)
         // setNewPet()
     }
 
-    useEffect(() => {
-        console.log(newPet)
-    }, [newPet])
+    // useEffect(() => {
+    //     console.log(newPet)
+    // }, [newPet])
 
     useEffect(() => {
         let petInfo = mascotas.findIndex(function (item) {
             return item.id_mascota === newPet;
         });
         setPetIndex(petInfo)
+        console.log(petIndex)
     }, [newPet])
 
     const handleClickClose = () => {
@@ -97,27 +98,19 @@ export default function PetImages() {
 
     return (
         <>
-            { mascotas.map((item) => (
-                <div>
-                    <Button key={item.id_mascota} onClick={e => handleClickOpen(e.target.value)} name="id_mascota" value={item.id_mascota}>
-                        {item.nombre_mascota}
-                    </Button>
-
-                    {/* <Select onChange={handleChange} name="id_mascota" >
-                        <MenuItem key={item.id_mascota} value={item.id_mascota} onClick={handleClickOpen} >
-                            {item.nombre_mascota}
-                        </MenuItem>
-
-                    </Select> */}
-                    {/* <h1>{item.nombre_mascota}</h1>
-                    <h1>{item.escala_edad}</h1>
-                    <h1>{item.municipio}</h1> */}
-                </div>
-            ))
+            {Object.keys(mascotas).length > 0 ?
+                mascotas.map((item) => {
+                    return (
+                            <Button key={item.mascota}>
+                                <MenuItem key={item.mascota} onClick={(e) => handleClickOpen(e.target.value)} value={item.id_mascota}>{item.nombre_mascota}</MenuItem>
+                            </Button>
+                    )
+                })
+                :
+                <Typography>Cargando...</Typography>
             }
 
             <Dialog maxWidth="lg" open={open} onClose={handleClickClose}>
-
                 <Box style={{ 'padding': '20px' }}>
                     <Typography variant="h3" >ID: {getPet.id_mascota}</Typography>
                     <Typography variant="h3" >Nombre Mascota: {getPet.nombre_mascota}</Typography>
@@ -125,8 +118,6 @@ export default function PetImages() {
                     <Typography variant="h3" >Raza: {getPet.raza}</Typography>
                     <Typography variant="h3" >Observaciones: {getPet.descripcion_mascota}</Typography>
                 </Box>
-
-
             </Dialog>
         </>
     )
