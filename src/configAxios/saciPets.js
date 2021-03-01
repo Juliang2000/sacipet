@@ -21,7 +21,7 @@ export async function getPetPhotos(petPhotos) {
     formData.append('id_mascota', petPhotos)
 
     try {
-        let petPhotos = await axiosClient.post('/files', formData)
+        let { petPhoto } = await axiosClient.post('/files', formData)
         petPhotos = new Image();
         return petPhotos
     } catch (e) {
