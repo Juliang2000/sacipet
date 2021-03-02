@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Card, CardHeader, CardActions, Avatar, IconButton, Button, Dialog, Grid, CardMedia, Fab } from '@material-ui/core';
+import { Card, CardHeader, CardActions, Avatar, IconButton, Button, Dialog, Grid, CardMedia, MenuItem, Menu, Select } from '@material-ui/core';
 
 import { red } from '@material-ui/core/colors';
 
@@ -62,6 +62,7 @@ import pug2 from '../../../assets/images/cardsModal/pug2.jpg'
 import pug3 from '../../../assets/images/cardsModal/pug3.png'
 import pug4 from '../../../assets/images/cardsModal/pug4.jpg'
 import pug5 from '../../../assets/images/cardsModal/pug5.jpg'
+import axiosClient from '../../../configAxios/axios';
 
 
 // import mascota1 from '../assets/images/cards/perro_con_peluca.jpg'
@@ -133,12 +134,37 @@ const rows = [createData('Pinina', 10, 'Macho', 'Pastor Alemán', 'Perro', 80)];
 
 ////////////////////////////////////////////////////////////
 export default function RecipeReviewCard(props) {
-
   const dispatch = useDispatch();
+  const { mascotas } = useSelector(state => state.saciPets);
+  const [open, setOpen] = useState(false);
+  const [newPet, setNewPet] = useState()
+  const [anchorMenu, setAnchorMenu] = useState(null);
+  const [images, setImages] = useState(pug1);
+  const InitialPetState =
+  {
+    nombre_mascota: '',
+    edad_mascota: "",
+    escala_edad: "",
+    descripcion_mascota: "",
+    esterilizado: "",
+    genero_mascota: "",
+    raza: "",
+    string_agg: "",
+    municipio: "",
+  };
+  const [getPet, setGetPet] = useState(InitialPetState)
+  const [petData, setPetData] = useState([])
+  const [petIndex, setPetIndex] = useState()
+  const ageScale = ["s", "semana", "mes", "año", "es"]
+  const [viewAgeScale, setViewAgeScale] = useState(ageScale[0]);
+  const [vaccines, setVaccines] = useState()
+  const [genre, setGenre] = useState();
 
-  const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
+
+
+  const handleClickOpen = (value) => {
+    setNewPet("" + value)
     setOpen(true);
   };
 
@@ -146,7 +172,7 @@ export default function RecipeReviewCard(props) {
     setOpen(false);
   };
 
-  const { mascotas } = useSelector(state => state.saciPets);
+
   // const { mascotas } = useSelector(state => state.saciPets);
   const { petImage1 } = useSelector(state => state.adoptFormData);
 
@@ -158,43 +184,83 @@ export default function RecipeReviewCard(props) {
 
   const [petPhoto, setPetPhoto] = useState(petSample);
   const [checkPets, setCheckPets] = useState(false);
-  // const [petPhotos, setPetPhotos] = useState([]);
 
-  // const [selectedImages, setSelectedImages] = useState([])
-
-
-  //   useEffect(() => {
-
-  //     if (photos) {
-  //       const fileArray = Array.from(photos).map((file) => (file))
-  //       console.log(fileArray)
-
-  //       setSelectedImages((prevImages) => prevImages.concat(fileArray))
-  //       Array.from(photos).map(
-  //         (file) => (file)
-  //       )
-  //     }  
-  // }, [photos])
-
-  // const fileArray = Array.from(e.target.files).map((file) => URL.createObjectURL(file))
-  // console.log(fileArray
-
-  useEffect(() => {
-    if (petImage1 === true) {
-      setPetPhoto(petImage1)
-    } else
-      setPetPhoto(petSample)
-  }, [petImage1])
-
-  // Array.from(photos).map()
-
-  const openCloseAdopt = () => {
-    setModal(!modal);
+  const handleClickMenu = (event) => {
+    setAnchorMenu(event.currentTarget);
   };
+
+  const handleCloseMenu = () => {
+    setAnchorMenu(null);
+  };
+
+
+
+  // useEffect(() => {
+  //   if (petImage1 === true) {
+  //     setPetPhoto(petImage1)
+  //   } else
+  //     setPetPhoto(petSample)
+  // }, [petImage1])
 
   useEffect(() => {
     dispatch(get_saci_pets_action())
   }, [dispatch])
+
+  useEffect(() => {
+    console.log(getPet)
+    const parvovirus = "Parvovirus"
+    setVaccines(getPet.string_agg)
+    console.log(parvovirus.includes(getPet.string_agg))
+    if (getPet.genero_mascota === "1") {
+      setGenre("Macho")
+    } else if (getPet.genero_mascota === "2") {
+      setGenre("Hembra")
+    }
+  }, [getPet])
+
+  useEffect(() => {
+    if (petIndex >= 0) {
+      setGetPet(mascotas[petIndex])
+    }
+  }, [petIndex])
+
+  useEffect(() => {
+    let petInfo = mascotas.findIndex(function (item) {
+      return item.id_mascota === newPet;
+    });
+    setPetIndex(petInfo)
+    console.log(petIndex)
+  }, [newPet])
+
+  useEffect(() => {
+    console.log(vaccines)
+  }, [vaccines])
+
+  useEffect(() => {
+    if (getPet.edad_mascota === "1") {
+      switch (getPet.escala_edad) {
+        case "1": setViewAgeScale(ageScale[1])
+          break;
+        case "2": setViewAgeScale(ageScale[2])
+          break;
+        case "3": setViewAgeScale(ageScale[3])
+          break;
+        default:
+      }
+    } else {
+      switch (getPet.escala_edad) {
+        case "1": setViewAgeScale(`${ageScale[1]}${ageScale[0]}`)
+          break;
+        case "2": setViewAgeScale(`${ageScale[1]}${ageScale[0]}`)
+          break;
+        case "3": setViewAgeScale(`${ageScale[1]}${ageScale[0]}`)
+          break;
+        default:
+      }
+    }
+    console.log(ageScale)
+    console.log(getPet.escala_edad)
+  }, [getPet])
 
   // useEffect(() => {
   //   if (petPhoto) {
@@ -202,13 +268,54 @@ export default function RecipeReviewCard(props) {
   //   }
   // }, [input])
 
+  // useEffect(() => {
+  //   for (let i of mascotas) {
+  //     dispatch(get_pet_photos_action(i.id_mascota));
+  //     console.log(i)
+  //     console.log(i.id_mascota);
+  //   }
+  // }, [mascotas, dispatch])
+
+  // const theme = useTheme();
+  // const isMobile = useMediaQuery(theme.breakpoints.down('xs'), {
+  //   defaultMatches: true
+  // });
+
+
+  // useEffect(() => {
+  //   for (let i of mascotas) {
+  //     // dispatch(get_pet_photos_action(i.id_mascota));
+  //     getImage(i.id_mascota)
+  //     console.log(i)
+  //     console.log(i.id_mascota);
+  //   }
+  // }, [mascotas, dispatch])
+
   useEffect(() => {
-    for (let i of mascotas) {
-      dispatch(get_pet_photos_action(i.id_mascota));
-      console.log(i)
-      console.log(i.id_mascota);
+    getImage();
+  }, []);
+
+  const getImage = async () => {
+
+    const formData = new FormData();
+    formData.append('consecutivo', '1')
+    formData.append('id_mascota', 244)
+
+    try {
+      const {data} = await axiosClient.post("/files", formData);
+      const imageUrl = URL.createObjectURL(data)
+      setImages(imageUrl);
+      return imageUrl
+
+      // return data
+    } catch (error) {
+      console.error(error);
     }
-  }, [mascotas, dispatch])
+  };
+
+  useEffect(() => {
+    console.log(images)
+  }, [images])
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'), {
@@ -221,7 +328,7 @@ export default function RecipeReviewCard(props) {
 
   var items = [
     {
-      imgPath: pug1,
+      imgPath: images,
     },
     {
       imgPath: pug2,
@@ -240,12 +347,18 @@ export default function RecipeReviewCard(props) {
   function Item(props) {
 
     return (
-      <CardMedia
-        className={classes.media}
-        title="Pinina"
-        onClick={handleClickOpen}
-        image={props.item.imgPath}
-      />
+      <>
+
+
+        <CardMedia
+          className={classes.media}
+          title="Pinina"
+          // onClick={handleClickOpen}
+          image={props.item.imgPath}
+        >
+        </CardMedia>
+
+      </>
     )
 
   }
@@ -255,8 +368,6 @@ export default function RecipeReviewCard(props) {
     <Grid container spacing={isMobile ? 1 : 3} xs={12} justify="center" className={classes.cardsPetsContainer}>
       { mascotas.map((item) => {
         return (
-
-
           <Grid item xs={12} sm={6} md={6} lg={4} xl={3}>
             <Card className={classes.cardsPets} style={{ borderRadius: 10 }}>
               <CardHeader
@@ -266,17 +377,21 @@ export default function RecipeReviewCard(props) {
                 </Avatar>
                 }
                 action={
-                  <IconButton aria-label="settings">
-                    <MoreVertIcon />
+                  <IconButton aria-label="settings" onClick={handleClickMenu}>
+                    <MenuItem>
+                      <MoreVertIcon>
+                      </MoreVertIcon>
+                    </MenuItem>
                   </IconButton>
+
                 }
-                title={item.nombre_mascota}
+                title={<Typography>{item.nombre_mascota}</Typography>}
                 subheader={item.raza}
               />
+
+
               {/* <Modal /> */}
               {/* {renderPhotos(petPhoto)} */}
-
-
               <Carousel
                 animation="fade"
                 autoPlay={false}
@@ -317,6 +432,13 @@ export default function RecipeReviewCard(props) {
                   items.map((item, i) => <Item key={i} item={item} />)
                 }
               </Carousel>
+              <Grid container justify="center">
+                <Button disableRipple style={{ textTransform: 'none' }}>
+                  <MenuItem key={item.mascota} onClick={(e) => handleClickOpen(e.target.value)} value={item.id_mascota}>
+                    Datos de mascota
+                  </MenuItem>
+                </Button>
+              </Grid>
 
               {/* <CardMedia
                 className={classes.media}
@@ -337,7 +459,7 @@ export default function RecipeReviewCard(props) {
                   <ShareIcon />
                 </IconButton>
                 <Button
-                  onClick={() => openCloseAdopt()}
+                  // onClick={() => openCloseAdopt()}
                   className={classes.buttonPrimary}
                   variant="contained"
                   color="primary"
@@ -352,8 +474,6 @@ export default function RecipeReviewCard(props) {
 
         );
       })}
-
-
       <>
         <Dialog
           open={open}
@@ -379,23 +499,21 @@ export default function RecipeReviewCard(props) {
                       <TableCell>Edad</TableCell>
                       <TableCell>Sexo</TableCell>
                       <TableCell>Raza</TableCell>
-                      <TableCell>Tipo</TableCell>
-                      <TableCell>Peso&nbsp;(Kg)</TableCell>
+                      <TableCell>Ubicación</TableCell>
+                      {/* <TableCell>Peso&nbsp;(Kg)</TableCell> */}
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {rows.map((row) => (
-                      <TableRow key={row.name}>
-                        <TableCell component="th" scope="row">
-                          {row.name}
-                        </TableCell>
-                        <TableCell>{row.calories}</TableCell>
-                        <TableCell>{row.sexo}</TableCell>
-                        <TableCell>{row.fat}</TableCell>
-                        <TableCell>{row.carbs}</TableCell>
-                        <TableCell>{row.protein}</TableCell>
-                      </TableRow>
-                    ))}
+                    <TableRow>
+                      <TableCell component="th" scope="row">
+                        {getPet.nombre_mascota}
+                      </TableCell>
+                      <TableCell>{getPet.escala_edad} {viewAgeScale}</TableCell>
+                      <TableCell>{genre}</TableCell>
+                      <TableCell>{getPet.raza}</TableCell>
+                      <TableCell>{getPet.municipio}</TableCell>
+                      {/* <TableCell>{row.protein}</TableCell> */}
+                    </TableRow>
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -410,15 +528,11 @@ export default function RecipeReviewCard(props) {
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>
-                  <ol>
-                    <li>Vacuna</li>
-                    <li>Vacuna</li>
-                    <li>Vacuna</li>
-                  </ol>
+                  {vaccines}
                 </Typography>
               </AccordionDetails>
             </Accordion>
-            <Accordion>
+            {/* <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel2a-content"
@@ -429,29 +543,28 @@ export default function RecipeReviewCard(props) {
               <AccordionDetails>
                 <Typography>Trae Cartilla Documentación</Typography>
               </AccordionDetails>
-            </Accordion>
+            </Accordion> */}
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel2a-content"
                 id="panel2a-header"
               >
-                <Typography className={classes.heading}>Observaciones</Typography>
+                <Typography className={classes.heading}>Descripción</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>
-                  Tratarle con mucho cariño <br />
-                Es enojón por todo
-                      </Typography>
+                  {getPet.descripcion_mascota}
+                </Typography>
               </AccordionDetails>
             </Accordion>
           </Paper>
         </Dialog>
       </>
 
-      <Dialog onclose={openCloseAdopt}>
+      {/* <Dialog onclose={openCloseAdopt}>
         <AdoptMeModal />
-      </Dialog>
+      </Dialog> */}
 
     </Grid>
   );

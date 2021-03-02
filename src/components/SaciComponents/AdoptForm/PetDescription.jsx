@@ -34,7 +34,6 @@ import {
   not_full_pet_description_action,
   reset_city_action
 } from '../../../redux/actions/adoptFormAction';
-// import { Update } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   formPetDescription: {
@@ -72,7 +71,6 @@ export default function PetDescription() {
   const { departments, cities } = useSelector(state => state.adoptFormData);
   const { user } = useSelector(state => state.login);
 
-  // const escala_edad  = useSelector(store => store.adoptFormData.descriptionData.escala_edad);
   const {
     nombre_mascota,
     edad_mascota,
@@ -238,12 +236,8 @@ export default function PetDescription() {
       setCheckAge(false)
     }
 
-  //////////////////////////////////////////////////
-
   const classes = useStyles();
 
-
-  //////////////////////////////////// Validaciones
   const schema = yup.object().shape({
 
     nombre_mascota: yup
@@ -271,9 +265,7 @@ export default function PetDescription() {
     mode: "onChange",
     resolver: yupResolver(schema),
   });
-  ////////////////////////////////////
 
-  // if (checkForm === true) {
   useEffect(() => {
     if (!errors.nombre_mascota && !errors.edad_mascota) {
       if (nombre_mascota.length &&
@@ -309,39 +301,10 @@ export default function PetDescription() {
   useEffect(() => {
     dispatch(update_form_data_action());
   }, [newPet, dispatch])
-  // }
-
-  // if (fullPetDescription === true) {
-  //   dispatch(full_pet_description_action());
-  //   setFullPetDescription(false);
-  //   dispatch(get_form_data_action(newPet));
-  //   dispatch(update_form_data_action());
-  //   setCheckForm(false);
-  // }
-
-  // const handleChange = (event) => {
-  //   const { name, value } = event.target
-  //   setnewPet({ ...newPet, [name]: value })
-  //   setDepData({ ...depData, [name]: value })
-  // }
-
+  
   const handleChange3 = (event) => {
-    setnewPet({ ...newPet, [event.target.name]: event.target.checked });
+    setnewPet({ ...newPet, [event.target.name]: "true" });
   };
-
-  // const [onSubmit, setOnSubmit] = useState(false)
-  // const [saveFormDescription, setSaveFormDescription] = useState(true);
-
-  // const onSubmit = (data, e) => {
-  //   _handleSubmit({ ...newPet })
-  //   console.log(newPet)
-  //   // e.target.reset();
-  // };
-
-  // redux Actions
-  // const _handleSubmit = async (data) => {
-  //   dispatch(savePetFormAction(data));
-  // };
 
   return (
     <form onSubmit={handleSubmit(/* onSubmit */)} autocomplete="off">
