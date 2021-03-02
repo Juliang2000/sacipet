@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Lottie from 'react-lottie';
 import { Link } from 'react-router-dom';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { Stepper, Step, StepLabel, Button, Grid, Typography, Box, Hidden, Dialog, IconButton } from '@material-ui/core';
+import { Stepper, Step, StepLabel, Button, Grid, Typography, Box, Hidden, Dialog, IconButton, Toolbar } from '@material-ui/core';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import StepConnector from '@material-ui/core/StepConnector';
@@ -140,6 +140,13 @@ const useStyles = makeStyles((theme) => ({
   rootDialogStart: {
     padding: '50px',
     textAlign: 'center',
+    [theme.breakpoints.only('xs')]: {
+      padding: theme.spacing(0, 0, 0, 0),
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100%',
+    },
   },
   buttonStart: {
     textTransform: 'none',
@@ -350,6 +357,7 @@ export default function AdoptStepper() {
   const theme = useTheme();
 
   const fullScreenResponsive = useMediaQuery(theme.breakpoints.down('lg'));
+  const fullScreenDialog = useMediaQuery(theme.breakpoints.down('xs'));
 
   const formRegisterLottieOptions = {
     loop: true,
@@ -419,6 +427,11 @@ export default function AdoptStepper() {
   const openRegister = () => {
     setOpenModal(false);
     dispatch(register_dialog_open_action())
+  }
+
+  // Close dialog login and Register
+  const handleClickCloseDialog = () => {
+    setOpenModal(false);
   }
 
   return (
@@ -548,10 +561,18 @@ export default function AdoptStepper() {
           <Dialog
             style={{ zIndex: 2 }}
             open={openModal}
-            onClose={handleClickCloseModal}
+            onClose={handleClickCloseDialog}
+            fullScreen={fullScreenDialog}
           >
             <div className={classes.rootDialogStart}>
               <Grid container justify="center">
+                <Grid container justify="flex-end">
+                  <Toolbar>
+                    <IconButton edge="end" color="primary" aria-label="close" onClick={handleClickCloseDialog}>
+                      <CloseIcon />
+                    </IconButton>
+                  </Toolbar>
+                </Grid>
                 <Grid item className={classes.titleDialogStart}>
                   <Typography variant='h6'>¡Hola! si ya tienes cuenta Inicia sesión o Regístrate</Typography>
                 </Grid>

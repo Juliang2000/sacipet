@@ -209,7 +209,7 @@ export default function SectionDesktop() {
                         onClick={handleClickOpenLogin}
                         startIcon={<img src={petUser} alt="Login" style={{ width: '40px' }} />}
                     >
-                        <Hidden xsDown>
+                        <Hidden smDown>
                             Ingresar
                         </Hidden>
                     </Button>

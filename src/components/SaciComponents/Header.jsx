@@ -174,7 +174,7 @@ export default function PrimarySearchAppBar() {
         <AppBar position="fixed" style={{ zIndex: 1 }}>
           <Toolbar>
             <Grid container alignItems="center" xs={12}>
-              <Grid container xs={4} sm={4} md={3} lg={3} xl={3} alignItems="center">
+              <Grid container xs={5} sm={5} md={3} lg={3} xl={3} alignItems="center">
                 {/* <Grid item xs={1}> */}
                 <IconButton
                   edge="start"
@@ -216,16 +216,16 @@ export default function PrimarySearchAppBar() {
                   {/* </Grid> */}
                 </Grid>
               </Hidden>
-              <Grid container justify="flex-end" alignItems="center" xs={8} sm={8} md={6} lg={6} xl={6}>
+              <Grid container justify="flex-end" alignItems="center" xs={7} sm={7} md={6} lg={6} xl={6}>
                 {/* <Hidden smDown> */}
 
-                <Grid item /* xs={3} */ sm={2} md={4} lg={4} xl={3}>
+                <Grid item xs={4} sm={3} md={4} lg={4} xl={3}>
                   <FindPetButton />
                 </Grid>
-                <Grid item /* xs={4} */ sm={2} md={4} lg={4} xl={3}>
+                <Grid item xs={4} sm={3} md={4} lg={4} xl={3}>
                   <AdoptStepper />
                 </Grid>
-                <Grid item /* xs={5} */ sm={4} md={4} lg={4} xl={3}>
+                <Grid item xs={4} sm={3} md={4} lg={4} xl={3}>
                   <SectionDesktop />
                 </Grid>
 
