@@ -44,7 +44,10 @@ const registerStyles = makeStyles((theme) => ({
   buttonSecondary2: {
     color: '#707070',
     textTransform: 'none',
-    margin: theme.spacing(1, 0, 3, 0),
+    margin: theme.spacing(1, 0, 1, 0),
+    [theme.breakpoints.only('xs')]: {
+      margin: theme.spacing(1, 0, 3, 0),
+    },
   },
 
   checkboxRojo: {

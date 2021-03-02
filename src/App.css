@@ -1,12 +1,22 @@
 /* Quitar bordes de botones */
-button{
-    outline: none !important;
-  }
 
-  .swal-wide{
-     z-index:3 !important;
+button {
+  outline: none !important;
 }
 
-*{
+.swal-wide {
+  z-index: 3 !important;
+}
+
+* {
   user-select: none;
+}
+
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #63C132;
+  border-left: 2px solid white;
 }
