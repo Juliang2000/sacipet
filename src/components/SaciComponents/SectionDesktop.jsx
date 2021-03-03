@@ -34,7 +34,7 @@ import Swal from 'sweetalert2';
 
 import Login from '../../pages/Login'
 import Register from '../../pages/Register'
-import { LoginRegisteredAction, login_dialog_close_action, login_dialog_open_action } from '../../redux/actions/loginAction';
+import { LoginRegisteredAction, login_dialog_close_action, login_dialog_open_action, adopt_dialog_close_action, adoptstepper_dialog_open_action } from '../../redux/actions/loginAction';
 import { register_dialog_close_action } from '../../redux/actions/registerAction';
 
 
@@ -118,6 +118,7 @@ export default function SectionDesktop() {
     const classes = useStyles();
 
     const handleClickOpenLogin = () => {
+        dispatch(adopt_dialog_close_action())
         dispatch(login_dialog_open_action())
     };
 
@@ -135,9 +136,11 @@ export default function SectionDesktop() {
                 icon: 'success',
                 title: `Bienvenid@ ${user.nombres}`,
                 text: 'Sesión Iniciada',
+                confirmButtonColor: '#63C132',
             }).then((result) => {
-                dispatch(login_dialog_close_action())
-                dispatch(register_dialog_close_action())
+                dispatch(login_dialog_close_action());
+                dispatch(register_dialog_close_action());
+                dispatch(adoptstepper_dialog_open_action());
                 if (result.isConfirmed) {
                     Swal.close()
                 }
@@ -151,9 +154,10 @@ export default function SectionDesktop() {
                 icon: 'success',
                 title: `Muy Bien! ${newUser.nombres}`,
                 text: 'Registro Exitoso!',
+                confirmButtonColor: '#63C132',
             }).then((result) => {
                 dispatch(LoginRegisteredAction(newUser));
-                dispatch(register_dialog_close_action())
+                dispatch(register_dialog_close_action());
                 if (result.isConfirmed) {
                     Swal.close()
                 }
