@@ -25,6 +25,7 @@ import Home from '@material-ui/icons/Home';
 import Person from '@material-ui/icons/Person';
 import petUser from '../../assets/icons/drawer/petUser-final.svg';
 import CloseIcon from '@material-ui/icons/Close';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 //Redux
 import { useSelector, useDispatch } from 'react-redux';
@@ -34,7 +35,7 @@ import Swal from 'sweetalert2';
 
 import Login from '../../pages/Login'
 import Register from '../../pages/Register'
-import { LoginRegisteredAction, login_dialog_close_action, login_dialog_open_action } from '../../redux/actions/loginAction';
+import { LoginRegisteredAction, login_dialog_close_action, login_dialog_open_action, adopt_dialog_close_action, adoptstepper_dialog_open_action } from '../../redux/actions/loginAction';
 import { register_dialog_close_action } from '../../redux/actions/registerAction';
 
 
@@ -52,7 +53,14 @@ const useStyles = makeStyles((theme) => ({
     },
     accountIcon: {
         width: '40px',
-    }
+    },
+
+    menuIcons: {
+        width: '40px',
+        [theme.breakpoints.only('xs')]: {
+            width: '30px',
+        }
+    },
 }));
 
 
@@ -118,6 +126,7 @@ export default function SectionDesktop() {
     const classes = useStyles();
 
     const handleClickOpenLogin = () => {
+        dispatch(adopt_dialog_close_action())
         dispatch(login_dialog_open_action())
     };
 
@@ -135,9 +144,11 @@ export default function SectionDesktop() {
                 icon: 'success',
                 title: `Bienvenid@ ${user.nombres}`,
                 text: 'Sesión Iniciada',
+                confirmButtonColor: '#63C132',
             }).then((result) => {
-                dispatch(login_dialog_close_action())
-                dispatch(register_dialog_close_action())
+                dispatch(login_dialog_close_action());
+                dispatch(register_dialog_close_action());
+                dispatch(adoptstepper_dialog_open_action());
                 if (result.isConfirmed) {
                     Swal.close()
                 }
@@ -151,9 +162,10 @@ export default function SectionDesktop() {
                 icon: 'success',
                 title: `Muy Bien! ${newUser.nombres}`,
                 text: 'Registro Exitoso!',
+                confirmButtonColor: '#63C132',
             }).then((result) => {
                 dispatch(LoginRegisteredAction(newUser));
-                dispatch(register_dialog_close_action())
+                dispatch(register_dialog_close_action());
                 if (result.isConfirmed) {
                     Swal.close()
                 }
@@ -173,30 +185,39 @@ export default function SectionDesktop() {
                             aria-haspopup="true"
                             color="inherit"
                             onClick={handleClick}
-                            startIcon={<img src={petUser} alt="Login" style={{ width: '30px' }} />}
+                            startIcon={<img src={petUser} alt="Login" className={classes.menuIcons} />}
                         >
-                            {`${user.nombres}`}
+                            <ArrowDropDownIcon />
+                            <Hidden smDown>
+                                {`${user.nombres}`}
+                            </Hidden>
                         </Button>
                     </Grid>
 
                     <StyledMenu
+                        autoFocus={false}
                         id="customized-menu"
                         anchorEl={anchorEl}
                         keepMounted
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
                     >
-                        <StyledMenuItem>
+                        {/* <StyledMenuItem>
                             <ListItemIcon>
                                 <Home />
                             </ListItemIcon>
                             <ListItemText primary="Inicio" />
-                        </StyledMenuItem>
+                        </StyledMenuItem> */}
                         <StyledMenuItem>
                             <ListItemIcon>
                                 <Person />
                             </ListItemIcon>
-                            <ListItemText primary="Cuenta" />
+                            <Hidden smDown>
+                                <ListItemText primary="Ver Tu Perfil" />
+                            </Hidden>
+                            <Hidden mdUp>
+                                <ListItemText primary={`${user.nombres}`} />
+                            </Hidden>
                         </StyledMenuItem>
                     </StyledMenu>
                 </> :
@@ -207,8 +228,9 @@ export default function SectionDesktop() {
                         fullWidth
                         className={classes.loginButton}
                         onClick={handleClickOpenLogin}
-                        startIcon={<img src={petUser} alt="Login" style={{ width: '40px' }} />}
+                        startIcon={<img src={petUser} alt="Login" className={classes.menuIcons} />}
                     >
+                        <ArrowDropDownIcon />
                         <Hidden smDown>
                             Ingresar
                         </Hidden>

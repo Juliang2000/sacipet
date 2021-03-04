@@ -31,6 +31,7 @@ import iconAdopt from '../../../assets/icons/drawer/iconAdopt-final.svg'
 import petIconGray from '../../../assets/icons/drawer/pet_gray.svg'
 import CloseIcon from '@material-ui/icons/Close';
 import iconSend from '../../../assets/icons/send.svg';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 import SettingsIcon from '@material-ui/icons/Settings';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
@@ -41,7 +42,7 @@ import registerPetForm from '../../../assets/lotties/registerPetForm.json'
 import { get_saci_pets_action } from '../../../redux/actions/saciPets';
 
 // open dialog login
-import { login_dialog_open_action } from '../../../redux/actions/loginAction';
+import { login_dialog_open_action, adoptstepper_dialog_open_action, adoptstepper_dialog_close_action, adopt_dialog_open_action } from '../../../redux/actions/loginAction';
 import { register_dialog_open_action } from '../../../redux/actions/registerAction';
 
 
@@ -138,10 +139,10 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '5%',
   },
   rootDialogStart: {
-    padding: '50px',
+    padding: theme.spacing(0, 5, 5, 5),
     textAlign: 'center',
     [theme.breakpoints.only('xs')]: {
-      padding: theme.spacing(0, 0, 0, 0),
+      padding: theme.spacing(1, 1, 1, 1),
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -157,7 +158,13 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     textTransform: 'none',
     fontSize: '15px',
-  }
+  },
+  menuIcons: {
+    width: '40px',
+    [theme.breakpoints.only('xs')]: {
+      width: '30px',
+    }
+  },
 }));
 
 
@@ -209,6 +216,9 @@ function getStepContent(step) {
 }
 
 export default function AdoptStepper() {
+
+  const { adoptDialog, adoptstepperDialog } = useSelector(state => state.login);
+
   const { user } = useSelector(state => state.login);
   const { petType } = useSelector(store => store.petType);
   const { activeStepState } = useSelector(state => state.adoptFormData);
@@ -288,11 +298,12 @@ export default function AdoptStepper() {
     icon: PropTypes.node,
   };
 
-  const [openModal, setOpenModal] = useState(false);
+  // const [openModal, setOpenModal] = useState(false);
   // const [cancelForm, setCancelForm] = useState(false);
 
   const handleClickOpenModal = () => {
-    setOpenModal(true);
+    dispatch(adopt_dialog_open_action())
+    dispatch(adoptstepper_dialog_open_action())
   };
 
   const handleClickCloseModal = () => {
@@ -308,15 +319,9 @@ export default function AdoptStepper() {
         confirmButtonText: 'Sí, salir!',
         cancelButtonText: "No, cancelar!",
         customClass: 'swal-wide',
-        showClass: {
-          popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-          popup: 'animate__animated animate__fadeOutUp'
-        }
       }).then((result) => {
         if (result.isConfirmed) {
-          setOpenModal(false);
+          dispatch(adoptstepper_dialog_close_action());
           dispatch(reset_action());
           dispatch(reset_form_action());
           setActiveStep(0);
@@ -380,7 +385,7 @@ export default function AdoptStepper() {
           setSendPhotos(true);
           Swal.fire('Registro exitoso!', '', 'success').then((result) => {
             if (result.isConfirmed) {
-              setOpenModal(false);
+              dispatch(adoptstepper_dialog_close_action());
               dispatch(reset_action());
               dispatch(reset_form_action());
               dispatch(get_saci_pets_action());
@@ -419,19 +424,22 @@ export default function AdoptStepper() {
 
   // Open dialog Login
   const handleClickOpenLogin = () => {
-    setOpenModal(false);
+    dispatch(adoptstepper_dialog_close_action())
     dispatch(login_dialog_open_action())
+    // dispatch(adoptstepper_dialog_open_action())
   };
 
   // Open dialog Register
   const openRegister = () => {
-    setOpenModal(false);
+    // setOpenModal(false);
+    dispatch(adoptstepper_dialog_close_action())
     dispatch(register_dialog_open_action())
   }
 
   // Close dialog login and Register
   const handleClickCloseDialog = () => {
-    setOpenModal(false);
+    // setOpenModal(false);
+    dispatch(adoptstepper_dialog_close_action())
   }
 
   return (
@@ -446,8 +454,9 @@ export default function AdoptStepper() {
         // variant="contained"
         color="secondary"
         // color="primary"
-        startIcon={<img src={iconAdopt} alt="LogIn" style={{ width: '40px' }} />}
+        startIcon={<img src={iconAdopt} alt="LogIn" className={classes.menuIcons} />}
       >
+        <ArrowDropDownIcon />
         <Hidden smDown>
           Dar en adopción
           </Hidden>
@@ -474,9 +483,9 @@ export default function AdoptStepper() {
         <>
           <Dialog
             style={{ zIndex: 2 }}
-            open={openModal}
+            open={adoptDialog && adoptstepperDialog === true}
             onClose={handleClickCloseModal}
-            // fullWidth
+            fullWidth
             maxWidth='md'
             fullScreen={fullScreenResponsive}
           >
@@ -560,19 +569,19 @@ export default function AdoptStepper() {
         <>
           <Dialog
             style={{ zIndex: 2 }}
-            open={openModal}
+            open={adoptstepperDialog === true}
             onClose={handleClickCloseDialog}
             fullScreen={fullScreenDialog}
           >
+            <Grid container justify="flex-end">
+              <Toolbar>
+                <IconButton edge="end" color="primary" aria-label="close" onClick={handleClickCloseDialog}>
+                  <CloseIcon />
+                </IconButton>
+              </Toolbar>
+            </Grid>
             <div className={classes.rootDialogStart}>
               <Grid container justify="center">
-                <Grid container justify="flex-end">
-                  <Toolbar>
-                    <IconButton edge="end" color="primary" aria-label="close" onClick={handleClickCloseDialog}>
-                      <CloseIcon />
-                    </IconButton>
-                  </Toolbar>
-                </Grid>
                 <Grid item className={classes.titleDialogStart}>
                   <Typography variant='h6'>¡Hola! si ya tienes cuenta Inicia sesión o Regístrate</Typography>
                 </Grid>

@@ -1,38 +1,29 @@
 import React, { useState } from 'react';
+
 import { fade, makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import MenuItem from '@material-ui/core/MenuItem';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import Drawer from '@material-ui/core/Drawer';
-import { Hidden, Grid } from '@material-ui/core';
-import Box from '@material-ui/core/Box'
 
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  InputBase,
+  MenuItem,
+  Drawer,
+  Hidden,
+  Grid,
+  Box
+} from '@material-ui/core';
 
-
-//components
 import AdoptStepper from './AdoptForm/AdoptStepper';
 import FindPetButton from './Adoption/FindPetButton';
 import SectionDesktop from './SectionDesktop';
-import SectionMobile from './SectionMobile';
 
-
-
-
-//icons
-// import logo from './../../assets/svg/Pininawhite.png'
-import logo from './../../assets/svg/logo-pinina.svg';
 import servicesIcon from '../../assets/icons/drawer/services.svg'
 import storeIcon from '../../assets/icons/drawer/store.svg'
-
-import iconMenu from '../../assets/icons/menu-final.svg'
-
-
-
+import logoIcon from './../../assets/svg/logo-pinina.svg';
+import menuIcon from '../../assets/icons/menu-final.svg'
+import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -41,13 +32,13 @@ const useStyles = makeStyles((theme) => ({
   },
 
   grow: {
-    // flexGrow: 1,
     color: '#fff',
-
   },
+
   menuButton: {
     color: '#ffff',
   },
+
   title: {
     color: '#ffff',
     fontSize: '1.2rem',
@@ -56,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
       display: 'block',
     },
   },
+
   title2: {
     color: '#black',
     fontSize: '1.2rem',
@@ -63,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
       display: 'block',
     },
   },
+
   search: {
     alignItems: 'left',
     position: 'relative',
@@ -71,10 +64,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: fade(theme.palette.common.white, 0.15),
     '&:hover': {
       backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    // width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      // width: 'auto',
     },
     "& .MuiInputBase-input": {
     }
@@ -90,12 +79,13 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     color: '#ffff',
   },
+
   inputRoot: {
     color: 'inherit',
   },
+
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create('width'),
     [theme.breakpoints.up('md')]: {
@@ -122,84 +112,55 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex',
     },
   },
-  sectionMobile: {
-    display: 'flex',
-    [theme.breakpoints.up('md')]: {
-      display: 'none',
-    },
 
-    upperdrawer: {
-      marginRight: '100px',
-    },
+  logoIcon: {
+    width: '40px',
+    [theme.breakpoints.only('xs')]: {
+      width: '30px',
+    }
+  },
 
-    draweritem: {
-      alignItems: 'center',
-      display: 'flex',
-      margin: '50%',
-    },
-    modal: {
-      position: 'absolute',
-      width: 400,
-      backgroundColor: 'white',
-      border: '2px solid #000',
-      boxShadow: theme.shadows[5],
-      //padding: theme.spacing(2,4,3),
-      padding: "16px 32px 24px",
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
-    },
-
-
-  }
 }));
-
-
 
 export default function PrimarySearchAppBar() {
 
   const classes = useStyles();
-  // const match = useMediaQuery('(min-width:768px)');
+
   const [open, setOpen] = useState();
 
   const handleDrawerOpen = () => {
     setOpen(true);
   };
+
   const handleDrawerClose = () => {
     setOpen(false);
   }
+
   return (
     <div className={classes.grow}>
       <Box mb={10}>
         <AppBar position="fixed" style={{ zIndex: 1 }}>
           <Toolbar>
             <Grid container alignItems="center" xs={12}>
-              <Grid container xs={5} sm={5} md={3} lg={3} xl={3} alignItems="center">
-                {/* <Grid item xs={1}> */}
+              <Grid container xs={4} sm={5} md={3} lg={3} xl={3} alignItems="center">
                 <IconButton
                   edge="start"
                   className={classes.menuButton}
                   aria-label="open drawer"
                   onClick={handleDrawerOpen}
                 >
-
-                  <img src={iconMenu} alt="Menu" style={{ width: '25px' }} />
-
+                  <img src={menuIcon} alt="Menu" style={{ width: '25px' }} />
                 </IconButton>
-
-                {/* </Grid> */}
-
-                <IconButton><img width={40} src={logo} alt="logo"></img></IconButton>
-
+                <IconButton>
+                  <img className={classes.logoIcon} src={logoIcon} alt="logo"></img>
+                </IconButton>
                 <Hidden only="xs">
                   <Typography className={classes.title} variant="h5">PET</Typography>
                   <Typography className={classes.title2} variant="h5">SACI</Typography>
                 </Hidden>
-
               </Grid>
               <Hidden smDown>
-                <Grid item sm={2} md={3} lg={3} xl={3} >
-
+                <Grid item sm={2} md={2} lg={3} xl={3} >
                   <div className={classes.search} >
                     <div className={classes.searchIcon} >
                       <SearchIcon />
@@ -213,12 +174,9 @@ export default function PrimarySearchAppBar() {
                       inputProps={{ 'aria-label': 'search' }}
                     />
                   </div>
-                  {/* </Grid> */}
                 </Grid>
               </Hidden>
-              <Grid container justify="flex-end" alignItems="center" xs={7} sm={7} md={6} lg={6} xl={6}>
-                {/* <Hidden smDown> */}
-
+              <Grid container justify="flex-end" alignItems="center" xs={8} sm={7} md={7} lg={6} xl={6}>
                 <Grid item xs={4} sm={3} md={4} lg={4} xl={3}>
                   <FindPetButton />
                 </Grid>
@@ -228,14 +186,6 @@ export default function PrimarySearchAppBar() {
                 <Grid item xs={4} sm={3} md={4} lg={4} xl={3}>
                   <SectionDesktop />
                 </Grid>
-
-                {/* </Hidden> */}
-
-                {/* <Hidden smUp> */}
-                {/* <Grid container justify="flex-end"> */}
-                {/* <SectionMobile /> */}
-                {/* </Grid> */}
-                {/* </Hidden> */}
               </Grid>
             </Grid>
           </Toolbar>
@@ -246,7 +196,6 @@ export default function PrimarySearchAppBar() {
         width={500}
         open={open}
         onClose={() => setOpen(false)}
-
       >
         <AppBar position="static">
           <Toolbar>
@@ -257,9 +206,13 @@ export default function PrimarySearchAppBar() {
               aria-label="open drawer"
               onClick={handleDrawerClose}
             >
-              <img src={iconMenu} alt="Menu" style={{ width: '25px' }} />
+              <img src={menuIcon} alt="Menu" style={{ width: '25px' }} />
             </IconButton>
-            <IconButton className={classes.upper}><img width={40} src={logo} alt="logo"></img></IconButton>
+            <IconButton
+              className={classes.upper}
+            >
+              <img className={classes.logoIcon} src={logoIcon} alt="logo"></img>
+            </IconButton>
             <Typography className={classes.title} variant="h5" noWrap>
               PET
           </Typography>
@@ -274,15 +227,7 @@ export default function PrimarySearchAppBar() {
             <MenuItem><img src={storeIcon} style={{ width: '30px', marginRight: '15px' }} alt="Tienda" /><h6>Tienda</h6></MenuItem>
           </Box>
         </div>
-
       </Drawer>
-
     </div>
-
-
-
-
   );
-
 }
-

@@ -13,11 +13,11 @@ import petImage2 from '../../../assets/images/cardsPets/pet2.png';
 import petImage3 from '../../../assets/images/cardsPets/pet3.png';
 import petImage4 from '../../../assets/images/cardsPets/pet4.png';
 import petImage5 from '../../../assets/images/cardsPets/pet5.png';
-import { ImageOutlined } from '@material-ui/icons';
+// import { ImageOutlined } from '@material-ui/icons';
 import { save_pet_image_1, save_pet_image_2, save_pet_image_3, save_pet_image_4, save_pet_image_5 } from '../../../redux/actions/adoptFormAction';
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     root: {
         "&:hover": {
             border: '3px dashed  #63C132',
@@ -25,7 +25,6 @@ const useStyles = makeStyles({
         },
         maxWidth: 145,
         border: '3px solid  #fff',
-
         marginLeft: 'auto',
         marginRight: 'auto',
     },
@@ -38,20 +37,20 @@ const useStyles = makeStyles({
         },
         height: 100,
         objectFit: 'cover',
-
         '-webkit-transition': 'all 500ms ease-in-out',
-
         transform: 'scale(1)',
-
     },
 
     containerPetimages: {
         // marginTop: 50,
         // marginBottom: 50,
+        // height: 200,
+        [theme.breakpoints.between('sm', 'xl')]: {
+            height: 200
+        },
+    },
 
-        height: 200,
-    }
-});
+}));
 
 const PetImages = () => {
 

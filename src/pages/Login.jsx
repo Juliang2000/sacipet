@@ -15,7 +15,7 @@ import { loginFacebookAction } from '../redux/actions/facebookAction';
 import Loader from './Loader';
 
 // Material UI
-import { TextField, Grid, Button, Typography, IconButton, AppBar, Toolbar } from '@material-ui/core';
+import { TextField, Grid, Button, Typography, IconButton, Toolbar } from '@material-ui/core';
 
 // Icons
 import iconEmail from '../assets/icons/email-final.svg';
@@ -86,12 +86,12 @@ export default function Login() {
   };
 
   const openRegister = () => {
-    dispatch(login_dialog_close_action())
-    dispatch(register_dialog_open_action())
+    dispatch(login_dialog_close_action());
+    dispatch(register_dialog_open_action());
   }
 
   const handleClickCloseLogin = () => {
-    dispatch(login_dialog_close_action())
+    dispatch(login_dialog_close_action());
   }
 
   return (
@@ -99,16 +99,15 @@ export default function Login() {
       { loader && (
         <Loader />
       )}
-
+      <Grid container justify="flex-end">
+        <Toolbar>
+          <IconButton edge="end" color="primary" aria-label="close" onClick={handleClickCloseLogin}>
+            <CloseIcon />
+          </IconButton>
+        </Toolbar>
+      </Grid>
       <Grid container className={classes.containerForm}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Grid container justify="flex-end">
-            <Toolbar>
-              <IconButton edge="end" color="primary" aria-label="close" onClick={handleClickCloseLogin}>
-                <CloseIcon />
-              </IconButton>
-            </Toolbar>
-          </Grid>
           <Typography align="center" variant="h4" gutterBottom className={classes.titleForm}>
             INICIAR SESIÓN
           </Typography>
@@ -187,7 +186,7 @@ export default function Login() {
             >
               Entrar
                </Button>
-            <span > --------------- O ---------------</span>
+            <span className={classes.containerLine}>──────────── O ────────────</span>
             <FacebookLogin
               appId="398513521394376"
               autoLoad={false}

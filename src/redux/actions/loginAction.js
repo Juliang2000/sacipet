@@ -5,6 +5,10 @@ import {
     INICIAR_SESION_START,
     LOGIN_DIALOG_CLOSE,
     LOGIN_DIALOG_OPEN,
+    ADOPT_DIALOG_OPEN,
+    ADOPT_DIALOG_CLOSE,
+    ADOPTSTEPPER_DIALOG_OPEN,
+    ADOPTSTEPPER_DIALOG_CLOSE,
     // REGISTER_TO_LOGIN
 } from "../types";
 import Swal from 'sweetalert2';
@@ -73,6 +77,35 @@ export const login_dialog_close_action = (loginDialog) => {
         payload: loginDialog
     }
 }
+
+export const adopt_dialog_open_action = (adoptDialog) => {
+    return {
+        type: ADOPT_DIALOG_OPEN,
+        payload: adoptDialog
+    }
+}
+
+export const adopt_dialog_close_action = (adoptDialog) => {
+    return {
+        type: ADOPT_DIALOG_CLOSE,
+        payload: adoptDialog
+    }
+}
+
+export const adoptstepper_dialog_open_action = (adoptstepperDialog) => {
+    return {
+        type: ADOPTSTEPPER_DIALOG_OPEN,
+        payload: adoptstepperDialog
+    }
+}
+
+export const adoptstepper_dialog_close_action = (adoptstepperDialog) => {
+    return {
+        type: ADOPTSTEPPER_DIALOG_CLOSE,
+        payload: adoptstepperDialog
+    }
+}
+
 
 // export const register_to_login_action = (registerToLogin) => {
 //     return {
