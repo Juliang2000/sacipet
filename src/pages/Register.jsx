@@ -23,9 +23,7 @@ import {
   Grid,
   Checkbox,
   Button,
-  Typography,
-  Toolbar,
-  IconButton
+  Typography
 } from '@material-ui/core';
 
 //Styles
@@ -40,7 +38,6 @@ import iconPassword2 from '../assets/icons/lock-2-final.svg';
 import logoSend from '../assets/icons/registration.svg';
 import iconFacebook from '../assets/icons/facebook-final.svg';
 import iconGoogle from '../assets/icons/google-final.svg';
-import CloseIcon from '@material-ui/icons/Close';
 
 // Google Button
 import GoogleLogin from 'react-google-login';
@@ -145,22 +142,11 @@ export default function Register() {
     dispatch(login_dialog_open_action())
   }
 
-  const handleClickCloseRegister = () => {
-    dispatch(register_dialog_close_action())
-  }
-
   return (
     <>
       { loader && (
         <Loader />
       )}
-      <Grid container justify="flex-end">
-        <Toolbar>
-          <IconButton edge="end" color="primary" aria-label="close" onClick={handleClickCloseRegister}>
-            <CloseIcon />
-          </IconButton>
-        </Toolbar>
-      </Grid>
       <Grid container className={classes.containerForm}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Typography align="center" variant="h4" gutterBottom className={classes.titleForm}>

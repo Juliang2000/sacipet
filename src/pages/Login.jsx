@@ -15,7 +15,7 @@ import { loginFacebookAction } from '../redux/actions/facebookAction';
 import Loader from './Loader';
 
 // Material UI
-import { TextField, Grid, Button, Typography, IconButton, Toolbar } from '@material-ui/core';
+import { TextField, Grid, Button, Typography } from '@material-ui/core';
 
 // Icons
 import iconEmail from '../assets/icons/email-final.svg';
@@ -23,7 +23,6 @@ import iconPassword from '../assets/icons/lock-final.svg';
 import iconSend from '../assets/icons/send-final.svg';
 import iconFacebook from '../assets/icons/facebook-final.svg';
 import iconGoogle from '../assets/icons/google-final.svg';
-import CloseIcon from '@material-ui/icons/Close';
 
 // Styles
 import loginStyles from './../assets/css/js/loginStyles';
@@ -90,22 +89,11 @@ export default function Login() {
     dispatch(register_dialog_open_action());
   }
 
-  const handleClickCloseLogin = () => {
-    dispatch(login_dialog_close_action());
-  }
-
   return (
     <>
       { loader && (
         <Loader />
       )}
-      <Grid container justify="flex-end">
-        <Toolbar>
-          <IconButton edge="end" color="primary" aria-label="close" onClick={handleClickCloseLogin}>
-            <CloseIcon />
-          </IconButton>
-        </Toolbar>
-      </Grid>
       <Grid container className={classes.containerForm}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Typography align="center" variant="h4" gutterBottom className={classes.titleForm}>
