@@ -2,7 +2,20 @@ import React, { useState, useEffect } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Card, CardHeader, CardActions, Avatar, IconButton, Button, Dialog, Grid, CardMedia, MenuItem, Menu, Select } from '@material-ui/core';
+import {
+  Card,
+  CardHeader,
+  CardActions,
+  Avatar,
+  IconButton,
+  Button,
+  Dialog,
+  Grid, CardMedia,
+  MenuItem,
+  Menu,
+  Select,
+  CircularProgress
+} from '@material-ui/core';
 
 import { red } from '@material-ui/core/colors';
 
@@ -159,6 +172,7 @@ export default function RecipeReviewCard(props) {
   const [viewAgeScale, setViewAgeScale] = useState(ageScale[0]);
   const [vaccines, setVaccines] = useState()
   const [genre, setGenre] = useState();
+  const [displayContent, setDisplayContent] = useState(false);
 
 
 
@@ -166,10 +180,14 @@ export default function RecipeReviewCard(props) {
   const handleClickOpen = (value) => {
     setNewPet("" + value)
     setOpen(true);
+    setTimeout(() => {
+      setDisplayContent(true)
+    }, 1000);
   };
 
   const handleClickClose = () => {
     setOpen(false);
+    setDisplayContent(false);
   };
 
 
@@ -195,16 +213,11 @@ export default function RecipeReviewCard(props) {
 
 
 
-  // useEffect(() => {
-  //   if (petImage1 === true) {
-  //     setPetPhoto(petImage1)
-  //   } else
-  //     setPetPhoto(petSample)
-  // }, [petImage1])
+
 
   useEffect(() => {
     dispatch(get_saci_pets_action())
-  }, [dispatch])
+  }, [])
 
   useEffect(() => {
     console.log(getPet)
@@ -290,22 +303,31 @@ export default function RecipeReviewCard(props) {
   //     console.log(i.id_mascota);
   //   }
   // }, [mascotas, dispatch])
+  const petPhotoData = {
+    consecutivo: '1',
+    id_mascota: 244
+  }
 
   useEffect(() => {
     getImage();
   }, []);
 
+
+
   const getImage = async () => {
 
-    const formData = new FormData();
-    formData.append('consecutivo', '1')
-    formData.append('id_mascota', 244)
+    // const formData = new FormData();
+
+    // formData.append('consecutivo', '1')
+    // formData.append('id_mascota', 244)
 
     try {
-      const {data} = await axiosClient.post("/files", formData);
-      const imageUrl = URL.createObjectURL(data)
-      setImages(imageUrl);
-      return imageUrl
+      const { data } = await axiosClient.get("/usersc/158");
+
+      // const imageUrl = URL.createObjectURL(data)
+      // console.log(imageUrl)
+      setImages(data);
+      return data
 
       // return data
     } catch (error) {
@@ -313,14 +335,22 @@ export default function RecipeReviewCard(props) {
     }
   };
 
-  useEffect(() => {
-    console.log(images)
-  }, [images])
+  // useEffect(() => {
+  //   console.log(images)
+  // }, [images])
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'), {
     defaultMatches: true
   });
+
+  const [testImage, setTestImage] = useState(pug1)
+
+  useEffect(() => {
+    const Example = (images) => <img src={`data:image/jpeg;base64,${images}`} />
+    // setTestImage(Example)
+    // console.log(Example)
+  }, [images])
 
   // const renderPhotos = (photo) => {
   //   return <img src={photo} key={photo} alt={photo} />
@@ -328,7 +358,7 @@ export default function RecipeReviewCard(props) {
 
   var items = [
     {
-      imgPath: images,
+      imgPath: pug1,
     },
     {
       imgPath: pug2,
@@ -432,6 +462,7 @@ export default function RecipeReviewCard(props) {
                   items.map((item, i) => <Item key={i} item={item} />)
                 }
               </Carousel>
+              {/* <img src={testImage} alt="" /> */}
               <Grid container justify="center">
                 <Button disableRipple style={{ textTransform: 'none' }}>
                   <MenuItem key={item.mascota} onClick={(e) => handleClickOpen(e.target.value)} value={item.id_mascota}>
@@ -471,68 +502,73 @@ export default function RecipeReviewCard(props) {
               </CardActions>
             </Card>
           </Grid>
+           </Grid>
 
-        );
-      })}
-      <>
-        <Dialog
-          open={open}
-          TransitionComponent={Transition}
-          keepMounted
-          onClose={handleClickClose}
-        >
-          <Paper elevation={3} className={classes.paperContainer}>
-            <Box display="flex" justifyContent="center">
-            </Box>
-            <Box display="flex" justifyContent="center" mb={5} my={5}>
-              <Typography variant="h4" color="initial">
-                Ficha De Mascota
+  );
+}
+      )
+      
+      }
+<>
+  { displayContent ?
+    <Dialog
+      open={open}
+      TransitionComponent={Transition}
+      keepMounted
+      onClose={handleClickClose}
+    >
+      <Paper elevation={3} className={classes.paperContainer}>
+        <Box display="flex" justifyContent="center">
+        </Box>
+        <Box display="flex" justifyContent="center" mb={5} my={5}>
+          <Typography variant="h4" color="initial">
+            Ficha De Mascota
                       </Typography>
-            </Box>
-            <Box mb={5}>
-              <TableContainer component={Paper}>
-                <Table className={classes.table} aria-label="simple table">
-                  {/* style={{ border: 'blue 7px solid'}} */}
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Nombre</TableCell>
-                      <TableCell>Edad</TableCell>
-                      <TableCell>Sexo</TableCell>
-                      <TableCell>Raza</TableCell>
-                      <TableCell>Ubicación</TableCell>
-                      {/* <TableCell>Peso&nbsp;(Kg)</TableCell> */}
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell component="th" scope="row">
-                        {getPet.nombre_mascota}
-                      </TableCell>
-                      <TableCell>{getPet.escala_edad} {viewAgeScale}</TableCell>
-                      <TableCell>{genre}</TableCell>
-                      <TableCell>{getPet.raza}</TableCell>
-                      <TableCell>{getPet.municipio}</TableCell>
-                      {/* <TableCell>{row.protein}</TableCell> */}
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Box>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography className={classes.heading}>Vacunas</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>
-                  {vaccines}
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-            {/* <Accordion>
+        </Box>
+        <Box mb={5}>
+          <TableContainer component={Paper}>
+            <Table className={classes.table} aria-label="simple table">
+              {/* style={{ border: 'blue 7px solid'}} */}
+              <TableHead>
+                <TableRow>
+                  <TableCell>Nombre</TableCell>
+                  <TableCell>Edad</TableCell>
+                  <TableCell>Sexo</TableCell>
+                  <TableCell>Raza</TableCell>
+                  <TableCell>Ubicación</TableCell>
+                  {/* <TableCell>Peso&nbsp;(Kg)</TableCell> */}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    {getPet.nombre_mascota}
+                  </TableCell>
+                  <TableCell>{getPet.escala_edad} {viewAgeScale}</TableCell>
+                  <TableCell>{genre}</TableCell>
+                  <TableCell>{getPet.raza}</TableCell>
+                  <TableCell>{getPet.municipio}</TableCell>
+                  {/* <TableCell>{row.protein}</TableCell> */}
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography className={classes.heading}>Vacunas</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              {vaccines}
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+        {/* <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel2a-content"
@@ -544,28 +580,29 @@ export default function RecipeReviewCard(props) {
                 <Typography>Trae Cartilla Documentación</Typography>
               </AccordionDetails>
             </Accordion> */}
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel2a-content"
-                id="panel2a-header"
-              >
-                <Typography className={classes.heading}>Descripción</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>
-                  {getPet.descripcion_mascota}
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-          </Paper>
-        </Dialog>
-      </>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel2a-content"
+            id="panel2a-header"
+          >
+            <Typography className={classes.heading}>Descripción</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              {getPet.descripcion_mascota}
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+      </Paper>
+            :
+              <CircularProgress />
 
-      {/* <Dialog onclose={openCloseAdopt}>
-        <AdoptMeModal />
-      </Dialog> */}
 
-    </Grid>
+    </Dialog>
+}
+</>
+
+   
   );
 }
