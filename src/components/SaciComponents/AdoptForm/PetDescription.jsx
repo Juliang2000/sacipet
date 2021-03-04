@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 
 import {
@@ -11,7 +12,6 @@ import {
   Checkbox,
   ListItemText,
   Typography,
-  // Button
 } from '@material-ui/core';
 
 // Form Validation
@@ -60,14 +60,12 @@ export default function PetDescription() {
   const { petType } = useSelector(store => store.petType);
   const [sendHamsterData, setSendHamsterData] = useState(true);
   const [racesContent, setRacesContent] = useState(false);
-  const [getData, setGetData] = useState(true);
   const [allowCities, setAllowCities] = useState(false);
 
   ///////////////////////INSERTS
   const raceData = useSelector(store => store.raceData.raceData);
   const hamsterRaceData = useSelector(store => store.hamsterRaceData.hamsterRaceData);
   const hamster = useSelector(state => state.petType.hamster);
-  const activeStepState = useSelector(state => state.adoptFormData.activeStepState);
   const { departments, cities } = useSelector(state => state.adoptFormData);
   const { user } = useSelector(state => state.login);
 
@@ -89,8 +87,6 @@ export default function PetDescription() {
     descripcion_mascota
   } = useSelector(store => store.adoptFormData.updateDescriptionData);
 
-  const [saveFormDescription, setSaveFormDescription] = useState(true);
-
   const [newPet, setnewPet] = useState({
     id_usuario: user.id,
     tipo_tramite: 1,
@@ -111,27 +107,11 @@ export default function PetDescription() {
     descripcion_mascota: `${descripcion_mascota}`,
   })
 
-  // if (saveFormDescription === true) {
-  //   if (activeStepState === 3) {
-  //     dispatch(get_form_data_action(newPet));
-  //     dispatch(update_form_data_action());
-
-  //     setSaveFormDescription(false);
-  //   }
-  // }
-
   const handleChange = (event) => {
     const { name, value } = event.target
     setnewPet({ ...newPet, [name]: value })
     setDepData({ ...depData, [name]: value })
   }
-
-  // useEffect(() => {
-  //   if (newPet) {
-  //     dispatch(get_form_data_action(newPet));
-  //     dispatch(update_form_data_action());
-  //   }
-  // }, [newPet])
 
   useEffect(() => {
     dispatch(get_department_data_action());
@@ -156,14 +136,13 @@ export default function PetDescription() {
     setnewPet({ ...newPet, [name]: value });
   }
 
+  // eslint-disable-next-line no-unused-vars
   const [sendPetData, setSendPetData] = useState(false);
 
   const saveData = () => {
     dispatch(push_data_action());
     setSendPetData(true);
     setRacesContent(true);
-    // dispatch(get_form_data_action(newPet));
-    // dispatch(update_form_data_action());
   }
 
   const saveSmallSize = () => {
@@ -206,16 +185,6 @@ export default function PetDescription() {
     setRacesContent(false);
   }
 
-  // if (sendPetData === true) {
-  //   if (petData.id_tamanio.length !== 0) {
-  //     (dispatch(get_pet_size_data(petData)))
-  //     setSendPetData(true);
-  //     setRacesContent(true);
-  //     setSendPetData(false);
-  //   }
-  //   setSendPetData(false);
-  // };
-
   useEffect(() => {
     (dispatch(get_pet_size_data(petData)))
   }, [newPet.id_tamanio])
@@ -257,7 +226,6 @@ export default function PetDescription() {
       .min(1, '¡Edad mínima 1!')
       .max(20, '¡máxima 20!')
       .integer('!Solo números enteros!'),
-    // .matches(/^[0-9]+$/, "¡Solo números!")
 
   });
 
@@ -286,7 +254,6 @@ export default function PetDescription() {
         dispatch(full_pet_description_action());
         dispatch(get_form_data_action(newPet));
         dispatch(update_form_data_action());
-        console.log(errors)
       } else {
         dispatch(not_full_pet_description_action());
       }
@@ -303,16 +270,12 @@ export default function PetDescription() {
   newPet.id_color,
   newPet.esterilizado])
 
-  // useEffect(() => {
-  //   dispatch(update_form_data_action());
-  // }, [newPet])
-
   const handleChange3 = (event) => {
     setnewPet({ ...newPet, [event.target.name]: "true" });
   };
 
   return (
-    <form onSubmit={handleSubmit(/* onSubmit */)} autocomplete="off">
+    <form onSubmit={handleSubmit()} autocomplete="off">
       <Grid container spacing={2} className={classes.formPetDescription}>
         <Grid item xs={12}>
           <Typography variant="h4" gutterBottom>
@@ -607,9 +570,6 @@ export default function PetDescription() {
             defaultValue={descripcion_mascota}
           />
         </Grid>
-        {/* <Button variant="text" color="default" type="submit">
-          Enviar
-        </Button> */}
       </Grid>
     </form>
   )

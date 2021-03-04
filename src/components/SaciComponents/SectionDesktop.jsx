@@ -244,7 +244,13 @@ export default function SectionDesktop() {
                 style={{ zIndex: 1 }}
                 fullScreen={fullScreen}
             >
-
+                <Grid container justify="flex-end">
+                    <Toolbar>
+                        <IconButton edge="end" color="primary" aria-label="close" onClick={handleClickCloseLogin}>
+                            <CloseIcon />
+                        </IconButton>
+                    </Toolbar>
+                </Grid>
                 <Login />
             </Dialog>
             <Dialog
@@ -253,6 +259,13 @@ export default function SectionDesktop() {
                 style={{ zIndex: 1 }}
                 fullScreen={fullScreen}
             >
+                <Grid container justify="flex-end">
+                    <Toolbar>
+                        <IconButton edge="end" color="primary" aria-label="close" onClick={handleClickCloseRegister}>
+                            <CloseIcon />
+                        </IconButton>
+                    </Toolbar>
+                </Grid>
                 <Register />
             </Dialog>
         </>
