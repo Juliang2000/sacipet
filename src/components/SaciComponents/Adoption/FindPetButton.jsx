@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
   },
-  iconsMenu: {
+  menuIcons: {
     width: '40px',
     [theme.breakpoints.only('xs')]: {
       width: '30px',
@@ -105,7 +105,7 @@ export default function FindPetButton() {
         fullWidth
         className={classes.findPetButtonDesktop}
         onClick={handleClick}
-        startIcon={<img src={iconFind} alt="LogIn" className={classes.iconsMenu} />}
+        startIcon={<img src={iconFind} alt="LogIn" className={classes.menuIcons} />}
 
       >
         <ArrowDropDownIcon />
@@ -116,6 +116,7 @@ export default function FindPetButton() {
       </Button>
       {/* </Grid> */}
       <StyledMenu
+        autoFocus={false}
         id="customized-menu"
         anchorEl={anchorEl}
         keepMounted

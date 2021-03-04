@@ -55,9 +55,9 @@ const useStyles = makeStyles((theme) => ({
         width: '40px',
     },
 
-    iconsMenu: {
+    menuIcons: {
         width: '40px',
-        [theme.breakpoints.only('xs')]:{
+        [theme.breakpoints.only('xs')]: {
             width: '30px',
         }
     },
@@ -185,7 +185,7 @@ export default function SectionDesktop() {
                             aria-haspopup="true"
                             color="inherit"
                             onClick={handleClick}
-                            startIcon={<img src={petUser} alt="Login" className={classes.iconsMenu} />}
+                            startIcon={<img src={petUser} alt="Login" className={classes.menuIcons} />}
                         >
                             <ArrowDropDownIcon />
                             <Hidden smDown>
@@ -195,6 +195,7 @@ export default function SectionDesktop() {
                     </Grid>
 
                     <StyledMenu
+                        autoFocus={false}
                         id="customized-menu"
                         anchorEl={anchorEl}
                         keepMounted
@@ -227,7 +228,7 @@ export default function SectionDesktop() {
                         fullWidth
                         className={classes.loginButton}
                         onClick={handleClickOpenLogin}
-                        startIcon={<img src={petUser} alt="Login" className={classes.iconsMenu} />}
+                        startIcon={<img src={petUser} alt="Login" className={classes.menuIcons} />}
                     >
                         <ArrowDropDownIcon />
                         <Hidden smDown>

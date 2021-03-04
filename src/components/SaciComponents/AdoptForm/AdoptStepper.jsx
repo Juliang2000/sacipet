@@ -159,7 +159,7 @@ const useStyles = makeStyles((theme) => ({
     textTransform: 'none',
     fontSize: '15px',
   },
-  iconsMenu: {
+  menuIcons: {
     width: '40px',
     [theme.breakpoints.only('xs')]: {
       width: '30px',
@@ -454,7 +454,7 @@ export default function AdoptStepper() {
         // variant="contained"
         color="secondary"
         // color="primary"
-        startIcon={<img src={iconAdopt} alt="LogIn" className={classes.iconsMenu} />}
+        startIcon={<img src={iconAdopt} alt="LogIn" className={classes.menuIcons} />}
       >
         <ArrowDropDownIcon />
         <Hidden smDown>
