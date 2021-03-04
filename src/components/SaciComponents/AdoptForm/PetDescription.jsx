@@ -111,14 +111,14 @@ export default function PetDescription() {
     descripcion_mascota: `${descripcion_mascota}`,
   })
 
-  if (saveFormDescription === true) {
-    if (activeStepState === 3) {
-      dispatch(get_form_data_action(newPet));
-      dispatch(update_form_data_action());
+  // if (saveFormDescription === true) {
+  //   if (activeStepState === 3) {
+  //     dispatch(get_form_data_action(newPet));
+  //     dispatch(update_form_data_action());
 
-      setSaveFormDescription(false);
-    }
-  }
+  //     setSaveFormDescription(false);
+  //   }
+  // }
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -126,16 +126,16 @@ export default function PetDescription() {
     setDepData({ ...depData, [name]: value })
   }
 
-  useEffect(() => {
-    if (newPet) {
-      dispatch(get_form_data_action(newPet));
-      dispatch(update_form_data_action());
-    }
-  }, [newPet, dispatch])
+  // useEffect(() => {
+  //   if (newPet) {
+  //     dispatch(get_form_data_action(newPet));
+  //     dispatch(update_form_data_action());
+  //   }
+  // }, [newPet])
 
   useEffect(() => {
     dispatch(get_department_data_action());
-  }, [dispatch])
+  }, [])
 
   const [petData, setPetData] = useState({
     id_tipo_mascota: petType,
@@ -162,8 +162,8 @@ export default function PetDescription() {
     dispatch(push_data_action());
     setSendPetData(true);
     setRacesContent(true);
-    dispatch(get_form_data_action(newPet));
-    dispatch(update_form_data_action());
+    // dispatch(get_form_data_action(newPet));
+    // dispatch(update_form_data_action());
   }
 
   const saveSmallSize = () => {
@@ -196,7 +196,7 @@ export default function PetDescription() {
         reset_city_action());
       setAllowCities(true)
     }
-  }, [newPet.id_unde, dispatch, depData])
+  }, [newPet.id_unde])
 
   if (racesContent === true) {
     if (id_tamanio !== 0) {
@@ -206,15 +206,19 @@ export default function PetDescription() {
     setRacesContent(false);
   }
 
-  if (sendPetData === true) {
-    if (petData.id_tamanio.length !== 0) {
-      (dispatch(get_pet_size_data(petData)))
-      setSendPetData(true);
-      setRacesContent(true);
-      setSendPetData(false);
-    }
-    setSendPetData(false);
-  };
+  // if (sendPetData === true) {
+  //   if (petData.id_tamanio.length !== 0) {
+  //     (dispatch(get_pet_size_data(petData)))
+  //     setSendPetData(true);
+  //     setRacesContent(true);
+  //     setSendPetData(false);
+  //   }
+  //   setSendPetData(false);
+  // };
+
+  useEffect(() => {
+    (dispatch(get_pet_size_data(petData)))
+  }, [newPet.id_tamanio])
 
   if (sendHamsterData === true) {
     if (hamster === true) {
@@ -268,40 +272,41 @@ export default function PetDescription() {
 
   useEffect(() => {
     if (!errors.nombre_mascota && !errors.edad_mascota) {
-      if (nombre_mascota.length &&
-        edad_mascota.length &&
-        escala_edad &&
-        esterilizado.length &&
-        id_tamanio &&
-        id_raza &&
-        id_color &&
-        id_unde &&
-        id_codigo &&
-        descripcion_mascota.length !== 0
+      if (newPet.nombre_mascota.length &&
+        newPet.edad_mascota.length &&
+        newPet.escala_edad &&
+        newPet.esterilizado.length &&
+        newPet.id_tamanio &&
+        newPet.id_raza &&
+        newPet.id_color &&
+        newPet.id_unde &&
+        newPet.id_codigo &&
+        newPet.descripcion_mascota.length !== 0
       ) {
         dispatch(full_pet_description_action());
+        dispatch(get_form_data_action(newPet));
+        dispatch(update_form_data_action());
         console.log(errors)
+      } else {
+        dispatch(not_full_pet_description_action());
       }
     }
-    else
-      dispatch(not_full_pet_description_action());
-  }, [nombre_mascota,
-    descripcion_mascota,
-    dispatch,
-    id_codigo,
-    id_unde,
+  }, [newPet.nombre_mascota,
+  newPet.descripcion_mascota,
+  newPet.id_codigo,
+  newPet.id_unde,
     errors,
-    edad_mascota,
-    escala_edad,
-    id_tamanio,
-    id_raza,
-    id_color,
-    esterilizado])
+  newPet.edad_mascota,
+  newPet.escala_edad,
+  newPet.id_tamanio,
+  newPet.id_raza,
+  newPet.id_color,
+  newPet.esterilizado])
 
-  useEffect(() => {
-    dispatch(update_form_data_action());
-  }, [newPet, dispatch])
-  
+  // useEffect(() => {
+  //   dispatch(update_form_data_action());
+  // }, [newPet])
+
   const handleChange3 = (event) => {
     setnewPet({ ...newPet, [event.target.name]: "true" });
   };

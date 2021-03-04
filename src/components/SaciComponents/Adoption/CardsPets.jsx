@@ -395,180 +395,177 @@ export default function RecipeReviewCard(props) {
 
 
   return (
-    <Grid container spacing={isMobile ? 1 : 3} xs={12} justify="center" className={classes.cardsPetsContainer}>
-      { mascotas.map((item) => {
-        return (
-          <Grid item xs={12} sm={6} md={6} lg={4} xl={3}>
-            <Card className={classes.cardsPets} style={{ borderRadius: 10 }}>
-              <CardHeader
-                avatar={
-                  <Avatar aria-label="recipe" className={classes.avatar}>
-                    R
+    <>
+      <Grid container spacing={isMobile ? 1 : 3} xs={12} justify="center" className={classes.cardsPetsContainer}>
+        {mascotas.map((item) => {
+          return (
+            <Grid item xs={12} sm={6} md={6} lg={4} xl={3}>
+              <Card className={classes.cardsPets} style={{ borderRadius: 10 }}>
+                <CardHeader
+                  avatar={
+                    <Avatar aria-label="recipe" className={classes.avatar}>
+                      R
                 </Avatar>
-                }
-                action={
-                  <IconButton aria-label="settings" onClick={handleClickMenu}>
-                    <MenuItem>
-                      <MoreVertIcon>
-                      </MoreVertIcon>
-                    </MenuItem>
-                  </IconButton>
-
-                }
-                title={<Typography>{item.nombre_mascota}</Typography>}
-                subheader={item.raza}
-              />
-
-
-              {/* <Modal /> */}
-              {/* {renderPhotos(petPhoto)} */}
-              <Carousel
-                animation="fade"
-                autoPlay={false}
-                cycleNavigation={false}
-                // IndicatorIcon={<PetsIcon/>}
-                indicatorIconButtonProps={{
-                  style: {
-                    padding: '5px',
-                    color: 'white'
                   }
-                }}
+                  action={
+                    <IconButton aria-label="settings" onClick={handleClickMenu}>
+                      <MenuItem>
+                        <MoreVertIcon>
+                        </MoreVertIcon>
+                      </MenuItem>
+                    </IconButton>
 
-                activeIndicatorIconButtonProps={{
-                  style: {
-                    color: '#63C132'
                   }
-                }}
+                  title={<Typography>{item.nombre_mascota}</Typography>}
+                  subheader={item.raza}
+                />
 
-                indicatorContainerProps={{
-                  style: {
-                    marginTop: '-50px',
+
+                {/* <Modal /> */}
+                {/* {renderPhotos(petPhoto)} */}
+                <Carousel
+                  animation="fade"
+                  autoPlay={false}
+                  cycleNavigation={false}
+                  // IndicatorIcon={<PetsIcon/>}
+                  indicatorIconButtonProps={{
+                    style: {
+                      padding: '5px',
+                      color: 'white'
+                    }
+                  }}
+
+                  activeIndicatorIconButtonProps={{
+                    style: {
+                      color: '#63C132'
+                    }
+                  }}
+
+                  indicatorContainerProps={{
+                    style: {
+                      marginTop: '-50px',
+                    }
+                  }}
+
+                  navButtonsProps={{
+                    style: {
+                      // backgroundColor: 'cornflowerblue',
+                      // borderRadius: 0,
+                      width: 10,
+                      height: 10
+                    }
+                  }}
+
+                  NextIcon={<KeyboardArrowRight />}
+                  PrevIcon={<KeyboardArrowLeft />}
+                >
+                  {
+                    items.map((item, i) => <Item key={i} item={item} />)
                   }
-                }}
-
-                navButtonsProps={{
-                  style: {
-                    // backgroundColor: 'cornflowerblue',
-                    // borderRadius: 0,
-                    width: 10,
-                    height: 10
-                  }
-                }}
-
-                NextIcon={<KeyboardArrowRight />}
-                PrevIcon={<KeyboardArrowLeft />}
-              >
-                {
-                  items.map((item, i) => <Item key={i} item={item} />)
-                }
-              </Carousel>
-              {/* <img src={testImage} alt="" /> */}
-              <Grid container justify="center">
-                <Button disableRipple style={{ textTransform: 'none' }}>
-                  <MenuItem key={item.mascota} onClick={(e) => handleClickOpen(e.target.value)} value={item.id_mascota}>
-                    Datos de mascota
+                </Carousel>
+                {/* <img src={testImage} alt="" /> */}
+                <Grid container justify="center">
+                  <Button disableRipple style={{ textTransform: 'none' }}>
+                    <MenuItem key={item.mascota} onClick={(e) => handleClickOpen(e.target.value)} value={item.id_mascota}>
+                      Datos de mascota
                   </MenuItem>
-                </Button>
-              </Grid>
+                  </Button>
+                </Grid>
 
-              {/* <CardMedia
+                {/* <CardMedia
                 className={classes.media}
                 title="Pinina"
                 onClick={handleClickOpen}
                 image={images}
               /> */}
 
-              {/* <CarouselPets /> */}
+                {/* <CarouselPets /> */}
 
-              {/* <CarouselData /> */}
+                {/* <CarouselData /> */}
 
-              <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                  <FavoriteIcon />
-                </IconButton>
-                <IconButton aria-label="share">
-                  <ShareIcon />
-                </IconButton>
-                <Button
-                  // onClick={() => openCloseAdopt()}
-                  className={classes.buttonPrimary}
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                  fullWidth
-                >
-                  Adóptame
+                <CardActions disableSpacing>
+                  <IconButton aria-label="add to favorites">
+                    <FavoriteIcon />
+                  </IconButton>
+                  <IconButton aria-label="share">
+                    <ShareIcon />
+                  </IconButton>
+                  <Button
+                    // onClick={() => openCloseAdopt()}
+                    className={classes.buttonPrimary}
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    fullWidth
+                  >
+                    Adóptame
               </Button>
-              </CardActions>
-            </Card>
-          </Grid>
-           </Grid>
+                </CardActions>
+              </Card>
+            </Grid>
+          )
+        }
+        )}
+      </Grid>
 
-  );
-}
-      )
-      
-      }
-<>
-  { displayContent ?
-    <Dialog
-      open={open}
-      TransitionComponent={Transition}
-      keepMounted
-      onClose={handleClickClose}
-    >
-      <Paper elevation={3} className={classes.paperContainer}>
-        <Box display="flex" justifyContent="center">
-        </Box>
-        <Box display="flex" justifyContent="center" mb={5} my={5}>
-          <Typography variant="h4" color="initial">
-            Ficha De Mascota
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClickClose}
+      >
+        <Paper elevation={3} className={classes.paperContainer}>
+          <Box display="flex" justifyContent="center">
+          </Box>
+          <Box display="flex" justifyContent="center" mb={5} my={5}>
+            <Typography variant="h4" color="initial">
+              Ficha De Mascota
                       </Typography>
-        </Box>
-        <Box mb={5}>
-          <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="simple table">
-              {/* style={{ border: 'blue 7px solid'}} */}
-              <TableHead>
-                <TableRow>
-                  <TableCell>Nombre</TableCell>
-                  <TableCell>Edad</TableCell>
-                  <TableCell>Sexo</TableCell>
-                  <TableCell>Raza</TableCell>
-                  <TableCell>Ubicación</TableCell>
-                  {/* <TableCell>Peso&nbsp;(Kg)</TableCell> */}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow>
-                  <TableCell component="th" scope="row">
-                    {getPet.nombre_mascota}
-                  </TableCell>
-                  <TableCell>{getPet.escala_edad} {viewAgeScale}</TableCell>
-                  <TableCell>{genre}</TableCell>
-                  <TableCell>{getPet.raza}</TableCell>
-                  <TableCell>{getPet.municipio}</TableCell>
-                  {/* <TableCell>{row.protein}</TableCell> */}
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography className={classes.heading}>Vacunas</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              {vaccines}
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-        {/* <Accordion>
+          </Box>
+          <Box mb={5}>
+            <TableContainer component={Paper}>
+              <Table className={classes.table} aria-label="simple table">
+                {/* style={{ border: 'blue 7px solid'}} */}
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Nombre</TableCell>
+                    <TableCell>Edad</TableCell>
+                    <TableCell>Sexo</TableCell>
+                    <TableCell>Raza</TableCell>
+                    <TableCell>Ubicación</TableCell>
+                    {/* <TableCell>Peso&nbsp;(Kg)</TableCell> */}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell component="th" scope="row">
+                      {getPet.nombre_mascota}
+                    </TableCell>
+                    <TableCell>{getPet.escala_edad} {viewAgeScale}</TableCell>
+                    <TableCell>{genre}</TableCell>
+                    <TableCell>{getPet.raza}</TableCell>
+                    <TableCell>{getPet.municipio}</TableCell>
+                    {/* <TableCell>{row.protein}</TableCell> */}
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography className={classes.heading}>Vacunas</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                {vaccines}
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          {/* <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel2a-content"
@@ -580,29 +577,24 @@ export default function RecipeReviewCard(props) {
                 <Typography>Trae Cartilla Documentación</Typography>
               </AccordionDetails>
             </Accordion> */}
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
-          >
-            <Typography className={classes.heading}>Descripción</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              {getPet.descripcion_mascota}
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-      </Paper>
-            :
-              <CircularProgress />
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel2a-content"
+              id="panel2a-header"
+            >
+              <Typography className={classes.heading}>Descripción</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                {getPet.descripcion_mascota}
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+        </Paper>
+      </Dialog>
+    </>
 
 
-    </Dialog>
-}
-</>
-
-   
   );
 }
