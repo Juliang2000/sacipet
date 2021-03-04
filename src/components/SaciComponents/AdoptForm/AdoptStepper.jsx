@@ -138,10 +138,10 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '5%',
   },
   rootDialogStart: {
-    padding: '50px',
+    padding: theme.spacing(0, 5, 5, 5),
     textAlign: 'center',
     [theme.breakpoints.only('xs')]: {
-      padding: theme.spacing(0, 0, 0, 0),
+      padding: theme.spacing(1, 1, 1, 1),
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -565,15 +565,15 @@ export default function AdoptStepper() {
             onClose={handleClickCloseDialog}
             fullScreen={fullScreenDialog}
           >
+            <Grid container justify="flex-end">
+              <Toolbar>
+                <IconButton edge="end" color="primary" aria-label="close" onClick={handleClickCloseDialog}>
+                  <CloseIcon />
+                </IconButton>
+              </Toolbar>
+            </Grid>
             <div className={classes.rootDialogStart}>
               <Grid container justify="center">
-                <Grid container justify="flex-end">
-                  <Toolbar>
-                    <IconButton edge="end" color="primary" aria-label="close" onClick={handleClickCloseDialog}>
-                      <CloseIcon />
-                    </IconButton>
-                  </Toolbar>
-                </Grid>
                 <Grid item className={classes.titleDialogStart}>
                   <Typography variant='h6'>¡Hola! si ya tienes cuenta Inicia sesión o Regístrate</Typography>
                 </Grid>

@@ -154,15 +154,15 @@ export default function Register() {
       { loader && (
         <Loader />
       )}
+      <Grid container justify="flex-end">
+        <Toolbar>
+          <IconButton edge="end" color="primary" aria-label="close" onClick={handleClickCloseRegister}>
+            <CloseIcon />
+          </IconButton>
+        </Toolbar>
+      </Grid>
       <Grid container className={classes.containerForm}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Grid container justify="flex-end">
-            <Toolbar>
-              <IconButton edge="end" color="primary" aria-label="close" onClick={handleClickCloseRegister}>
-                <CloseIcon />
-              </IconButton>
-            </Toolbar>
-          </Grid>
           <Typography align="center" variant="h4" gutterBottom className={classes.titleForm}>
             REGISTRARSE
           </Typography>
@@ -308,7 +308,7 @@ export default function Register() {
             >
               Registrar
               </Button>
-            <span > --------------- O ---------------</span>
+            <span className={classes.containerLine}>──────────── O ────────────</span>
             <FacebookLogin
               appId="398513521394376"
               autoLoad={false}
@@ -349,7 +349,7 @@ export default function Register() {
             <Button
               variant="text"
               size="small"
-              className={classes.buttonSecondary2}
+              className={classes.buttonSecondary3}
               onClick={openLogin}
             >
               ¿Tienes una cuenta? Inicia Sesión

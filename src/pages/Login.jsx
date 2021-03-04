@@ -99,16 +99,15 @@ export default function Login() {
       { loader && (
         <Loader />
       )}
-
+      <Grid container justify="flex-end">
+        <Toolbar>
+          <IconButton edge="end" color="primary" aria-label="close" onClick={handleClickCloseLogin}>
+            <CloseIcon />
+          </IconButton>
+        </Toolbar>
+      </Grid>
       <Grid container className={classes.containerForm}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Grid container justify="flex-end">
-            <Toolbar>
-              <IconButton edge="end" color="primary" aria-label="close" onClick={handleClickCloseLogin}>
-                <CloseIcon />
-              </IconButton>
-            </Toolbar>
-          </Grid>
           <Typography align="center" variant="h4" gutterBottom className={classes.titleForm}>
             INICIAR SESIÓN
           </Typography>
@@ -187,7 +186,7 @@ export default function Login() {
             >
               Entrar
                </Button>
-            <span > --------------- O ---------------</span>
+            <span className={classes.containerLine}>──────────── O ────────────</span>
             <FacebookLogin
               appId="398513521394376"
               autoLoad={false}

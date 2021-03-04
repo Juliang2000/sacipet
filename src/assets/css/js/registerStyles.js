@@ -3,10 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 const registerStyles = makeStyles((theme) => ({
 
   containerForm: {
-    overflowX: 'hidden',
-    padding: theme.spacing(5, 5, 2, 5),
+    padding: theme.spacing(0, 5, 2, 5),
     [theme.breakpoints.only('xs')]: {
-      padding: theme.spacing(0, 0, 0, 0),
+      padding: theme.spacing(1, 1, 1, 1),
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -42,6 +41,12 @@ const registerStyles = makeStyles((theme) => ({
   },
 
   buttonSecondary2: {
+    color: '#707070',
+    textTransform: 'none',
+    margin: theme.spacing(1, 0, 1, 0),
+  },
+
+  buttonSecondary3: {
     color: '#707070',
     textTransform: 'none',
     margin: theme.spacing(1, 0, 1, 0),
@@ -92,6 +97,11 @@ const registerStyles = makeStyles((theme) => ({
   iconsCenter: {
     display: 'flex',
     justifyContent: 'center'
+  },
+
+  containerLine: {
+    color: 'rgb(112,112,112, 0.5)',
+    fontWeight: '900'
   }
 
 }));
