@@ -9,6 +9,7 @@ import Menu from '@material-ui/core/Menu';
 //icons
 import findPetIcon from '../../../assets/icons/drawer/findPet.svg'
 import iconFind from '../../../assets/icons/drawer/iconFind-final.svg'
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
@@ -37,6 +38,12 @@ const useStyles = makeStyles((theme) => ({
   heading: {
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
+  },
+  iconsMenu: {
+    width: '40px',
+    [theme.breakpoints.only('xs')]: {
+      width: '30px',
+    }
   },
 }))
 
@@ -91,42 +98,43 @@ export default function FindPetButton() {
   return (
     <div>
       {/* <Hidden xsDown> */}
-        {/* <Grid container justify="center"> */}
-        <Button
-          // variant="contained"
-          color="secondary"
-          fullWidth
-          className={classes.findPetButtonDesktop}
-          onClick={handleClick}
-          startIcon={<img src={iconFind} alt="LogIn" style={{ width: '40px' }} />}
+      {/* <Grid container justify="center"> */}
+      <Button
+        // variant="contained"
+        color="secondary"
+        fullWidth
+        className={classes.findPetButtonDesktop}
+        onClick={handleClick}
+        startIcon={<img src={iconFind} alt="LogIn" className={classes.iconsMenu} />}
 
-        >
-          <Hidden smDown>
-            Encontrar
+      >
+        <ArrowDropDownIcon />
+        <Hidden smDown>
+          Encontrar
           </Hidden>
 
-                </Button>
-        {/* </Grid> */}
-        <StyledMenu
-          id="customized-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          <StyledMenuItem>
-            <ListItemIcon>
-              <img src={iconFind} alt="Lost Pets" style={{ width: '40px' }} />
-            </ListItemIcon>
-            <ListItemText primary="Mascotas recuperadas" />
-          </StyledMenuItem>
-          <StyledMenuItem>
-            <ListItemIcon>
-              <img src={iconFind} alt="Lost Pets" style={{ width: '40px' }} />
-            </ListItemIcon>
-            <ListItemText primary="Publica tu mascota como perdida" />
-          </StyledMenuItem>
-        </StyledMenu>
+      </Button>
+      {/* </Grid> */}
+      <StyledMenu
+        id="customized-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <StyledMenuItem>
+          <ListItemIcon>
+            <img src={iconFind} alt="Lost Pets" style={{ width: '40px' }} />
+          </ListItemIcon>
+          <ListItemText primary="Mascotas recuperadas" />
+        </StyledMenuItem>
+        <StyledMenuItem>
+          <ListItemIcon>
+            <img src={iconFind} alt="Lost Pets" style={{ width: '40px' }} />
+          </ListItemIcon>
+          <ListItemText primary="Publica tu mascota como perdida" />
+        </StyledMenuItem>
+      </StyledMenu>
       {/* </Hidden> */}
       {/* <Hidden mdUp>
         <div className={classes.mobile}>

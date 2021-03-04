@@ -198,7 +198,7 @@ export default function PrimarySearchAppBar() {
 
               </Grid>
               <Hidden smDown>
-                <Grid item sm={2} md={3} lg={3} xl={3} >
+                <Grid item sm={2} md={2} lg={3} xl={3} >
 
                   <div className={classes.search} >
                     <div className={classes.searchIcon} >
@@ -216,7 +216,7 @@ export default function PrimarySearchAppBar() {
                   {/* </Grid> */}
                 </Grid>
               </Hidden>
-              <Grid container justify="flex-end" alignItems="center" xs={7} sm={7} md={6} lg={6} xl={6}>
+              <Grid container justify="flex-end" alignItems="center" xs={7} sm={7} md={7} lg={6} xl={6}>
                 {/* <Hidden smDown> */}
 
                 <Grid item xs={4} sm={3} md={4} lg={4} xl={3}>

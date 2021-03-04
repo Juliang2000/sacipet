@@ -25,6 +25,7 @@ import Home from '@material-ui/icons/Home';
 import Person from '@material-ui/icons/Person';
 import petUser from '../../assets/icons/drawer/petUser-final.svg';
 import CloseIcon from '@material-ui/icons/Close';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 //Redux
 import { useSelector, useDispatch } from 'react-redux';
@@ -52,7 +53,14 @@ const useStyles = makeStyles((theme) => ({
     },
     accountIcon: {
         width: '40px',
-    }
+    },
+
+    iconsMenu: {
+        width: '40px',
+        [theme.breakpoints.only('xs')]:{
+            width: '30px',
+        }
+    },
 }));
 
 
@@ -177,9 +185,12 @@ export default function SectionDesktop() {
                             aria-haspopup="true"
                             color="inherit"
                             onClick={handleClick}
-                            startIcon={<img src={petUser} alt="Login" style={{ width: '30px' }} />}
+                            startIcon={<img src={petUser} alt="Login" className={classes.iconsMenu} />}
                         >
-                            {`${user.nombres}`}
+                            <ArrowDropDownIcon />
+                            <Hidden smDown>
+                                {`${user.nombres}`}
+                            </Hidden>
                         </Button>
                     </Grid>
 
@@ -190,17 +201,22 @@ export default function SectionDesktop() {
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
                     >
-                        <StyledMenuItem>
+                        {/* <StyledMenuItem>
                             <ListItemIcon>
                                 <Home />
                             </ListItemIcon>
                             <ListItemText primary="Inicio" />
-                        </StyledMenuItem>
+                        </StyledMenuItem> */}
                         <StyledMenuItem>
                             <ListItemIcon>
                                 <Person />
                             </ListItemIcon>
-                            <ListItemText primary="Cuenta" />
+                            <Hidden smDown>
+                                <ListItemText primary="Ver Tu Perfil" />
+                            </Hidden>
+                            <Hidden mdUp>
+                                <ListItemText primary={`${user.nombres}`} />
+                            </Hidden>
                         </StyledMenuItem>
                     </StyledMenu>
                 </> :
@@ -211,8 +227,9 @@ export default function SectionDesktop() {
                         fullWidth
                         className={classes.loginButton}
                         onClick={handleClickOpenLogin}
-                        startIcon={<img src={petUser} alt="Login" style={{ width: '40px' }} />}
+                        startIcon={<img src={petUser} alt="Login" className={classes.iconsMenu} />}
                     >
+                        <ArrowDropDownIcon />
                         <Hidden smDown>
                             Ingresar
                         </Hidden>

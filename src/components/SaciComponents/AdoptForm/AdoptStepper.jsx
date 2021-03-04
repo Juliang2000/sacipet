@@ -31,6 +31,7 @@ import iconAdopt from '../../../assets/icons/drawer/iconAdopt-final.svg'
 import petIconGray from '../../../assets/icons/drawer/pet_gray.svg'
 import CloseIcon from '@material-ui/icons/Close';
 import iconSend from '../../../assets/icons/send.svg';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 import SettingsIcon from '@material-ui/icons/Settings';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
@@ -157,7 +158,13 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     textTransform: 'none',
     fontSize: '15px',
-  }
+  },
+  iconsMenu: {
+    width: '40px',
+    [theme.breakpoints.only('xs')]: {
+      width: '30px',
+    }
+  },
 }));
 
 
@@ -447,8 +454,9 @@ export default function AdoptStepper() {
         // variant="contained"
         color="secondary"
         // color="primary"
-        startIcon={<img src={iconAdopt} alt="LogIn" style={{ width: '40px' }} />}
+        startIcon={<img src={iconAdopt} alt="LogIn" className={classes.iconsMenu} />}
       >
+        <ArrowDropDownIcon />
         <Hidden smDown>
           Dar en adopción
           </Hidden>
