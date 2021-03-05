@@ -96,6 +96,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: red[500],
   },
   cardsPetsContainer: {
+    width: '100%',
     [theme.breakpoints.down('sm')]: {
       margin: theme.spacing(0),
     },
@@ -400,7 +401,7 @@ export default function RecipeReviewCard(props) {
 
   return (
     <>
-      <Grid container spacing={isMobile ? 1 : 3} xs={12} justify="center" className={classes.cardsPetsContainer}>
+      <Grid container spacing={isMobile ? 1 : 3} /* xs={12} */ justify="center" className={classes.cardsPetsContainer}>
         {mascotas.map((item) => {
           return (
             <Grid item xs={12} sm={6} md={6} lg={4} xl={3}>

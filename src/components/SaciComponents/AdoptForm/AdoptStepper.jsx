@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Lottie from 'react-lottie';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { Stepper, Step, StepLabel, Button, Grid, Typography, Box, Hidden, Dialog, IconButton, Toolbar } from '@material-ui/core';
+import { Stepper, Step, StepLabel, Button, Grid, Typography, Box, Hidden, Dialog, IconButton, Toolbar,MenuItem } from '@material-ui/core';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import StepConnector from '@material-ui/core/StepConnector';
@@ -115,6 +115,9 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     textTransform: 'none',
     fontSize: '15px',
+    [theme.breakpoints.between('xs', 'sm')]: {
+      color: '#000',
+    }
   },
   adoptionMobileButton: {
     // color: 'black',
@@ -413,20 +416,32 @@ export default function AdoptStepper() {
   return (
 
     <>
-      <Button
-        fullWidth
-        onClick={handleClickOpenModal}
-        className={classes.adoptionButton}
-        // variant="contained"
-        color="secondary"
-        // color="primary"
-        startIcon={<img src={iconAdopt} alt="LogIn" className={classes.menuIcons} />}
-      >
-        <ArrowDropDownIcon />
-        <Hidden smDown>
-          Dar en adopción
+      <Hidden smDown>
+        <Button
+          // fullWidth
+          color="secondary"
+          className={classes.adoptionButton}
+          onClick={handleClickOpenModal}
+          startIcon={<img src={iconAdopt} alt="LogIn" className={classes.menuIcons} />}
+        >
+          <ArrowDropDownIcon />
+          <Hidden only="md" /* mdDown */>
+            Dar en adopción
         </Hidden>
-      </Button>
+        </Button>
+      </Hidden>
+
+      <Hidden mdUp>
+        <MenuItem
+          color="secondary"
+          className={classes.adoptionButton}
+          onClick={handleClickOpenModal}
+        >
+          <img src={iconAdopt} alt="LogIn" className={classes.menuIcons} />
+          <ArrowDropDownIcon />
+          Dar en adopción
+        </MenuItem>
+      </Hidden>
 
       {user ?
         <>
@@ -550,7 +565,7 @@ export default function AdoptStepper() {
                         </Button>
                 </Grid>
 
-                <Grid item xs={12} spacing={3} justifyContent="center" >
+                <Grid item xs={12} /* spacing={3}  justifyContent="center" */>
                   <Button
                     variant="text"
                     size="small"
