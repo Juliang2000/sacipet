@@ -1,17 +1,13 @@
 import React from 'react'
-import { Button, makeStyles, withStyles, Hidden, Typography, Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
+import { Button, makeStyles, withStyles, Hidden } from '@material-ui/core';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
-
 //icons
-import findPetIcon from '../../../assets/icons/drawer/findPet.svg'
 import iconFind from '../../../assets/icons/drawer/iconFind-final.svg'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
 
 const useStyles = makeStyles((theme) => ({
 
@@ -19,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     textTransform: 'none',
     fontSize: '15px',
-
   },
 
   findPetButton: {

@@ -7,7 +7,6 @@ import {
     Grid,
     Dialog,
     Hidden,
-    AppBar,
     Toolbar,
     IconButton,
     Menu,
@@ -21,7 +20,6 @@ import { useTheme } from '@material-ui/core/styles';
 
 
 //icons
-import Home from '@material-ui/icons/Home';
 import Person from '@material-ui/icons/Person';
 import petUser from '../../assets/icons/drawer/petUser-final.svg';
 import CloseIcon from '@material-ui/icons/Close';
