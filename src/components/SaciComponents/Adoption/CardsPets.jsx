@@ -211,10 +211,6 @@ export default function RecipeReviewCard(props) {
     setAnchorMenu(null);
   };
 
-
-
-
-
   useEffect(() => {
     dispatch(get_saci_pets_action())
   }, [])
@@ -356,22 +352,23 @@ export default function RecipeReviewCard(props) {
   //   return <img src={photo} key={photo} alt={photo} />
   // }
 
+
   var items = [
     {
-      imgPath: pug1,
+      imgPath: `http://localhost:3000/158.jpg`,
     },
-    {
-      imgPath: pug2,
-    },
-    {
-      imgPath: pug3,
-    },
-    {
-      imgPath: pug4,
-    },
-    {
-      imgPath: pug5
-    },
+    // {
+    //   imgPath: pug2,
+    // },
+    // {
+    //   imgPath: pug3,
+    // },
+    // {
+    //   imgPath: pug4,
+    // },
+    // {
+    //   imgPath: pug5
+    // },
   ]
 
   function Item(props) {
@@ -379,14 +376,21 @@ export default function RecipeReviewCard(props) {
     return (
       <>
 
-
-        <CardMedia
-          className={classes.media}
-          title="Pinina"
-          // onClick={handleClickOpen}
-          image={props.item.imgPath}
-        >
-        </CardMedia>
+        {/* {mascotas.map((item, i) => {
+          return (
+            <CardMedia
+              className={classes.media}
+              title="Pinina"
+              image={`http://localhost:3000/${item.id_foto}.jpg`}
+              key={i}
+              item={item}
+            // onClick={handleClickOpen}
+            // image={props.item.imgPath}
+            >
+            </CardMedia>
+          )
+        })
+        } */}
 
       </>
     )
@@ -419,8 +423,6 @@ export default function RecipeReviewCard(props) {
                   title={<Typography>{item.nombre_mascota}</Typography>}
                   subheader={item.raza}
                 />
-
-
                 {/* <Modal /> */}
                 {/* {renderPhotos(petPhoto)} */}
                 <Carousel
@@ -459,10 +461,29 @@ export default function RecipeReviewCard(props) {
                   NextIcon={<KeyboardArrowRight />}
                   PrevIcon={<KeyboardArrowLeft />}
                 >
-                  {
+                  <CardMedia
+                    className={classes.media}
+                    title="Pinina"
+                    image={`http://localhost:3000/${item.id_foto}.jpg`}
+                  // onClick={handleClickOpen}
+                  // image={props.item.imgPath}
+                  >
+                  </CardMedia>
+                  {/* {
                     items.map((item, i) => <Item key={i} item={item} />)
-                  }
+                  } */}
+                  {/* <Item/> */}
                 </Carousel>
+                {/* <CardMedia
+                  className={classes.media}
+                  title="Pinina"
+                  image={`http://localhost:3000/${item.id_foto}.jpg`}
+                // onClick={handleClickOpen}
+                // image={props.item.imgPath}
+                >
+                </CardMedia> */}
+                {/* <img src={`localhost:3000/158.jpg`} /> */}
+                {/* <img src="http://localhost:3000/158.jpg" alt="img" /> */}
                 {/* <img src={testImage} alt="" /> */}
                 <Grid container justify="center">
                   <Button disableRipple style={{ textTransform: 'none' }}>
