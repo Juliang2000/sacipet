@@ -18,21 +18,15 @@ import pug5 from '../../../assets/images/cardsModal/pug5.jpg'
 
 const useStyles = makeStyles(() => ({
     media: {
-        marginTop: '50rem',
         height: 450,
         paddingTop: '56.25%', // 16:9
         cursor: 'pointer',
     },
-    title: {
-        fontSize: '50px',
-        color: 'red',
-        transformText: 'none',
-    }
 }));
 
 export default function CarouselPhotos({ itemPets }) {
 
-    const classes = useStyles;
+    const classes = useStyles();
     const petPhotos = itemPets;
     const photo_1 = petPhotos.split(',')[0]
     const photo_2 = petPhotos.split(',')[1]
@@ -72,15 +66,12 @@ export default function CarouselPhotos({ itemPets }) {
 
     function Item(props) {
         return (
-            <>{
+            <>
 
 
                 <CardMedia
                     // component="img"
                     className={classes.media}
-                    style={{
-                        height: 450
-                    }}
                     title="Pinina"
                     // item={props.item.imgPath}
                     // onClick={handleClickOpen}
@@ -88,7 +79,7 @@ export default function CarouselPhotos({ itemPets }) {
                 >
                 </CardMedia>
 
-                }
+            
             </>
         )
 

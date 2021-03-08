@@ -421,7 +421,7 @@ export default function RecipeReviewCard(props) {
                   subheader={item.raza}
                 />
                 <CarouselPhotos
-                itemPets={item.fotos}
+                  itemPets={item.fotos}
                 />
 
                 <Grid container justify="center">
