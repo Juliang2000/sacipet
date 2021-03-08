@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { useSelector } from 'react-redux';
+
 import AdoptStepper from './AdoptForm/AdoptStepper';
 import FindPetButton from './Adoption/FindPetButton';
 import SectionDesktop from './SectionDesktop';
@@ -127,6 +129,8 @@ export default function PrimarySearchAppBar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+  const { user } = useSelector(state => state.login);
+
   // const handleProfileMenuOpen = (event) => {
   //   setAnchorEl(event.currentTarget);
   // };
@@ -183,14 +187,14 @@ export default function PrimarySearchAppBar() {
         onClose={handleMobileMenuClose}
       >
 
-        <div onClick={handleMenuClose}>
-          <SectionDesktop />
+        <div>
+          <FindPetButton />
         </div>
         <div onClick={handleMenuClose}>
           <AdoptStepper />
         </div>
-        <div>
-          <FindPetButton />
+        <div onClick={user ? null : handleMenuClose}>
+          <SectionDesktop />
         </div>
 
         {/* </MenuItem> */}

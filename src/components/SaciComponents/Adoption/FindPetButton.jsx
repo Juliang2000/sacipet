@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, makeStyles, withStyles, Hidden, IconButton } from '@material-ui/core';
+import { Button, makeStyles, withStyles, Hidden } from '@material-ui/core';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
