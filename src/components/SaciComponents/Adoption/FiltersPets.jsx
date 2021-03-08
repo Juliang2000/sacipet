@@ -1,4 +1,4 @@
-import React, { /* useState */ } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import TreeView from '@material-ui/lab/TreeView';
@@ -7,14 +7,13 @@ import Typography from '@material-ui/core/Typography';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import { Chip } from "@material-ui/core";
+
 
 // import filters from '../../../assets/icons/filters/046-pet-shelter.svg'
 // import dog from '../../../assets/icons/petype/dog.svg';
 // import cat from '../../../assets/icons/petype/cat.svg';
 // import hamster from '../../../assets/icons/petype/hamster.svg';
-
-// Lotties
-import Lottie from 'react-lottie';
 
 import petFilter from '../../../assets/icons/filters/filters-final.svg';
 
@@ -48,7 +47,8 @@ const useTreeItemStyles = makeStyles((theme) => ({
   root: {
     color: theme.palette.text.secondary,
     '&:hover > $content': {
-      backgroundColor: theme.palette.action.hover,
+      // backgroundColor: theme.palette.action.hover,
+      backgroundColor: '#c9caca'
     },
     '&:focus > $content, &$selected > $content': {
       backgroundColor: `var(--tree-view-bg-color, ${theme.palette.grey[400]})`,
@@ -61,8 +61,8 @@ const useTreeItemStyles = makeStyles((theme) => ({
   },
   content: {
     color: theme.palette.text.secondary,
-    borderTopRightRadius: theme.spacing(2),
-    borderBottomRightRadius: theme.spacing(2),
+    // borderTopRightRadius: theme.spacing(2),
+    // borderBottomRightRadius: theme.spacing(2),
     paddingRight: theme.spacing(1),
     fontWeight: theme.typography.fontWeightMedium,
     '$expanded > &': {
@@ -137,46 +137,48 @@ StyledTreeItem.propTypes = {
   labelText: PropTypes.string.isRequired,
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
+
   root: {
     height: 264,
     flexGrow: 1,
     maxWidth: 400,
   },
+
   iconSize: {
     width: '40px',
     marginRight: '10px'
   },
-  // lottieSize: {
-  //   width: '40px',
-  //   marginRight: '10px'
-  // }
-});
+
+  filtersChips: {
+
+    margin: theme.spacing(3),
+
+    '& .MuiChip-deleteIconColorPrimary': {
+      color: '#FFF'
+    },
+
+    '& .MuiChip-label': {
+      color: '#FFF',
+    },
+
+    '& .MuiChip-root:hover': {
+      backgroundColor: 'red'
+    },
+
+    '& .MuiChip-root': {
+      marginRight: '5px',
+      marginBottom: '5px'
+    }
+
+  }
+}));
 
 
 
 export default function GmailTreeView() {
 
   const classes = useStyles();
-
-  // Const Lotties
-  const defaultOptions = {
-    loop: true,
-    autoplay: false,
-    rendererSettings: {
-      preserveAespectRatio: 'xMidYMid slice'
-    }
-  }
-
-  // const [isPaused, setIsPaused] = useState(false);
-
-  // const [isStopeed, setIsStopped] = useState(false);
-
-  // const [isStart, setIsStart] = useState(false);
-
-  // const handleStart = () => {
-  //   setIsStart(true)
-  // }
 
   const lottieFilter = () => {
     return (
@@ -214,31 +216,31 @@ export default function GmailTreeView() {
     )
   }
 
-  const raceDog1= () => {
+  const raceDog1 = () => {
     return (
       <img src={petRaceDog1} alt="Icon Pet Race 1" className={classes.iconSize} />
     )
   }
 
-  const raceDog2= () => {
+  const raceDog2 = () => {
     return (
       <img src={petRaceDog2} alt="Icon Pet Race 2" className={classes.iconSize} />
     )
   }
 
-  const raceDog3= () => {
+  const raceDog3 = () => {
     return (
       <img src={petRaceDog3} alt="Icon Pet Race 3" className={classes.iconSize} />
     )
   }
 
-  const raceDog4= () => {
+  const raceDog4 = () => {
     return (
       <img src={petRaceDog4} alt="Icon Pet Race 4" className={classes.iconSize} />
     )
   }
 
-  const raceDog5= () => {
+  const raceDog5 = () => {
     return (
       <img src={petRaceDog5} alt="Icon Pet Race 5" className={classes.iconSize} />
     )
@@ -274,6 +276,36 @@ export default function GmailTreeView() {
     )
   }
 
+  const [filtersDogs, setFiltersDogs] = useState(false);
+
+  const handleDogsAdd = () => {
+    setFiltersDogs(true);
+  }
+
+  const handleDogsDelete = () => {
+    setFiltersDogs(false);
+  }
+
+  const [filtersCats, setFiltersCats] = useState(false);
+
+  const handleCatsAdd = () => {
+    setFiltersCats(true);
+  }
+
+  const handleCatsDelete = () => {
+    setFiltersCats(false);
+  }
+
+  const [filtersHamsters, setFiltersHamsters] = useState(false);
+
+  const handleHamstersAdd = () => {
+    setFiltersHamsters(true);
+  }
+
+  const handleHamstersDelete = () => {
+    setFiltersHamsters(false);
+  }
+
   return (
     <div>
 
@@ -283,6 +315,37 @@ export default function GmailTreeView() {
     width={400}
     autoplay={isStart}
     /> */}
+
+      <div className={classes.filtersChips}>
+
+        {filtersDogs ?
+          <Chip
+            className="animate__animated animate__fadeInUpBig"
+            color="primary"
+            label="Perros"
+            onDelete={handleDogsDelete}
+          />
+          : null}
+
+        {filtersCats ?
+          <Chip
+            className="animate__animated animate__fadeInUpBig"
+            color="primary"
+            label="Gatos"
+            onDelete={handleCatsDelete}
+          />
+          : null}
+
+        {filtersHamsters ?
+          <Chip
+            className={"animate__animated animate__fadeInUpBig"}
+            color="primary"
+            label="Hamsters"
+            onDelete={handleHamstersDelete}
+          />
+          : null}
+
+      </div>
 
       <TreeView
         className={classes.root}
@@ -294,66 +357,53 @@ export default function GmailTreeView() {
         <StyledTreeItem nodeId="1" labelText="Filtros" labelIcon={lottieFilter} bgColor="#63C132" color="#FFFFFF">
           <StyledTreeItem nodeId="2" labelText="Tipo De Mascota" labelIcon={lottiePetType} >
             <StyledTreeItem
-              bgColor="#FF8899"
               nodeId="7"
               labelText="Perros"
               labelIcon={lottieDog}
-            // onClick={handleStart}
+              onClick={handleDogsAdd}
             // labelInfo="90"
             />
-
-            {/* <Button variant="text" color="default" onClick={handleStart}>
-            prueba
-          </Button> */}
-
-            {/* <LottiePrueba/> */}
-
             <StyledTreeItem
-              bgColor="#FF8899"
               nodeId="8"
               labelText="Gatos"
               labelIcon={lottieCat}
+              onClick={handleCatsAdd}
             // labelInfo="90"
             />
             <StyledTreeItem
-              bgColor="#FF8899"
               nodeId="9"
               labelText="Hámsters"
               labelIcon={lottieHamster}
+              onClick={handleHamstersAdd}
             // labelInfo="90"
             />
           </StyledTreeItem>
           <StyledTreeItem nodeId="3" labelText="Raza" labelIcon={lottiePetRace} >
             <StyledTreeItem
-              bgColor="#FF8899"
               nodeId="10"
               labelText="Raza1"
               labelIcon={raceDog1}
             // labelInfo="90"
             />
             <StyledTreeItem
-              bgColor="#FF8899"
               nodeId="11"
               labelText="Raza2"
               labelIcon={raceDog2}
             // labelInfo="90"
             />
             <StyledTreeItem
-              bgColor="#FF8899"
               nodeId="12"
               labelText="Raza3"
               labelIcon={raceDog3}
             // labelInfo="90"
             />
             <StyledTreeItem
-              bgColor="#FF8899"
               nodeId="13"
               labelText="Raza4"
               labelIcon={raceDog4}
             // labelInfo="90"
             />
             <StyledTreeItem
-              bgColor="#FF8899"
               nodeId="14"
               labelText="Raza5"
               labelIcon={raceDog5}
@@ -362,21 +412,18 @@ export default function GmailTreeView() {
           </StyledTreeItem>
           <StyledTreeItem nodeId="4" labelText="Tamaño" labelIcon={lottiePetSize} >
             <StyledTreeItem
-              bgColor="#FF8899"
               nodeId="15"
               labelText="Pequeño"
               labelIcon={SupervisorAccountIcon}
             // labelInfo="90"
             />
             <StyledTreeItem
-              bgColor="#FF8899"
               nodeId="16"
               labelText="Mediano"
               labelIcon={SupervisorAccountIcon}
             // labelInfo="90"
             />
             <StyledTreeItem
-              bgColor="#FF8899"
               nodeId="17"
               labelText="Grande"
               labelIcon={SupervisorAccountIcon}
@@ -385,14 +432,12 @@ export default function GmailTreeView() {
           </StyledTreeItem>
           <StyledTreeItem nodeId="5" labelText="Género" labelIcon={lottiePetGender} >
             <StyledTreeItem
-              bgColor="#FF8899"
               nodeId="18"
               labelText="Macho"
               labelIcon={lottiePetGenderMale}
             // labelInfo="90"
             />
             <StyledTreeItem
-              bgColor="#FF8899"
               nodeId="19"
               labelText="Hembra"
               labelIcon={lottiePetGenderFemale}
@@ -401,21 +446,18 @@ export default function GmailTreeView() {
           </StyledTreeItem>
           <StyledTreeItem nodeId="6" labelText="Edad" labelIcon={lottiePetYear} >
             <StyledTreeItem
-              bgColor="#FF8899"
               nodeId="20"
               labelText="Joven"
               labelIcon={SupervisorAccountIcon}
             // labelInfo="90"
             />
             <StyledTreeItem
-              bgColor="#FF8899"
               nodeId="21"
               labelText="Adulto"
               labelIcon={SupervisorAccountIcon}
             // labelInfo="90"
             />
             <StyledTreeItem
-              bgColor="#FF8899"
               nodeId="22"
               labelText="Viejo"
               labelIcon={SupervisorAccountIcon}
