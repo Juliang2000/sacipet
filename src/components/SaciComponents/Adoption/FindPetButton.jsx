@@ -1,17 +1,13 @@
 import React from 'react'
-import { Button, makeStyles, withStyles, Hidden, Typography, Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
+import { Button, makeStyles, withStyles, Hidden } from '@material-ui/core';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
-
 //icons
-import findPetIcon from '../../../assets/icons/drawer/findPet.svg'
 import iconFind from '../../../assets/icons/drawer/iconFind-final.svg'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
 
 const useStyles = makeStyles((theme) => ({
 
@@ -19,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     textTransform: 'none',
     fontSize: '15px',
-
   },
 
   findPetButton: {
@@ -31,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     textTransform: 'none',
     fontSize: '15px',
+    [theme.breakpoints.between('xs', 'sm')]: {
+      color: '#000',
+    }
   },
   mobile: {
     width: '25rem',
@@ -42,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   menuIcons: {
     width: '40px',
     [theme.breakpoints.only('xs')]: {
-      width: '30px',
+      width: '35px',
     }
   },
 }))
@@ -99,21 +97,35 @@ export default function FindPetButton() {
     <div>
       {/* <Hidden xsDown> */}
       {/* <Grid container justify="center"> */}
-      <Button
-        // variant="contained"
-        color="secondary"
-        fullWidth
-        className={classes.findPetButtonDesktop}
-        onClick={handleClick}
-        startIcon={<img src={iconFind} alt="LogIn" className={classes.menuIcons} />}
-
-      >
-        <ArrowDropDownIcon />
-        <Hidden smDown>
-          Encontrar
+      <Hidden smDown>
+        <Button
+          // fullWidth
+          // variant="contained"
+          color="secondary"
+          className={classes.findPetButtonDesktop}
+          onClick={handleClick}
+          startIcon={<img src={iconFind} alt="LogIn" className={classes.menuIcons} />}
+        >
+          <ArrowDropDownIcon />
+          <Hidden only="md"/* mdDown */>
+            Encontrar
           </Hidden>
+        </Button>
+      </Hidden>
 
-      </Button>
+      <Hidden mdUp>
+        <MenuItem
+         color="secondary"
+         className={classes.findPetButtonDesktop}
+         onClick={handleClick}
+         >
+          <img src={iconFind} alt="LogIn" className={classes.menuIcons} />
+          <ArrowDropDownIcon />
+          Encontrar
+        </MenuItem>
+      </Hidden>
+
+
       {/* </Grid> */}
       <StyledMenu
         autoFocus={false}
@@ -125,13 +137,13 @@ export default function FindPetButton() {
       >
         <StyledMenuItem>
           <ListItemIcon>
-            <img src={iconFind} alt="Lost Pets" style={{ width: '40px' }} />
+            <img src={iconFind} alt="Lost Pets" className={classes.menuIcons} />
           </ListItemIcon>
           <ListItemText primary="Mascotas recuperadas" />
         </StyledMenuItem>
         <StyledMenuItem>
           <ListItemIcon>
-            <img src={iconFind} alt="Lost Pets" style={{ width: '40px' }} />
+            <img src={iconFind} alt="Lost Pets" className={classes.menuIcons} />
           </ListItemIcon>
           <ListItemText primary="Publica tu mascota como perdida" />
         </StyledMenuItem>

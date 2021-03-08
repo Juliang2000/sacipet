@@ -13,7 +13,7 @@ export default function SaciDashboard() {
     return (
         <>
             <Header />
-            <Grid container style={{ marginTop: '50px' }}>
+            <Grid container /* style={{ marginTop: '50px' }} */>
 
                 <Hidden smDown>
                     <Grid item xs={12} sm={12} md={2} lg={2} xl={2}>

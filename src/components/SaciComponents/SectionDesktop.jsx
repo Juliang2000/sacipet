@@ -7,7 +7,6 @@ import {
     Grid,
     Dialog,
     Hidden,
-    AppBar,
     Toolbar,
     IconButton,
     Menu,
@@ -21,7 +20,6 @@ import { useTheme } from '@material-ui/core/styles';
 
 
 //icons
-import Home from '@material-ui/icons/Home';
 import Person from '@material-ui/icons/Person';
 import petUser from '../../assets/icons/drawer/petUser-final.svg';
 import CloseIcon from '@material-ui/icons/Close';
@@ -45,11 +43,17 @@ const useStyles = makeStyles((theme) => ({
         color: '#fff',
         textTransform: 'none',
         fontSize: '15px',
+        [theme.breakpoints.between('xs', 'sm')]: {
+            color: '#000',
+        }
     },
     loginButton: {
         color: '#fff',
         textTransform: 'none',
         fontSize: '15px',
+        [theme.breakpoints.between('xs', 'sm')]: {
+            color: '#000',
+        }
     },
     accountIcon: {
         width: '40px',
@@ -67,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
 const StyledMenu = withStyles({
     paper: {
         border: '1px solid #d3d4d5',
-        marginTop: '10px',
+        marginTop: '5px',
     },
 })((props) => (
     <Menu
@@ -177,7 +181,7 @@ export default function SectionDesktop() {
         <>
             { user ?
                 <>
-                    <Grid container justify="center">
+                    <Hidden smDown>
                         <Button
                             className={classes.accountCircle}
                             edge="end"
@@ -188,11 +192,24 @@ export default function SectionDesktop() {
                             startIcon={<img src={petUser} alt="Login" className={classes.menuIcons} />}
                         >
                             <ArrowDropDownIcon />
-                            <Hidden smDown>
-                                {`${user.nombres}`}
-                            </Hidden>
+                            {`${user.nombres}`}
                         </Button>
-                    </Grid>
+                    </Hidden>
+
+                    <Hidden mdUp>
+                        <MenuItem
+                            className={classes.accountCircle}
+                            edge="end"
+                            aria-label="account of current user"
+                            aria-haspopup="true"
+                            color="inherit"
+                            onClick={handleClick}
+                        >
+                            <img src={petUser} alt="Login" className={classes.menuIcons} />
+                            <ArrowDropDownIcon />
+                            {`${user.nombres}`}
+                        </MenuItem>
+                    </Hidden>
 
                     <StyledMenu
                         autoFocus={false}
@@ -202,39 +219,42 @@ export default function SectionDesktop() {
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
                     >
-                        {/* <StyledMenuItem>
-                            <ListItemIcon>
-                                <Home />
-                            </ListItemIcon>
-                            <ListItemText primary="Inicio" />
-                        </StyledMenuItem> */}
                         <StyledMenuItem>
                             <ListItemIcon>
                                 <Person />
                             </ListItemIcon>
-                            <Hidden smDown>
-                                <ListItemText primary="Ver Tu Perfil" />
-                            </Hidden>
-                            <Hidden mdUp>
-                                <ListItemText primary={`${user.nombres}`} />
-                            </Hidden>
+                            <ListItemText primary="Ver Tu Perfil" />
                         </StyledMenuItem>
                     </StyledMenu>
                 </> :
 
                 <>
-                    <Button
-                        color="secondary"
-                        fullWidth
-                        className={classes.loginButton}
-                        onClick={handleClickOpenLogin}
-                        startIcon={<img src={petUser} alt="Login" className={classes.menuIcons} />}
-                    >
-                        <ArrowDropDownIcon />
-                        <Hidden smDown>
+                    <Hidden smDown>
+                        <Button
+                            // fullWidth
+                            color="secondary"
+                            className={classes.loginButton}
+                            onClick={handleClickOpenLogin}
+                            startIcon={<img src={petUser} alt="Login" className={classes.menuIcons} />}
+                        >
+                            <ArrowDropDownIcon />
+                            {/* <Hidden mdDown> */}
                             Ingresar
-                        </Hidden>
-                    </Button>
+                        {/* </Hidden> */}
+                        </Button>
+                    </Hidden>
+
+                    <Hidden mdUp>
+                        <MenuItem
+                            color="secondary"
+                            className={classes.loginButton}
+                            onClick={handleClickOpenLogin}
+                        >
+                            <img src={petUser} alt="Login" className={classes.menuIcons} />
+                            <ArrowDropDownIcon />
+                            Ingresar
+                        </MenuItem>
+                    </Hidden>
                 </>
             }
 

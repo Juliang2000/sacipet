@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Lottie from 'react-lottie';
-import { Link } from 'react-router-dom';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { Stepper, Step, StepLabel, Button, Grid, Typography, Box, Hidden, Dialog, IconButton, Toolbar } from '@material-ui/core';
+import { Stepper, Step, StepLabel, Button, Grid, Typography, Box, Hidden, Dialog, IconButton, Toolbar,MenuItem } from '@material-ui/core';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import StepConnector from '@material-ui/core/StepConnector';
@@ -17,18 +16,15 @@ import { useDispatch } from 'react-redux';
 
 //Redux actions
 import { reset_action } from '../../../redux/actions/petTypeAction'
-import { next_step_action, back_step_action, sizePetData, update_form_data_action, registry_form_adopt, upload_pet_image_1, upload_pet_image_2, upload_pet_image_3, upload_pet_image_4, upload_pet_image_5, reset_form_action } from '../../../redux/actions/adoptFormAction'
+import { next_step_action, back_step_action, update_form_data_action, registry_form_adopt, upload_pet_image_1, upload_pet_image_2, upload_pet_image_3, upload_pet_image_4, upload_pet_image_5, reset_form_action } from '../../../redux/actions/adoptFormAction'
 
 //components
 import PetType from './PetType'
 import PetDescription from './PetDescription';
 import PetImages from './PetImages';
-import swal from 'sweetalert2'
-
 
 //icons
-import iconAdopt from '../../../assets/icons/drawer/iconAdopt-final.svg'
-import petIconGray from '../../../assets/icons/drawer/pet_gray.svg'
+import iconAdopt from '../../../assets/icons/drawer/iconAdopt-final.svg';
 import CloseIcon from '@material-ui/icons/Close';
 import iconSend from '../../../assets/icons/send.svg';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -119,6 +115,9 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     textTransform: 'none',
     fontSize: '15px',
+    [theme.breakpoints.between('xs', 'sm')]: {
+      color: '#000',
+    }
   },
   adoptionMobileButton: {
     // color: 'black',
@@ -225,26 +224,13 @@ export default function AdoptStepper() {
   const { petDescription } = useSelector(state => state.adoptFormData);
   const newPet = useSelector(state => state.adoptFormData.updateDescriptionData);
   const { petimage1, petimage2, petimage3, petimage4, petimage5 } = useSelector(state => state.adoptFormData);
-  const { savePetImage1, savePetImage2, savePetImage3, savePetImage4, savePetImage5 } = useSelector(state => state.adoptFormData);
+  const { savePetImage1 } = useSelector(state => state.adoptFormData);
   const id_mascota = useSelector(state => state.adoptFormData.registeredFormData.data.mascota.id_mascota);
-  // const successPetImage1 = useSelector(state => state.adoptFormData.successPetImage1.data.sucess)
-  // const successPetImage2 = useSelector(state => state.adoptFormData.successPetImage2.data.sucess)
-  // const successPetImage3 = useSelector(state => state.adoptFormData.successPetImage3.data.sucess)
-  // const successPetImage4 = useSelector(state => state.adoptFormData.successPetImage4.data.sucess)
-  // const successPetImage5 = useSelector(state => state.adoptFormData.successPetImage5.data.sucess)
-  // const petimage2 = useSelector(state => state.adoptFormData.petimage2);
   const dispatch = useDispatch();
-  // const user = true;
   const classes = useStyles();
-
-  // const [skipped, setSkipped] = React.useState(new Set());
 
   const [saveFormDescription, setSaveFormDescription] = useState(true);
   const [allowContent, setAllowContent] = useState(false);
-  const [checkedStepOne, setCheckedStepOne] = useState(true)
-  const [checkedStepTwo, setCheckedStepTwo] = useState(true)
-  const [checkStepThree, setCheckStepThree] = useState(true)
-  // const [checkStepFour, setCheckStepFour] = useState(true)
 
   if (saveFormDescription === true) {
     if (activeStepState === 2) {
@@ -284,22 +270,10 @@ export default function AdoptStepper() {
   ]);
 
   ColorlibStepIcon.propTypes = {
-    /**
-     * Whether this step is active.
-     */
     active: PropTypes.bool,
-    /**
-     * Mark the step as completed. Is passed to child components.
-     */
     completed: PropTypes.bool,
-    /**
-     * The label displayed in the step icon.
-     */
     icon: PropTypes.node,
   };
-
-  // const [openModal, setOpenModal] = useState(false);
-  // const [cancelForm, setCancelForm] = useState(false);
 
   const handleClickOpenModal = () => {
     dispatch(adopt_dialog_open_action())
@@ -330,6 +304,7 @@ export default function AdoptStepper() {
         }
       })
     )
+
   };
 
   const [activeStep, setActiveStep] = useState(0);
@@ -356,8 +331,7 @@ export default function AdoptStepper() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-
-  const [sendPhotos, setSendPhotos] = useState(null)
+  const [sendPhotos, setSendPhotos] = useState(null);
 
   const theme = useTheme();
 
@@ -420,64 +394,54 @@ export default function AdoptStepper() {
       }, 100);
       setSendPhotos(false);
     }
-  }
+  };
 
   // Open dialog Login
   const handleClickOpenLogin = () => {
     dispatch(adoptstepper_dialog_close_action())
     dispatch(login_dialog_open_action())
-    // dispatch(adoptstepper_dialog_open_action())
   };
 
   // Open dialog Register
   const openRegister = () => {
-    // setOpenModal(false);
     dispatch(adoptstepper_dialog_close_action())
     dispatch(register_dialog_open_action())
-  }
+  };
 
   // Close dialog login and Register
   const handleClickCloseDialog = () => {
-    // setOpenModal(false);
     dispatch(adoptstepper_dialog_close_action())
-  }
+  };
 
   return (
 
     <>
-      {/* <Hidden smDown> */}
-      {/* <Grid container justify="center"> */}
-      <Button
-        fullWidth
-        onClick={handleClickOpenModal}
-        className={classes.adoptionButton}
-        // variant="contained"
-        color="secondary"
-        // color="primary"
-        startIcon={<img src={iconAdopt} alt="LogIn" className={classes.menuIcons} />}
-      >
-        <ArrowDropDownIcon />
-        <Hidden smDown>
-          Dar en adopción
-          </Hidden>
-
-      </Button>
-      {/* </Grid> */}
-      {/* </Hidden> */}
-
-      {/* <Hidden mdUp>
+      <Hidden smDown>
         <Button
+          // fullWidth
+          color="secondary"
+          className={classes.adoptionButton}
           onClick={handleClickOpenModal}
-          className={classes.adoptionMobileButton}
-          variant="text"
-          // color="primary"
-          startIcon={<img src={petIconGray} alt="LogIn" style={{ width: '40px' }} />}
+          startIcon={<img src={iconAdopt} alt="LogIn" className={classes.menuIcons} />}
         >
-          <Typography>
-            Adopciones
-            </Typography>
+          <ArrowDropDownIcon />
+          <Hidden only="md" /* mdDown */>
+            Dar en adopción
+        </Hidden>
         </Button>
-      </Hidden> */}
+      </Hidden>
+
+      <Hidden mdUp>
+        <MenuItem
+          color="secondary"
+          className={classes.adoptionButton}
+          onClick={handleClickOpenModal}
+        >
+          <img src={iconAdopt} alt="LogIn" className={classes.menuIcons} />
+          <ArrowDropDownIcon />
+          Dar en adopción
+        </MenuItem>
+      </Hidden>
 
       {user ?
         <>
@@ -513,7 +477,7 @@ export default function AdoptStepper() {
                     <Box m={10}>
                       <Typography variant="h5" className={classes.instructions}>
                         ¿Todo está listo?
-            </Typography>
+                      </Typography>
                       <Lottie
                         options={formRegisterLottieOptions}
                         height={200}
@@ -530,14 +494,14 @@ export default function AdoptStepper() {
                     <Grid container justify="center">
                       <Button onClick={handleBack} className={classes.button}>
                         Atrás
-            </Button>
+                      </Button>
                       <Button
                         onClick={handleRegisterForm}
                         variant="contained"
                         color="primary"
                         className={classes.button}>
                         Enviar
-            </Button>
+                      </Button>
                     </Grid>
                   </div>
                 ) : (
@@ -601,7 +565,7 @@ export default function AdoptStepper() {
                         </Button>
                 </Grid>
 
-                <Grid item xs={12} spacing={3} justifyContent="center" >
+                <Grid item xs={12} /* spacing={3}  justifyContent="center" */>
                   <Button
                     variant="text"
                     size="small"
