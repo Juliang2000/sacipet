@@ -240,29 +240,13 @@ export default function PetDescription() {
   });
 
   useEffect(() => {
+    if (newPet.id_tamanio.length !== 0) {
+      setAllowRaces(true)
+    }
+  }, [newPet.id_tamanio])
+
+  useEffect(() => {
     switch (petType) {
-      case 1 - 2: if (newPet.id_tamanio.length === true) {
-        setAllowRaces(true)
-      } if (!errors.nombre_mascota && !errors.edad_mascota) {
-        if (newPet.nombre_mascota.length &&
-          newPet.edad_mascota.length &&
-          newPet.escala_edad &&
-          newPet.esterilizado.length &&
-          newPet.id_tamanio &&
-          newPet.id_raza &&
-          newPet.id_color &&
-          newPet.id_unde &&
-          newPet.id_codigo &&
-          newPet.descripcion_mascota.length !== 0
-        ) {
-          dispatch(full_pet_description_action());
-          dispatch(get_form_data_action(newPet));
-          dispatch(update_form_data_action());
-        } else {
-          dispatch(not_full_pet_description_action());
-        }
-      }
-        break;
       case 3: setAllowRaces(true);
         if (!errors.nombre_mascota && !errors.edad_mascota) {
           if (newPet.nombre_mascota.length &&
@@ -281,10 +265,27 @@ export default function PetDescription() {
           } else {
             dispatch(not_full_pet_description_action());
           }
-
         }
         break;
-      default:
+      default: if (!errors.nombre_mascota && !errors.edad_mascota) {
+        if (newPet.nombre_mascota.length &&
+          newPet.edad_mascota.length &&
+          newPet.escala_edad &&
+          newPet.esterilizado.length &&
+          newPet.id_tamanio &&
+          newPet.id_raza &&
+          newPet.id_color &&
+          newPet.id_unde &&
+          newPet.id_codigo &&
+          newPet.descripcion_mascota.length !== 0
+        ) {
+          dispatch(full_pet_description_action());
+          dispatch(get_form_data_action(newPet));
+          dispatch(update_form_data_action());
+        } else {
+          dispatch(not_full_pet_description_action());
+        }
+      }
     }
   }, [newPet.nombre_mascota,
   newPet.descripcion_mascota,
