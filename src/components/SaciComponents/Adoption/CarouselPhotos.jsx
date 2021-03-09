@@ -34,7 +34,10 @@ export default function CarouselPhotos({ itemPets }) {
     const photo_4 = petPhotos.split(',')[3]
     const photo_5 = petPhotos.split(',')[4]
     console.log(photo_1)
-
+    console.log(photo_2)
+    console.log(photo_3)
+    console.log(photo_4)
+    console.log(photo_5)
     const [items, setItems] = useState([
         {
             imgPath: `http://localhost:3000/${photo_1}.jpg`,

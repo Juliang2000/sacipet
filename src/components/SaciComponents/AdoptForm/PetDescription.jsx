@@ -61,6 +61,7 @@ export default function PetDescription() {
   const [sendHamsterData, setSendHamsterData] = useState(true);
   const [racesContent, setRacesContent] = useState(false);
   const [allowCities, setAllowCities] = useState(false);
+  const [allowRaces, setAllowRaces] = useState(false);
 
   ///////////////////////INSERTS
   const raceData = useSelector(store => store.raceData.raceData);
@@ -239,24 +240,51 @@ export default function PetDescription() {
   });
 
   useEffect(() => {
-    if (!errors.nombre_mascota && !errors.edad_mascota) {
-      if (newPet.nombre_mascota.length &&
-        newPet.edad_mascota.length &&
-        newPet.escala_edad &&
-        newPet.esterilizado.length &&
-        newPet.id_tamanio &&
-        newPet.id_raza &&
-        newPet.id_color &&
-        newPet.id_unde &&
-        newPet.id_codigo &&
-        newPet.descripcion_mascota.length !== 0
-      ) {
-        dispatch(full_pet_description_action());
-        dispatch(get_form_data_action(newPet));
-        dispatch(update_form_data_action());
-      } else {
-        dispatch(not_full_pet_description_action());
+    switch (petType) {
+      case 1 - 2: if (newPet.id_tamanio.length === true) {
+        setAllowRaces(true)
+      } if (!errors.nombre_mascota && !errors.edad_mascota) {
+        if (newPet.nombre_mascota.length &&
+          newPet.edad_mascota.length &&
+          newPet.escala_edad &&
+          newPet.esterilizado.length &&
+          newPet.id_tamanio &&
+          newPet.id_raza &&
+          newPet.id_color &&
+          newPet.id_unde &&
+          newPet.id_codigo &&
+          newPet.descripcion_mascota.length !== 0
+        ) {
+          dispatch(full_pet_description_action());
+          dispatch(get_form_data_action(newPet));
+          dispatch(update_form_data_action());
+        } else {
+          dispatch(not_full_pet_description_action());
+        }
       }
+        break;
+      case 3: setAllowRaces(true);
+        if (!errors.nombre_mascota && !errors.edad_mascota) {
+          if (newPet.nombre_mascota.length &&
+            newPet.edad_mascota.length &&
+            newPet.escala_edad &&
+            newPet.esterilizado.length &&
+            newPet.id_raza &&
+            newPet.id_color &&
+            newPet.id_unde &&
+            newPet.id_codigo &&
+            newPet.descripcion_mascota.length !== 0
+          ) {
+            dispatch(full_pet_description_action());
+            dispatch(get_form_data_action(newPet));
+            dispatch(update_form_data_action());
+          } else {
+            dispatch(not_full_pet_description_action());
+          }
+
+        }
+        break;
+      default:
     }
   }, [newPet.nombre_mascota,
   newPet.descripcion_mascota,
@@ -380,15 +408,12 @@ export default function PetDescription() {
               labelId="demo-simple-select-outlined-label"
               id="demo-simple-select-outlined"
               name="id_raza"
-              // value={age}
               label="Raza De Mascota"
               onChange={handleChange}
-              disabled={id_tamanio.length === 0}
+              disabled={allowRaces === false}
               defaultValue={id_raza}
             >
-              {/* <MenuItem>
-                <em>Seleccione:</em>
-              </MenuItem> */}
+
               {hamster ?
                 hamsterRaceData.map(item => (
                   <MenuItem key={item.nombre_raza} value={item.id_raza} defaultValue={item.nombre_raza} >
