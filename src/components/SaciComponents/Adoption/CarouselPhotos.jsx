@@ -19,8 +19,6 @@ import pug5 from '../../../assets/images/cardsModal/pug5.jpg'
 const useStyles = makeStyles(() => ({
     media: {
         height: 450,
-        paddingTop: '56.25%', // 16:9
-        cursor: 'pointer',
     },
 }));
 

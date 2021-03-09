@@ -36,6 +36,17 @@ import petGenderFemale from '../../../assets/icons/filters/petGenderFemale.svg';
 
 import petYear from '../../../assets/icons/filters/petYear.svg';
 
+// Dispatch Redux
+import { useDispatch } from 'react-redux';
+
+// Redux Actions
+import {
+  get_saci_pets_action,
+  get_saci_pets_cats_action,
+  get_saci_pets_dogs_action,
+  get_saci_pets_hamsters_action
+} from '../../../redux/actions/saciPets'
+
 
 // import Button from '@material-ui/core/Button';
 
@@ -178,6 +189,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function GmailTreeView() {
 
+  const dispatch = useDispatch();
+
   const classes = useStyles();
 
   const lottieFilter = () => {
@@ -275,36 +288,65 @@ export default function GmailTreeView() {
       <img src={petYear} alt="Icon Pet Year" className={classes.iconSize} />
     )
   }
+  /////////////////////////////////////////////////////////////////////////
 
   const [filtersDogs, setFiltersDogs] = useState(false);
+  const [filtersDogsValidate, setFiltersDogsValidate] = useState(false);
 
   const handleDogsAdd = () => {
     setFiltersDogs(true);
+    dispatch(get_saci_pets_dogs_action())
   }
 
   const handleDogsDelete = () => {
-    setFiltersDogs(false);
+    setFiltersDogsValidate(true);
+    dispatch(get_saci_pets_action())
+    setTimeout(() => {
+      setFiltersDogs(false);
+      setFiltersDogsValidate(false);
+    }, 1000);
   }
 
+  /////////////////////////////////////////////////////////////////////////
+
   const [filtersCats, setFiltersCats] = useState(false);
+  const [filtersCatsValidate, setFiltersCatsValidate] = useState(false);
 
   const handleCatsAdd = () => {
     setFiltersCats(true);
+    dispatch(get_saci_pets_cats_action())
   }
 
   const handleCatsDelete = () => {
-    setFiltersCats(false);
+    setFiltersCatsValidate(true);
+    dispatch(get_saci_pets_action())
+    setTimeout(() => {
+      setFiltersCats(false);
+      setFiltersCatsValidate(false);
+
+    }, 1000);
   }
 
+  /////////////////////////////////////////////////////////////////////////
+
   const [filtersHamsters, setFiltersHamsters] = useState(false);
+  const [filtersHamstersValidate, setFiltersHamsterValidate] = useState(false);
 
   const handleHamstersAdd = () => {
     setFiltersHamsters(true);
+    dispatch(get_saci_pets_hamsters_action())
   }
 
   const handleHamstersDelete = () => {
-    setFiltersHamsters(false);
+    setFiltersHamsterValidate(true);
+    dispatch(get_saci_pets_action())
+    setTimeout(() => {
+      setFiltersHamsterValidate(false);
+      setFiltersHamsters(false);
+    }, 1000);
   }
+
+
 
   return (
     <div>
@@ -320,7 +362,7 @@ export default function GmailTreeView() {
 
         {filtersDogs ?
           <Chip
-            className="animate__animated animate__fadeInUpBig"
+            className={filtersDogsValidate ? "animate__animated animate__backOutDown" : "animate__animated animate__fadeInUpBig"}
             color="primary"
             label="Perros"
             onDelete={handleDogsDelete}
@@ -329,7 +371,7 @@ export default function GmailTreeView() {
 
         {filtersCats ?
           <Chip
-            className="animate__animated animate__fadeInUpBig"
+            className={filtersCatsValidate ? "animate__animated animate__backOutDown" : "animate__animated animate__fadeInUpBig"}
             color="primary"
             label="Gatos"
             onDelete={handleCatsDelete}
@@ -338,7 +380,7 @@ export default function GmailTreeView() {
 
         {filtersHamsters ?
           <Chip
-            className={"animate__animated animate__fadeInUpBig"}
+            className={filtersHamstersValidate ? "animate__animated animate__backOutDown" : "animate__animated animate__fadeInUpBig"}
             color="primary"
             label="Hamsters"
             onDelete={handleHamstersDelete}
