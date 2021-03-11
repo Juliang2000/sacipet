@@ -41,7 +41,7 @@ export default function CarouselPhotos({ itemPets }) {
     useEffect(() => {
         if (photo_2 > 0) {
             console.log("si hay numero")
-            setItems(...items, [
+            setItems([
                 {
                     imgPath: `${baseURL}${photo_1}.jpg`,
                 },
