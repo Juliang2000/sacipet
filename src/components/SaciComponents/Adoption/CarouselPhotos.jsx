@@ -24,47 +24,86 @@ const useStyles = makeStyles(() => ({
 
 export default function CarouselPhotos({ itemPets }) {
 
+    const baseURL = process.env.REACT_APP_BACKEND_URL;
     const classes = useStyles();
     const petPhotos = itemPets;
-    const photo_1 = petPhotos.split(',')[0]
-    const photo_2 = petPhotos.split(',')[1]
-    const photo_3 = petPhotos.split(',')[2]
-    const photo_4 = petPhotos.split(',')[3]
-    const photo_5 = petPhotos.split(',')[4]
+    const [photo_1, setPhoto_1] = useState(petPhotos.split(',')[0])
+    const [photo_2, setPhoto_2] = useState(petPhotos.split(',')[1])
+    const [photo_3, setPhoto_3] = useState(petPhotos.split(',')[2])
+    const [photo_4, setPhoto_4] = useState(petPhotos.split(',')[3])
+    const [photo_5, setPhoto_5] = useState(petPhotos.split(',')[4])
     const [items, setItems] = useState([
         {
-            imgPath: `http://localhost:3000/${photo_1}.jpg`,
-        },
-        {
-            imgPath: `http://localhost:3000/${photo_2}.jpg`,
-        },
-        {
-            imgPath: `http://localhost:3000/${photo_3}.jpg`,
-        },
-        {
-            imgPath: `http://localhost:3000/${photo_4}.jpg`,
-        },
-        {
-            imgPath: `http://localhost:3000/${photo_5}.jpg`,
-        },
-    ]);
+            imgPath: `${baseURL}${photo_1}.jpg`,
+        }
+    ])
 
-    // switch (photo_1) {
-    //     case 1 - 500: setItems([
-    //         {
-    //             imgPath: `http://localhost:3000/${photo_1}.jpg`,
-    //         }
-    //     ])
-    //     setAllowContent(true)
-    //         break;
-    //     default:
-    // }
+    useEffect(() => {
+        if (photo_2 > 0) {
+            console.log("si hay numero")
+            setItems([
+                {
+                    imgPath: `${baseURL}${photo_1}.jpg`,
+                },
+                {
+                    imgPath: `${baseURL}${photo_2}.jpg`,
+                }
+            ])
+            if (photo_3 > 0) {
+                setItems([
+                    {
+                        imgPath: `${baseURL}${photo_1}.jpg`,
+                    },
+                    {
+                        imgPath: `${baseURL}${photo_2}.jpg`,
+                    },
+                    {
+                        imgPath: `${baseURL}${photo_3}.jpg`,
+                    }
+                ])
+                if (photo_4 > 0) {
+                    setItems([
+                        {
+                            imgPath: `${baseURL}${photo_1}.jpg`,
+                        },
+                        {
+                            imgPath: `${baseURL}${photo_2}.jpg`,
+                        },
+                        {
+                            imgPath: `${baseURL}${photo_3}.jpg`,
+                        },
+                        {
+                            imgPath: `${baseURL}${photo_4}.jpg`,
+                        }
+                    ])
+                    if (photo_5 > 0) {
+                        setItems([
+                            {
+                                imgPath: `${baseURL}${photo_1}.jpg`,
+                            },
+                            {
+                                imgPath: `${baseURL}${photo_2}.jpg`,
+                            },
+                            {
+                                imgPath: `${baseURL}${photo_3}.jpg`,
+                            },
+                            {
+                                imgPath: `${baseURL}${photo_4}.jpg`,
+                            },
+                            {
+                                imgPath: `${baseURL}${photo_5}.jpg`,
+                            }
+                        ])
+                    }
+                }
+            }
+        }
+    }, [])
+
 
     function Item(props) {
         return (
             <>
-
-
                 <CardMedia
                     // component="img"
                     className={classes.media}
@@ -74,8 +113,6 @@ export default function CarouselPhotos({ itemPets }) {
                     image={props.item.imgPath}
                 >
                 </CardMedia>
-
-            
             </>
         )
 
@@ -122,7 +159,6 @@ export default function CarouselPhotos({ itemPets }) {
                 {
                     items.map((item, i) => <Item key={i} item={item} />)
                 }
-
             </Carousel>
         </>
     )

@@ -193,11 +193,8 @@ export default function RecipeReviewCard(props) {
     setDisplayContent(false);
   };
 
-
-  // const { mascotas } = useSelector(state => state.saciPets);
   const { petImage1 } = useSelector(state => state.adoptFormData);
 
-  // const { open, handleClickOpen, handleClickClose } = useModal();
 
   const classes = useStyles();
 
@@ -274,133 +271,18 @@ export default function RecipeReviewCard(props) {
     console.log(getPet.escala_edad)
   }, [getPet])
 
-  // useEffect(() => {
-  //   if (petPhoto) {
-  //     setPetPhotos()
-  //   }
-  // }, [input])
-
-  // useEffect(() => {
-  //   for (let i of mascotas) {
-  //     dispatch(get_pet_photos_action(i.id_mascota));
-  //     console.log(i)
-  //     console.log(i.id_mascota);
-  //   }
-  // }, [mascotas, dispatch])
-
-  // const theme = useTheme();
-  // const isMobile = useMediaQuery(theme.breakpoints.down('xs'), {
-  //   defaultMatches: true
-  // });
-
-
-  // useEffect(() => {
-  //   for (let i of mascotas) {
-  //     // dispatch(get_pet_photos_action(i.id_mascota));
-  //     getImage(i.id_mascota)
-  //     console.log(i)
-  //     console.log(i.id_mascota);
-  //   }
-  // }, [mascotas, dispatch])
-  const petPhotoData = {
-    consecutivo: '1',
-    id_mascota: 244
-  }
-
-  useEffect(() => {
-    getImage();
-  }, []);
-
-
-
-  const getImage = async () => {
-
-    // const formData = new FormData();
-
-    // formData.append('consecutivo', '1')
-    // formData.append('id_mascota', 244)
-
-    try {
-      const { data } = await axiosClient.get("/usersc/158");
-
-      // const imageUrl = URL.createObjectURL(data)
-      // console.log(imageUrl)
-      setImages(data);
-      return data
-
-      // return data
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  // useEffect(() => {
-  //   console.log(images)
-  // }, [images])
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'), {
     defaultMatches: true
   });
 
-  const [testImage, setTestImage] = useState(pug1)
-
-  useEffect(() => {
-    const Example = (images) => <img src={`data:image/jpeg;base64,${images}`} />
-    // setTestImage(Example)
-    // console.log(Example)
-  }, [images])
-
-  // const renderPhotos = (photo) => {
-  //   return <img src={photo} key={photo} alt={photo} />
-  // }
-
-
-  // var items = [
-  //   {
-  //     imgPath: `http://localhost:3000/158.jpg`,
-  //   },
-  //   {
-  //     imgPath: pug2,
-  //   },
-  //   {
-  //     imgPath: pug3,
-  //   },
-  //   {
-  //     imgPath: pug4,
-  //   },
-  //   {
-  //     imgPath: pug5
-  //   },
-  // ]
-
-  // function Item(props) {
-
-  //   return (
-  //     <>
-
-  //       <CardMedia
-  //         className={classes.media}
-  //         title="Pinina"
-  //         item={props.item.imgPath}
-  //         // onClick={handleClickOpen}
-  //         image={props.item.imgPath}
-  //       >
-  //       </CardMedia>
-
-
-  //     </>
-  //   )
-
-  // }
-
-
   return (
     <>
       <Grid container spacing={isMobile ? 1 : 3} /* xs={12} */ justify="center" className={classes.cardsPetsContainer}>
         {mascotas.map((item) => {
           return (
-            <Grid item xs={12} sm={6} md={6} lg={4} xl={3}>
+            <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
               <Card className={classes.cardsPets} style={{ borderRadius: 10 }}>
                 <CardHeader
                   avatar={
@@ -439,7 +321,6 @@ export default function RecipeReviewCard(props) {
                     <ShareIcon />
                   </IconButton>
                   <Button
-                    // onClick={() => openCloseAdopt()}
                     className={classes.buttonPrimary}
                     variant="contained"
                     color="primary"
@@ -473,7 +354,6 @@ export default function RecipeReviewCard(props) {
           <Box mb={5}>
             <TableContainer component={Paper}>
               <Table className={classes.table} aria-label="simple table">
-                {/* style={{ border: 'blue 7px solid'}} */}
                 <TableHead>
                   <TableRow>
                     <TableCell>Nombre</TableCell>
@@ -481,7 +361,6 @@ export default function RecipeReviewCard(props) {
                     <TableCell>Sexo</TableCell>
                     <TableCell>Raza</TableCell>
                     <TableCell>Ubicación</TableCell>
-                    {/* <TableCell>Peso&nbsp;(Kg)</TableCell> */}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -493,7 +372,6 @@ export default function RecipeReviewCard(props) {
                     <TableCell>{genre}</TableCell>
                     <TableCell>{getPet.raza}</TableCell>
                     <TableCell>{getPet.municipio}</TableCell>
-                    {/* <TableCell>{row.protein}</TableCell> */}
                   </TableRow>
                 </TableBody>
               </Table>
@@ -513,18 +391,7 @@ export default function RecipeReviewCard(props) {
               </Typography>
             </AccordionDetails>
           </Accordion>
-          {/* <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel2a-content"
-                id="panel2a-header"
-              >
-                <Typography className={classes.heading}>Documentación</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>Trae Cartilla Documentación</Typography>
-              </AccordionDetails>
-            </Accordion> */}
+
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
