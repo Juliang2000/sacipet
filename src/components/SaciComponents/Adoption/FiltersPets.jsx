@@ -513,7 +513,7 @@ export default function GmailTreeView() {
               labelText="Gatos"
               labelIcon={lottieCat}
               onClick={handleCatsAdd}
-            labelInfo="3"
+            // labelInfo="90"
             />
             <StyledTreeItem
               nodeId="8"
