@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import TreeView from '@material-ui/lab/TreeView';
@@ -42,9 +43,6 @@ import { useDispatch } from 'react-redux';
 // Redux Actions
 import {
   get_saci_pets_action,
-  get_saci_pets_cats_action,
-  get_saci_pets_dogs_action,
-  get_saci_pets_hamsters_action
 } from '../../../redux/actions/saciPets'
 
 
@@ -295,12 +293,10 @@ export default function GmailTreeView() {
 
   const handleDogsAdd = () => {
     setFiltersDogs(true);
-    dispatch(get_saci_pets_dogs_action())
   }
 
   const handleDogsDelete = () => {
     setFiltersDogsValidate(true);
-    dispatch(get_saci_pets_action())
     setTimeout(() => {
       setFiltersDogs(false);
       setFiltersDogsValidate(false);
@@ -314,12 +310,10 @@ export default function GmailTreeView() {
 
   const handleCatsAdd = () => {
     setFiltersCats(true);
-    dispatch(get_saci_pets_cats_action())
   }
 
   const handleCatsDelete = () => {
     setFiltersCatsValidate(true);
-    dispatch(get_saci_pets_action())
     setTimeout(() => {
       setFiltersCats(false);
       setFiltersCatsValidate(false);
@@ -334,17 +328,133 @@ export default function GmailTreeView() {
 
   const handleHamstersAdd = () => {
     setFiltersHamsters(true);
-    dispatch(get_saci_pets_hamsters_action())
   }
 
   const handleHamstersDelete = () => {
     setFiltersHamsterValidate(true);
-    dispatch(get_saci_pets_action())
     setTimeout(() => {
       setFiltersHamsterValidate(false);
       setFiltersHamsters(false);
     }, 1000);
   }
+
+  // const { mascotas } = useSelector(state => state.saciPets);
+
+
+  // const harold = mascotas.filter(pets => pets.id_tipo_mascota === "1")
+
+  // const [filters, setFilters] = useState({
+  //   filtro: mascotas.filter(pets => pets.id_tipo_mascota === "1")
+  // })
+
+
+  // filtro vacio
+  const [filtersInitial] = useState({
+    id_tipo_mascota: false,
+  })
+
+  // filtro gatos
+  const [petsFiltersCats] = useState({
+    cats: true,
+  })
+
+  // filtro perros
+  const [petsFiltersDogs] = useState({
+    dogs: true,
+  })
+
+  // filtro hamsters
+  const [petsFiltersHamsters] = useState({
+    hamsters: true,
+  })
+
+  // filtro gatos y perros
+  const [petsFiltersCatsDogs] = useState({
+    cats: true,
+    dogs: true,
+  })
+
+  // filtro gatos y hamsters
+  const [petsFiltersCatsHamsters] = useState({
+    cats: true,
+    hamsters: true,
+  })
+
+  // filtro perros y hamsters
+  const [petsFiltersDogsHamsters] = useState({
+    dogs: true,
+    hamsters: true,
+  })
+
+
+  // filtro perros, gatos y hamsters
+  const [petsFiltersCatsDogsHamsters] = useState({
+    cats: true,
+    dogs: true,
+    hamsters: true,
+  })
+
+
+
+
+
+  useEffect(() => {
+    if (filtersDogs === false && filtersCats === false && filtersHamsters === false) {
+      dispatch(get_saci_pets_action(filtersInitial))
+    }
+  }, [filtersDogs, filtersCats, filtersHamsters])
+
+  // gatos
+  useEffect(() => {
+    if (filtersCats === true && filtersHamsters === false && filtersDogs === false) {
+      dispatch(get_saci_pets_action(petsFiltersCats))
+    }
+  }, [filtersCats, filtersHamsters, filtersDogs])
+
+  // perros
+  useEffect(() => {
+    if (filtersDogs === true && filtersCats === false && filtersHamsters === false) {
+      dispatch(get_saci_pets_action(petsFiltersDogs))
+    }
+  }, [filtersDogs, filtersCats, filtersHamsters])
+
+  // hamsters
+  useEffect(() => {
+    if (filtersHamsters === true && filtersCats === false && filtersDogs === false) {
+      dispatch(get_saci_pets_action(petsFiltersHamsters))
+    }
+  }, [filtersHamsters, filtersCats, filtersDogs])
+
+  // gatos y perros
+  useEffect(() => {
+    if (filtersCats === true && filtersDogs === true && filtersHamsters === false) {
+      dispatch(get_saci_pets_action(petsFiltersCatsDogs))
+    }
+  }, [filtersCats, filtersDogs, filtersHamsters])
+
+  // gatos y hamsters
+  useEffect(() => {
+    if (filtersCats === true && filtersHamsters === true && filtersDogs === false) {
+      dispatch(get_saci_pets_action(petsFiltersCatsHamsters))
+    }
+  }, [filtersCats, filtersHamsters, filtersDogs])
+
+  // perros y hamsters
+  useEffect(() => {
+    if (filtersDogs === true && filtersHamsters === true && filtersCats === false) {
+      dispatch(get_saci_pets_action(petsFiltersDogsHamsters))
+    }
+  }, [filtersDogs, filtersHamsters, filtersCats])
+
+  // gatos, perros y hamsters
+  useEffect(() => {
+    if (filtersCats === true && filtersDogs === true && filtersHamsters === true) {
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsHamsters))
+    }
+  }, [filtersCats, filtersDogs, filtersHamsters])
+
+
+
 
 
 
@@ -400,18 +510,19 @@ export default function GmailTreeView() {
           <StyledTreeItem nodeId="2" labelText="Tipo De Mascota" labelIcon={lottiePetType} >
             <StyledTreeItem
               nodeId="7"
+              labelText="Gatos"
+              labelIcon={lottieCat}
+              onClick={handleCatsAdd}
+            labelInfo="3"
+            />
+            <StyledTreeItem
+              nodeId="8"
               labelText="Perros"
               labelIcon={lottieDog}
               onClick={handleDogsAdd}
             // labelInfo="90"
             />
-            <StyledTreeItem
-              nodeId="8"
-              labelText="Gatos"
-              labelIcon={lottieCat}
-              onClick={handleCatsAdd}
-            // labelInfo="90"
-            />
+
             <StyledTreeItem
               nodeId="9"
               labelText="Hámsters"

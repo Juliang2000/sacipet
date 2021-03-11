@@ -7,7 +7,7 @@ const initialState = {
     file: {},
 
 }
-    
+
 
 export default (state = initialState, action) => {
     switch (action.type) {
@@ -16,13 +16,7 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 mascotas: action.payload
-
             }
-
-            // case GET_SACI_PETS_CATS:
-            //     return {
-            //         mascotas: state.mascotas
-            //     }
 
         case GET_PET_PHOTOS:
             return {
