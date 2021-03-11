@@ -18,6 +18,12 @@ export default (state = initialState, action) => {
                 mascotas: action.payload
 
             }
+
+            // case GET_SACI_PETS_CATS:
+            //     return {
+            //         mascotas: state.mascotas
+            //     }
+
         case GET_PET_PHOTOS:
             return {
                 ...state,

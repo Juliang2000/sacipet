@@ -94,7 +94,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
-
   logoIcon: {
     width: '40px',
     // [theme.breakpoints.only('xs')]: {
@@ -123,24 +122,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-  const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const { user } = useSelector(state => state.login);
-
-  // const handleProfileMenuOpen = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
 
   const handleMenuClose = () => {
-    setAnchorEl(null);
     handleMobileMenuClose();
   };
 
@@ -158,22 +150,6 @@ export default function PrimarySearchAppBar() {
     setOpen(false);
   }
 
-  const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
-
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
     <Hidden mdUp>
@@ -186,7 +162,6 @@ export default function PrimarySearchAppBar() {
         open={isMobileMenuOpen}
         onClose={handleMobileMenuClose}
       >
-
         <div>
           <FindPetButton />
         </div>
@@ -196,19 +171,6 @@ export default function PrimarySearchAppBar() {
         <div onClick={user ? null : handleMenuClose}>
           <SectionDesktop />
         </div>
-
-        {/* </MenuItem> */}
-        {/* <MenuItem onClick={handleProfileMenuOpen} onClick={handleMenuClose}> */}
-        {/* <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p> */}
-        {/* </MenuItem> */}
       </Menu>
     </Hidden>
   );
@@ -271,7 +233,6 @@ export default function PrimarySearchAppBar() {
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
-      {renderMenu}
 
       <Drawer
         docked={false}
