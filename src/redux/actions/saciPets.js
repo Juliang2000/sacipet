@@ -65,6 +65,54 @@ export const get_saci_pets_action = (filters) => async (dispatch) => {
             filter = response.data.mascotas.filter(pets => pets.id_tipo_mascota === "1" || pets.id_tipo_mascota === "2" || pets.id_tipo_mascota === "3");
         }
 
+        // filtros tamaño pequeño
+        if (filters.smalls === true) {
+            filter = response.data.mascotas.filter(pets => pets.id_tamanio === "3");
+        }
+
+        // filtros tamaño mediano
+        if (filters.mediums === true) {
+            filter = response.data.mascotas.filter(pets => pets.id_tamanio === "2");
+        }
+
+        // filtros tamaño grande
+        if (filters.bigs === true) {
+            filter = response.data.mascotas.filter(pets => pets.id_tamanio === "1");
+        }
+
+        // filtros tamaño pequeño y mediano
+        if (filters.smalls === true && filters.mediums === true) {
+            filter = response.data.mascotas.filter(pets => pets.id_tamanio === "3" || pets.id_tamanio === "2");
+        }
+
+        // filtros tamaño pequeño y grande
+        if (filters.smalls === true && filters.bigs === true) {
+            filter = response.data.mascotas.filter(pets => pets.id_tamanio === "3" || pets.id_tamanio === "1");
+        }
+
+        // filtros tamaño grande y mediano
+        if (filters.bigs === true && filters.mediums === true) {
+            filter = response.data.mascotas.filter(pets => pets.id_tamanio === "1" || pets.id_tamanio === "2");
+        }
+
+        // filtros tamaño pequeño, mediano y grande
+        if (filters.smalls === true && filters.mediums === true && filters.bigs === true) {
+            filter = response.data.mascotas.filter(pets => pets.id_tamanio === "3" || pets.id_tamanio === "2" || pets.id_tamanio === "1");
+        }
+
+        if(filters.cats === true && filters.smalls === true ){
+            filter = response.data.mascotas.filter(pets => pets.id_tipo_mascota === "1" && pets.id_tamanio === "3");
+        }
+
+        if(filters.cats === true && filters.mediums === true ){
+            filter = response.data.mascotas.filter(pets => pets.id_tipo_mascota === "1" && pets.id_tamanio === "2");
+        }
+
+        if(filters.cats === true && filters.bigs === true ){
+            filter = response.data.mascotas.filter(pets => pets.id_tipo_mascota === "1" && pets.id_tamanio === "1");
+        }
+
+
         dispatch({
             type: GET_SACI_PETS,
             payload: filter

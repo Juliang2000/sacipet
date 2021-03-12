@@ -22,6 +22,8 @@ import { red } from '@material-ui/core/colors';
 
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
+import PetsIcon from '@material-ui/icons/Pets';
+
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 
@@ -117,7 +119,7 @@ const useStyles = makeStyles((theme) => ({
     // },
     color: '#ffffff',
     textTransform: 'none',
-    fontSize: '18px',
+    // fontSize: '18px',
   },
 
   heading: {
@@ -211,9 +213,18 @@ export default function RecipeReviewCard(props) {
     setAnchorMenu(null);
   };
 
+
+  // filtros harold
+  const [filtersInitial] = useState({
+    id_tipo_mascota: false,
+  })
+
   useEffect(() => {
-    dispatch(get_saci_pets_action())
+    dispatch(get_saci_pets_action(filtersInitial))
   }, [])
+
+
+
 
   useEffect(() => {
     console.log(getPet)
@@ -280,24 +291,15 @@ export default function RecipeReviewCard(props) {
   return (
     <>
       <Grid container spacing={isMobile ? 1 : 3} /* xs={12} */ justify="center" className={classes.cardsPetsContainer}>
-        {mascotas.map((item) => {
+        {mascotas.map((item, i) => {
           return (
-            <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={item.id_mascota} >
               <Card className={classes.cardsPets} style={{ borderRadius: 10 }}>
                 <CardHeader
                   avatar={
                     <Avatar aria-label="recipe" className={classes.avatar}>
                       R
                 </Avatar>
-                  }
-                  action={
-                    <IconButton aria-label="settings" onClick={handleClickMenu}>
-                      <MenuItem>
-                        <MoreVertIcon>
-                        </MoreVertIcon>
-                      </MenuItem>
-                    </IconButton>
-
                   }
                   title={<Typography>{item.nombre_mascota}</Typography>}
                   subheader={item.raza}
@@ -306,13 +308,13 @@ export default function RecipeReviewCard(props) {
                   itemPets={item.fotos}
                 />
 
-                <Grid container justify="center">
+                {/* <Grid container justify="center">
                   <Button disableRipple style={{ textTransform: 'none' }}>
                     <MenuItem key={item.mascota} onClick={(e) => handleClickOpen(e.target.value)} value={item.id_mascota}>
                       Datos de mascota
                   </MenuItem>
                   </Button>
-                </Grid>
+                </Grid> */}
                 <CardActions disableSpacing>
                   <IconButton aria-label="add to favorites">
                     <FavoriteIcon />
@@ -320,11 +322,20 @@ export default function RecipeReviewCard(props) {
                   <IconButton aria-label="share">
                     <ShareIcon />
                   </IconButton>
+
+                  <IconButton aria-label="pets">
+                    <PetsIcon />
+                  </IconButton>
+
+                  {/* <MenuItem key={item.mascota} onClick={(e) => handleClickOpen(e.target.value)} value={item.id_mascota}>
+                    Mascotas
+                  </MenuItem> */}
+
                   <Button
                     className={classes.buttonPrimary}
                     variant="contained"
                     color="primary"
-                    size="large"
+                    size="medium"
                     fullWidth
                   >
                     Adóptame
