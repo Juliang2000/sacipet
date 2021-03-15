@@ -588,6 +588,31 @@ export default function GmailTreeView() {
     bigs: true
   })
 
+  //filtro gatos, perros, pequeños, medianos
+  const [petsFiltersCatsDogsSmallsMediums] = useState({
+    cats: true,
+    dogs: true,
+    smalls: true,
+    mediums: true
+  })
+
+  //filtro gatos, perros, pequeños, grandes
+  const [petsFiltersCatsDogsSmallsBigs] = useState({
+    cats: true,
+    dogs: true,
+    smalls: true,
+    bigs: true
+  })
+
+  //filtro gatos, perros, medianos, grandes
+  const [petsFiltersCatsDogsMediumsBigs] = useState({
+    cats: true,
+    dogs: true,
+    mediums: true,
+    bigs: true
+  })
+
+
   //filtro gatos, pequeños, medianos, grandes
   const [petsFiltersCatsSmallsMediumsBigs] = useState({
     cats: true,
@@ -598,6 +623,15 @@ export default function GmailTreeView() {
 
   //filtro perros, pequeños, medianos, grandes
   const [petsFiltersDogsSmallsMediumsBigs] = useState({
+    dogs: true,
+    smalls: true,
+    mediums: true,
+    bigs: true
+  })
+
+  // filtros gatos, perros, pequeños, medianos, grandes
+  const [petsFiltersCatsDogsSmallsMediumsBigs] = useState({
+    cats: true,
     dogs: true,
     smalls: true,
     mediums: true,
@@ -1047,6 +1081,50 @@ export default function GmailTreeView() {
     }
   }, [filtersDeps])
 
+  // gatos y perros, pequeños, medianos
+  useEffect(() => {
+    if (
+      filtersCats &&
+      filtersDogs &&
+      filtersSmalls &&
+      filtersMediums &&
+      !filtersHamsters &&
+      !filtersBigs
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsSmallsMediums))
+    }
+  }, [filtersDeps])
+
+  // gatos y perros, pequeños, grandes
+  useEffect(() => {
+    if (
+      filtersCats &&
+      filtersDogs &&
+      filtersSmalls &&
+      filtersBigs &&
+      !filtersHamsters &&
+      !filtersMediums
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsSmallsBigs))
+    }
+  }, [filtersDeps])
+
+  // gatos y perros, medianos, grandes
+  useEffect(() => {
+    if (
+      filtersCats &&
+      filtersDogs &&
+      filtersMediums &&
+      filtersBigs &&
+      !filtersHamsters &&
+      !filtersSmalls
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsMediumsBigs))
+    }
+  }, [filtersDeps])
+
+
+
 
   // gatos, pequeños, medianos, grandes
   useEffect(() => {
@@ -1075,6 +1153,23 @@ export default function GmailTreeView() {
       dispatch(get_saci_pets_action(petsFiltersDogsSmallsMediumsBigs))
     }
   }, [filtersDeps])
+
+  // filtros gatos, perros, pequeños, medianos, grandes
+  useEffect(() => {
+    if (
+      filtersCats &&
+      filtersDogs &&
+      filtersSmalls &&
+      filtersMediums &&
+      filtersBigs &&
+      !filtersHamsters
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsSmallsMediumsBigs))
+    }
+  }, [filtersDeps])
+
+
+
 
 
   return (

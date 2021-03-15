@@ -185,6 +185,24 @@ export const get_saci_pets_action = (filters) => async (dispatch) => {
                 (pets.id_tipo_mascota === "1" || pets.id_tipo_mascota === "2") && pets.id_tamanio === "1");
         }
 
+        // filtros gatos, perros, pequeños, medianos
+        if (filters.cats === true && filters.dogs === true && filters.smalls === true && filters.mediums === true) {
+            filter = response.data.mascotas.filter(pets =>
+                (pets.id_tipo_mascota === "1" || pets.id_tipo_mascota === "2") && (pets.id_tamanio === "3" || pets.id_tamanio === "2"));
+        }
+
+        // filtros gatos, perros, pequeños, grandes
+        if (filters.cats === true && filters.dogs === true && filters.smalls === true && filters.bigs === true) {
+            filter = response.data.mascotas.filter(pets =>
+                (pets.id_tipo_mascota === "1" || pets.id_tipo_mascota === "2") && (pets.id_tamanio === "3" || pets.id_tamanio === "1"));
+        }
+
+        // filtros gatos, perros, medianos, grandes
+        if (filters.cats === true && filters.dogs === true && filters.mediums === true && filters.bigs === true) {
+            filter = response.data.mascotas.filter(pets =>
+                (pets.id_tipo_mascota === "1" || pets.id_tipo_mascota === "2") && (pets.id_tamanio === "2" || pets.id_tamanio === "1"));
+        }
+
         // filtros gatos, pequeños, medianos, grandes
         if (filters.cats === true && filters.smalls === true && filters.mediums === true && filters.bigs === true) {
             filter = response.data.mascotas.filter(pets =>
@@ -195,6 +213,13 @@ export const get_saci_pets_action = (filters) => async (dispatch) => {
         if (filters.dogs === true && filters.smalls === true && filters.mediums === true && filters.bigs === true) {
             filter = response.data.mascotas.filter(pets =>
                 pets.id_tipo_mascota === "2" && (pets.id_tamanio === "3" || pets.id_tamanio === "2" || pets.id_tamanio === "1"));
+        }
+
+        // filtros gatos, perros, pequeños, medianos, grandes
+        if (filters.cats === true && filters.dogs === true && filters.smalls === true && filters.mediums === true && filters.bigs === true) {
+            filter = response.data.mascotas.filter(pets =>
+                (pets.id_tipo_mascota === "1" || pets.id_tipo_mascota === "2") &&
+                (pets.id_tamanio === "3" || pets.id_tamanio === "2" || pets.id_tamanio === "1"));
         }
 
 
