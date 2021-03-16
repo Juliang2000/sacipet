@@ -16,9 +16,12 @@ import pug3 from '../../../assets/images/cardsModal/pug3.png'
 import pug4 from '../../../assets/images/cardsModal/pug4.jpg'
 import pug5 from '../../../assets/images/cardsModal/pug5.jpg'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     media: {
         height: 450,
+        [theme.breakpoints.down('lg')]: {
+            height: 370,
+          },
     },
 }));
 

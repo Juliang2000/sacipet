@@ -335,7 +335,7 @@ export default function AdoptStepper() {
 
   const theme = useTheme();
 
-  const fullScreenResponsive = useMediaQuery(theme.breakpoints.down('lg'));
+  const fullScreenResponsive = useMediaQuery(theme.breakpoints.down('sm'));
   const fullScreenDialog = useMediaQuery(theme.breakpoints.down('xs'));
 
   const formRegisterLottieOptions = {

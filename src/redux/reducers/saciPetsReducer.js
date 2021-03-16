@@ -3,7 +3,7 @@ import { GET_SACI_PETS, PAGE_SACI_PETS } from "../types"
 const initialState = {
 
     mascotas: [],
-    pageMacotas: []
+    pageMascotas: []
 
 }
 
@@ -15,7 +15,6 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 mascotas: action.payload
-
             }
 
         case PAGE_SACI_PETS:
