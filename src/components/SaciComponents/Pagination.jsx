@@ -13,25 +13,16 @@ export default function Pagination() {
     const { mascotas } = useSelector(state => state.saciPets);
     const [offset, setOffset] = useState(0);
     const [data, setData] = useState([]);
-    const [perPage] = useState(5);
+    const [perPage] = useState(20);
     const [pageCount, setPageCount] = useState(0)
 
 
     useEffect(() => {
-        const slicePets = mascotas.slice(offset, offset + perPage)
-        console.log(slicePets)
-        setPageCount(Math.ceil(mascotas.length / perPage))
-        dispatch(page_saci_pets_action(slicePets));
-    }, [mascotas])
-
-    useEffect(() => {
-        const slicePets = mascotas.slice(offset, offset + perPage)
-        console.log(slicePets)
-        setPageCount(Math.ceil(mascotas.length / perPage))
-        dispatch(page_saci_pets_action(slicePets));
-    }, [offset])
-
-
+            const slicePets = mascotas.slice(offset, offset + perPage)
+            console.log(slicePets)
+            setPageCount(Math.ceil(mascotas.length / perPage))
+            dispatch(page_saci_pets_action(slicePets));
+    }, [mascotas, offset])
 
     const handlePageClick = (e) => {
         const selectedPage = e.selected;

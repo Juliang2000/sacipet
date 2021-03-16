@@ -51,7 +51,7 @@ import Slide from '@material-ui/core/Slide';
 // import Modal from './ModalData';
 
 // components
-import AdoptMeModal from '../AdoptMeForm/AdoptMeModal';
+import PetModalData from './PetModalData';
 
 //Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -294,7 +294,7 @@ export default function RecipeReviewCard(props) {
   return (
     <>
       <Grid container spacing={isMobile ? 1 : 3} /* xs={12} */ justify="center" className={classes.cardsPetsContainer}>
-        {pageMascotas?.map((item) => {
+        {pageMascotas.map((item) => {
           return (
             <Grid key={item.id_mascota} item xs={12} sm={6} md={6} lg={3} xl={3}>
               <Card className={classes.cardsPets} style={{ borderRadius: 10 }}>
@@ -322,13 +322,10 @@ export default function RecipeReviewCard(props) {
                   <IconButton aria-label="add to favorites">
                     <FavoriteIcon />
                   </IconButton>
-                  <IconButton aria-label="share">
-                    <ShareIcon />
-                  </IconButton>
-
-                  <IconButton aria-label="pets">
+                  <PetModalData/>
+                  {/* <IconButton aria-label="pets">
                     <PetsIcon />
-                  </IconButton>
+                  </IconButton> */}
 
                   {/* <MenuItem key={item.mascota} onClick={(e) => handleClickOpen(e.target.value)} value={item.id_mascota}>
                     Mascotas
@@ -350,6 +347,8 @@ export default function RecipeReviewCard(props) {
         }
         )}
       </Grid>
+
+      {/* dialogo ficha de mascota */}
 
       <Dialog
         open={open}
