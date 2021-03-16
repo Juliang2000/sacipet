@@ -150,7 +150,7 @@ const rows = [createData('Pinina', 10, 'Macho', 'Pastor Alemán', 'Perro', 80)];
 ////////////////////////////////////////////////////////////
 export default function RecipeReviewCard(props) {
   const dispatch = useDispatch();
-  const { mascotas } = useSelector(state => state.saciPets);
+  const { pageMascotas } = useSelector(state => state.saciPets);
   const [open, setOpen] = useState(false);
   const [newPet, setNewPet] = useState()
   const [anchorMenu, setAnchorMenu] = useState(null);
@@ -182,6 +182,7 @@ export default function RecipeReviewCard(props) {
 
   const handleClickOpen = (value) => {
     setNewPet("" + value)
+    console.log(newPet)
     setOpen(true);
     setTimeout(() => {
       setDisplayContent(true)
@@ -229,16 +230,18 @@ export default function RecipeReviewCard(props) {
 
   useEffect(() => {
     if (petIndex >= 0) {
-      setGetPet(mascotas[petIndex])
+      setGetPet(pageMascotas[petIndex])
     }
   }, [petIndex])
 
   useEffect(() => {
-    let petInfo = mascotas.findIndex(function (item) {
-      return item.id_mascota === newPet;
-    });
-    setPetIndex(petInfo)
-    console.log(petIndex)
+    if (pageMascotas) {
+      let petInfo = pageMascotas.findIndex(function (item) {
+        return item.id_mascota === newPet;
+      });
+      setPetIndex(petInfo)
+      console.log(petIndex)
+    }
   }, [newPet])
 
   useEffect(() => {
@@ -280,9 +283,9 @@ export default function RecipeReviewCard(props) {
   return (
     <>
       <Grid container spacing={isMobile ? 1 : 3} /* xs={12} */ justify="center" className={classes.cardsPetsContainer}>
-        {mascotas.map((item) => {
+        {pageMascotas?.map((item) => {
           return (
-            <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
+            <Grid key={item.id_mascota} item xs={12} sm={6} md={6} lg={3} xl={3}>
               <Card className={classes.cardsPets} style={{ borderRadius: 10 }}>
                 <CardHeader
                   avatar={
@@ -308,7 +311,7 @@ export default function RecipeReviewCard(props) {
 
                 <Grid container justify="center">
                   <Button disableRipple style={{ textTransform: 'none' }}>
-                    <MenuItem key={item.mascota} onClick={(e) => handleClickOpen(e.target.value)} value={item.id_mascota}>
+                    <MenuItem key={item.id_mascota} onClick={(e) => handleClickOpen(e.target.value)} value={item.id_mascota}>
                       Datos de mascota
                   </MenuItem>
                   </Button>
