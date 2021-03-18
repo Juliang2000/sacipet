@@ -1379,6 +1379,68 @@ export const get_saci_pets_action = (filters) => async (dispatch) => {
       );
     }
 
+    // filtros, gatos, perros, pequeños, medianos, grandes, machos
+    if (
+      filters.cats &&
+      filters.dogs &&
+      filters.smalls &&
+      filters.mediums &&
+      filters.bigs &&
+      filters.males
+    ) {
+      filter = response.data.mascotas.filter(
+        (pets) =>
+          (pets.id_tipo_mascota === '1' || pets.id_tipo_mascota === '2') &&
+          (pets.id_tamanio === '3' ||
+            pets.id_tamanio === '2' ||
+            pets.id_tamanio === '1') &&
+          pets.genero_mascota === '1'
+      );
+    }
+
+    // filtros, gatos, perros, pequeños, medianos, grandes, hembras
+    if (
+      filters.cats &&
+      filters.dogs &&
+      filters.smalls &&
+      filters.mediums &&
+      filters.bigs &&
+      filters.females
+    ) {
+      filter = response.data.mascotas.filter(
+        (pets) =>
+          (pets.id_tipo_mascota === '1' || pets.id_tipo_mascota === '2') &&
+          (pets.id_tamanio === '3' ||
+            pets.id_tamanio === '2' ||
+            pets.id_tamanio === '1') &&
+          pets.genero_mascota === '2'
+      );
+    }
+
+    /////////////////////////////////////////////////////////
+
+    /////////////////////// Filtros 7 ///////////////////////
+
+    // filtros, gatos, perros, pequeños, medianos, grandes, machos, hembras
+    if (
+      filters.cats &&
+      filters.dogs &&
+      filters.smalls &&
+      filters.mediums &&
+      filters.bigs &&
+      filters.males &&
+      filters.females
+    ) {
+      filter = response.data.mascotas.filter(
+        (pets) =>
+          (pets.id_tipo_mascota === '1' || pets.id_tipo_mascota === '2') &&
+          (pets.id_tamanio === '3' ||
+            pets.id_tamanio === '2' ||
+            pets.id_tamanio === '1') &&
+          (pets.genero_mascota === '1' || pets.genero_mascota === '2')
+      );
+    }
+
     /////////////////////////////////////////////////////////
 
     // filtros ultima mascota agregada y ordenada de 1 a 3

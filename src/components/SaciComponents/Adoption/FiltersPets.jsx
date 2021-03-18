@@ -1470,6 +1470,37 @@ export default function GmailTreeView() {
     females,
   });
 
+  // filtros, gatos, perros, pequeños, medianos, grandes, machos
+  const [petsFiltersCatsDogsSmallsMediumsBigsMales] = useState({
+    cats,
+    dogs,
+    smalls,
+    mediums,
+    bigs,
+    males
+  });
+
+  // filtros, gatos, perros, pequeños, medianos, grandes, hembras
+  const [petsFiltersCatsDogsSmallsMediumsBigsFemales] = useState({
+    cats,
+    dogs,
+    smalls,
+    mediums,
+    bigs,
+    females
+  });
+
+  // filtros, gatos, perros, pequeños, medianos, grandes, machos, hembras
+  const [petsFiltersCatsDogsSmallsMediumsBigsMalesFemales] = useState({
+    cats,
+    dogs,
+    smalls,
+    mediums,
+    bigs,
+    males,
+    females
+  });
+
   const filtersDeps = [
     filtersCats,
     filtersDogs,
@@ -3414,6 +3445,52 @@ export default function GmailTreeView() {
     ) {
       dispatch(
         get_saci_pets_action(petsFiltersCatsDogsMediumsBigsMalesFemales)
+      );
+    }
+
+    // gatos, perros, pequeños, medianos, grandes, machos
+    if (
+      filtersCats &&
+      filtersDogs &&
+      filtersSmalls &&
+      filtersMediums &&
+      filtersBigs &&
+      filtersMales &&
+      !filtersHamsters &&
+      !filtersFemales
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsSmallsMediumsBigsMales));
+    }
+
+    // gatos, perros, pequeños, medianos, grandes, hembras
+    if (
+      filtersCats &&
+      filtersDogs &&
+      filtersSmalls &&
+      filtersMediums &&
+      filtersBigs &&
+      filtersFemales &&
+      !filtersHamsters &&
+      !filtersMales
+    ) {
+      dispatch(
+        get_saci_pets_action(petsFiltersCatsDogsSmallsMediumsBigsFemales)
+      );
+    }
+
+    // gatos, perros, pequeños, medianos, grandes, machos, hembras
+    if (
+      filtersCats &&
+      filtersDogs &&
+      filtersSmalls &&
+      filtersMediums &&
+      filtersBigs &&
+      filtersMales &&
+      filtersFemales &&
+      !filtersHamsters
+    ) {
+      dispatch(
+        get_saci_pets_action(petsFiltersCatsDogsSmallsMediumsBigsMalesFemales)
       );
     }
   }, [filtersDeps]);
