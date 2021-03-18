@@ -8,8 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import { Chip } from "@material-ui/core";
-
+import { Chip } from '@material-ui/core';
 
 // import filters from '../../../assets/icons/filters/046-pet-shelter.svg'
 // import dog from '../../../assets/icons/petype/dog.svg';
@@ -24,11 +23,11 @@ import petCat from '../../../assets/icons/filters/cat-final.svg';
 import petHamster from '../../../assets/icons/filters/hamster-final.svg';
 
 import petRace from '../../../assets/icons/filters/pet-race-final.svg';
-import petRaceDog1 from '../../../assets/icons/filters/pet-race-dog01.svg'
-import petRaceDog2 from '../../../assets/icons/filters/pet-race-dog02.svg'
-import petRaceDog3 from '../../../assets/icons/filters/pet-race-dog03.svg'
-import petRaceDog4 from '../../../assets/icons/filters/pet-race-dog04.svg'
-import petRaceDog5 from '../../../assets/icons/filters/pet-race-dog05.svg'
+import petRaceDog1 from '../../../assets/icons/filters/pet-race-dog01.svg';
+import petRaceDog2 from '../../../assets/icons/filters/pet-race-dog02.svg';
+import petRaceDog3 from '../../../assets/icons/filters/pet-race-dog03.svg';
+import petRaceDog4 from '../../../assets/icons/filters/pet-race-dog04.svg';
+import petRaceDog5 from '../../../assets/icons/filters/pet-race-dog05.svg';
 
 import petSize from '../../../assets/icons/filters/petSize.svg';
 import petGender from '../../../assets/icons/filters/petGender.svg';
@@ -41,10 +40,7 @@ import petYear from '../../../assets/icons/filters/petYear.svg';
 import { useDispatch } from 'react-redux';
 
 // Redux Actions
-import {
-  get_saci_pets_action,
-} from '../../../redux/actions/saciPets'
-
+import { get_saci_pets_action } from '../../../redux/actions/saciPets';
 
 // import Button from '@material-ui/core/Button';
 
@@ -57,7 +53,7 @@ const useTreeItemStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
     '&:hover > $content': {
       // backgroundColor: theme.palette.action.hover,
-      backgroundColor: '#c9caca'
+      backgroundColor: '#c9caca',
     },
     '&:focus > $content, &$selected > $content': {
       backgroundColor: `var(--tree-view-bg-color, ${theme.palette.grey[400]})`,
@@ -106,7 +102,14 @@ const useTreeItemStyles = makeStyles((theme) => ({
 
 function StyledTreeItem(props) {
   const classes = useTreeItemStyles();
-  const { labelText, labelIcon: LabelIcon, labelInfo, color, bgColor, ...other } = props;
+  const {
+    labelText,
+    labelIcon: LabelIcon,
+    labelInfo,
+    color,
+    bgColor,
+    ...other
+  } = props;
 
   return (
     <TreeItem
@@ -147,7 +150,6 @@ StyledTreeItem.propTypes = {
 };
 
 const useStyles = makeStyles((theme) => ({
-
   root: {
     height: 264,
     flexGrow: 1,
@@ -156,15 +158,14 @@ const useStyles = makeStyles((theme) => ({
 
   iconSize: {
     width: '40px',
-    marginRight: '10px'
+    marginRight: '10px',
   },
 
   filtersChips: {
-
     margin: theme.spacing(3),
 
     '& .MuiChip-deleteIconColorPrimary': {
-      color: '#FFF'
+      color: '#FFF',
     },
 
     '& .MuiChip-label': {
@@ -172,21 +173,17 @@ const useStyles = makeStyles((theme) => ({
     },
 
     '& .MuiChip-root:hover': {
-      backgroundColor: 'red'
+      backgroundColor: 'red',
     },
 
     '& .MuiChip-root': {
       marginRight: '5px',
-      marginBottom: '5px'
-    }
-
-  }
+      marginBottom: '5px',
+    },
+  },
 }));
 
-
-
 export default function GmailTreeView() {
-
   const dispatch = useDispatch();
 
   const classes = useStyles();
@@ -194,98 +191,122 @@ export default function GmailTreeView() {
   const lottieFilter = () => {
     return (
       <img src={petFilter} alt="Icon Pet Filter" className={classes.iconSize} />
-    )
-  }
+    );
+  };
 
   const lottiePetType = () => {
     return (
       <img src={petType} alt="Icon Pet Type" className={classes.iconSize} />
-    )
-  }
+    );
+  };
 
   const lottieDog = () => {
-    return (
-      <img src={petDog} alt="Icon Pet Dog" className={classes.iconSize} />
-    )
-  }
+    return <img src={petDog} alt="Icon Pet Dog" className={classes.iconSize} />;
+  };
 
   const lottieCat = () => {
-    return (
-      <img src={petCat} alt="Icon Pet Dog" className={classes.iconSize} />
-    )
-  }
+    return <img src={petCat} alt="Icon Pet Dog" className={classes.iconSize} />;
+  };
 
   const lottieHamster = () => {
     return (
       <img src={petHamster} alt="Icon Pet Dog" className={classes.iconSize} />
-    )
-  }
+    );
+  };
 
   const lottiePetRace = () => {
     return (
       <img src={petRace} alt="Icon Pet Race" className={classes.iconSize} />
-    )
-  }
+    );
+  };
 
   const raceDog1 = () => {
     return (
-      <img src={petRaceDog1} alt="Icon Pet Race 1" className={classes.iconSize} />
-    )
-  }
+      <img
+        src={petRaceDog1}
+        alt="Icon Pet Race 1"
+        className={classes.iconSize}
+      />
+    );
+  };
 
   const raceDog2 = () => {
     return (
-      <img src={petRaceDog2} alt="Icon Pet Race 2" className={classes.iconSize} />
-    )
-  }
+      <img
+        src={petRaceDog2}
+        alt="Icon Pet Race 2"
+        className={classes.iconSize}
+      />
+    );
+  };
 
   const raceDog3 = () => {
     return (
-      <img src={petRaceDog3} alt="Icon Pet Race 3" className={classes.iconSize} />
-    )
-  }
+      <img
+        src={petRaceDog3}
+        alt="Icon Pet Race 3"
+        className={classes.iconSize}
+      />
+    );
+  };
 
   const raceDog4 = () => {
     return (
-      <img src={petRaceDog4} alt="Icon Pet Race 4" className={classes.iconSize} />
-    )
-  }
+      <img
+        src={petRaceDog4}
+        alt="Icon Pet Race 4"
+        className={classes.iconSize}
+      />
+    );
+  };
 
   const raceDog5 = () => {
     return (
-      <img src={petRaceDog5} alt="Icon Pet Race 5" className={classes.iconSize} />
-    )
-  }
+      <img
+        src={petRaceDog5}
+        alt="Icon Pet Race 5"
+        className={classes.iconSize}
+      />
+    );
+  };
 
   const lottiePetSize = () => {
     return (
       <img src={petSize} alt="Icon Pet Size" className={classes.iconSize} />
-    )
-  }
+    );
+  };
 
   const lottiePetGender = () => {
     return (
       <img src={petGender} alt="Icon Pet Gender" className={classes.iconSize} />
-    )
-  }
+    );
+  };
 
   const lottiePetGenderMale = () => {
     return (
-      <img src={petGenderMale} alt="Icon Pet Gender Male" className={classes.iconSize} />
-    )
-  }
+      <img
+        src={petGenderMale}
+        alt="Icon Pet Gender Male"
+        className={classes.iconSize}
+      />
+    );
+  };
 
   const lottiePetGenderFemale = () => {
     return (
-      <img src={petGenderFemale} alt="Icon Pet Gender Female" className={classes.iconSize} />
-    )
-  }
+      <img
+        src={petGenderFemale}
+        alt="Icon Pet Gender Female"
+        className={classes.iconSize}
+      />
+    );
+  };
 
   const lottiePetYear = () => {
     return (
       <img src={petYear} alt="Icon Pet Year" className={classes.iconSize} />
-    )
-  }
+    );
+  };
 
   /////////////////////////////////////////////////////////////////////////
   // tipos de mascota//
@@ -296,16 +317,15 @@ export default function GmailTreeView() {
 
   const handleCatsAdd = () => {
     setFiltersCats(true);
-  }
+  };
 
   const handleCatsDelete = () => {
     setFiltersCatsValidate(true);
     setTimeout(() => {
       setFiltersCats(false);
       setFiltersCatsValidate(false);
-
     }, 1000);
-  }
+  };
 
   // perros
   const [filtersDogs, setFiltersDogs] = useState(false);
@@ -313,7 +333,7 @@ export default function GmailTreeView() {
 
   const handleDogsAdd = () => {
     setFiltersDogs(true);
-  }
+  };
 
   const handleDogsDelete = () => {
     setFiltersDogsValidate(true);
@@ -321,7 +341,7 @@ export default function GmailTreeView() {
       setFiltersDogs(false);
       setFiltersDogsValidate(false);
     }, 1000);
-  }
+  };
 
   // hamsters
   const [filtersHamsters, setFiltersHamsters] = useState(false);
@@ -329,7 +349,7 @@ export default function GmailTreeView() {
 
   const handleHamstersAdd = () => {
     setFiltersHamsters(true);
-  }
+  };
 
   const handleHamstersDelete = () => {
     setFiltersHamsterValidate(true);
@@ -337,7 +357,7 @@ export default function GmailTreeView() {
       setFiltersHamsterValidate(false);
       setFiltersHamsters(false);
     }, 1000);
-  }
+  };
 
   /////////////////////////////////////////////////////////////////////////
   // tamaños //
@@ -348,7 +368,7 @@ export default function GmailTreeView() {
 
   const handleSmallsAdd = () => {
     setFiltersSmalls(true);
-  }
+  };
 
   const handleSmallsDelete = () => {
     setFiltersSmallsValidate(true);
@@ -356,7 +376,7 @@ export default function GmailTreeView() {
       setFiltersSmallsValidate(false);
       setFiltersSmalls(false);
     }, 1000);
-  }
+  };
 
   // mediano
   const [filtersMediums, setFiltersMediums] = useState(false);
@@ -364,7 +384,7 @@ export default function GmailTreeView() {
 
   const handleMediumsAdd = () => {
     setFiltersMediums(true);
-  }
+  };
 
   const handleMediumsDelete = () => {
     setFiltersMediumsValidate(true);
@@ -372,7 +392,7 @@ export default function GmailTreeView() {
       setFiltersMediumsValidate(false);
       setFiltersMediums(false);
     }, 1000);
-  }
+  };
 
   // grande
   const [filtersBigs, setFiltersBigs] = useState(false);
@@ -380,7 +400,7 @@ export default function GmailTreeView() {
 
   const handleBigsAdd = () => {
     setFiltersBigs(true);
-  }
+  };
 
   const handleBigsDelete = () => {
     setFiltersBigsValidate(true);
@@ -388,7 +408,7 @@ export default function GmailTreeView() {
       setFiltersBigsValidate(false);
       setFiltersBigs(false);
     }, 1000);
-  }
+  };
 
   /////////////////////////////////////////////////////////////////////////
   //genero
@@ -399,15 +419,15 @@ export default function GmailTreeView() {
 
   const handleMalesAdd = () => {
     setFiltersMales(true);
-  }
+  };
 
   const handleMalesDelete = () => {
     setFiltersMalesValidate(true);
     setTimeout(() => {
       setFiltersMalesValidate(false);
-      setFiltersMales(false)
+      setFiltersMales(false);
     }, 1000);
-  }
+  };
 
   //hembras
   const [filtersFemales, setFiltersFemales] = useState(false);
@@ -415,19 +435,15 @@ export default function GmailTreeView() {
 
   const handleFemalesAdd = () => {
     setFiltersFemales(true);
-  }
+  };
 
   const handleFemalesDelete = () => {
     setFiltersFemalesValidate(true);
     setTimeout(() => {
       setFiltersFemalesValidate(false);
-      setFiltersFemales(false)
+      setFiltersFemales(false);
     }, 1000);
-  }
-
-
-
-
+  };
 
   // const { mascotas } = useSelector(state => state.saciPets);
   // const harold = mascotas.filter(pets => pets.id_tipo_mascota === "1")
@@ -444,7 +460,7 @@ export default function GmailTreeView() {
     mediums: true,
     bigs: true,
     males: true,
-    females: true
+    females: true,
   };
 
   const {
@@ -456,133 +472,129 @@ export default function GmailTreeView() {
     mediums,
     bigs,
     males,
-    females
-  } = filtersObjs
-
-  // console.log(object1)
-
+    females,
+  } = filtersObjs;
 
   // filtro vacio
   const [filtersInitial] = useState({
-    id_tipo_mascota
-  })
-
+    id_tipo_mascota,
+  });
 
   // filtro gatos
   const [petsFiltersCats] = useState({
-    cats
-  })
+    cats,
+  });
 
   // filtro perros
   const [petsFiltersDogs] = useState({
-    dogs
-  })
+    dogs,
+  });
 
   // filtro hamsters
   const [petsFiltersHamsters] = useState({
-    hamsters
-  })
+    hamsters,
+  });
 
   // filtro gatos y perros
   const [petsFiltersCatsDogs] = useState({
     cats,
-    dogs
-  })
+    dogs,
+  });
 
   // filtro gatos y hamsters
   const [petsFiltersCatsHamsters] = useState({
     cats,
-    hamsters
-  })
+    hamsters,
+  });
 
   // filtro perros y hamsters
   const [petsFiltersDogsHamsters] = useState({
     dogs,
-    hamsters
-  })
+    hamsters,
+  });
 
   // filtro perros, gatos y hamsters
   const [petsFiltersCatsDogsHamsters] = useState({
     cats,
     dogs,
-    hamsters
-  })
+    hamsters,
+  });
 
   // filtros pequeños
   const [petsFiltersSmalls] = useState({
-    smalls
-  })
+    smalls,
+  });
 
   // filtro medianos
   const [petsFiltersMediums] = useState({
-    mediums
-  })
+    mediums,
+  });
 
   // filtro grandes
   const [petsFiltersBigs] = useState({
-    bigs
-  })
+    bigs,
+  });
 
   // filtro pequeños y medianos
   const [petsFiltersSmallsMediums] = useState({
     smalls,
-    mediums
-  })
+    mediums,
+  });
 
   //filtro pequeños y grandes
   const [petsFiltersSmallsBigs] = useState({
     smalls,
-    bigs
-  })
+    bigs,
+  });
 
   //filtro grandes y medianos
   const [petsFiltersBigsMediums] = useState({
     bigs,
-    mediums
-  })
+    mediums,
+  });
 
   //filtro pequeños, medianos, grandes
   const [petsFiltersSmallsMediumsBigs] = useState({
     smalls,
     mediums,
-    bigs
-  })
+    bigs,
+  });
 
   //filtro gatos, pequeños
   const [petsFiltersCatsSmalls] = useState({
     cats,
-    smalls
-  })
+    smalls,
+  });
 
   //filtro gatos, medianos
   const [petsFiltersCatsMediums] = useState({
     cats,
-    mediums
-  })
+    mediums,
+  });
 
   //filtro gatos, grandes
   const [petsFiltersCatsBigs] = useState({
     cats,
-    bigs
-  })
+    bigs,
+  });
 
   //filtro perros, pequeños
   const [petsFiltersDogsSmalls] = useState({
     dogs,
-    smalls
-  })
+    smalls,
+  });
 
   //filtro perros, medianos
   const [petsFiltersDogsMediums] = useState({
     dogs,
-    mediums
-  })
+    mediums,
+  });
 
   //filtro perros, grandes
   const [petsFiltersDogsBigs] = useState({
     dogs,
-    bigs
-  })
+    bigs,
+  });
 
   //filtro hamsters tamaños no
 
@@ -590,105 +602,104 @@ export default function GmailTreeView() {
   const [petsFiltersCatsSmallsMediums] = useState({
     cats,
     smalls,
-    mediums
-  })
+    mediums,
+  });
 
   //filtro gatos, pequeños, grandes
   const [petsFiltersCatsSmallsBigs] = useState({
     cats,
     smalls,
-    bigs
-  })
+    bigs,
+  });
 
   //filtro gatos, medianos, grandes
   const [petsFiltersCatsMediumsBigs] = useState({
     cats,
     mediums,
-    bigs
-  })
+    bigs,
+  });
 
   //filtro perros, pequeños, medianos
   const [petsFiltersDogsSmallsMediums] = useState({
     dogs,
     smalls,
-    mediums
-  })
+    mediums,
+  });
 
   //filtro perros, pequeños, grandes
   const [petsFiltersDogsSmallsBigs] = useState({
     dogs,
     smalls,
-    bigs
-  })
+    bigs,
+  });
 
   //filtro perros, medianos, grandes
   const [petsFiltersDogsMediumsBigs] = useState({
     dogs,
     mediums,
-    bigs
-  })
+    bigs,
+  });
 
   //filtro gatos, perros, pequeños
   const [petsFiltersCatsDogsSmalls] = useState({
     cats,
     dogs,
-    smalls
-  })
+    smalls,
+  });
 
   //filtro gatos, perros, medianos
   const [petsFiltersCatsDogsMediums] = useState({
     cats,
     dogs,
-    mediums
-  })
+    mediums,
+  });
 
   //filtro gatos, perros, grandes
   const [petsFiltersCatsDogsBigs] = useState({
     cats,
     dogs,
-    bigs
-  })
+    bigs,
+  });
 
   //filtro gatos, perros, pequeños, medianos
   const [petsFiltersCatsDogsSmallsMediums] = useState({
     cats,
     dogs,
     smalls,
-    mediums
-  })
+    mediums,
+  });
 
   //filtro gatos, perros, pequeños, grandes
   const [petsFiltersCatsDogsSmallsBigs] = useState({
     cats,
     dogs,
     smalls,
-    bigs
-  })
+    bigs,
+  });
 
   //filtro gatos, perros, medianos, grandes
   const [petsFiltersCatsDogsMediumsBigs] = useState({
     cats,
     dogs,
     mediums,
-    bigs
-  })
-
+    bigs,
+  });
 
   //filtro gatos, pequeños, medianos, grandes
   const [petsFiltersCatsSmallsMediumsBigs] = useState({
     cats,
     smalls,
     mediums,
-    bigs
-  })
+    bigs,
+  });
 
   //filtro perros, pequeños, medianos, grandes
   const [petsFiltersDogsSmallsMediumsBigs] = useState({
     dogs,
     smalls,
     mediums,
-    bigs
-  })
+    bigs,
+  });
 
   // filtros gatos, perros, pequeños, medianos, grandes
   const [petsFiltersCatsDogsSmallsMediumsBigs] = useState({
@@ -696,164 +707,163 @@ export default function GmailTreeView() {
     dogs,
     smalls,
     mediums,
-    bigs
-  })
+    bigs,
+  });
 
   // filtros machos
   const [petsFiltersMales] = useState({
-    males
-  })
+    males,
+  });
 
   // filtros hembras
   const [petsFiltersFemales] = useState({
-    females
-  })
+    females,
+  });
 
   // filtros machos, hembras
   const [petsFiltersMalesFemales] = useState({
     males,
-    females
-  })
+    females,
+  });
 
   // filtros, gatos, machos
   const [petsFiltersCatsMales] = useState({
     cats,
-    males
-  })
+    males,
+  });
 
   // filtros, gatos, hembras
   const [petsFiltersCatsFemales] = useState({
     cats,
-    females
-  })
+    females,
+  });
 
   // filtros, perros, machos
   const [petsFiltersDogsMales] = useState({
     dogs,
-    males
-  })
+    males,
+  });
 
   // filtros, perros, hembras
   const [petsFiltersDogsFemales] = useState({
     dogs,
-    females
-  })
+    females,
+  });
 
   // filtros, hamsters, machos
   const [petsFiltersHamstersMales] = useState({
     hamsters,
-    males
-  })
+    males,
+  });
 
   // filtros, hamsters, hembras
   const [petsFiltersHamstersFemales] = useState({
     hamsters,
-    females
-  })
+    females,
+  });
 
   // filtros, gatos, machos, hembras
   const [petsFiltersCatsMalesFemales] = useState({
     cats,
     males,
-    females
-  })
+    females,
+  });
 
   // filtros, perros, machos, hembras
   const [petsFiltersDogsMalesFemales] = useState({
     dogs,
     males,
-    females
-  })
+    females,
+  });
 
   // filtros, hamsters, machos, hembras
   const [petsFiltersHamstersMalesFemales] = useState({
     hamsters,
     males,
-    females
-  })
+    females,
+  });
 
   // filtros, gatos, perros, machos
   const [petsFiltersCatsDogsMales] = useState({
     cats,
     dogs,
-    males
-  })
+    males,
+  });
 
   // filtros, gatos, perros, hembras
   const [petsFiltersCatsDogsFemales] = useState({
     cats,
     dogs,
-    females
-  })
+    females,
+  });
 
   // filtros, gatos, hamsters, machos
   const [petsFiltersCatsHamstersMales] = useState({
     cats,
     hamsters,
-    males
-  })
+    males,
+  });
 
   // filtros, gatos, hamsters, hembras
   const [petsFiltersCatsHamstersFemales] = useState({
     cats,
     hamsters,
-    females
-  })
+    females,
+  });
 
   // filtros, perros, hamsters, machos
   const [petsFiltersDogsHamstersMales] = useState({
     dogs,
     hamsters,
-    males
-  })
+    males,
+  });
 
   // filtros, perros, hamsters, hembras
   const [petsFiltersDogsHamstersFemales] = useState({
     dogs,
     hamsters,
-    females
-  })
+    females,
+  });
 
   // gatos, perros, machos, hembras
   const [petsFiltersCatsDogsMalesFemales] = useState({
     cats,
     dogs,
     males,
-    females
-  })
+    females,
+  });
 
   // gatos, hamsters, machos, hembras
   const [petsFiltersCatsHamstersMalesFemales] = useState({
     cats,
     hamsters,
     males,
-    females
-  })
+    females,
+  });
 
   // perros, hamsters, machos, hembras
   const [petsFiltersDogsHamstersMalesFemales] = useState({
     dogs,
     hamsters,
     males,
-    females
-  })
-
+    females,
+  });
 
   // filtros, gatos, perros, hamsters, machos
   const [petsFiltersCatsDogsHamstersMales] = useState({
     cats,
     dogs,
     hamsters,
-    males
-  })
+    males,
+  });
 
   // filtros, gatos, perros, hamsters, hembras
   const [petsFiltersCatsDogsHamstersFemales] = useState({
     cats,
     dogs,
     hamsters,
-    females
-  })
+    females,
+  });
 
   // filtros, gatos, perros, hamsters, machos, hembras
   const [petsFiltersCatsDogsHamstersMalesFemales] = useState({
@@ -861,68 +871,66 @@ export default function GmailTreeView() {
     dogs,
     hamsters,
     males,
-    females
-  })
+    females,
+  });
 
   // filtros, gatos, pequeños, machos
   const [petsFiltersCatsSmallsMales] = useState({
     cats,
     smalls,
-    males
-  })
+    males,
+  });
 
   // filtros, gatos, pequeños, hembras
   const [petsFiltersCatsSmallsFemales] = useState({
     cats,
     smalls,
-    females
-  })
+    females,
+  });
 
   // filtros, perros, pequeños, machos
   const [petsFiltersDogsSmallsMales] = useState({
     dogs,
     smalls,
-    males
-  })
+    males,
+  });
 
   // filtros, perros, pequeños, hembras
   const [petsFiltersDogsSmallsFemales] = useState({
     dogs,
     smalls,
-    females
-  })
+    females,
+  });
   // filtros hamsters no tienen tamaño
   // filtros hamsters no tienen tamaño
-
-
 
   // filtros, gatos, medianos, machos
   const [petsFiltersCatsMediumsMales] = useState({
     cats,
     mediums,
-    males
-  })
+    males,
+  });
 
   // filtros, gatos, medianos, hembras
   const [petsFiltersCatsMediumsFemales] = useState({
     cats,
     mediums,
-    females
-  })
+    females,
+  });
 
   // filtros, perros, medianos, machos
   const [petsFiltersDogsMediumsMales] = useState({
     dogs,
     mediums,
-    males
-  })
+    males,
+  });
 
   // filtros, perros, medianos, hembras
   const [petsFiltersDogsMediumsFemales] = useState({
     dogs,
     mediums,
-    females
-  })
+    females,
+  });
   // filtros hamsters no tienen tamaño
   // filtros hamsters no tienen tamaño
 
@@ -930,130 +938,128 @@ export default function GmailTreeView() {
   const [petsFiltersCatsBigsMales] = useState({
     cats,
     bigs,
-    males
-  })
+    males,
+  });
 
   // filtros, gatos, grandes, hembras
   const [petsFiltersCatsBigsFemales] = useState({
     cats,
     bigs,
-    females
-  })
+    females,
+  });
 
   // filtros, perros, grandes, machos
   const [petsFiltersDogsBigsMales] = useState({
     dogs,
     bigs,
-    males
-  })
+    males,
+  });
 
   // filtros, perros, grandes, hembras
   const [petsFiltersDogsBigsFemales] = useState({
     dogs,
     bigs,
-    females
-  })
-
+    females,
+  });
 
   // filtros hamsters no tienen tamaño
   // filtros hamsters no tienen tamaño
-
 
   // filtros gatos, pequeños, machos, hembras
   const [petsFiltersCatsSmallsMalesFemales] = useState({
     cats,
     smalls,
     males,
-    females
-  })
+    females,
+  });
 
   // filtros gatos, medianos, machos, hembras
   const [petsFiltersCatsMediumsMalesFemales] = useState({
     cats,
     mediums,
     males,
-    females
-  })
+    females,
+  });
 
   // filtros gatos, grandes, machos, hembras
   const [petsFiltersCatsBigsMalesFemales] = useState({
     cats,
     bigs,
     males,
-    females
-  })
+    females,
+  });
 
   // filtros perros, pequeños, machos, hembras
   const [petsFiltersDogsSmallsMalesFemales] = useState({
     dogs,
     smalls,
     males,
-    females
-  })
+    females,
+  });
 
   // filtros perros, medianos, machos, hembras
   const [petsFiltersDogsMediumsMalesFemales] = useState({
     dogs,
     mediums,
     males,
-    females
-  })
+    females,
+  });
 
   // filtros perros, grandes, machos, hembras
   const [petsFiltersDogsBigsMalesFemales] = useState({
     dogs,
     bigs,
     males,
-    females
-  })
+    females,
+  });
 
   // filtros gatos, perros, pequeños, machos
   const [petsFiltersCatsDogsSmallsMales] = useState({
     cats,
     dogs,
     smalls,
-    males
-  })
+    males,
+  });
 
   // filtros gatos, perros, pequeños, hembras
   const [petsFiltersCatsDogsSmallsFemales] = useState({
     cats,
     dogs,
     smalls,
-    females
-  })
+    females,
+  });
 
   // filtros gatos, perros, medianos, machos
   const [petsFiltersCatsDogsMediumsMales] = useState({
     cats,
     dogs,
     mediums,
-    males
-  })
+    males,
+  });
 
   // gatos, perros, medianos, hembras
   const [petsFiltersCatsDogsMediumsFemales] = useState({
     cats,
     dogs,
     mediums,
-    females
-  })
+    females,
+  });
 
   // filtros gatos, perros, grandes, machos
   const [petsFiltersCatsDogsBigsMales] = useState({
     cats,
     dogs,
     bigs,
-    males
-  })
+    males,
+  });
 
   // filtros gatos, perros, grandes, hembras
   const [petsFiltersCatsDogsBigsFemales] = useState({
     cats,
     dogs,
     bigs,
-    females
-  })
+    females,
+  });
 
   // filtros gatos, perros, pequeños, machos, hembras
   const [petsFiltersCatsDogsSmallsMalesFemales] = useState({
@@ -1061,8 +1067,8 @@ export default function GmailTreeView() {
     dogs,
     smalls,
     males,
-    females
-  })
+    females,
+  });
 
   // filtros gatos, perros, medianos, machos, hembras
   const [petsFiltersCatsDogsMediumsMalesFemales] = useState({
@@ -1070,8 +1076,8 @@ export default function GmailTreeView() {
     dogs,
     mediums,
     males,
-    females
-  })
+    females,
+  });
 
   // filtros gatos, perros, grandes, machos, hembras
   const [petsFiltersCatsDogsBigsMalesFemales] = useState({
@@ -1079,136 +1085,390 @@ export default function GmailTreeView() {
     dogs,
     bigs,
     males,
-    females
-  })
-
+    females,
+  });
 
   // filtros pequeños, machos
   const [petsFiltersSmallsMales] = useState({
     smalls,
-    males
-  })
+    males,
+  });
 
   // filtros pequeños, hembras
   const [petsFiltersSmallsFemales] = useState({
     smalls,
-    females
-  })
+    females,
+  });
 
   // filtros pequeños, machos, hembras
   const [petsFiltersSmallsMalesFemales] = useState({
     smalls,
     males,
-    females
-  })
-
+    females,
+  });
 
   // filtros medianos, machos
   const [petsFiltersMediumsMales] = useState({
     mediums,
-    males
-  })
+    males,
+  });
 
   // filtros medianos, hembras
   const [petsFiltersMediumsFemales] = useState({
     mediums,
-    females
-  })
+    females,
+  });
 
   // filtros medianos, machos, hembras
   const [petsFiltersMediumsMalesFemales] = useState({
     mediums,
     males,
-    females
-  })
-
+    females,
+  });
 
   // filtros grandes, machos
   const [petsFiltersBigsMales] = useState({
     bigs,
-    males
-  })
+    males,
+  });
 
   // filtros grandes, hembras
   const [petsFiltersBigsFemales] = useState({
     bigs,
-    females
-  })
+    females,
+  });
 
   // filtros grandes, machos, hembras
   const [petsFiltersBigsMalesFemales] = useState({
     bigs,
     males,
-    females
-  })
-
-
+    females,
+  });
 
   // filtros pequeños, medianos, machos
   const [petsFiltersSmallsMediumsMales] = useState({
     smalls,
     mediums,
-    males
-  })
+    males,
+  });
 
   // filtros pequeños, medianos, hembras
   const [petsFiltersSmallsMediumsFemales] = useState({
     smalls,
     mediums,
-    females
-  })
+    females,
+  });
 
   // filtros pequeños, medianos, machos, hembras
   const [petsFiltersSmallsMediumsMalesFemales] = useState({
     smalls,
     mediums,
     males,
-    females
-  })
+    females,
+  });
 
   // filtros pequeños, grandes, machos
   const [petsFiltersSmallsBigsMales] = useState({
     smalls,
     bigs,
-    males
-  })
+    males,
+  });
 
   // filtros pequeños, grandes, hembras
   const [petsFiltersSmallsBigsFemales] = useState({
     smalls,
     bigs,
-    females
-  })
+    females,
+  });
 
   // filtros pequeños, grandes, machos, hembras
   const [petsFiltersSmallsBigsMalesFemales] = useState({
     smalls,
     bigs,
     males,
-    females
-  })
+    females,
+  });
 
+  // filtros medianos, grandes, machos
+  const [petsFiltersMediumsBigsMales] = useState({
+    mediums,
+    bigs,
+    males,
+  });
 
+  // filtros medianos, grandes, hembras
+  const [petsFiltersMediumsBigsFemales] = useState({
+    mediums,
+    bigs,
+    females,
+  });
+
+  // filtros medianos, grandes, machos, hembras
+  const [petsFiltersMediumsBigsMalesFemales] = useState({
+    mediums,
+    bigs,
+    males,
+    females,
+  });
 
   // filtros pequeños, medianos, grandes, machos
+  const [petsFiltersSmallsMediumsBigsMales] = useState({
+    smalls,
+    mediums,
+    bigs,
+    males,
+  });
+
   // filtros pequeños, medianos, grandes, hembras
+  const [petsFiltersSmallsMediumsBigsFemales] = useState({
+    smalls,
+    mediums,
+    bigs,
+    females,
+  });
+
   // filtros pequeños, medianos, grandes, machos, hembras
+  const [petsFiltersSmallsMediumsBigsMalesFemales] = useState({
+    smalls,
+    mediums,
+    bigs,
+    males,
+    females,
+  });
 
+  // filtros gatos, pequeños, medianos, machos
+  const [petsFiltersCatsSmallsMediumsMales] = useState({
+    cats,
+    smalls,
+    mediums,
+    males,
+  });
 
+  // filtros gatos, pequeños, medianos, hembras
+  const [petsFiltersCatsSmallsMediumsFemales] = useState({
+    cats,
+    smalls,
+    mediums,
+    females,
+  });
 
+  // filtros gatos, pequeños, medianos, machos, hembras
+  const [petsFiltersCatsSmallsMediumsMalesFemales] = useState({
+    cats,
+    smalls,
+    mediums,
+    males,
+    females,
+  });
 
+  // filtros gatos, pequeños, grandes, machos
+  const [petsFiltersCatsSmallsBigsMales] = useState({
+    cats,
+    smalls,
+    bigs,
+    males,
+  });
 
+  // filtros gatos, pequeños, grandes, hembras
+  const [petsFiltersCatsSmallsBigsFemales] = useState({
+    cats,
+    smalls,
+    bigs,
+    females,
+  });
 
+  // filtros gatos, pequeños, grandes, machos, hembras
+  const [petsFiltersCatsSmallsBigsMalesFemales] = useState({
+    cats,
+    smalls,
+    bigs,
+    males,
+    females,
+  });
 
+  // filtros gatos, medianos, grandes, machos
+  const [petsFiltersCatsMediumsBigsMales] = useState({
+    cats,
+    mediums,
+    bigs,
+    males,
+  });
 
+  // filtros gatos, medianos, grandes, hembras
+  const [petsFiltersCatsMediumsBigsFemales] = useState({
+    cats,
+    mediums,
+    bigs,
+    females,
+  });
 
+  // filtros gatos, medianos, grandes, machos, hembras
+  const [petsFiltersCatsMediumsBigsMalesFemales] = useState({
+    cats,
+    mediums,
+    bigs,
+    males,
+    females,
+  });
 
+  // filtros perros, pequeños, medianos, machos
+  const [petsFiltersDogsSmallsMediumsMales] = useState({
+    dogs,
+    smalls,
+    mediums,
+    males,
+  });
 
+  // filtros perros, pequeños, medianos, hembras
+  const [petsFiltersDogsSmallsMediumsFemales] = useState({
+    dogs,
+    smalls,
+    mediums,
+    females,
+  });
 
+  // filtros perros, pequeños, medianos, machos, hembras
+  const [petsFiltersDogsSmallsMediumsMalesFemales] = useState({
+    dogs,
+    smalls,
+    mediums,
+    males,
+    females,
+  });
 
+  // filtros perros, pequeños, grandes, machos
+  const [petsFiltersDogsSmallsBigsMales] = useState({
+    dogs,
+    smalls,
+    bigs,
+    males,
+  });
 
+  // filtros perros, pequeños, grandes, hembras
+  const [petsFiltersDogsSmallsBigsFemales] = useState({
+    dogs,
+    smalls,
+    bigs,
+    females,
+  });
 
+  // filtros perros, pequeños, grandes, machos, hembras
+  const [petsFiltersDogsSmallsBigsMalesFemales] = useState({
+    dogs,
+    smalls,
+    bigs,
+    males,
+    females,
+  });
 
+  // filtros perros, medianos, grandes, machos
+  const [petsFiltersDogsMediumsBigsMales] = useState({
+    dogs,
+    mediums,
+    bigs,
+    males,
+  });
+
+  // filtros perros, medianos, grandes, hembras
+  const [petsFiltersDogsMediumsBigsFemales] = useState({
+    dogs,
+    mediums,
+    bigs,
+    females,
+  });
+
+  // filtros perros, medianos, grandes, machos, hembras
+  const [petsFiltersDogsMediumsBigsMalesFemales] = useState({
+    dogs,
+    mediums,
+    bigs,
+    males,
+    females,
+  });
+
+  // filtros gatos, perros, pequeños, medianos, machos
+  const [petsFiltersCatsDogsSmallsMediumsMales] = useState({
+    cats,
+    dogs,
+    smalls,
+    mediums,
+    males,
+  });
+
+  // filtros gatos, perros, pequeños, medianos, hembras
+  const [petsFiltersCatsDogsSmallsMediumsFemales] = useState({
+    cats,
+    dogs,
+    smalls,
+    mediums,
+    females,
+  });
+
+  // filtros gatos, perros, pequeños, medianos, machos, hembras
+  const [petsFiltersCatsDogsSmallsMediumsMalesFemales] = useState({
+    cats,
+    dogs,
+    smalls,
+    mediums,
+    males,
+    females,
+  });
+
+  // filtros gatos, perros, pequeños, grandes, machos
+  const [petsFiltersCatsDogsSmallsBigsMales] = useState({
+    cats,
+    dogs,
+    smalls,
+    bigs,
+    males,
+  });
+
+  // filtros gatos, perros, pequeños, grandes, hembras
+  const [petsFiltersCatsDogsSmallsBigsFemales] = useState({
+    cats,
+    dogs,
+    smalls,
+    bigs,
+    females,
+  });
+
+  // filtros gatos, perros, pequeños, grandes, machos, hembras
+  const [petsFiltersCatsDogsSmallsBigsMalesFemales] = useState({
+    cats,
+    dogs,
+    smalls,
+    bigs,
+    males,
+    females,
+  });
+
+  // filtros gatos, perros, medianos, grandes, machos
+  const [petsFiltersCatsDogsMediumsBigsMales] = useState({
+    cats,
+    dogs,
+    mediums,
+    bigs,
+    males,
+  });
+
+  // filtros gatos, perros, medianos, grandes, hembras
+  const [petsFiltersCatsDogsMediumsBigsFemales] = useState({
+    cats,
+    dogs,
+    mediums,
+    bigs,
+    females,
+  });
+
+  // filtros gatos, perros, medianos, grandes, machos, hembras
+  const [petsFiltersCatsDogsMediumsBigsMalesFemales] = useState({
+    cats,
+    dogs,
+    mediums,
+    bigs,
+    males,
+    females,
+  });
 
   const filtersDeps = [
     filtersCats,
@@ -1218,8 +1478,8 @@ export default function GmailTreeView() {
     filtersMediums,
     filtersBigs,
     filtersMales,
-    filtersFemales
-  ]
+    filtersFemales,
+  ];
 
   useEffect(() => {
     // filtro vacio
@@ -1233,7 +1493,7 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(filtersInitial))
+      dispatch(get_saci_pets_action(filtersInitial));
     }
 
     // gatos
@@ -1247,7 +1507,7 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCats))
+      dispatch(get_saci_pets_action(petsFiltersCats));
     }
 
     // perros
@@ -1261,7 +1521,7 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersDogs))
+      dispatch(get_saci_pets_action(petsFiltersDogs));
     }
 
     // hamsters
@@ -1275,7 +1535,7 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersHamsters))
+      dispatch(get_saci_pets_action(petsFiltersHamsters));
     }
 
     // gatos y perros
@@ -1289,9 +1549,8 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsDogs))
+      dispatch(get_saci_pets_action(petsFiltersCatsDogs));
     }
-
 
     // gatos y hamsters
     if (
@@ -1304,7 +1563,7 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsHamsters))
+      dispatch(get_saci_pets_action(petsFiltersCatsHamsters));
     }
 
     // perros y hamsters
@@ -1318,7 +1577,7 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersDogsHamsters))
+      dispatch(get_saci_pets_action(petsFiltersDogsHamsters));
     }
 
     // gatos, perros y hamsters
@@ -1332,7 +1591,7 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsDogsHamsters))
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsHamsters));
     }
 
     ///////////// tamaños /////////////
@@ -1348,7 +1607,7 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersSmalls))
+      dispatch(get_saci_pets_action(petsFiltersSmalls));
     }
 
     // mediano
@@ -1362,9 +1621,8 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersMediums))
+      dispatch(get_saci_pets_action(petsFiltersMediums));
     }
-
 
     // grande
     if (
@@ -1377,9 +1635,8 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersBigs))
+      dispatch(get_saci_pets_action(petsFiltersBigs));
     }
-
 
     // pequeño y mediano
     if (
@@ -1392,7 +1649,7 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersSmallsMediums))
+      dispatch(get_saci_pets_action(petsFiltersSmallsMediums));
     }
 
     // pequeño y grande
@@ -1406,9 +1663,8 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersSmallsBigs))
+      dispatch(get_saci_pets_action(petsFiltersSmallsBigs));
     }
-
 
     // grande y mediano
     if (
@@ -1421,9 +1677,8 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersBigsMediums))
+      dispatch(get_saci_pets_action(petsFiltersBigsMediums));
     }
-
 
     // pequeño, mediano y grande
     if (
@@ -1436,10 +1691,8 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersSmallsMediumsBigs))
+      dispatch(get_saci_pets_action(petsFiltersSmallsMediumsBigs));
     }
-
-
 
     /////////////////////// tamaños por mascota ///////////////////////
 
@@ -1454,9 +1707,8 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsSmalls))
+      dispatch(get_saci_pets_action(petsFiltersCatsSmalls));
     }
-
 
     // gatos medianos
     if (
@@ -1469,9 +1721,8 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsMediums))
+      dispatch(get_saci_pets_action(petsFiltersCatsMediums));
     }
-
 
     //gatos grandes
     if (
@@ -1484,9 +1735,8 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsBigs))
+      dispatch(get_saci_pets_action(petsFiltersCatsBigs));
     }
-
 
     // perros pequeños
     if (
@@ -1499,9 +1749,8 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersDogsSmalls))
+      dispatch(get_saci_pets_action(petsFiltersDogsSmalls));
     }
-
 
     // perros medianos
     if (
@@ -1514,9 +1763,8 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersDogsMediums))
+      dispatch(get_saci_pets_action(petsFiltersDogsMediums));
     }
-
 
     // perros grandes
     if (
@@ -1529,7 +1777,7 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersDogsBigs))
+      dispatch(get_saci_pets_action(petsFiltersDogsBigs));
     }
 
     // hamsters no tienen tamaño
@@ -1545,9 +1793,8 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsSmallsMediums))
+      dispatch(get_saci_pets_action(petsFiltersCatsSmallsMediums));
     }
-
 
     // gatos, pequeños, grandes
     if (
@@ -1560,9 +1807,8 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsSmallsBigs))
+      dispatch(get_saci_pets_action(petsFiltersCatsSmallsBigs));
     }
-
 
     // gatos, medianos, grandes
     if (
@@ -1575,7 +1821,7 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsMediumsBigs))
+      dispatch(get_saci_pets_action(petsFiltersCatsMediumsBigs));
     }
 
     // perros, pequeños, medianos
@@ -1589,7 +1835,7 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersDogsSmallsMediums))
+      dispatch(get_saci_pets_action(petsFiltersDogsSmallsMediums));
     }
 
     // perros, pequeños, grandes
@@ -1603,9 +1849,8 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersDogsSmallsBigs))
+      dispatch(get_saci_pets_action(petsFiltersDogsSmallsBigs));
     }
-
 
     // perros, medianos, grandes
     if (
@@ -1618,7 +1863,7 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersDogsMediumsBigs))
+      dispatch(get_saci_pets_action(petsFiltersDogsMediumsBigs));
     }
 
     // gatos y perros, pequeños
@@ -1632,7 +1877,7 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsDogsSmalls))
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsSmalls));
     }
 
     // gatos y perros, medianos
@@ -1646,7 +1891,7 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsDogsMediums))
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsMediums));
     }
 
     // gatos y perros, grandes
@@ -1660,7 +1905,7 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsDogsBigs))
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsBigs));
     }
 
     // gatos y perros, pequeños, medianos
@@ -1674,7 +1919,7 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsDogsSmallsMediums))
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsSmallsMediums));
     }
 
     // gatos y perros, pequeños, grandes
@@ -1688,7 +1933,7 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsDogsSmallsBigs))
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsSmallsBigs));
     }
 
     // gatos y perros, medianos, grandes
@@ -1702,7 +1947,7 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsDogsMediumsBigs))
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsMediumsBigs));
     }
 
     // gatos, pequeños, medianos, grandes
@@ -1716,7 +1961,7 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsSmallsMediumsBigs))
+      dispatch(get_saci_pets_action(petsFiltersCatsSmallsMediumsBigs));
     }
 
     // perros, pequeños, medianos, grandes
@@ -1730,7 +1975,7 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersDogsSmallsMediumsBigs))
+      dispatch(get_saci_pets_action(petsFiltersDogsSmallsMediumsBigs));
     }
 
     // gatos, perros, pequeños, medianos, grandes
@@ -1744,7 +1989,7 @@ export default function GmailTreeView() {
       !filtersMales &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsDogsSmallsMediumsBigs))
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsSmallsMediumsBigs));
     }
 
     // machos
@@ -1758,9 +2003,8 @@ export default function GmailTreeView() {
       !filtersMediums &&
       !filtersBigs
     ) {
-      dispatch(get_saci_pets_action(petsFiltersMales))
+      dispatch(get_saci_pets_action(petsFiltersMales));
     }
-
 
     // hembras
 
@@ -1774,9 +2018,8 @@ export default function GmailTreeView() {
       !filtersMediums &&
       !filtersBigs
     ) {
-      dispatch(get_saci_pets_action(petsFiltersFemales))
+      dispatch(get_saci_pets_action(petsFiltersFemales));
     }
-
 
     // machos, hembras
 
@@ -1790,10 +2033,8 @@ export default function GmailTreeView() {
       !filtersMediums &&
       !filtersBigs
     ) {
-      dispatch(get_saci_pets_action(petsFiltersMalesFemales))
+      dispatch(get_saci_pets_action(petsFiltersMalesFemales));
     }
-
-
 
     // gatos, machos
 
@@ -1807,9 +2048,8 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsMales))
+      dispatch(get_saci_pets_action(petsFiltersCatsMales));
     }
-
 
     // gatos, hembras
 
@@ -1823,9 +2063,8 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersMales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsFemales))
+      dispatch(get_saci_pets_action(petsFiltersCatsFemales));
     }
-
 
     // perros, machos
 
@@ -1839,9 +2078,8 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersDogsMales))
+      dispatch(get_saci_pets_action(petsFiltersDogsMales));
     }
-
 
     // perros, hembras
 
@@ -1855,9 +2093,8 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersMales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersDogsFemales))
+      dispatch(get_saci_pets_action(petsFiltersDogsFemales));
     }
-
 
     // hamsters, machos
 
@@ -1871,9 +2108,8 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersHamstersMales))
+      dispatch(get_saci_pets_action(petsFiltersHamstersMales));
     }
-
 
     // hamsters, hembras
 
@@ -1887,10 +2123,8 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersMales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersHamstersFemales))
+      dispatch(get_saci_pets_action(petsFiltersHamstersFemales));
     }
-
-
 
     // gatos, machos, hembras
 
@@ -1904,9 +2138,8 @@ export default function GmailTreeView() {
       !filtersMediums &&
       !filtersBigs
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsMalesFemales))
+      dispatch(get_saci_pets_action(petsFiltersCatsMalesFemales));
     }
-
 
     // perros, machos, hembras
 
@@ -1920,10 +2153,8 @@ export default function GmailTreeView() {
       !filtersMediums &&
       !filtersBigs
     ) {
-      dispatch(get_saci_pets_action(petsFiltersDogsMalesFemales))
+      dispatch(get_saci_pets_action(petsFiltersDogsMalesFemales));
     }
-
-
 
     // hamsters, machos, hembras
 
@@ -1937,10 +2168,8 @@ export default function GmailTreeView() {
       !filtersMediums &&
       !filtersBigs
     ) {
-      dispatch(get_saci_pets_action(petsFiltersHamstersMalesFemales))
+      dispatch(get_saci_pets_action(petsFiltersHamstersMalesFemales));
     }
-
-
 
     // gatos, perros, machos
 
@@ -1954,10 +2183,8 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsDogsMales))
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsMales));
     }
-
-
 
     // gatos, perros, hembras
 
@@ -1971,9 +2198,8 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersMales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsDogsFemales))
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsFemales));
     }
-
 
     // gatos, hamsters, machos
 
@@ -1987,9 +2213,8 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsHamstersMales))
+      dispatch(get_saci_pets_action(petsFiltersCatsHamstersMales));
     }
-
 
     // gatos, hamsters, hembras
 
@@ -2003,9 +2228,8 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersMales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsHamstersFemales))
+      dispatch(get_saci_pets_action(petsFiltersCatsHamstersFemales));
     }
-
 
     // perros, hamsters, machos
 
@@ -2019,9 +2243,8 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersDogsHamstersMales))
+      dispatch(get_saci_pets_action(petsFiltersDogsHamstersMales));
     }
-
 
     // perros, hamsters, hembras
 
@@ -2035,10 +2258,8 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersMales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersDogsHamstersFemales))
+      dispatch(get_saci_pets_action(petsFiltersDogsHamstersFemales));
     }
-
-
 
     // gatos, perros, machos, hembras
 
@@ -2052,9 +2273,8 @@ export default function GmailTreeView() {
       !filtersMediums &&
       !filtersBigs
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsDogsMalesFemales))
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsMalesFemales));
     }
-
 
     // gatos, hamsters, machos, hembras
 
@@ -2068,9 +2288,8 @@ export default function GmailTreeView() {
       !filtersMediums &&
       !filtersBigs
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsHamstersMalesFemales))
+      dispatch(get_saci_pets_action(petsFiltersCatsHamstersMalesFemales));
     }
-
 
     // perros, hamsters, machos, hembras
 
@@ -2084,10 +2303,8 @@ export default function GmailTreeView() {
       !filtersMediums &&
       !filtersBigs
     ) {
-      dispatch(get_saci_pets_action(petsFiltersDogsHamstersMalesFemales))
+      dispatch(get_saci_pets_action(petsFiltersDogsHamstersMalesFemales));
     }
-
-
 
     // gatos, perros, hamsters, machos
 
@@ -2101,9 +2318,8 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsDogsHamstersMales))
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsHamstersMales));
     }
-
 
     // gatos, perros, hamsters, hembras
 
@@ -2117,9 +2333,8 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersMales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsDogsHamstersFemales))
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsHamstersFemales));
     }
-
 
     // gatos, perros, hamsters, machos, hembras
 
@@ -2133,10 +2348,8 @@ export default function GmailTreeView() {
       !filtersMediums &&
       !filtersBigs
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsDogsHamstersMalesFemales))
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsHamstersMalesFemales));
     }
-
-
 
     // gatos, pequeños, machos
 
@@ -2150,26 +2363,22 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsSmallsMales))
+      dispatch(get_saci_pets_action(petsFiltersCatsSmallsMales));
     }
-
 
     // gatos, pequeños, hembras
 
     if (
       filtersCats &&
       filtersSmalls &&
-      filtersFemales &
-      !filtersDogs &&
+      filtersFemales & !filtersDogs &&
       !filtersHamsters &&
       !filtersMediums &&
       !filtersBigs &&
       !filtersMales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsSmallsFemales))
+      dispatch(get_saci_pets_action(petsFiltersCatsSmallsFemales));
     }
-
-
 
     // perros, pequeños, machos
 
@@ -2183,10 +2392,8 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersDogsSmallsMales))
+      dispatch(get_saci_pets_action(petsFiltersDogsSmallsMales));
     }
-
-
 
     // perros, pequeños, hembras
 
@@ -2200,7 +2407,7 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersMales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersDogsSmallsFemales))
+      dispatch(get_saci_pets_action(petsFiltersDogsSmallsFemales));
     }
 
     // hamsters no tienen tamaño
@@ -2218,13 +2425,10 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsMediumsMales))
+      dispatch(get_saci_pets_action(petsFiltersCatsMediumsMales));
     }
-
-
 
     // gatos, medianos, hembras
-
     if (
       filtersCats &&
       filtersMediums &&
@@ -2235,13 +2439,10 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersMales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsMediumsFemales))
+      dispatch(get_saci_pets_action(petsFiltersCatsMediumsFemales));
     }
-
-
 
     // perros, medianos, machos
-
     if (
       filtersDogs &&
       filtersMediums &&
@@ -2252,13 +2453,10 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersDogsMediumsMales))
+      dispatch(get_saci_pets_action(petsFiltersDogsMediumsMales));
     }
-
-
 
     // perros, medianos, hembras
-
     if (
       filtersDogs &&
       filtersMediums &&
@@ -2269,15 +2467,12 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersMales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersDogsMediumsFemales))
+      dispatch(get_saci_pets_action(petsFiltersDogsMediumsFemales));
     }
 
     // hamsters no tienen tamaño
-    // hamsters no tienen tamaño
-
 
     // gatos, grandes, machos
-
     if (
       filtersCats &&
       filtersBigs &&
@@ -2288,12 +2483,10 @@ export default function GmailTreeView() {
       !filtersMediums &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsBigsMales))
+      dispatch(get_saci_pets_action(petsFiltersCatsBigsMales));
     }
 
-
     // gatos, grandes, hembras
-
     if (
       filtersCats &&
       filtersBigs &&
@@ -2304,13 +2497,10 @@ export default function GmailTreeView() {
       !filtersMediums &&
       !filtersMales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsBigsFemales))
+      dispatch(get_saci_pets_action(petsFiltersCatsBigsFemales));
     }
 
-
-
     // perros, grandes, machos
-
     if (
       filtersDogs &&
       filtersBigs &&
@@ -2321,9 +2511,8 @@ export default function GmailTreeView() {
       !filtersMediums &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersDogsBigsMales))
+      dispatch(get_saci_pets_action(petsFiltersDogsBigsMales));
     }
-
 
     // perros, grandes, hembras
 
@@ -2337,7 +2526,7 @@ export default function GmailTreeView() {
       !filtersMediums &&
       !filtersMales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersDogsBigsFemales))
+      dispatch(get_saci_pets_action(petsFiltersDogsBigsFemales));
     }
 
     // hamsters no tienen tamaño
@@ -2354,9 +2543,8 @@ export default function GmailTreeView() {
       !filtersMediums &&
       !filtersBigs
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsSmallsMalesFemales))
+      dispatch(get_saci_pets_action(petsFiltersCatsSmallsMalesFemales));
     }
-
 
     // gatos, medianos, machos, hembras
     if (
@@ -2369,9 +2557,8 @@ export default function GmailTreeView() {
       !filtersSmalls &&
       !filtersBigs
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsMediumsMalesFemales))
+      dispatch(get_saci_pets_action(petsFiltersCatsMediumsMalesFemales));
     }
-
 
     // gatos, grandes, machos, hembras
     if (
@@ -2384,7 +2571,7 @@ export default function GmailTreeView() {
       !filtersSmalls &&
       !filtersMediums
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsBigsMalesFemales))
+      dispatch(get_saci_pets_action(petsFiltersCatsBigsMalesFemales));
     }
 
     // perros, pequeños, machos, hembras
@@ -2398,7 +2585,7 @@ export default function GmailTreeView() {
       !filtersMediums &&
       !filtersBigs
     ) {
-      dispatch(get_saci_pets_action(petsFiltersDogsSmallsMalesFemales))
+      dispatch(get_saci_pets_action(petsFiltersDogsSmallsMalesFemales));
     }
 
     // perros, medianos, machos, hembras
@@ -2412,9 +2599,8 @@ export default function GmailTreeView() {
       !filtersSmalls &&
       !filtersBigs
     ) {
-      dispatch(get_saci_pets_action(petsFiltersDogsMediumsMalesFemales))
+      dispatch(get_saci_pets_action(petsFiltersDogsMediumsMalesFemales));
     }
-
 
     // perros, grandes, machos, hembras
     if (
@@ -2427,7 +2613,7 @@ export default function GmailTreeView() {
       !filtersSmalls &&
       !filtersMediums
     ) {
-      dispatch(get_saci_pets_action(petsFiltersDogsBigsMalesFemales))
+      dispatch(get_saci_pets_action(petsFiltersDogsBigsMalesFemales));
     }
 
     // gatos, perros, pequeños, machos
@@ -2441,9 +2627,8 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsDogsSmallsMales))
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsSmallsMales));
     }
-
 
     // gatos, perros, pequeños, hembras
     if (
@@ -2456,9 +2641,8 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersMales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsDogsSmallsFemales))
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsSmallsFemales));
     }
-
 
     // gatos, perros, medianos, machos
     if (
@@ -2471,7 +2655,7 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsDogsMediumsMales))
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsMediumsMales));
     }
 
     // gatos, perros, medianos, hembras
@@ -2485,9 +2669,8 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersMales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsDogsMediumsFemales))
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsMediumsFemales));
     }
-
 
     // gatos, perros, grandes, machos
     if (
@@ -2500,7 +2683,7 @@ export default function GmailTreeView() {
       !filtersMediums &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsDogsBigsMales))
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsBigsMales));
     }
 
     // gatos, perros, grandes, hembras
@@ -2514,7 +2697,7 @@ export default function GmailTreeView() {
       !filtersMediums &&
       !filtersMales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsDogsBigsFemales))
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsBigsFemales));
     }
 
     // gatos, perros, pequeños, machos, hembras
@@ -2528,7 +2711,7 @@ export default function GmailTreeView() {
       !filtersMediums &&
       !filtersBigs
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsDogsSmallsMalesFemales))
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsSmallsMalesFemales));
     }
 
     // gatos, perros, medianos, machos, hembras
@@ -2542,7 +2725,7 @@ export default function GmailTreeView() {
       !filtersSmalls &&
       !filtersBigs
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsDogsMediumsMalesFemales))
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsMediumsMalesFemales));
     }
 
     // gatos, perros, grandes, machos, hembras
@@ -2556,7 +2739,7 @@ export default function GmailTreeView() {
       !filtersSmalls &&
       !filtersMediums
     ) {
-      dispatch(get_saci_pets_action(petsFiltersCatsDogsBigsMalesFemales))
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsBigsMalesFemales));
     }
 
     // pequeños, machos
@@ -2570,8 +2753,7 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersSmallsMales))
-      console.log('pequeños, machos')
+      dispatch(get_saci_pets_action(petsFiltersSmallsMales));
     }
 
     // pequeños, hembras
@@ -2585,7 +2767,7 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersMales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersSmallsFemales))
+      dispatch(get_saci_pets_action(petsFiltersSmallsFemales));
     }
 
     // pequeños, machos, hembras
@@ -2599,7 +2781,7 @@ export default function GmailTreeView() {
       !filtersMediums &&
       !filtersBigs
     ) {
-      dispatch(get_saci_pets_action(petsFiltersSmallsMalesFemales))
+      dispatch(get_saci_pets_action(petsFiltersSmallsMalesFemales));
     }
 
     // medianos, machos
@@ -2613,7 +2795,7 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersMediumsMales))
+      dispatch(get_saci_pets_action(petsFiltersMediumsMales));
     }
 
     // medianos, hembras
@@ -2627,7 +2809,7 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersMales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersMediumsFemales))
+      dispatch(get_saci_pets_action(petsFiltersMediumsFemales));
     }
 
     // medianos, machos, hembras
@@ -2641,7 +2823,7 @@ export default function GmailTreeView() {
       !filtersSmalls &&
       !filtersBigs
     ) {
-      dispatch(get_saci_pets_action(petsFiltersMediumsMalesFemales))
+      dispatch(get_saci_pets_action(petsFiltersMediumsMalesFemales));
     }
 
     // grandes, machos
@@ -2655,7 +2837,7 @@ export default function GmailTreeView() {
       !filtersMediums &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersBigsMales))
+      dispatch(get_saci_pets_action(petsFiltersBigsMales));
     }
 
     // grandes, hembras
@@ -2669,7 +2851,7 @@ export default function GmailTreeView() {
       !filtersMediums &&
       !filtersMales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersBigsFemales))
+      dispatch(get_saci_pets_action(petsFiltersBigsFemales));
     }
 
     // grandes, machos, hembras
@@ -2683,7 +2865,7 @@ export default function GmailTreeView() {
       !filtersSmalls &&
       !filtersMediums
     ) {
-      dispatch(get_saci_pets_action(petsFiltersBigsMalesFemales))
+      dispatch(get_saci_pets_action(petsFiltersBigsMalesFemales));
     }
 
     // pequeños, medianos, machos
@@ -2697,7 +2879,7 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersSmallsMediumsMales))
+      dispatch(get_saci_pets_action(petsFiltersSmallsMediumsMales));
     }
 
     // pequeños, medianos, hembras
@@ -2711,7 +2893,7 @@ export default function GmailTreeView() {
       !filtersBigs &&
       !filtersMales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersSmallsMediumsFemales))
+      dispatch(get_saci_pets_action(petsFiltersSmallsMediumsFemales));
     }
 
     // pequeños, medianos, machos, hembras
@@ -2725,7 +2907,7 @@ export default function GmailTreeView() {
       !filtersHamsters &&
       !filtersBigs
     ) {
-      dispatch(get_saci_pets_action(petsFiltersSmallsMediumsMalesFemales))
+      dispatch(get_saci_pets_action(petsFiltersSmallsMediumsMalesFemales));
     }
 
     // pequeños, grandes, machos
@@ -2739,7 +2921,7 @@ export default function GmailTreeView() {
       !filtersMediums &&
       !filtersFemales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersSmallsBigsMales))
+      dispatch(get_saci_pets_action(petsFiltersSmallsBigsMales));
     }
 
     // pequeños, grandes, hembras
@@ -2753,7 +2935,7 @@ export default function GmailTreeView() {
       !filtersMediums &&
       !filtersMales
     ) {
-      dispatch(get_saci_pets_action(petsFiltersSmallsBigsFemales))
+      dispatch(get_saci_pets_action(petsFiltersSmallsBigsFemales));
     }
 
     // pequeños, grandes, machos, hembras
@@ -2767,70 +2949,477 @@ export default function GmailTreeView() {
       !filtersHamsters &&
       !filtersMediums
     ) {
-      dispatch(get_saci_pets_action(petsFiltersSmallsBigsMalesFemales))
+      dispatch(get_saci_pets_action(petsFiltersSmallsBigsMalesFemales));
     }
 
-  }, [filtersDeps])
+    // medianos, gandes, machos
+    if (
+      filtersMediums &&
+      filtersBigs &&
+      filtersMales &&
+      !filtersCats &&
+      !filtersDogs &&
+      !filtersHamsters &&
+      !filtersSmalls &&
+      !filtersFemales
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersMediumsBigsMales));
+    }
 
+    // medianos, gandes, hembras
+    if (
+      filtersMediums &&
+      filtersBigs &&
+      filtersFemales &&
+      !filtersCats &&
+      !filtersDogs &&
+      !filtersHamsters &&
+      !filtersSmalls &&
+      !filtersMales
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersMediumsBigsFemales));
+    }
 
+    // medianos, gandes, machos, hembras
+    if (
+      filtersMediums &&
+      filtersBigs &&
+      filtersMales &&
+      filtersFemales &&
+      !filtersCats &&
+      !filtersDogs &&
+      !filtersHamsters &&
+      !filtersSmalls
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersMediumsBigsMalesFemales));
+    }
 
+    // pequeños, medianos, grandes, machos
+    if (
+      filtersSmalls &&
+      filtersMediums &&
+      filtersBigs &&
+      filtersMales &&
+      !filtersCats &&
+      !filtersDogs &&
+      !filtersHamsters &&
+      !filtersFemales
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersSmallsMediumsBigsMales));
+    }
 
-  // medianos, gandes, machos
-  // medianos, gandes, hembras
-  // medianos, gandes, machos, hembras
+    // pequeños, medianos, grandes, hembras
+    if (
+      filtersSmalls &&
+      filtersMediums &&
+      filtersBigs &&
+      filtersFemales &&
+      !filtersCats &&
+      !filtersDogs &&
+      !filtersHamsters &&
+      !filtersMales
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersSmallsMediumsBigsFemales));
+    }
 
-  // pequeños, medianos, grandes, machos
-  // pequeños, medianos, grandes, hembras
-  // pequeños, medianos, grandes, machos, hembras
+    // pequeños, medianos, grandes, machos, hembras
+    if (
+      filtersSmalls &&
+      filtersMediums &&
+      filtersBigs &&
+      filtersMales &&
+      filtersFemales &&
+      !filtersCats &&
+      !filtersDogs &&
+      !filtersHamsters
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersSmallsMediumsBigsMalesFemales));
+    }
+    // gatos, pequeños, medianos, machos
+    if (
+      filtersCats &&
+      filtersSmalls &&
+      filtersMediums &&
+      filtersMales &&
+      !filtersDogs &&
+      !filtersHamsters &&
+      !filtersBigs &&
+      !filtersFemales
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersCatsSmallsMediumsMales));
+    }
 
+    // gatos, pequeños, medianos, hembras
+    if (
+      filtersCats &&
+      filtersSmalls &&
+      filtersMediums &&
+      filtersFemales &&
+      !filtersDogs &&
+      !filtersHamsters &&
+      !filtersBigs &&
+      !filtersMales
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersCatsSmallsMediumsFemales));
+    }
 
+    // gatos, pequeños, medianos, machos, hembras
+    if (
+      filtersCats &&
+      filtersSmalls &&
+      filtersMediums &&
+      filtersMales &&
+      filtersFemales &&
+      !filtersDogs &&
+      !filtersHamsters &&
+      !filtersBigs
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersCatsSmallsMediumsMalesFemales));
+    }
 
+    // gatos, pequeños, grandes, machos
+    if (
+      filtersCats &&
+      filtersSmalls &&
+      filtersBigs &&
+      filtersMales &&
+      !filtersDogs &&
+      !filtersHamsters &&
+      !filtersMediums &&
+      !filtersFemales
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersCatsSmallsBigsMales));
+    }
 
+    // gatos, pequeños, grandes, hembras
+    if (
+      filtersCats &&
+      filtersSmalls &&
+      filtersBigs &&
+      filtersFemales &&
+      !filtersDogs &&
+      !filtersHamsters &&
+      !filtersMediums &&
+      !filtersMales
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersCatsSmallsBigsFemales));
+    }
 
+    // gatos, pequeños, grandes, machos, hembras
+    if (
+      filtersCats &&
+      filtersSmalls &&
+      filtersBigs &&
+      filtersMales &&
+      filtersFemales &&
+      !filtersDogs &&
+      !filtersHamsters &&
+      !filtersMediums
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersCatsSmallsBigsMalesFemales));
+    }
 
-  // gatos, pequeños, medianos, machos
-  // gatos, pequeños, medianos, hembras
-  // gatos, pequeños, medianos, machos, hembras
+    // gatos, medianos, grandes, machos
+    if (
+      filtersCats &&
+      filtersMediums &&
+      filtersBigs &&
+      filtersMales &&
+      !filtersDogs &&
+      !filtersHamsters &&
+      !filtersSmalls &&
+      !filtersFemales
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersCatsMediumsBigsMales));
+    }
 
-  // gatos, pequeños, grandes, machos
-  // gatos, pequeños, grandes, hembras
-  // gatos, pequeños, gandes, machos, hembras
+    // gatos, medianos, grandes, hembras
+    if (
+      filtersCats &&
+      filtersMediums &&
+      filtersBigs &&
+      filtersFemales &&
+      !filtersDogs &&
+      !filtersHamsters &&
+      !filtersSmalls &&
+      !filtersMales
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersCatsMediumsBigsFemales));
+    }
 
-  // gatos, medianos, grandes, machos
-  // gatos, medianos, grandes, hembras
-  // gatos, medianos, grandes, machos, hembras
+    // gatos, medianos, grandes, machos, hembras
+    if (
+      filtersCats &&
+      filtersMediums &&
+      filtersBigs &&
+      filtersMales &&
+      filtersFemales &&
+      !filtersDogs &&
+      !filtersHamsters &&
+      !filtersSmalls
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersCatsMediumsBigsMalesFemales));
+    }
 
+    // perros, pequeños, medianos, machos
+    if (
+      filtersDogs &&
+      filtersSmalls &&
+      filtersMediums &&
+      filtersMales &&
+      !filtersCats &&
+      !filtersHamsters &&
+      !filtersBigs &&
+      !filtersFemales
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersDogsSmallsMediumsMales));
+    }
 
+    // perros, pequeños, medianos, hembras
+    if (
+      filtersDogs &&
+      filtersSmalls &&
+      filtersMediums &&
+      filtersFemales &&
+      !filtersCats &&
+      !filtersHamsters &&
+      !filtersBigs &&
+      !filtersMales
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersDogsSmallsMediumsFemales));
+    }
 
-  // perros, pequeños, medianos, machos
-  // perros, pequeños, medianos, hembras
-  // perros, pequeños, medianos, machos, hembras
+    // perros, pequeños, medianos, machos, hembras
+    if (
+      filtersDogs &&
+      filtersSmalls &&
+      filtersMediums &&
+      filtersMales &&
+      filtersFemales &&
+      !filtersCats &&
+      !filtersHamsters &&
+      !filtersBigs
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersDogsSmallsMediumsMalesFemales));
+    }
 
-  // perros, pequeños, grandes, machos
-  // perros, pequeños, grandes, hembras
-  // perros, pequeños, gandes, machos, hembras
+    // perros, pequeños, grandes, machos
+    if (
+      filtersDogs &&
+      filtersSmalls &&
+      filtersBigs &&
+      filtersMales &&
+      !filtersCats &&
+      !filtersHamsters &&
+      !filtersMediums &&
+      !filtersFemales
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersDogsSmallsBigsMales));
+    }
 
-  // perros, medianos, grandes, machos
-  // perros, medianos, grandes, hembras
-  // perros, medianos, grandes, machos, hembras
+    // perros, pequeños, grandes, hembras
+    if (
+      filtersDogs &&
+      filtersSmalls &&
+      filtersBigs &&
+      filtersFemales &&
+      !filtersCats &&
+      !filtersHamsters &&
+      !filtersMediums &&
+      !filtersMales
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersDogsSmallsBigsFemales));
+    }
 
+    // perros, pequeños, gandes, machos, hembras
+    if (
+      filtersDogs &&
+      filtersSmalls &&
+      filtersBigs &&
+      filtersMales &&
+      filtersFemales &&
+      !filtersCats &&
+      !filtersHamsters &&
+      !filtersMediums
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersDogsSmallsBigsMalesFemales));
+    }
 
+    // perros, medianos, grandes, machos
+    if (
+      filtersDogs &&
+      filtersMediums &&
+      filtersBigs &&
+      filtersMales &&
+      !filtersCats &&
+      !filtersHamsters &&
+      !filtersSmalls &&
+      !filtersFemales
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersDogsMediumsBigsMales));
+    }
 
-  // gatos, perros, pequeños, medianos, machos
-  // gatos, perros, pequeños, medianos, hembras
-  // gatos, perros, pequeños, medianos, machos, hembras
+    // perros, medianos, grandes, hembras
+    if (
+      filtersDogs &&
+      filtersMediums &&
+      filtersBigs &&
+      filtersFemales &&
+      !filtersCats &&
+      !filtersHamsters &&
+      !filtersSmalls &&
+      !filtersMales
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersDogsMediumsBigsFemales));
+    }
 
-  // gatos, perros, pequeños, grandes, machos
-  // gatos, perros, pequeños, grandes, hembras
-  // gatos, perros, pequeños, grandes, machos, hembras
+    // perros, medianos, grandes, machos, hembras
+    if (
+      filtersDogs &&
+      filtersMediums &&
+      filtersBigs &&
+      filtersMales &&
+      filtersFemales &&
+      !filtersCats &&
+      !filtersHamsters &&
+      !filtersSmalls
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersDogsMediumsBigsMalesFemales));
+    }
 
-  // gatos, perros, medianos, grandes, machos
-  // gatos, perros, medianos, grandes, hembras
-  // gatos, perros, medianos, grandes, machos, hembras
+    // gatos, perros, pequeños, medianos, machos
+    if (
+      filtersCats &&
+      filtersDogs &&
+      filtersSmalls &&
+      filtersMediums &&
+      filtersMales &&
+      !filtersHamsters &&
+      !filtersBigs &&
+      !filtersFemales
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsSmallsMediumsMales));
+    }
+
+    // gatos, perros, pequeños, medianos, hembras
+    if (
+      filtersCats &&
+      filtersDogs &&
+      filtersSmalls &&
+      filtersMediums &&
+      filtersFemales &&
+      !filtersHamsters &&
+      !filtersBigs &&
+      !filtersMales
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsSmallsMediumsFemales));
+    }
+
+    // gatos, perros, pequeños, medianos, machos, hembras
+    if (
+      filtersCats &&
+      filtersDogs &&
+      filtersSmalls &&
+      filtersMediums &&
+      filtersMales &&
+      filtersFemales &&
+      !filtersHamsters &&
+      !filtersBigs
+    ) {
+      dispatch(
+        get_saci_pets_action(petsFiltersCatsDogsSmallsMediumsMalesFemales)
+      );
+    }
+
+    // gatos, perros, pequeños, grandes, machos
+    if (
+      filtersCats &&
+      filtersDogs &&
+      filtersSmalls &&
+      filtersBigs &&
+      filtersMales &&
+      !filtersHamsters &&
+      !filtersMediums &&
+      !filtersFemales
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsSmallsBigsMales));
+    }
+
+    // gatos, perros, pequeños, grandes, hembras
+    if (
+      filtersCats &&
+      filtersDogs &&
+      filtersSmalls &&
+      filtersBigs &&
+      filtersFemales &&
+      !filtersHamsters &&
+      !filtersMediums &&
+      !filtersMales
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsSmallsBigsFemales));
+    }
+
+    // gatos, perros, pequeños, grandes, machos, hembras
+    if (
+      filtersCats &&
+      filtersDogs &&
+      filtersSmalls &&
+      filtersBigs &&
+      filtersMales &&
+      filtersFemales &&
+      !filtersHamsters &&
+      !filtersMediums
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsSmallsBigsMalesFemales));
+    }
+
+    // gatos, perros, medianos, grandes, machos
+    if (
+      filtersCats &&
+      filtersDogs &&
+      filtersMediums &&
+      filtersBigs &&
+      filtersMales &&
+      !filtersHamsters &&
+      !filtersSmalls &&
+      !filtersFemales
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsMediumsBigsMales));
+    }
+
+    // gatos, perros, medianos, grandes, hembras
+    if (
+      filtersCats &&
+      filtersDogs &&
+      filtersMediums &&
+      filtersBigs &&
+      filtersFemales &&
+      !filtersHamsters &&
+      !filtersSmalls &&
+      !filtersMales
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersCatsDogsMediumsBigsFemales));
+    }
+
+    // gatos, perros, medianos, grandes, machos, hembras
+    if (
+      filtersCats &&
+      filtersDogs &&
+      filtersMediums &&
+      filtersBigs &&
+      filtersMales &&
+      filtersFemales &&
+      !filtersHamsters &&
+      !filtersSmalls
+    ) {
+      dispatch(
+        get_saci_pets_action(petsFiltersCatsDogsMediumsBigsMalesFemales)
+      );
+    }
+  }, [filtersDeps]);
 
   return (
     <div>
-
       {/* <Lottie
     options={{ animationData: dog, ...defaultOptions }}
     height={400}
@@ -2839,84 +3428,112 @@ export default function GmailTreeView() {
     /> */}
 
       <div className={classes.filtersChips}>
-
-        {filtersCats ?
+        {filtersCats ? (
           <Chip
-            className={filtersCatsValidate ? "animate__animated animate__backOutDown" : "animate__animated animate__fadeInUpBig"}
+            className={
+              filtersCatsValidate
+                ? 'animate__animated animate__backOutDown'
+                : 'animate__animated animate__fadeInUpBig'
+            }
             color="primary"
             label="Gatos"
             onDelete={handleCatsDelete}
           />
-          : null}
+        ) : null}
 
-        {filtersDogs ?
+        {filtersDogs ? (
           <Chip
-            className={filtersDogsValidate ? "animate__animated animate__backOutDown" : "animate__animated animate__fadeInUpBig"}
+            className={
+              filtersDogsValidate
+                ? 'animate__animated animate__backOutDown'
+                : 'animate__animated animate__fadeInUpBig'
+            }
             color="primary"
             label="Perros"
             onDelete={handleDogsDelete}
           />
-          : null}
+        ) : null}
 
-        {filtersHamsters ?
+        {filtersHamsters ? (
           <Chip
-            className={filtersHamstersValidate ? "animate__animated animate__backOutDown" : "animate__animated animate__fadeInUpBig"}
+            className={
+              filtersHamstersValidate
+                ? 'animate__animated animate__backOutDown'
+                : 'animate__animated animate__fadeInUpBig'
+            }
             color="primary"
             label="Hamsters"
             onDelete={handleHamstersDelete}
           />
-          : null}
-
-
-
+        ) : null}
       </div>
 
       <div className={classes.filtersChips}>
-        {filtersSmalls ?
+        {filtersSmalls ? (
           <Chip
-            className={filtersSmallsValidate ? "animate__animated animate__backOutDown" : "animate__animated animate__fadeInUpBig"}
+            className={
+              filtersSmallsValidate
+                ? 'animate__animated animate__backOutDown'
+                : 'animate__animated animate__fadeInUpBig'
+            }
             color="primary"
             label="Pequeños"
             onDelete={handleSmallsDelete}
           />
-          : null}
+        ) : null}
 
-        {filtersMediums ?
+        {filtersMediums ? (
           <Chip
-            className={filtersMediumsValidate ? "animate__animated animate__backOutDown" : "animate__animated animate__fadeInUpBig"}
+            className={
+              filtersMediumsValidate
+                ? 'animate__animated animate__backOutDown'
+                : 'animate__animated animate__fadeInUpBig'
+            }
             color="primary"
             label="Medianos"
             onDelete={handleMediumsDelete}
           />
-          : null}
+        ) : null}
 
-        {filtersBigs ?
+        {filtersBigs ? (
           <Chip
-            className={filtersBigsValidate ? "animate__animated animate__backOutDown" : "animate__animated animate__fadeInUpBig"}
+            className={
+              filtersBigsValidate
+                ? 'animate__animated animate__backOutDown'
+                : 'animate__animated animate__fadeInUpBig'
+            }
             color="primary"
             label="Grandes"
             onDelete={handleBigsDelete}
           />
-          : null}
+        ) : null}
       </div>
 
       <div className={classes.filtersChips}>
-        {filtersMales ?
+        {filtersMales ? (
           <Chip
-            className={filtersMalesValidate ? "animate__animated animate__backOutDown" : "animate__animated animate__fadeInUpBig"}
+            className={
+              filtersMalesValidate
+                ? 'animate__animated animate__backOutDown'
+                : 'animate__animated animate__fadeInUpBig'
+            }
             color="primary"
             label="Machos"
             onDelete={handleMalesDelete}
           />
-          : null}
-        {filtersFemales ?
+        ) : null}
+        {filtersFemales ? (
           <Chip
-            className={filtersFemalesValidate ? "animate__animated animate__backOutDown" : "animate__animated animate__fadeInUpBig"}
+            className={
+              filtersFemalesValidate
+                ? 'animate__animated animate__backOutDown'
+                : 'animate__animated animate__fadeInUpBig'
+            }
             color="primary"
             label="Hembras"
             onDelete={handleFemalesDelete}
           />
-          : null}
+        ) : null}
       </div>
 
       <TreeView
@@ -2926,21 +3543,31 @@ export default function GmailTreeView() {
         defaultExpandIcon={<ArrowRightIcon />}
         defaultEndIcon={<div style={{ width: 24 }} />}
       >
-        <StyledTreeItem nodeId="1" labelText="Filtros" labelIcon={lottieFilter} bgColor="#63C132" color="#FFFFFF">
-          <StyledTreeItem nodeId="2" labelText="Tipo De Mascota" labelIcon={lottiePetType} >
+        <StyledTreeItem
+          nodeId="1"
+          labelText="Filtros"
+          labelIcon={lottieFilter}
+          bgColor="#63C132"
+          color="#FFFFFF"
+        >
+          <StyledTreeItem
+            nodeId="2"
+            labelText="Tipo De Mascota"
+            labelIcon={lottiePetType}
+          >
             <StyledTreeItem
               nodeId="7"
               labelText="Gatos"
               labelIcon={lottieCat}
               onClick={handleCatsAdd}
-            // labelInfo="90"
+              // labelInfo="90"
             />
             <StyledTreeItem
               nodeId="8"
               labelText="Perros"
               labelIcon={lottieDog}
               onClick={handleDogsAdd}
-            // labelInfo="90"
+              // labelInfo="90"
             />
 
             <StyledTreeItem
@@ -2948,7 +3575,7 @@ export default function GmailTreeView() {
               labelText="Hámsters"
               labelIcon={lottieHamster}
               onClick={handleHamstersAdd}
-            // labelInfo="90"
+              // labelInfo="90"
             />
           </StyledTreeItem>
           {/* <StyledTreeItem nodeId="3" labelText="Raza" labelIcon={lottiePetRace} >
@@ -2983,63 +3610,71 @@ export default function GmailTreeView() {
             // labelInfo="90"
             />
           </StyledTreeItem> */}
-          <StyledTreeItem nodeId="4" labelText="Tamaño" labelIcon={lottiePetSize} >
+          <StyledTreeItem
+            nodeId="4"
+            labelText="Tamaño"
+            labelIcon={lottiePetSize}
+          >
             <StyledTreeItem
               nodeId="15"
               labelText="Pequeños"
               labelIcon={SupervisorAccountIcon}
               onClick={handleSmallsAdd}
-            // labelInfo="90"
+              // labelInfo="90"
             />
             <StyledTreeItem
               nodeId="16"
               labelText="Medianos"
               labelIcon={SupervisorAccountIcon}
               onClick={handleMediumsAdd}
-            // labelInfo="90"
+              // labelInfo="90"
             />
             <StyledTreeItem
               nodeId="17"
               labelText="Grandes"
               labelIcon={SupervisorAccountIcon}
               onClick={handleBigsAdd}
-            // labelInfo="90"
+              // labelInfo="90"
             />
           </StyledTreeItem>
-          <StyledTreeItem nodeId="5" labelText="Géneros" labelIcon={lottiePetGender} >
+          <StyledTreeItem
+            nodeId="5"
+            labelText="Géneros"
+            labelIcon={lottiePetGender}
+          >
             <StyledTreeItem
               nodeId="18"
               labelText="Machos"
               labelIcon={lottiePetGenderMale}
               onClick={handleMalesAdd}
-            // labelInfo="90"
+              // labelInfo="90"
             />
             <StyledTreeItem
               nodeId="19"
               labelText="Hembras"
               labelIcon={lottiePetGenderFemale}
               onClick={handleFemalesAdd}
-            // labelInfo="90"
+              // labelInfo="90"
             />
           </StyledTreeItem>
-          <StyledTreeItem nodeId="6" labelText="Edad" labelIcon={lottiePetYear} >
+          <StyledTreeItem nodeId="6" labelText="Edad" labelIcon={lottiePetYear}>
             <StyledTreeItem
               nodeId="20"
               labelText="Joven"
               labelIcon={SupervisorAccountIcon}
-            // labelInfo="90"
+              // labelInfo="90"
             />
             <StyledTreeItem
               nodeId="21"
               labelText="Adulto"
               labelIcon={SupervisorAccountIcon}
-            // labelInfo="90"
+              // labelInfo="90"
             />
             <StyledTreeItem
               nodeId="22"
               labelText="Viejo"
               labelIcon={SupervisorAccountIcon}
-            // labelInfo="90"
+              // labelInfo="90"
             />
           </StyledTreeItem>
         </StyledTreeItem>
