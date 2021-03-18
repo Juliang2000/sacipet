@@ -1,4 +1,4 @@
-import { GET_SACI_PETS, GET_PET_PHOTOS, SAVE_PET } from '../types';
+import { GET_SACI_PETS, GET_PET_PHOTOS, PAGE_SACI_PETS } from '../types';
 import { getPetPhotos, getSaciPets } from '../../configAxios/saciPets';
 
 export const get_saci_pets_action = (filters) => async (dispatch) => {
@@ -1472,9 +1472,16 @@ export const get_pet_photos_action = (petPhoto) => async (dispatch) => {
   }
 };
 
-export const save_pet_action = (petFile) => {
-  return {
-    type: SAVE_PET,
-    payload: petFile,
-  };
+// export const save_pet_action = (petFile) => {
+//   return {
+//     type: SAVE_PET,
+//     payload: petFile,
+//   };
+// };
+
+export const page_saci_pets_action = (slicePets) => async (dispatch) => {
+  dispatch({
+    type: PAGE_SACI_PETS,
+    payload: slicePets,
+  });
 };

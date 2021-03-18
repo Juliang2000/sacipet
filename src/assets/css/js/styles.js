@@ -247,6 +247,15 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(1),
     },
 
+    /// Pagination Component Styles
+
+    PageButton: {
+        textTransform: 'none',
+        color: '#fff',
+        fontSize: '16px',
+        width: '100px'
+    }
+
 }));
 
 export default useStyles;
