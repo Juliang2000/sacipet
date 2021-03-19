@@ -1,14 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
 import Typography from '@material-ui/core/Typography';
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import { Chip } from '@material-ui/core';
+import { Chip, Tooltip, Zoom, Box } from '@material-ui/core';
 
 // import filters from '../../../assets/icons/filters/046-pet-shelter.svg'
 // import dog from '../../../assets/icons/petype/dog.svg';
@@ -29,12 +28,19 @@ import petRaceDog3 from '../../../assets/icons/filters/pet-race-dog03.svg';
 import petRaceDog4 from '../../../assets/icons/filters/pet-race-dog04.svg';
 import petRaceDog5 from '../../../assets/icons/filters/pet-race-dog05.svg';
 
-import petSize from '../../../assets/icons/filters/petSize.svg';
-import petGender from '../../../assets/icons/filters/petGender.svg';
-import petGenderMale from '../../../assets/icons/filters/petGenderMale.svg';
-import petGenderFemale from '../../../assets/icons/filters/petGenderFemale.svg';
+import petSize from '../../../assets/icons/filters/pet-size-final.svg';
+import petSmall from '../../../assets/icons/filters/small-final.svg';
+import petMedium from '../../../assets/icons/filters/medium-final.svg';
+import petBig from '../../../assets/icons/filters/big-final.svg';
 
-import petYear from '../../../assets/icons/filters/petYear.svg';
+import petGender from '../../../assets/icons/filters/pet-gender-final.svg';
+import petMale from '../../../assets/icons/filters/male-final.svg';
+import petFemale from '../../../assets/icons/filters/female-final.svg';
+
+import petYear from '../../../assets/icons/filters/pet-year-final.svg';
+import petYoung from '../../../assets/icons/filters/young-final.svg';
+import petAdult from '../../../assets/icons/filters/adult-final.svg';
+import petOld from '../../../assets/icons/filters/old-final.svg';
 
 // Dispatch Redux
 import { useDispatch } from 'react-redux';
@@ -160,6 +166,15 @@ const useStyles = makeStyles((theme) => ({
     width: '40px',
     marginRight: '10px',
   },
+  iconSize2: {
+    width: '60px',
+    marginRight: '10px',
+  },
+
+  CustomTooltip: {
+    backgroundColor: '#63C132',
+    fontSize: '12px',
+  },
 
   filtersChips: {
     margin: theme.spacing(3),
@@ -269,11 +284,27 @@ export default function GmailTreeView() {
       />
     );
   };
-
+  ///////////////////////////////////////////////////////
   const lottiePetSize = () => {
     return (
-      <img src={petSize} alt="Icon Pet Size" className={classes.iconSize} />
+      <img src={petSize} alt="Icon Pet Size" className={classes.iconSize2} />
     );
+  };
+
+  const lottieSmall = () => {
+    return (
+      <img src={petSmall} alt="Icon Pet Small" className={classes.iconSize} />
+    );
+  };
+
+  const lottieMedium = () => {
+    return (
+      <img src={petMedium} alt="Icon Pet Medium" className={classes.iconSize} />
+    );
+  };
+
+  const lottieBig = () => {
+    return <img src={petBig} alt="Icon Pet Big" className={classes.iconSize} />;
   };
 
   const lottiePetGender = () => {
@@ -282,20 +313,20 @@ export default function GmailTreeView() {
     );
   };
 
-  const lottiePetGenderMale = () => {
+  const lottieMale = () => {
     return (
       <img
-        src={petGenderMale}
+        src={petMale}
         alt="Icon Pet Gender Male"
         className={classes.iconSize}
       />
     );
   };
 
-  const lottiePetGenderFemale = () => {
+  const lottieFemale = () => {
     return (
       <img
-        src={petGenderFemale}
+        src={petFemale}
         alt="Icon Pet Gender Female"
         className={classes.iconSize}
       />
@@ -306,6 +337,22 @@ export default function GmailTreeView() {
     return (
       <img src={petYear} alt="Icon Pet Year" className={classes.iconSize} />
     );
+  };
+
+  const lottieYoung = () => {
+    return (
+      <img src={petYoung} alt="Icon Pet Young" className={classes.iconSize} />
+    );
+  };
+
+  const lottieAdult = () => {
+    return (
+      <img src={petAdult} alt="Icon Pet Adult" className={classes.iconSize} />
+    );
+  };
+
+  const lottieOld = () => {
+    return <img src={petOld} alt="Icon Pet Old" className={classes.iconSize} />;
   };
 
   /////////////////////////////////////////////////////////////////////////
@@ -444,6 +491,40 @@ export default function GmailTreeView() {
       setFiltersFemales(false);
     }, 1000);
   };
+
+  /////////////////////////////////////////////////////////////////////////
+
+  //genero
+
+  // jovenes
+  const [filtersYoungs, setFiltersYoungs] = useState(false);
+  const [filtersYoungsValidate, setFiltersYoungsValidate] = useState(false);
+
+  const handleYoungsAdd = () => {
+    setFiltersYoungs(true);
+  };
+
+  const handleYoungsDelete = () => {
+    setFiltersYoungsValidate(true);
+    setTimeout(() => {
+      setFiltersYoungsValidate(false);
+      setFiltersYoungs(false);
+    }, 1000);
+  };
+
+  // adultos
+  const [filtersAdults, setFiltersAdults] = useState(false);
+  const [filtersAdultsValidate, setFiltersAdultsValidate] = useState(false);
+  const handleAdultsAdd = () => {};
+  const handleAdultsDelete = () => {};
+
+  //viejos
+  const [filtersOlds, setFiltersOlds] = useState(false);
+  const [filtersOldsValidate, setFiltersOldsValidate] = useState(false);
+  const handleOldsAdd = () => {};
+  const handleOldsDelete = () => {};
+
+  /////////////////////////////////////////////////////////////////////////
 
   // const { mascotas } = useSelector(state => state.saciPets);
   // const harold = mascotas.filter(pets => pets.id_tipo_mascota === "1")
@@ -1477,7 +1558,7 @@ export default function GmailTreeView() {
     smalls,
     mediums,
     bigs,
-    males
+    males,
   });
 
   // filtros, gatos, perros, pequeños, medianos, grandes, hembras
@@ -1487,7 +1568,7 @@ export default function GmailTreeView() {
     smalls,
     mediums,
     bigs,
-    females
+    females,
   });
 
   // filtros, gatos, perros, pequeños, medianos, grandes, machos, hembras
@@ -1498,7 +1579,7 @@ export default function GmailTreeView() {
     mediums,
     bigs,
     males,
-    females
+    females,
   });
 
   const filtersDeps = [
@@ -3495,6 +3576,22 @@ export default function GmailTreeView() {
     }
   }, [filtersDeps]);
 
+  const CustomTooltip = (props) => (
+    <Tooltip
+      {...props}
+      arrow
+      TransitionComponent={Zoom}
+      placement={'right'}
+      classes={{ tooltip: classes.CustomTooltip }}
+    />
+  );
+
+  // const CustomTooltip = withStyles({
+  //   tooltip: {
+  //     color: 'white',
+  //   },
+  // })(Tooltip);
+
   return (
     <div>
       {/* <Lottie
@@ -3611,6 +3708,18 @@ export default function GmailTreeView() {
             onDelete={handleFemalesDelete}
           />
         ) : null}
+        {filtersYoungs ? (
+          <Chip
+            className={
+              filtersYoungsValidate
+                ? 'animate__animated animate__backOutDown'
+                : 'animate__animated animate__fadeInUpBig'
+            }
+            color="primary"
+            label="Jóvenes"
+            onDelete={handleYoungsDelete}
+          />
+        ) : null}
       </div>
 
       <TreeView
@@ -3655,38 +3764,38 @@ export default function GmailTreeView() {
               // labelInfo="90"
             />
           </StyledTreeItem>
-          {/* <StyledTreeItem nodeId="3" labelText="Raza" labelIcon={lottiePetRace} >
+          <StyledTreeItem nodeId="3" labelText="Raza" labelIcon={lottiePetRace}>
             <StyledTreeItem
               nodeId="10"
               labelText="Raza1"
               labelIcon={raceDog1}
-            // labelInfo="90"
+              // labelInfo="90"
             />
             <StyledTreeItem
               nodeId="11"
               labelText="Raza2"
               labelIcon={raceDog2}
-            // labelInfo="90"
+              // labelInfo="90"
             />
             <StyledTreeItem
               nodeId="12"
               labelText="Raza3"
               labelIcon={raceDog3}
-            // labelInfo="90"
+              // labelInfo="90"
             />
             <StyledTreeItem
               nodeId="13"
               labelText="Raza4"
               labelIcon={raceDog4}
-            // labelInfo="90"
+              // labelInfo="90"
             />
             <StyledTreeItem
               nodeId="14"
               labelText="Raza5"
               labelIcon={raceDog5}
-            // labelInfo="90"
+              // labelInfo="90"
             />
-          </StyledTreeItem> */}
+          </StyledTreeItem>
           <StyledTreeItem
             nodeId="4"
             labelText="Tamaño"
@@ -3695,64 +3804,90 @@ export default function GmailTreeView() {
             <StyledTreeItem
               nodeId="15"
               labelText="Pequeños"
-              labelIcon={SupervisorAccountIcon}
+              labelIcon={lottieSmall}
               onClick={handleSmallsAdd}
               // labelInfo="90"
             />
             <StyledTreeItem
               nodeId="16"
               labelText="Medianos"
-              labelIcon={SupervisorAccountIcon}
+              labelIcon={lottieMedium}
               onClick={handleMediumsAdd}
               // labelInfo="90"
             />
             <StyledTreeItem
               nodeId="17"
               labelText="Grandes"
-              labelIcon={SupervisorAccountIcon}
+              labelIcon={lottieBig}
               onClick={handleBigsAdd}
               // labelInfo="90"
             />
           </StyledTreeItem>
           <StyledTreeItem
             nodeId="5"
-            labelText="Géneros"
+            labelText="Género"
             labelIcon={lottiePetGender}
           >
             <StyledTreeItem
               nodeId="18"
               labelText="Machos"
-              labelIcon={lottiePetGenderMale}
+              labelIcon={lottieMale}
               onClick={handleMalesAdd}
               // labelInfo="90"
             />
             <StyledTreeItem
               nodeId="19"
               labelText="Hembras"
-              labelIcon={lottiePetGenderFemale}
+              labelIcon={lottieFemale}
               onClick={handleFemalesAdd}
               // labelInfo="90"
             />
           </StyledTreeItem>
           <StyledTreeItem nodeId="6" labelText="Edad" labelIcon={lottiePetYear}>
-            <StyledTreeItem
-              nodeId="20"
-              labelText="Joven"
-              labelIcon={SupervisorAccountIcon}
-              // labelInfo="90"
-            />
-            <StyledTreeItem
-              nodeId="21"
-              labelText="Adulto"
-              labelIcon={SupervisorAccountIcon}
-              // labelInfo="90"
-            />
-            <StyledTreeItem
-              nodeId="22"
-              labelText="Viejo"
-              labelIcon={SupervisorAccountIcon}
-              // labelInfo="90"
-            />
+            <CustomTooltip title="Mascotas entre 1 semana a 6 meses">
+              <Box>
+                <StyledTreeItem
+                  nodeId="20"
+                  labelText="Cachorros"
+                  labelIcon={lottieYoung}
+                  // onClick={handleChildrensAdd}
+                  // labelInfo="90"
+                />
+              </Box>
+            </CustomTooltip>
+            <CustomTooltip title="Mascotas entre 7 meses a 2 años">
+              <Box>
+                <StyledTreeItem
+                  nodeId="21"
+                  labelText="Jóvenes"
+                  labelIcon={lottieYoung}
+                  onClick={handleYoungsAdd}
+                  // labelInfo="90"
+                />
+              </Box>
+            </CustomTooltip>
+            <CustomTooltip title="Mascotas entre 3 a 10 años">
+              <Box>
+                <StyledTreeItem
+                  nodeId="22"
+                  labelText="Adultos"
+                  labelIcon={lottieAdult}
+                  onClick={handleAdultsAdd}
+                  // labelInfo="90"
+                />
+              </Box>
+            </CustomTooltip>
+            <CustomTooltip title="Mascotas entre 11 a 25 años">
+              <Box>
+                <StyledTreeItem
+                  nodeId="23"
+                  labelText="Viejos"
+                  labelIcon={lottieOld}
+                  onClick={handleOldsAdd}
+                  // labelInfo="90"
+                />
+              </Box>
+            </CustomTooltip>
           </StyledTreeItem>
         </StyledTreeItem>
       </TreeView>
