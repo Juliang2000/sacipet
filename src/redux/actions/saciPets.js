@@ -1,5 +1,5 @@
-import { GET_SACI_PETS, GET_PET_PHOTOS, PAGE_SACI_PETS } from '../types';
-import { getPetPhotos, getSaciPets } from '../../configAxios/saciPets';
+import { GET_SACI_PETS, PAGE_SACI_PETS, SELECT_PET_DATA } from "../types";
+import { getSaciPets } from "../../configAxios/saciPets"
 
 export const get_saci_pets_action = (filters) => async (dispatch) => {
   try {
@@ -1460,17 +1460,17 @@ export const get_saci_pets_action = (filters) => async (dispatch) => {
   }
 };
 
-export const get_pet_photos_action = (petPhoto) => async (dispatch) => {
-  try {
-    const responseData = await getPetPhotos(petPhoto);
-    dispatch({
-      type: GET_PET_PHOTOS,
-      payload: responseData,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
+// export const get_pet_photos_action = (petPhoto) => async (dispatch) => {
+//   try {
+//     const responseData = await getPetPhotos(petPhoto);
+//     dispatch({
+//       type: GET_PET_PHOTOS,
+//       payload: responseData,
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 // export const save_pet_action = (petFile) => {
 //   return {
@@ -1485,3 +1485,13 @@ export const page_saci_pets_action = (slicePets) => async (dispatch) => {
     payload: slicePets,
   });
 };
+
+
+export const select_pet_action = (id_mascota) => async (dispatch) => {
+
+  dispatch({
+    type: SELECT_PET_DATA,
+    payload: id_mascota
+  })
+
+}
