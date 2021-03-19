@@ -1,9 +1,10 @@
-import { GET_SACI_PETS, PAGE_SACI_PETS } from "../types"
+import { GET_SACI_PETS, PAGE_SACI_PETS, SELECT_PET_DATA } from "../types"
 
 const initialState = {
 
     mascotas: [],
-    pageMascotas: []
+    pageMascotas: [],
+    petSelected: null
 
 }
 
@@ -21,6 +22,12 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 pageMascotas: action.payload
+
+            }
+        case SELECT_PET_DATA:
+            return {
+                ...state,
+                petSelected: action.payload
 
             }
 

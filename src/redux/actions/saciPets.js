@@ -1,4 +1,4 @@
-import { GET_SACI_PETS, GET_PET_PHOTOS, PAGE_SACI_PETS } from "../types";
+import { GET_SACI_PETS, GET_PET_PHOTOS, PAGE_SACI_PETS, SELECT_PET_DATA } from "../types";
 import { getPetPhotos, getSaciPets } from "../../configAxios/saciPets"
 
 export const get_saci_pets_action = (filters) => async (dispatch) => {
@@ -426,15 +426,6 @@ export const get_saci_pets_action = (filters) => async (dispatch) => {
     }
 }
 
-export const page_saci_pets_action = (slicePets) => async (dispatch) => {
-
-    dispatch({
-        type: PAGE_SACI_PETS,
-        payload: slicePets
-    })
-
-}
-
 export const get_pet_photos_action = (petPhoto) => async (dispatch) => {
     try {
         const responseData = await getPetPhotos(petPhoto)
@@ -445,4 +436,22 @@ export const get_pet_photos_action = (petPhoto) => async (dispatch) => {
     } catch (error) {
         console.log(error)
     }
+}
+
+export const page_saci_pets_action = (slicePets) => async (dispatch) => {
+
+    dispatch({
+        type: PAGE_SACI_PETS,
+        payload: slicePets
+    })
+
+}
+
+export const select_pet_action = (id_mascota) => async (dispatch) => {
+
+    dispatch({
+        type: SELECT_PET_DATA,
+        payload: id_mascota
+    })
+
 }

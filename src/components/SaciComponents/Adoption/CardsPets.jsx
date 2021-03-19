@@ -10,22 +10,21 @@ import {
   IconButton,
   Button,
   Dialog,
-  Grid, CardMedia,
+  Grid,
+  CardMedia,
   MenuItem,
   Menu,
   Select,
-  CircularProgress
+  CircularProgress,
 } from '@material-ui/core';
 
 import { red } from '@material-ui/core/colors';
-
 
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import PetsIcon from '@material-ui/icons/Pets';
 
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-
 
 // Accordion
 import Accordion from '@material-ui/core/Accordion';
@@ -60,39 +59,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '@material-ui/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 // import useModal from '../../../hooks/useModal';
-import { get_pet_photos_action, get_saci_pets_action } from '../../../redux/actions/saciPets';
+import {
+  get_pet_photos_action,
+  get_saci_pets_action,
+} from '../../../redux/actions/saciPets';
 // import { Height, LensTwoTone } from '@material-ui/icons';
 
 //images
 import petSample from '../../../assets/images/cards/perro_con_peluca.jpg';
 
 // Carousel
-import Carousel from 'react-material-ui-carousel'
+import Carousel from 'react-material-ui-carousel';
 
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
-import pug1 from '../../../assets/images/cardsModal/pug1.jpg'
-import pug2 from '../../../assets/images/cardsModal/pug2.jpg'
-import pug3 from '../../../assets/images/cardsModal/pug3.png'
-import pug4 from '../../../assets/images/cardsModal/pug4.jpg'
-import pug5 from '../../../assets/images/cardsModal/pug5.jpg'
+import pug1 from '../../../assets/images/cardsModal/pug1.jpg';
+import pug2 from '../../../assets/images/cardsModal/pug2.jpg';
+import pug3 from '../../../assets/images/cardsModal/pug3.png';
+import pug4 from '../../../assets/images/cardsModal/pug4.jpg';
+import pug5 from '../../../assets/images/cardsModal/pug5.jpg';
 import axiosClient from '../../../configAxios/axios';
 import CarouselPhotos from './CarouselPhotos';
-
-
-// import mascota1 from '../assets/images/cards/perro_con_peluca.jpg'
-// import mascota2 from '../../assets/images/cards/pastor_aleman_navideño.jpg'
-// import mascota3 from '../../assets/images/cards/pinscher.jpg'
-// import mascota4 from '../../assets/images/cards/perro_chancla.jpg'
-// import mascota5 from '../../assets/images/cards/gato_comiendo.jpg'
-// import mascota6 from '../../assets/images/cards/perro_programador.jpg'
-// import mascota7 from '../../assets/images/cards/perros_adopcion.jpg'
-// import mascota8 from '../../assets/images/cards/perros_en_moto.jpg'
-// import mascota9 from '../../assets/images/cards/pato_patinando.jpg'
-// import mascota10 from '../../assets/images/cards/cerdo_con_botas.jpg'
-// import mascota11 from '../../assets/images/cards/gato_enfermero.jpg'
-// import mascota12 from '../../assets/images/cards/loro_con_perro.jpg'
+import AdoptButton from '../AdoptMeForm/AdoptButton';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -133,13 +122,13 @@ const useStyles = makeStyles((theme) => ({
     height: 450,
     paddingTop: '56.25%', // 16:9
     cursor: 'pointer',
-  }
+  },
 }));
 ////////////////////////////////////////////////////////////
 // Data
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return <Slide direction='up' ref={ref} {...props} />;
 });
 
 function createData(name, calories, sexo, fat, carbs, protein) {
@@ -148,46 +137,41 @@ function createData(name, calories, sexo, fat, carbs, protein) {
 
 const rows = [createData('Pinina', 10, 'Macho', 'Pastor Alemán', 'Perro', 80)];
 
-
 ////////////////////////////////////////////////////////////
 export default function RecipeReviewCard(props) {
   const dispatch = useDispatch();
-  const { pageMascotas } = useSelector(state => state.saciPets);
+  const { pageMascotas } = useSelector((state) => state.saciPets);
   const [open, setOpen] = useState(false);
-  const [newPet, setNewPet] = useState()
+  const [newPet, setNewPet] = useState();
   const [anchorMenu, setAnchorMenu] = useState(null);
   const [images, setImages] = useState(pug1);
-  const InitialPetState =
-  {
+  const InitialPetState = {
     nombre_mascota: '',
-    edad_mascota: "",
-    escala_edad: "",
-    descripcion_mascota: "",
-    esterilizado: "",
-    genero_mascota: "",
-    raza: "",
-    string_agg: "",
-    municipio: "",
+    edad_mascota: '',
+    escala_edad: '',
+    descripcion_mascota: '',
+    esterilizado: '',
+    genero_mascota: '',
+    raza: '',
+    string_agg: '',
+    municipio: '',
     fotos: [],
   };
-  const [getPet, setGetPet] = useState(InitialPetState)
-  const [petData, setPetData] = useState([])
-  const [petIndex, setPetIndex] = useState()
-  const ageScale = ["s", "semana", "mes", "año", "es"]
+  const [getPet, setGetPet] = useState(InitialPetState);
+  const [petData, setPetData] = useState([]);
+  const [petIndex, setPetIndex] = useState();
+  const ageScale = ['s', 'semana', 'mes', 'año', 'es'];
   const [viewAgeScale, setViewAgeScale] = useState(ageScale[0]);
-  const [vaccines, setVaccines] = useState()
+  const [vaccines, setVaccines] = useState();
   const [genre, setGenre] = useState();
   const [displayContent, setDisplayContent] = useState(false);
 
-
-
-
   const handleClickOpen = (value) => {
-    setNewPet("" + value)
-    console.log(newPet)
+    setNewPet('' + value);
+    console.log(newPet);
     setOpen(true);
     setTimeout(() => {
-      setDisplayContent(true)
+      setDisplayContent(true);
     }, 1000);
   };
 
@@ -196,8 +180,7 @@ export default function RecipeReviewCard(props) {
     setDisplayContent(false);
   };
 
-  const { petImage1 } = useSelector(state => state.adoptFormData);
-
+  const { petImage1 } = useSelector((state) => state.adoptFormData);
 
   const classes = useStyles();
 
@@ -214,102 +197,115 @@ export default function RecipeReviewCard(props) {
     setAnchorMenu(null);
   };
 
-
   // filtros harold
   const [filtersInitial] = useState({
     id_tipo_mascota: false,
-  })
+  });
 
   useEffect(() => {
-    dispatch(get_saci_pets_action(filtersInitial))
-  }, [])
-
-
-
+    dispatch(get_saci_pets_action(filtersInitial));
+  }, []);
 
   useEffect(() => {
-    console.log(getPet)
-    const parvovirus = "Parvovirus"
-    setVaccines(getPet.string_agg)
-    console.log(parvovirus.includes(getPet.string_agg))
-    if (getPet.genero_mascota === "1") {
-      setGenre("Macho")
-    } else if (getPet.genero_mascota === "2") {
-      setGenre("Hembra")
+    console.log(getPet);
+    const parvovirus = 'Parvovirus';
+    setVaccines(getPet.string_agg);
+    console.log(parvovirus.includes(getPet.string_agg));
+    if (getPet.genero_mascota === '1') {
+      setGenre('Macho');
+    } else if (getPet.genero_mascota === '2') {
+      setGenre('Hembra');
     }
-  }, [getPet])
+  }, [getPet]);
 
   useEffect(() => {
     if (petIndex >= 0) {
-      setGetPet(pageMascotas[petIndex])
+      setGetPet(pageMascotas[petIndex]);
     }
-  }, [petIndex])
+  }, [petIndex]);
 
   useEffect(() => {
     if (pageMascotas) {
       let petInfo = pageMascotas.findIndex(function (item) {
         return item.id_mascota === newPet;
       });
-      setPetIndex(petInfo)
-      console.log(petIndex)
+      setPetIndex(petInfo);
+      console.log(petIndex);
     }
-  }, [newPet])
+  }, [newPet]);
 
   useEffect(() => {
-    console.log(vaccines)
-  }, [vaccines])
+    console.log(vaccines);
+  }, [vaccines]);
 
   useEffect(() => {
-    if (getPet.edad_mascota === "1") {
+    if (getPet.edad_mascota === '1') {
       switch (getPet.escala_edad) {
-        case "1": setViewAgeScale(ageScale[1])
+        case '1':
+          setViewAgeScale(ageScale[1]);
           break;
-        case "2": setViewAgeScale(ageScale[2])
+        case '2':
+          setViewAgeScale(ageScale[2]);
           break;
-        case "3": setViewAgeScale(ageScale[3])
+        case '3':
+          setViewAgeScale(ageScale[3]);
           break;
         default:
       }
     } else {
       switch (getPet.escala_edad) {
-        case "1": setViewAgeScale(`${ageScale[1]}${ageScale[0]}`)
+        case '1':
+          setViewAgeScale(`${ageScale[1]}${ageScale[0]}`);
           break;
-        case "2": setViewAgeScale(`${ageScale[1]}${ageScale[0]}`)
+        case '2':
+          setViewAgeScale(`${ageScale[1]}${ageScale[0]}`);
           break;
-        case "3": setViewAgeScale(`${ageScale[1]}${ageScale[0]}`)
+        case '3':
+          setViewAgeScale(`${ageScale[1]}${ageScale[0]}`);
           break;
         default:
       }
     }
-    console.log(ageScale)
-    console.log(getPet.escala_edad)
-  }, [getPet])
-
+    console.log(ageScale);
+    console.log(getPet.escala_edad);
+  }, [getPet]);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'), {
-    defaultMatches: true
+    defaultMatches: true,
   });
+
 
   return (
     <>
-      <Grid container spacing={isMobile ? 1 : 3} /* xs={12} */ justify="center" className={classes.cardsPetsContainer}>
+      <Grid
+        container
+        spacing={isMobile ? 1 : 3}
+        /* xs={12} */ justify='center'
+        className={classes.cardsPetsContainer}
+      >
         {pageMascotas.map((item) => {
           return (
-            <Grid key={item.id_mascota} item xs={12} sm={6} md={6} lg={3} xl={3}>
+            <Grid
+              key={item.id_mascota}
+              item
+              xs={12}
+              sm={6}
+              md={6}
+              lg={3}
+              xl={3}
+            >
               <Card className={classes.cardsPets} style={{ borderRadius: 10 }}>
                 <CardHeader
                   avatar={
-                    <Avatar aria-label="recipe" className={classes.avatar}>
+                    <Avatar aria-label='recipe' className={classes.avatar}>
                       R
-                </Avatar>
+                    </Avatar>
                   }
                   title={<Typography>{item.nombre_mascota}</Typography>}
                   subheader={item.raza}
                 />
-                <CarouselPhotos
-                  itemPets={item.fotos}
-                />
+                <CarouselPhotos itemPets={item.fotos} />
 
                 {/* <Grid container justify="center">
                   <Button disableRipple style={{ textTransform: 'none' }}>
@@ -319,36 +315,38 @@ export default function RecipeReviewCard(props) {
                   </Button>
                 </Grid> */}
                 <CardActions disableSpacing>
-                  <IconButton aria-label="add to favorites">
+                  <IconButton aria-label='add to favorites'>
                     <FavoriteIcon />
                   </IconButton>
-                  <PetModalData/>
-                  {/* <IconButton aria-label="pets">
-                    <PetsIcon />
-                  </IconButton> */}
+                  <PetModalData />
+                  <IconButton aria-label='pets'>
 
-                  {/* <MenuItem key={item.mascota} onClick={(e) => handleClickOpen(e.target.value)} value={item.id_mascota}>
-                    Mascotas
-                  </MenuItem> */}
+                    <MenuItem key={item.id_mascota} onClick={(e) => handleClickOpen(e.target.value)} value={item.id_mascota}>
+                      <PetsIcon />
+                    </MenuItem>
+                  </IconButton>
 
-                  <Button
-                    className={classes.buttonPrimary}
-                    variant="contained"
-                    color="primary"
-                    size="medium"
-                    fullWidth
-                  >
-                    Adóptame
-              </Button>
+                  {/* Adopt a Pet Button */}
+                  <MenuItem>
+                    <Button
+                      className={classes.buttonPrimary}
+                      onCLick={() => console.log(item.id_mascota)}
+                      variant='contained'
+                      color='primary'
+                      size='medium'
+                      fullWidth
+                      key={item.id_mascota}
+                    >
+                      Adóptame
+                  </Button>
+                  </MenuItem>
+                  {/* <button key={item.id_mascota} onClick={console.log(item.id_mascota)}>adóptame</button> */}
                 </CardActions>
               </Card>
             </Grid>
-          )
-        }
-        )}
+          );
+        })}
       </Grid>
-
-      {/* dialogo ficha de mascota */}
 
       <Dialog
         open={open}
@@ -357,16 +355,15 @@ export default function RecipeReviewCard(props) {
         onClose={handleClickClose}
       >
         <Paper elevation={3} className={classes.paperContainer}>
-          <Box display="flex" justifyContent="center">
-          </Box>
-          <Box display="flex" justifyContent="center" mb={5} my={5}>
-            <Typography variant="h4" color="initial">
+          <Box display='flex' justifyContent='center'></Box>
+          <Box display='flex' justifyContent='center' mb={5} my={5}>
+            <Typography variant='h4' color='initial'>
               Ficha De Mascota
-                      </Typography>
+            </Typography>
           </Box>
           <Box mb={5}>
             <TableContainer component={Paper}>
-              <Table className={classes.table} aria-label="simple table">
+              <Table className={classes.table} aria-label='simple table'>
                 <TableHead>
                   <TableRow>
                     <TableCell>Nombre</TableCell>
@@ -378,10 +375,12 @@ export default function RecipeReviewCard(props) {
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell component="th" scope="row">
+                    <TableCell component='th' scope='row'>
                       {getPet.nombre_mascota}
                     </TableCell>
-                    <TableCell>{getPet.escala_edad} {viewAgeScale}</TableCell>
+                    <TableCell>
+                      {getPet.escala_edad} {viewAgeScale}
+                    </TableCell>
                     <TableCell>{genre}</TableCell>
                     <TableCell>{getPet.raza}</TableCell>
                     <TableCell>{getPet.municipio}</TableCell>
@@ -393,36 +392,30 @@ export default function RecipeReviewCard(props) {
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
+              aria-controls='panel1a-content'
+              id='panel1a-header'
             >
               <Typography className={classes.heading}>Vacunas</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
-                {vaccines}
-              </Typography>
+              <Typography>{vaccines}</Typography>
             </AccordionDetails>
           </Accordion>
 
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel2a-content"
-              id="panel2a-header"
+              aria-controls='panel2a-content'
+              id='panel2a-header'
             >
               <Typography className={classes.heading}>Descripción</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
-                {getPet.descripcion_mascota}
-              </Typography>
+              <Typography>{getPet.descripcion_mascota}</Typography>
             </AccordionDetails>
           </Accordion>
         </Paper>
       </Dialog>
     </>
-
-
   );
 }
