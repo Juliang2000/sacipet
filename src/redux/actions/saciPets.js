@@ -1,5 +1,5 @@
-import { GET_SACI_PETS, PAGE_SACI_PETS, SELECT_PET_DATA } from "../types";
-import { getSaciPets } from "../../configAxios/saciPets"
+import { GET_SACI_PETS, PAGE_SACI_PETS, SELECT_PET_DATA } from '../types';
+import { getSaciPets } from '../../configAxios/saciPets';
 
 export const get_saci_pets_action = (filters) => async (dispatch) => {
   try {
@@ -1443,7 +1443,49 @@ export const get_saci_pets_action = (filters) => async (dispatch) => {
 
     /////////////////////////////////////////////////////////
 
-    // filtros ultima mascota agregada y ordenada de 1 a 3
+    // filtros, cachorros
+    if (filters.puppies) {
+      filter = response.data.mascotas.filter(
+        (pets) =>
+          (pets.edad_mascota >= 1 &&
+            pets.edad_mascota <= 26 &&
+            pets.escala_edad === '1') ||
+          (pets.edad_mascota <= 6 && pets.escala_edad === '2')
+      );
+    }
+
+    // filtros, jovenes
+    if (filters.youngs) {
+      filter = response.data.mascotas.filter(
+        (pets) =>
+          (pets.edad_mascota >= 7 &&
+            pets.edad_mascota <= 24 &&
+            pets.escala_edad === '2') ||
+          (pets.edad_mascota <= 2 && pets.escala_edad === '3')
+      );
+    }
+
+    // filtros, adultos
+    if (filters.adults) {
+      filter = response.data.mascotas.filter(
+        (pets) =>
+          pets.edad_mascota >= 3 &&
+          pets.edad_mascota <= 10 &&
+          pets.escala_edad === '3'
+      );
+    }
+
+    // filtros, viejos
+    if (filters.olds) {
+      filter = response.data.mascotas.filter(
+        (pets) =>
+          pets.edad_mascota >= 11 &&
+          pets.edad_mascota <= 25 &&
+          pets.escala_edad === '3'
+      );
+    }
+
+    // // filtros ultima mascota agregada y ordenada de 1 a 3
     if (filters.id_tipo_mascota !== false) {
       filter = filter.reverse();
       filter = filter.sort((a, b) => a.id_tipo_mascota - b.id_tipo_mascota);
@@ -1460,25 +1502,6 @@ export const get_saci_pets_action = (filters) => async (dispatch) => {
   }
 };
 
-// export const get_pet_photos_action = (petPhoto) => async (dispatch) => {
-//   try {
-//     const responseData = await getPetPhotos(petPhoto);
-//     dispatch({
-//       type: GET_PET_PHOTOS,
-//       payload: responseData,
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
-// export const save_pet_action = (petFile) => {
-//   return {
-//     type: SAVE_PET,
-//     payload: petFile,
-//   };
-// };
-
 export const page_saci_pets_action = (slicePets) => async (dispatch) => {
   dispatch({
     type: PAGE_SACI_PETS,
@@ -1486,12 +1509,9 @@ export const page_saci_pets_action = (slicePets) => async (dispatch) => {
   });
 };
 
-
 export const select_pet_action = (id_mascota) => async (dispatch) => {
-
   dispatch({
     type: SELECT_PET_DATA,
-    payload: id_mascota
-  })
-
-}
+    payload: id_mascota,
+  });
+};
