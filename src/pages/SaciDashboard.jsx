@@ -6,6 +6,7 @@ import FiltersPets from '../components/SaciComponents/Adoption/FiltersPets'
 import FiltersPetsResponsive from '../components/SaciComponents/Adoption/FiltersPetsResponsive'
 import { Grid, Hidden } from '@material-ui/core';
 import Pagination from '../components/SaciComponents/Pagination'
+import AdoptMeForm from '../components/SaciComponents/Adoption/AdoptMeForm';
 
 const useStyles = makeStyles((theme) => ({
     pageContainer: {
@@ -41,10 +42,12 @@ export default function SaciDashboard() {
                     <CardsPets />
                 </Grid>
 
+                <AdoptMeForm />
+
             </Grid>
             <Grid container justify='center' className={classes.pageContainer}>
-                    <Pagination />
-            </Grid> 
+                <Pagination />
+            </Grid>
         </>
     )
 }

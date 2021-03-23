@@ -14,7 +14,6 @@ export const get_pet_size_data = (petData) => async (dispatch, getState) => {
     }
 }
 
-
 export const small_size_action = (petSize) => ({
     type: SMALL_SIZE_PET_ACTION,
     payload: petSize

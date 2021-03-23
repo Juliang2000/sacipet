@@ -60,8 +60,10 @@ import { useTheme } from '@material-ui/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 // import useModal from '../../../hooks/useModal';
 import {
+  adopt_me_dialog_action,
   get_pet_photos_action,
   get_saci_pets_action,
+  select_pet_action,
 } from '../../../redux/actions/saciPets';
 // import { Height, LensTwoTone } from '@material-ui/icons';
 
@@ -81,7 +83,8 @@ import pug4 from '../../../assets/images/cardsModal/pug4.jpg';
 import pug5 from '../../../assets/images/cardsModal/pug5.jpg';
 import axiosClient from '../../../configAxios/axios';
 import CarouselPhotos from './CarouselPhotos';
-import AdoptButton from '../AdoptMeForm/AdoptButton';
+
+import House from '../../../assets/icons/pet-house.svg'
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -295,7 +298,7 @@ export default function RecipeReviewCard(props) {
               lg={3}
               xl={3}
             >
-              <Card className={classes.cardsPets} style={{ borderRadius: 10 }}>
+              <Card className={classes.cardsPets} style={{ borderRadius: 10 }} onClick={() => dispatch(select_pet_action(item.id_mascota))}>
                 <CardHeader
                   avatar={
                     <Avatar aria-label='recipe' className={classes.avatar}>
@@ -306,41 +309,20 @@ export default function RecipeReviewCard(props) {
                   subheader={item.raza}
                 />
                 <CarouselPhotos itemPets={item.fotos} />
-
-                {/* <Grid container justify="center">
-                  <Button disableRipple style={{ textTransform: 'none' }}>
-                    <MenuItem key={item.id_mascota} onClick={(e) => handleClickOpen(e.target.value)} value={item.id_mascota}>
-                      Datos de mascota
-                  </MenuItem>
-                  </Button>
-                </Grid> */}
                 <CardActions disableSpacing>
                   <IconButton aria-label='add to favorites'>
                     <FavoriteIcon />
                   </IconButton>
                   <PetModalData />
-                  <IconButton aria-label='pets'>
-
-                    <MenuItem key={item.id_mascota} onClick={(e) => handleClickOpen(e.target.value)} value={item.id_mascota}>
-                      <PetsIcon />
-                    </MenuItem>
+                  <IconButton onClick={() => console.log("dato entrante")} value={item.id_mascota}>
+                    <PetsIcon />
                   </IconButton>
-
-                  {/* Adopt a Pet Button */}
-                  <MenuItem>
-                    <Button
-                      className={classes.buttonPrimary}
-                      onCLick={() => console.log(item.id_mascota)}
-                      variant='contained'
-                      color='primary'
-                      size='medium'
-                      fullWidth
-                      key={item.id_mascota}
-                    >
-                      Adóptame
-                  </Button>
-                  </MenuItem>
-                  {/* <button key={item.id_mascota} onClick={console.log(item.id_mascota)}>adóptame</button> */}
+                  <Button
+                    className={classes.buttonPrimary}
+                    variant='contained'
+                    color='primary'
+                    fullWidth
+                    onClick={() => dispatch(adopt_me_dialog_action(true))}>Adóptame</Button>
                 </CardActions>
               </Card>
             </Grid>

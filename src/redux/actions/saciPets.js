@@ -1,5 +1,6 @@
-import { GET_SACI_PETS, PAGE_SACI_PETS, SELECT_PET_DATA } from "../types";
+import { GET_SACI_PETS, PAGE_SACI_PETS, SELECT_PET_DATA, SET_ADOPT_ME_DIALOG, SET_PET_DATA_DIALOG } from "../types";
 import { getSaciPets } from "../../configAxios/saciPets"
+import { CardActions } from "@material-ui/core";
 
 export const get_saci_pets_action = (filters) => async (dispatch) => {
   try {
@@ -1460,25 +1461,6 @@ export const get_saci_pets_action = (filters) => async (dispatch) => {
   }
 };
 
-// export const get_pet_photos_action = (petPhoto) => async (dispatch) => {
-//   try {
-//     const responseData = await getPetPhotos(petPhoto);
-//     dispatch({
-//       type: GET_PET_PHOTOS,
-//       payload: responseData,
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
-// export const save_pet_action = (petFile) => {
-//   return {
-//     type: SAVE_PET,
-//     payload: petFile,
-//   };
-// };
-
 export const page_saci_pets_action = (slicePets) => async (dispatch) => {
   dispatch({
     type: PAGE_SACI_PETS,
@@ -1495,3 +1477,22 @@ export const select_pet_action = (id_mascota) => async (dispatch) => {
   })
 
 }
+
+export const adopt_me_dialog_action = (dialogState) => async (dispatch) => {
+
+  dispatch({
+    type: SET_ADOPT_ME_DIALOG,
+    payload: dialogState
+  })
+
+}
+
+export const pet_data_dialog_action = (dialogDataState) => async (dispatch) => {
+
+  dispatch({
+    type: SET_PET_DATA_DIALOG,
+    payload: dialogDataState
+  })
+
+}
+
