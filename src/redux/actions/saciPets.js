@@ -1,6 +1,5 @@
 import { GET_SACI_PETS, PAGE_SACI_PETS, SELECT_PET_DATA, SET_ADOPT_ME_DIALOG, SET_PET_DATA_DIALOG } from "../types";
 import { getSaciPets } from "../../configAxios/saciPets"
-import { CardActions } from "@material-ui/core";
 
 export const get_saci_pets_action = (filters) => async (dispatch) => {
   try {
@@ -63,6 +62,48 @@ export const get_saci_pets_action = (filters) => async (dispatch) => {
     if (filters.females) {
       filter = response.data.mascotas.filter(
         (pets) => pets.genero_mascota === '2'
+      );
+    }
+
+    // filtros, cachorros
+    if (filters.puppies) {
+      filter = response.data.mascotas.filter(
+        (pets) =>
+          (pets.edad_mascota >= 1 &&
+            pets.edad_mascota <= 25 &&
+            pets.escala_edad === '1') ||
+          (pets.edad_mascota <= 6 && pets.escala_edad === '2')
+      );
+    }
+
+    // filtros, jovenes
+    if (filters.youngs) {
+      filter = response.data.mascotas.filter(
+        (pets) =>
+          (pets.edad_mascota >= 7 &&
+            pets.edad_mascota <= 24 &&
+            pets.escala_edad === '2') ||
+          (pets.edad_mascota <= 2 && pets.escala_edad === '3')
+      );
+    }
+
+    // filtros, adultos
+    if (filters.adults) {
+      filter = response.data.mascotas.filter(
+        (pets) =>
+          pets.edad_mascota >= 3 &&
+          pets.edad_mascota <= 10 &&
+          pets.escala_edad === '3'
+      );
+    }
+
+    // filtros, viejos
+    if (filters.olds) {
+      filter = response.data.mascotas.filter(
+        (pets) =>
+          pets.edad_mascota >= 11 &&
+          pets.edad_mascota <= 25 &&
+          pets.escala_edad === '3'
       );
     }
 
@@ -242,6 +283,144 @@ export const get_saci_pets_action = (filters) => async (dispatch) => {
     if (filters.bigs && filters.females) {
       filter = response.data.mascotas.filter(
         (pets) => pets.id_tamanio === '1' && pets.genero_mascota === '2'
+      );
+    }
+
+    // filtros, cachorros, gatos
+    if (filters.puppies && filters.cats) {
+      filter = response.data.mascotas.filter(
+        (pets) =>
+          ((pets.edad_mascota >= 1 &&
+            pets.edad_mascota <= 25 &&
+            pets.escala_edad === '1') ||
+            (pets.edad_mascota <= 6 && pets.escala_edad === '2')) &&
+          pets.id_tipo_mascota === '1'
+      );
+    }
+
+    // filtros, cachorros, perros
+    if (filters.puppies && filters.dogs) {
+      filter = response.data.mascotas.filter(
+        (pets) =>
+          ((pets.edad_mascota >= 1 &&
+            pets.edad_mascota <= 25 &&
+            pets.escala_edad === '1') ||
+            (pets.edad_mascota <= 6 && pets.escala_edad === '2')) &&
+          pets.id_tipo_mascota === '2'
+      );
+    }
+
+    // filtros, cachorros, hamsters
+    if (filters.puppies && filters.hamsters) {
+      filter = response.data.mascotas.filter(
+        (pets) =>
+          ((pets.edad_mascota >= 1 &&
+            pets.edad_mascota <= 25 &&
+            pets.escala_edad === '1') ||
+            (pets.edad_mascota <= 6 && pets.escala_edad === '2')) &&
+          pets.id_tipo_mascota === '3'
+      );
+    }
+
+    // filtros, jovenes, gatos
+    if (filters.youngs && filters.cats) {
+      filter = response.data.mascotas.filter(
+        (pets) =>
+          ((pets.edad_mascota >= 7 &&
+            pets.edad_mascota <= 24 &&
+            pets.escala_edad === '2') ||
+            (pets.edad_mascota <= 2 && pets.escala_edad === '3')) &&
+          pets.id_tipo_mascota === '1'
+      );
+    }
+
+    // filtros, jovenes, perros
+    if (filters.youngs && filters.dogs) {
+      filter = response.data.mascotas.filter(
+        (pets) =>
+          ((pets.edad_mascota >= 7 &&
+            pets.edad_mascota <= 24 &&
+            pets.escala_edad === '2') ||
+            (pets.edad_mascota <= 2 && pets.escala_edad === '3')) &&
+          pets.id_tipo_mascota === '2'
+      );
+    }
+
+    // filtros, jovenes, hamsters
+    if (filters.youngs && filters.hamsters) {
+      filter = response.data.mascotas.filter(
+        (pets) =>
+          ((pets.edad_mascota >= 7 &&
+            pets.edad_mascota <= 24 &&
+            pets.escala_edad === '2') ||
+            (pets.edad_mascota <= 2 && pets.escala_edad === '3')) &&
+          pets.id_tipo_mascota === '3'
+      );
+    }
+
+    // filtros, adultos, gatos
+    if (filters.adults && filters.cats) {
+      filter = response.data.mascotas.filter(
+        (pets) =>
+          pets.edad_mascota >= 3 &&
+          pets.edad_mascota <= 10 &&
+          pets.escala_edad === '3' &&
+          pets.id_tipo_mascota === '1'
+      );
+    }
+
+    // filtros, adultos, perros
+    if (filters.adults && filters.dogs) {
+      filter = response.data.mascotas.filter(
+        (pets) =>
+          pets.edad_mascota >= 3 &&
+          pets.edad_mascota <= 10 &&
+          pets.escala_edad === '3' &&
+          pets.id_tipo_mascota === '2'
+      );
+    }
+
+    // filtros, adultos, hamsters
+    if (filters.adults && filters.hamsters) {
+      filter = response.data.mascotas.filter(
+        (pets) =>
+          pets.edad_mascota >= 3 &&
+          pets.edad_mascota <= 10 &&
+          pets.escala_edad === '3' &&
+          pets.id_tipo_mascota === '3'
+      );
+    }
+
+    // filtros, viejos, gatos
+    if (filters.olds && filters.cats) {
+      filter = response.data.mascotas.filter(
+        (pets) =>
+          pets.edad_mascota >= 11 &&
+          pets.edad_mascota <= 25 &&
+          pets.escala_edad === '3' &&
+          pets.id_tipo_mascota === '1'
+      );
+    }
+
+    // filtros, viejos, perros
+    if (filters.olds && filters.dogs) {
+      filter = response.data.mascotas.filter(
+        (pets) =>
+          pets.edad_mascota >= 11 &&
+          pets.edad_mascota <= 25 &&
+          pets.escala_edad === '3' &&
+          pets.id_tipo_mascota === '2'
+      );
+    }
+
+    // filtros, viejos, hamsters
+    if (filters.olds && filters.hamsters) {
+      filter = response.data.mascotas.filter(
+        (pets) =>
+          pets.edad_mascota >= 11 &&
+          pets.edad_mascota <= 25 &&
+          pets.escala_edad === '3' &&
+          pets.id_tipo_mascota === '3'
       );
     }
 
@@ -1030,6 +1209,27 @@ export const get_saci_pets_action = (filters) => async (dispatch) => {
       );
     }
 
+    // filtros, cachorros, jovenes, adultos, viejos
+    if (filters.puppies && filters.youngs && filters.adults && filters.olds) {
+      filter = response.data.mascotas.filter(
+        (pets) =>
+          (pets.edad_mascota >= 1 &&
+            pets.edad_mascota <= 25 &&
+            pets.escala_edad === '1') ||
+          (pets.edad_mascota <= 6 && pets.escala_edad === '2') ||
+          (pets.edad_mascota >= 7 &&
+            pets.edad_mascota <= 24 &&
+            pets.escala_edad === '2') ||
+          (pets.edad_mascota <= 2 && pets.escala_edad === '3') ||
+          (pets.edad_mascota >= 3 &&
+            pets.edad_mascota <= 10 &&
+            pets.escala_edad === '3') ||
+          (pets.edad_mascota >= 11 &&
+            pets.edad_mascota <= 25 &&
+            pets.escala_edad === '3')
+      );
+    }
+
     /////////////////////////////////////////////////////////
 
     /////////////////////// Filtros 5 ///////////////////////
@@ -1444,7 +1644,7 @@ export const get_saci_pets_action = (filters) => async (dispatch) => {
 
     /////////////////////////////////////////////////////////
 
-    // filtros ultima mascota agregada y ordenada de 1 a 3
+    // // filtros ultima mascota agregada y ordenada de 1 a 3
     if (filters.id_tipo_mascota !== false) {
       filter = filter.reverse();
       filter = filter.sort((a, b) => a.id_tipo_mascota - b.id_tipo_mascota);
@@ -1468,9 +1668,7 @@ export const page_saci_pets_action = (slicePets) => async (dispatch) => {
   });
 };
 
-
 export const select_pet_action = (id_mascota) => async (dispatch) => {
-
   dispatch({
     type: SELECT_PET_DATA,
     payload: id_mascota

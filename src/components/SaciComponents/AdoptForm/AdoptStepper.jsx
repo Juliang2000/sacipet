@@ -15,11 +15,22 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 
 //Redux actions
-import { reset_action } from '../../../redux/actions/petTypeAction'
-import { next_step_action, back_step_action, update_form_data_action, registry_form_adopt, upload_pet_image_1, upload_pet_image_2, upload_pet_image_3, upload_pet_image_4, upload_pet_image_5, reset_form_action } from '../../../redux/actions/adoptFormAction'
+import { reset_action } from '../../../redux/actions/petTypeAction';
+import {
+  next_step_action,
+  back_step_action,
+  update_form_data_action,
+  registry_form_adopt,
+  upload_pet_image_1,
+  upload_pet_image_2,
+  upload_pet_image_3,
+  upload_pet_image_4,
+  upload_pet_image_5,
+  reset_form_action,
+} from '../../../redux/actions/adoptFormAction';
 
 //components
-import PetType from './PetType'
+import PetType from './PetType';
 import PetDescription from './PetDescription';
 import PetImages from './PetImages';
 
@@ -29,18 +40,22 @@ import CloseIcon from '@material-ui/icons/Close';
 import iconSend from '../../../assets/icons/send.svg';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
-import SettingsIcon from '@material-ui/icons/Settings';
-import GroupAddIcon from '@material-ui/icons/GroupAdd';
-import VideoLabelIcon from '@material-ui/icons/VideoLabel';
+import petTypeIcon from '../../../assets/icons/dialogs/pet-type.svg';
+import petDateIcon from '../../../assets/icons/dialogs/pet-date.svg';
+import petPhotoIcon from '../../../assets/icons/dialogs/pet-photo.svg';
 
 //lotties
-import registerPetForm from '../../../assets/lotties/registerPetForm.json'
+import registerPetForm from '../../../assets/lotties/registerPetForm.json';
 import { get_saci_pets_action } from '../../../redux/actions/saciPets';
 
 // open dialog login
-import { login_dialog_open_action, adoptstepper_dialog_open_action, adoptstepper_dialog_close_action, adopt_dialog_open_action } from '../../../redux/actions/loginAction';
+import {
+  login_dialog_open_action,
+  adoptstepper_dialog_open_action,
+  adoptstepper_dialog_close_action,
+  adopt_dialog_open_action,
+} from '../../../redux/actions/loginAction';
 import { register_dialog_open_action } from '../../../redux/actions/registerAction';
-
 
 const ColorlibConnector = withStyles({
   alternativeLabel: {
@@ -68,7 +83,7 @@ const ColorlibConnector = withStyles({
 
 const useColorlibStepIconStyles = makeStyles({
   test: {
-    position: 'relative'
+    position: 'relative',
   },
   root: {
     backgroundColor: '#ccc',
@@ -106,7 +121,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
     alignItems: 'center',
     textAlign: 'center',
-
   },
   petprice: {
     alignItems: 'center',
@@ -117,7 +131,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '15px',
     [theme.breakpoints.between('xs', 'sm')]: {
       color: '#000',
-    }
+    },
   },
   adoptionMobileButton: {
     // color: 'black',
@@ -129,7 +143,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 5,
   },
   closeButton: {
-
     color: '#808080',
     width: 30,
     height: 30,
@@ -162,10 +175,9 @@ const useStyles = makeStyles((theme) => ({
     width: '40px',
     [theme.breakpoints.only('xs')]: {
       width: '30px',
-    }
+    },
   },
 }));
-
 
 // const icons = {
 //   1: <SettingsIcon />,
@@ -178,10 +190,9 @@ function ColorlibStepIcon(props) {
   const { active, completed } = props;
 
   const icons = {
-    1: <SettingsIcon />,
-    2: <GroupAddIcon />,
-    3: <VideoLabelIcon />,
-    4: <VideoLabelIcon />,
+    1: <img src={petTypeIcon} alt="Pets Types" />,
+    2: <img src={petDateIcon} alt="Pets Dates" />,
+    3: <img src={petPhotoIcon} alt="Pets Photos" />,
   };
 
   return (
@@ -197,11 +208,14 @@ function ColorlibStepIcon(props) {
 }
 
 export function getSteps() {
-  return ['Selecciona el tipo de mascota', 'Datos de la mascota', 'Subir fotos'];
+  return [
+    'Selecciona el tipo de mascota',
+    'Datos de la mascota',
+    'Subir fotos',
+  ];
 }
 
 function getStepContent(step) {
-
   switch (step) {
     case 0:
       return <PetType />;
@@ -215,17 +229,24 @@ function getStepContent(step) {
 }
 
 export default function AdoptStepper() {
+  const { adoptDialog, adoptstepperDialog } = useSelector(
+    (state) => state.login
+  );
 
-  const { adoptDialog, adoptstepperDialog } = useSelector(state => state.login);
-
-  const { user } = useSelector(state => state.login);
-  const { petType } = useSelector(store => store.petType);
-  const { activeStepState } = useSelector(state => state.adoptFormData);
-  const { petDescription } = useSelector(state => state.adoptFormData);
-  const newPet = useSelector(state => state.adoptFormData.updateDescriptionData);
-  const { petimage1, petimage2, petimage3, petimage4, petimage5 } = useSelector(state => state.adoptFormData);
-  const { savePetImage1 } = useSelector(state => state.adoptFormData);
-  const id_mascota = useSelector(state => state.adoptFormData.registeredFormData.data.mascota.id_mascota);
+  const { user } = useSelector((state) => state.login);
+  const { petType } = useSelector((store) => store.petType);
+  const { activeStepState } = useSelector((state) => state.adoptFormData);
+  const { petDescription } = useSelector((state) => state.adoptFormData);
+  const newPet = useSelector(
+    (state) => state.adoptFormData.updateDescriptionData
+  );
+  const { petimage1, petimage2, petimage3, petimage4, petimage5 } = useSelector(
+    (state) => state.adoptFormData
+  );
+  const { savePetImage1 } = useSelector((state) => state.adoptFormData);
+  const id_mascota = useSelector(
+    (state) => state.adoptFormData.registeredFormData.data.mascota.id_mascota
+  );
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -242,32 +263,31 @@ export default function AdoptStepper() {
   useEffect(() => {
     if (activeStepState) {
       switch (activeStepState) {
-        case 1: if (petType !== 0) {
-          setAllowContent(true)
-        } else {
-          setAllowContent(false)
-        }
+        case 1:
+          if (petType !== 0) {
+            setAllowContent(true);
+          } else {
+            setAllowContent(false);
+          }
           break;
-        case 2: if (petDescription === true) {
-          setAllowContent(true);
-        } else {
-          setAllowContent(false);
-        }
+        case 2:
+          if (petDescription === true) {
+            setAllowContent(true);
+          } else {
+            setAllowContent(false);
+          }
           break;
-        case 3: if (savePetImage1 === true) {
-          setAllowContent(true);
-        } else {
-          setAllowContent(false);
-        }
+        case 3:
+          if (savePetImage1 === true) {
+            setAllowContent(true);
+          } else {
+            setAllowContent(false);
+          }
           break;
         default:
       }
     }
-  }, [activeStepState,
-    petDescription,
-    petType,
-    savePetImage1,
-  ]);
+  }, [activeStepState, petDescription, petType, savePetImage1]);
 
   ColorlibStepIcon.propTypes = {
     active: PropTypes.bool,
@@ -276,42 +296,38 @@ export default function AdoptStepper() {
   };
 
   const handleClickOpenModal = () => {
-    dispatch(adopt_dialog_open_action())
-    dispatch(adoptstepper_dialog_open_action())
+    dispatch(adopt_dialog_open_action());
+    dispatch(adoptstepper_dialog_open_action());
   };
 
   const handleClickCloseModal = () => {
-
-    return (
-      Swal.fire({
-        title: '¿Estás seguro?',
-        text: "No podrás revertir los cambios!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#D33',
-        cancelButtonColor: '#63C132',
-        confirmButtonText: 'Sí, salir!',
-        cancelButtonText: "No, cancelar!",
-        customClass: 'swal-wide',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          dispatch(adoptstepper_dialog_close_action());
-          dispatch(reset_action());
-          dispatch(reset_form_action());
-          setActiveStep(0);
-          setAllowContent(false)
-          Swal.close()
-        }
-      })
-    )
-
+    return Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'No podrás revertir los cambios!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#D33',
+      cancelButtonColor: '#63C132',
+      confirmButtonText: 'Sí, salir!',
+      cancelButtonText: 'No, cancelar!',
+      customClass: 'swal-wide',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(adoptstepper_dialog_close_action());
+        dispatch(reset_action());
+        dispatch(reset_form_action());
+        setActiveStep(0);
+        setAllowContent(false);
+        Swal.close();
+      }
+    });
   };
 
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
 
   const handleNext = () => {
-    dispatch(next_step_action())
+    dispatch(next_step_action());
     if (activeStepState === 2) {
       if (petDescription === true) {
         setTimeout(() => {
@@ -323,10 +339,10 @@ export default function AdoptStepper() {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }, 20);
     }
-  }
+  };
 
   const handleBack = () => {
-    dispatch(back_step_action())
+    dispatch(back_step_action());
     console.log(id_mascota);
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
@@ -345,76 +361,73 @@ export default function AdoptStepper() {
   };
 
   const handleRegisterForm = () => {
-    return (
-      Swal.fire({
-        title: '¿Deseas registrar los datos anteriores?',
-        showDenyButton: true,
-        confirmButtonColor: '#63C132',
-        denyButtonColor: '#D33',
-        confirmButtonText: 'Guardar',
-        denyButtonText: "No Guardar",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          dispatch(registry_form_adopt(newPet))
-          setSendPhotos(true);
-          Swal.fire('Registro exitoso!', '', 'success').then((result) => {
-            if (result.isConfirmed) {
-              dispatch(adoptstepper_dialog_close_action());
-              dispatch(reset_action());
-              dispatch(reset_form_action());
-              dispatch(get_saci_pets_action());
-              setActiveStep(0);
-              setAllowContent(false)
-              Swal.close()
-            }
-          })
-        } else if (result.isDenied) {
-          Swal.fire('Los cambios no han sido guardados', '', 'info')
-        }
-      })
-    )
-  }
+    return Swal.fire({
+      title: '¿Deseas registrar los datos anteriores?',
+      showDenyButton: true,
+      confirmButtonColor: '#63C132',
+      denyButtonColor: '#D33',
+      confirmButtonText: 'Guardar',
+      denyButtonText: 'No Guardar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(registry_form_adopt(newPet));
+        setSendPhotos(true);
+        Swal.fire('Registro exitoso!', '', 'success').then((result) => {
+          if (result.isConfirmed) {
+            dispatch(adoptstepper_dialog_close_action());
+            dispatch(reset_action());
+            dispatch(reset_form_action());
+            dispatch(get_saci_pets_action());
+            setActiveStep(0);
+            setAllowContent(false);
+            Swal.close();
+          }
+        });
+      } else if (result.isDenied) {
+        Swal.fire('Los cambios no han sido guardados', '', 'info');
+      }
+    });
+  };
 
   if (sendPhotos === true) {
     if (id_mascota !== 0) {
       setTimeout(() => {
-        dispatch(upload_pet_image_1(petimage1, id_mascota))
+        dispatch(upload_pet_image_1(petimage1, id_mascota));
       }, 100);
       setTimeout(() => {
-        dispatch(upload_pet_image_2(petimage2, id_mascota))
+        dispatch(upload_pet_image_2(petimage2, id_mascota));
       }, 100);
       setTimeout(() => {
-        dispatch(upload_pet_image_3(petimage3, id_mascota))
+        dispatch(upload_pet_image_3(petimage3, id_mascota));
       }, 100);
       setTimeout(() => {
-        dispatch(upload_pet_image_4(petimage4, id_mascota))
+        dispatch(upload_pet_image_4(petimage4, id_mascota));
       }, 100);
       setTimeout(() => {
-        dispatch(upload_pet_image_5(petimage5, id_mascota))
+        dispatch(upload_pet_image_5(petimage5, id_mascota));
       }, 100);
       setSendPhotos(false);
     }
-  };
+  }
 
   // Open dialog Login
   const handleClickOpenLogin = () => {
-    dispatch(adoptstepper_dialog_close_action())
-    dispatch(login_dialog_open_action())
+    dispatch(adoptstepper_dialog_close_action());
+    dispatch(login_dialog_open_action());
   };
 
   // Open dialog Register
   const openRegister = () => {
-    dispatch(adoptstepper_dialog_close_action())
-    dispatch(register_dialog_open_action())
+    dispatch(adoptstepper_dialog_close_action());
+    dispatch(register_dialog_open_action());
   };
 
   // Close dialog login and Register
   const handleClickCloseDialog = () => {
-    dispatch(adoptstepper_dialog_close_action())
+    dispatch(adoptstepper_dialog_close_action());
   };
 
   return (
-
     <>
       <Hidden smDown>
         <Button
@@ -422,12 +435,12 @@ export default function AdoptStepper() {
           color="secondary"
           className={classes.adoptionButton}
           onClick={handleClickOpenModal}
-          startIcon={<img src={iconAdopt} alt="LogIn" className={classes.menuIcons} />}
+          startIcon={
+            <img src={iconAdopt} alt="LogIn" className={classes.menuIcons} />
+          }
         >
           <ArrowDropDownIcon />
-          <Hidden only="md" /* mdDown */>
-            Dar en adopción
-        </Hidden>
+          <Hidden only="md" /* mdDown */>Dar en adopción</Hidden>
         </Button>
       </Hidden>
 
@@ -443,30 +456,39 @@ export default function AdoptStepper() {
         </MenuItem>
       </Hidden>
 
-      {user ?
+      {user ? (
         <>
           <Dialog
             style={{ zIndex: 2 }}
             open={adoptDialog && adoptstepperDialog === true}
             onClose={handleClickCloseModal}
             fullWidth
-            maxWidth='md'
+            maxWidth="md"
             fullScreen={fullScreenResponsive}
           >
-            <Grid
-              container
-              justify="flex-end"
-              alignItems="flex-start">
-              <IconButton className={classes.closeIconButton} edge="end" color="inherit" aria-label="close" onClick={handleClickCloseModal}>
+            <Grid container justify="flex-end" alignItems="flex-start">
+              <IconButton
+                className={classes.closeIconButton}
+                edge="end"
+                color="inherit"
+                aria-label="close"
+                onClick={handleClickCloseModal}
+              >
                 <CloseIcon className={classes.closeButton} />
               </IconButton>
             </Grid>
             <div className={classes.root}>
               <Hidden only={'xs'}>
-                <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
+                <Stepper
+                  alternativeLabel
+                  activeStep={activeStep}
+                  connector={<ColorlibConnector />}
+                >
                   {steps.map((label) => (
                     <Step key={label}>
-                      <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+                      <StepLabel StepIconComponent={ColorlibStepIcon}>
+                        {label}
+                      </StepLabel>
                     </Step>
                   ))}
                 </Stepper>
@@ -486,10 +508,10 @@ export default function AdoptStepper() {
                       />
                       <Grid container justify="center">
                         Pulsa el botón enviar para registrar tu formulario,
-                        </Grid>
+                      </Grid>
                       <Grid container justify="center">
                         Si deseas cambiar algún dato pulsa el botón de atrás
-                        </Grid>
+                      </Grid>
                     </Box>
                     <Grid container justify="center">
                       <Button onClick={handleBack} className={classes.button}>
@@ -499,19 +521,22 @@ export default function AdoptStepper() {
                         onClick={handleRegisterForm}
                         variant="contained"
                         color="primary"
-                        className={classes.button}>
+                        className={classes.button}
+                      >
                         Enviar
                       </Button>
                     </Grid>
                   </div>
                 ) : (
                   <div>
-                    <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+                    <Typography className={classes.instructions}>
+                      {getStepContent(activeStep)}
+                    </Typography>
                     <div>
                       <Grid container justify="center" >
                         <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                           Atrás
-                          </Button>
+                        </Button>
                         <Button
                           disabled={allowContent === false}
                           variant="contained"
@@ -519,7 +544,9 @@ export default function AdoptStepper() {
                           onClick={handleNext}
                           className={classes.button}
                         >
-                          {activeStep === steps.length - 1 ? 'Siguiente' : 'Siguiente'}
+                          {activeStep === steps.length - 1
+                            ? 'Siguiente'
+                            : 'Siguiente'}
                         </Button>
                       </Grid>
                     </div>
@@ -529,7 +556,7 @@ export default function AdoptStepper() {
             </div>
           </Dialog>
         </>
-        :
+      ) : (
         <>
           <Dialog
             style={{ zIndex: 2 }}
@@ -539,7 +566,12 @@ export default function AdoptStepper() {
           >
             <Grid container justify="flex-end">
               <Toolbar>
-                <IconButton edge="end" color="primary" aria-label="close" onClick={handleClickCloseDialog}>
+                <IconButton
+                  edge="end"
+                  color="primary"
+                  aria-label="close"
+                  onClick={handleClickCloseDialog}
+                >
                   <CloseIcon />
                 </IconButton>
               </Toolbar>
@@ -547,7 +579,9 @@ export default function AdoptStepper() {
             <div className={classes.rootDialogStart}>
               <Grid container justify="center">
                 <Grid item className={classes.titleDialogStart}>
-                  <Typography variant='h6'>¡Hola! si ya tienes cuenta Inicia sesión o Regístrate</Typography>
+                  <Typography variant="h6">
+                    ¡Hola! si ya tienes cuenta Inicia sesión o Regístrate
+                  </Typography>
                 </Grid>
 
                 <Grid item xs={12}>
@@ -556,13 +590,19 @@ export default function AdoptStepper() {
                     color="primary"
                     variant="contained"
                     size="large"
-                    endIcon={<img src={iconSend} alt="LogIn" className={classes.icons2} />}
+                    endIcon={
+                      <img
+                        src={iconSend}
+                        alt="LogIn"
+                        className={classes.icons2}
+                      />
+                    }
                     fullWidth
                     type="submit"
                     onClick={handleClickOpenLogin}
                   >
                     Inicia Sesión
-                        </Button>
+                  </Button>
                 </Grid>
 
                 <Grid item xs={12} /* spacing={3}  justifyContent="center" */>
@@ -573,13 +613,13 @@ export default function AdoptStepper() {
                     onClick={openRegister}
                   >
                     ¿No tienes una cuenta? Regístrate
-                    </Button>
+                  </Button>
                 </Grid>
               </Grid>
             </div>
           </Dialog>
         </>
-      }
+      )}
     </>
   );
 }
