@@ -1644,7 +1644,87 @@ export default function GmailTreeView() {
   // filtros, viejos
   const [petsFiltersOlds] = useState({
     olds,
-  })
+  });
+
+  // filtros, cachorros, jovenes, adultos, viejos
+  const [petsFiltersPuppiesYoungsAdultsOlds] = useState({
+    puppies,
+    youngs,
+    adults,
+    olds,
+  });
+
+  // filtros, cachorros, gatos
+  const [petsFiltersPuppiesCats] = useState({
+    puppies,
+    cats
+  });
+
+  // filtros, cachorros, perros
+  const [petsFiltersPuppiesDogs] = useState({
+    puppies,
+    dogs
+  });
+
+  // filtros, cachorros, hamsters
+  const [petsFiltersPuppiesHamsters] = useState({
+    puppies,
+    hamsters
+  });
+
+  // filtros, jovenes, gatos
+  const [petsFiltersYoungsCats] = useState({
+    youngs,
+    cats
+  });
+
+  // filtros, jovenes, perros
+  const [petsFiltersYoungsDogs] = useState({
+    youngs,
+    dogs
+  });
+
+  // filtros, jovenes, hamsters
+  const [petsFiltersYoungsHamsters] = useState({
+    youngs,
+    hamsters
+  });
+
+  // filtros, adultos, gatos
+  const [petsFiltersAdultsCats] = useState({
+    adults,
+    cats
+  });
+
+  // filtros, adultos, perros
+  const [petsFiltersAdultsDogs] = useState({
+    adults,
+    dogs
+  });
+
+  // filtros, adultos, hamsters
+  const [petsFiltersAdultsHamsters] = useState({
+    adults,
+    hamsters
+  });
+
+  // filtros, viejos, gatos
+  const [petsFiltersOldsCats] = useState({
+    olds,
+    cats
+  });
+
+  // filtros, viejos, perros
+  const [petsFiltersOldsDogs] = useState({
+    olds,
+    dogs
+  });
+
+  // filtros, viejos, hamsters
+  const [petsFiltersOldsHamsters] = useState({
+    olds,
+    hamsters
+  });
 
   const filtersDeps = [
     filtersCats,
@@ -4265,6 +4345,240 @@ export default function GmailTreeView() {
       !filtersAdults
     ) {
       dispatch(get_saci_pets_action(petsFiltersOlds));
+    }
+
+    // cachorros, jovenes, adultos, viejos
+    if (
+      filtersPuppies &&
+      filtersYoungs &&
+      filtersAdults &&
+      filtersOlds &&
+      !filtersCats &&
+      !filtersDogs &&
+      !filtersHamsters &&
+      !filtersSmalls &&
+      !filtersMediums &&
+      !filtersBigs &&
+      !filtersMales &&
+      !filtersFemales
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersPuppiesYoungsAdultsOlds));
+    }
+
+    // cachorros, gatos
+    if (
+      filtersPuppies &&
+      filtersCats &&
+      !filtersDogs &&
+      !filtersHamsters &&
+      !filtersSmalls &&
+      !filtersMediums &&
+      !filtersBigs &&
+      !filtersMales &&
+      !filtersFemales &&
+      !filtersYoungs &&
+      !filtersAdults &&
+      !filtersOlds
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersPuppiesCats));
+    }
+
+    // cachorros, perros
+    if (
+      filtersPuppies &&
+      filtersDogs &&
+      !filtersCats &&
+      !filtersHamsters &&
+      !filtersSmalls &&
+      !filtersMediums &&
+      !filtersBigs &&
+      !filtersMales &&
+      !filtersFemales &&
+      !filtersYoungs &&
+      !filtersAdults &&
+      !filtersOlds
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersPuppiesDogs));
+    }
+
+    // cachorros, hamsters
+    if (
+      filtersPuppies &&
+      filtersHamsters &&
+      !filtersCats &&
+      !filtersDogs &&
+      !filtersSmalls &&
+      !filtersMediums &&
+      !filtersBigs &&
+      !filtersMales &&
+      !filtersFemales &&
+      !filtersYoungs &&
+      !filtersAdults &&
+      !filtersOlds
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersPuppiesHamsters));
+    }
+
+    // jovenes, gatos
+    if (
+      filtersYoungs &&
+      filtersCats &&
+      !filtersDogs &&
+      !filtersHamsters &&
+      !filtersSmalls &&
+      !filtersMediums &&
+      !filtersBigs &&
+      !filtersMales &&
+      !filtersFemales &&
+      !filtersPuppies &&
+      !filtersAdults &&
+      !filtersOlds
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersYoungsCats));
+    }
+
+    // jovenes, perros
+    if (
+      filtersYoungs &&
+      filtersDogs &&
+      !filtersCats &&
+      !filtersHamsters &&
+      !filtersSmalls &&
+      !filtersMediums &&
+      !filtersBigs &&
+      !filtersMales &&
+      !filtersFemales &&
+      !filtersPuppies &&
+      !filtersAdults &&
+      !filtersOlds
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersYoungsDogs));
+    }
+
+    // jovenes, hamsters
+    if (
+      filtersYoungs &&
+      filtersHamsters &&
+      !filtersCats &&
+      !filtersDogs &&
+      !filtersSmalls &&
+      !filtersMediums &&
+      !filtersBigs &&
+      !filtersMales &&
+      !filtersFemales &&
+      !filtersPuppies &&
+      !filtersAdults &&
+      !filtersOlds
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersYoungsHamsters));
+    }
+
+    // adultos, gatos
+    if (
+      filtersAdults &&
+      filtersCats &&
+      !filtersDogs &&
+      !filtersHamsters &&
+      !filtersSmalls &&
+      !filtersMediums &&
+      !filtersBigs &&
+      !filtersMales &&
+      !filtersFemales &&
+      !filtersPuppies &&
+      !filtersYoungs &&
+      !filtersOlds
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersAdultsCats));
+    }
+
+    // adultos, perros
+    if (
+      filtersAdults &&
+      filtersDogs &&
+      !filtersCats &&
+      !filtersHamsters &&
+      !filtersSmalls &&
+      !filtersMediums &&
+      !filtersBigs &&
+      !filtersMales &&
+      !filtersFemales &&
+      !filtersPuppies &&
+      !filtersYoungs &&
+      !filtersOlds
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersAdultsDogs));
+    }
+
+    // adultos, hamsters
+    if (
+      filtersAdults &&
+      filtersHamsters &&
+      !filtersCats &&
+      !filtersDogs &&
+      !filtersSmalls &&
+      !filtersMediums &&
+      !filtersBigs &&
+      !filtersMales &&
+      !filtersFemales &&
+      !filtersPuppies &&
+      !filtersYoungs &&
+      !filtersOlds
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersAdultsHamsters));
+    }
+
+    // viejos, gatos
+    if (
+      filtersOlds &&
+      filtersCats &&
+      !filtersDogs &&
+      !filtersHamsters &&
+      !filtersSmalls &&
+      !filtersMediums &&
+      !filtersBigs &&
+      !filtersMales &&
+      !filtersFemales &&
+      !filtersPuppies &&
+      !filtersYoungs &&
+      !filtersAdults
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersOldsCats));
+    }
+
+    // viejos, perros
+    if (
+      filtersOlds &&
+      filtersDogs &&
+      !filtersCats &&
+      !filtersHamsters &&
+      !filtersSmalls &&
+      !filtersMediums &&
+      !filtersBigs &&
+      !filtersMales &&
+      !filtersFemales &&
+      !filtersPuppies &&
+      !filtersYoungs &&
+      !filtersAdults
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersOldsDogs));
+    }
+
+    // viejos, hamsters
+    if (
+      filtersOlds &&
+      filtersHamsters &&
+      !filtersCats &&
+      !filtersDogs &&
+      !filtersSmalls &&
+      !filtersMediums &&
+      !filtersBigs &&
+      !filtersMales &&
+      !filtersFemales &&
+      !filtersPuppies &&
+      !filtersYoungs &&
+      !filtersAdults
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersOldsHamsters));
     }
   }, [filtersDeps]);
 
