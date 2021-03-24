@@ -1,20 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Lottie from 'react-lottie';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import {
-  Stepper,
-  Step,
-  StepLabel,
-  Button,
-  Grid,
-  Typography,
-  Box,
-  Hidden,
-  Dialog,
-  IconButton,
-  Toolbar,
-  MenuItem,
-} from '@material-ui/core';
+import { Stepper, Step, StepLabel, Button, Grid, Typography, Box, Hidden, Dialog, IconButton, Toolbar, MenuItem } from '@material-ui/core';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import StepConnector from '@material-ui/core/StepConnector';
@@ -517,7 +504,7 @@ export default function AdoptStepper() {
                         options={formRegisterLottieOptions}
                         height={200}
                         width={200}
-                        // isPaused={playLottie.registerPetForm}
+                      // isPaused={playLottie.registerPetForm}
                       />
                       <Grid container justify="center">
                         Pulsa el botón enviar para registrar tu formulario,
@@ -546,12 +533,8 @@ export default function AdoptStepper() {
                       {getStepContent(activeStep)}
                     </Typography>
                     <div>
-                      <Grid container justify="center">
-                        <Button
-                          disabled={activeStep === 0}
-                          onClick={handleBack}
-                          className={classes.button}
-                        >
+                      <Grid container justify="center" >
+                        <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                           Atrás
                         </Button>
                         <Button

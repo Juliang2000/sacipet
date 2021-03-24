@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
 
 
     toolbar: {
-        paddingRight: 24, 
+        paddingRight: 24,
     },
     toolbarIcon: {
         display: 'flex',
@@ -88,26 +88,26 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: 16,
         transition: '0.2s',
 
-      },
+    },
 
     cards: {
         width: '100%',
-    borderRadius: 16,
-    boxShadow: '0 8px 16px 0 #BDC9D7',
-    overflow: 'hidden',
-    '&:hover': {
-        boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)',
-      },
+        borderRadius: 16,
+        boxShadow: '0 8px 16px 0 #BDC9D7',
+        overflow: 'hidden',
+        '&:hover': {
+            boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)',
+        },
 
 
     },
     cardmedia: {
- 
+
         maxHeight: 240,
         // width: 300,
         display: "flex",
-    margin: "0 10px",
-    justifyContent: "space-between"
+        margin: "0 10px",
+        justifyContent: "space-between"
 
     },
     groupcards: {
@@ -254,6 +254,11 @@ const useStyles = makeStyles((theme) => ({
         color: '#fff',
         fontSize: '16px',
         width: '100px'
+    },
+
+    // Adopt Me Form Styles
+    switchLength: {
+        width: '20px'
     }
 
 }));

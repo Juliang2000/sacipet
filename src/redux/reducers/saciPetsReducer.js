@@ -1,10 +1,12 @@
-import { GET_SACI_PETS, PAGE_SACI_PETS, SELECT_PET_DATA } from "../types"
+import { GET_SACI_PETS, PAGE_SACI_PETS, SELECT_PET_DATA, SET_ADOPT_ME_DIALOG, SET_PET_DATA_DIALOG } from "../types"
 
 const initialState = {
 
     mascotas: [],
     pageMascotas: [],
-    petSelected: null
+    petSelected: null,
+    adoptMeDialog: null,
+    dataDialog: null
 
 }
 
@@ -28,6 +30,18 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 petSelected: action.payload
+
+            }
+        case SET_ADOPT_ME_DIALOG:
+            return {
+                ...state,
+                adoptMeDialog: action.payload
+
+            }
+        case SET_PET_DATA_DIALOG:
+            return {
+                ...state,
+                dataDialog: action.payload
 
             }
 

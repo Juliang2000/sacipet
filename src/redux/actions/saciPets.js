@@ -1,5 +1,5 @@
-import { GET_SACI_PETS, PAGE_SACI_PETS, SELECT_PET_DATA } from '../types';
-import { getSaciPets } from '../../configAxios/saciPets';
+import { GET_SACI_PETS, PAGE_SACI_PETS, SELECT_PET_DATA, SET_ADOPT_ME_DIALOG, SET_PET_DATA_DIALOG } from "../types";
+import { getSaciPets } from "../../configAxios/saciPets"
 
 export const get_saci_pets_action = (filters) => async (dispatch) => {
   try {
@@ -1671,6 +1671,26 @@ export const page_saci_pets_action = (slicePets) => async (dispatch) => {
 export const select_pet_action = (id_mascota) => async (dispatch) => {
   dispatch({
     type: SELECT_PET_DATA,
-    payload: id_mascota,
-  });
-};
+    payload: id_mascota
+  })
+
+}
+
+export const adopt_me_dialog_action = (dialogState) => async (dispatch) => {
+
+  dispatch({
+    type: SET_ADOPT_ME_DIALOG,
+    payload: dialogState
+  })
+
+}
+
+export const pet_data_dialog_action = (dialogDataState) => async (dispatch) => {
+
+  dispatch({
+    type: SET_PET_DATA_DIALOG,
+    payload: dialogDataState
+  })
+
+}
+
