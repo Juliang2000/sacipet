@@ -4,10 +4,15 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
-import Typography from '@material-ui/core/Typography';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import { Chip, Tooltip, Zoom, Box } from '@material-ui/core';
+import {
+  Typography,
+  Chip,
+  Tooltip,
+  Zoom,
+  Box,
+} from '@material-ui/core';
 
 // import filters from '../../../assets/icons/filters/046-pet-shelter.svg'
 // import dog from '../../../assets/icons/petype/dog.svg';
@@ -43,7 +48,7 @@ import petAdult from '../../../assets/icons/filters/adult-final.svg';
 import petOld from '../../../assets/icons/filters/old-final.svg';
 
 // Dispatch Redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Redux Actions
 import { get_saci_pets_action } from '../../../redux/actions/saciPets';
@@ -356,6 +361,16 @@ export default function GmailTreeView() {
   };
 
   /////////////////////////////////////////////////////////////////////////
+  const [expanded, setExpanded] = React.useState([]);
+
+  useEffect(() => {
+    setExpanded(['1']);
+  }, []);
+
+  const handleToggle = (event, nodeIds) => {
+    setExpanded(nodeIds);
+  };
+
   // tipos de mascota//
 
   // gatos
@@ -375,6 +390,7 @@ export default function GmailTreeView() {
   };
 
   // perros
+
   const [filtersDogs, setFiltersDogs] = useState(false);
   const [filtersDogsValidate, setFiltersDogsValidate] = useState(false);
 
@@ -562,7 +578,10 @@ export default function GmailTreeView() {
 
   /////////////////////////////////////////////////////////////////////////
 
-  // const { mascotas } = useSelector(state => state.saciPets);
+  const { mascotas } = useSelector((state) => state.saciPets);
+
+  // console.log(mascotas)
+
   // const harold = mascotas.filter(pets => pets.id_tipo_mascota === "1")
   // const [filters, setFilters] = useState({
   //   filtro: mascotas.filter(pets => pets.id_tipo_mascota === "1")
@@ -1657,90 +1676,89 @@ export default function GmailTreeView() {
   // filtros, cachorros, gatos
   const [petsFiltersPuppiesCats] = useState({
     puppies,
-    cats
+    cats,
   });
 
   // filtros, cachorros, perros
   const [petsFiltersPuppiesDogs] = useState({
     puppies,
-    dogs
+    dogs,
   });
 
   // filtros, cachorros, hamsters
   const [petsFiltersPuppiesHamsters] = useState({
     puppies,
-    hamsters
+    hamsters,
   });
 
   // filtros, jovenes, gatos
   const [petsFiltersYoungsCats] = useState({
     youngs,
-    cats
+    cats,
   });
 
   // filtros, jovenes, perros
   const [petsFiltersYoungsDogs] = useState({
     youngs,
-    dogs
+    dogs,
   });
 
   // filtros, jovenes, hamsters
   const [petsFiltersYoungsHamsters] = useState({
     youngs,
-    hamsters
+    hamsters,
   });
 
   // filtros, adultos, gatos
   const [petsFiltersAdultsCats] = useState({
     adults,
-    cats
+    cats,
   });
 
   // filtros, adultos, perros
   const [petsFiltersAdultsDogs] = useState({
     adults,
-    dogs
+    dogs,
   });
 
   // filtros, adultos, hamsters
   const [petsFiltersAdultsHamsters] = useState({
     adults,
-    hamsters
+    hamsters,
   });
 
   // filtros, viejos, gatos
   const [petsFiltersOldsCats] = useState({
     olds,
-    cats
+    cats,
   });
 
   // filtros, viejos, perros
   const [petsFiltersOldsDogs] = useState({
     olds,
-    dogs
+    dogs,
   });
 
   // filtros, viejos, hamsters
   const [petsFiltersOldsHamsters] = useState({
     olds,
-    hamsters
+    hamsters,
   });
 
-  const filtersDeps = [
-    filtersCats,
-    filtersDogs,
-    filtersHamsters,
-    filtersSmalls,
-    filtersMediums,
-    filtersBigs,
-    filtersMales,
-    filtersFemales,
-
-    filtersPuppies,
-    filtersYoungs,
-    filtersAdults,
-    filtersOlds,
-  ];
+  // const filtersDeps = [
+  //   filtersCats,
+  //   filtersDogs,
+  //   filtersHamsters,
+  //   filtersSmalls,
+  //   filtersMediums,
+  //   filtersBigs,
+  //   filtersMales,
+  //   filtersFemales,
+  //   filtersPuppies,
+  //   filtersYoungs,
+  //   filtersAdults,
+  //   filtersOlds,
+  // ];
 
   useEffect(() => {
     // filtro vacio
@@ -1795,6 +1813,7 @@ export default function GmailTreeView() {
       !filtersOlds
     ) {
       dispatch(get_saci_pets_action(petsFiltersDogs));
+      setExpanded(['1', '3']);
     }
 
     // hamsters
@@ -4580,7 +4599,20 @@ export default function GmailTreeView() {
     ) {
       dispatch(get_saci_pets_action(petsFiltersOldsHamsters));
     }
-  }, [filtersDeps]);
+  }, [
+    filtersCats,
+    filtersDogs,
+    filtersHamsters,
+    filtersSmalls,
+    filtersMediums,
+    filtersBigs,
+    filtersMales,
+    filtersFemales,
+    filtersPuppies,
+    filtersYoungs,
+    filtersAdults,
+    filtersOlds,
+  ]);
 
   const CustomTooltip = (props) => (
     <Tooltip
@@ -4592,15 +4624,19 @@ export default function GmailTreeView() {
     />
   );
 
+  // crear array de un array
+  let dataArr = mascotas.map((item) => {
+    return [item.id_raza, item];
+  });
+
+  // crear valor clave  de un array de array
+  let maparr = new Map(dataArr);
+
+  // convertir de nuevo a array desde mapobject
+  let mascotasDuplicate = [...maparr.values()];
+
   return (
     <div>
-      {/* <Lottie
-    options={{ animationData: dog, ...defaultOptions }}
-    height={400}
-    width={400}
-    autoplay={isStart}
-    /> */}
-
       <div className={classes.filtersChips}>
         {filtersCats ? (
           <Chip
@@ -4762,10 +4798,11 @@ export default function GmailTreeView() {
 
       <TreeView
         className={classes.root}
-        defaultExpanded={['1']}
         defaultCollapseIcon={<ArrowDropDownIcon />}
         defaultExpandIcon={<ArrowRightIcon />}
         defaultEndIcon={<div style={{ width: 24 }} />}
+        expanded={expanded}
+        onNodeToggle={handleToggle}
       >
         <StyledTreeItem
           nodeId="1"
@@ -4803,7 +4840,22 @@ export default function GmailTreeView() {
             />
           </StyledTreeItem>
           <StyledTreeItem nodeId="3" labelText="Raza" labelIcon={lottiePetRace}>
-            <StyledTreeItem
+            <div style={{ height: 200, overflow: 'auto', display: filtersDogs ? 'inherit' : 'none'}}>
+              {filtersDogs
+                ? mascotasDuplicate.map((item) => (
+                    <StyledTreeItem
+                      key={item.id_mascota}
+                      value={item.id_raza}
+                      defaultValue={item.raza}
+                      nodeId={item.id_mascota}
+                      labelIcon={raceDog2}
+                      labelText={item.raza}
+                    ></StyledTreeItem>
+                  ))
+                : null}
+            </div>
+
+            {/* <StyledTreeItem
               nodeId="10"
               labelText="Raza1"
               labelIcon={raceDog1}
@@ -4832,7 +4884,7 @@ export default function GmailTreeView() {
               labelText="Raza5"
               labelIcon={raceDog5}
               // labelInfo="90"
-            />
+            /> */}
           </StyledTreeItem>
           <StyledTreeItem
             nodeId="4"
