@@ -6,13 +6,7 @@ import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import {
-  Typography,
-  Chip,
-  Tooltip,
-  Zoom,
-  Box,
-} from '@material-ui/core';
+import { Typography, Chip, Tooltip, Zoom, Box } from '@material-ui/core';
 
 // import filters from '../../../assets/icons/filters/046-pet-shelter.svg'
 // import dog from '../../../assets/icons/petype/dog.svg';
@@ -4840,7 +4834,13 @@ export default function GmailTreeView() {
             />
           </StyledTreeItem>
           <StyledTreeItem nodeId="3" labelText="Raza" labelIcon={lottiePetRace}>
-            <div style={{ height: 200, overflow: 'auto', display: filtersDogs ? 'inherit' : 'none'}}>
+            <div
+              style={{
+                height: 200,
+                overflow: 'auto',
+                display: filtersDogs ? 'inherit' : 'none',
+              }}
+            >
               {filtersDogs
                 ? mascotasDuplicate.map((item) => (
                     <StyledTreeItem
