@@ -84,7 +84,7 @@ import pug5 from '../../../assets/images/cardsModal/pug5.jpg';
 import axiosClient from '../../../configAxios/axios';
 import CarouselPhotos from './CarouselPhotos';
 
-import House from '../../../assets/icons/pet-house.svg'
+import House from '../../../assets/icons/pet-house.svg';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -131,7 +131,7 @@ const useStyles = makeStyles((theme) => ({
 // Data
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction='up' ref={ref} {...props} />;
+  return <Slide direction="up" ref={ref} {...props} />;
 });
 
 function createData(name, calories, sexo, fat, carbs, protein) {
@@ -278,13 +278,12 @@ export default function RecipeReviewCard(props) {
     defaultMatches: true,
   });
 
-
   return (
     <>
       <Grid
         container
         spacing={isMobile ? 1 : 3}
-        /* xs={12} */ justify='center'
+        /* xs={12} */ justify="center"
         className={classes.cardsPetsContainer}
       >
         {pageMascotas.map((item) => {
@@ -298,31 +297,43 @@ export default function RecipeReviewCard(props) {
               lg={3}
               xl={3}
             >
-              <Card className={classes.cardsPets} style={{ borderRadius: 10 }} onClick={() => dispatch(select_pet_action(item.id_mascota))}>
+              <Card
+                className={classes.cardsPets}
+                style={{ borderRadius: 10 }}
+
+                onClick={() => dispatch(select_pet_action(item.id_mascota))}
+              >
+                <CarouselPhotos itemPets={item.fotos} />
                 <CardHeader
-                  avatar={
-                    <Avatar aria-label='recipe' className={classes.avatar}>
-                      R
-                    </Avatar>
-                  }
+                  // avatar={
+                  //   <Avatar aria-label='recipe' className={classes.avatar}>
+                  //     R
+                  //   </Avatar>
+                  // }
                   title={<Typography>{item.nombre_mascota}</Typography>}
                   subheader={item.raza}
+                  style={{ textAlign: 'center'}}
                 />
-                <CarouselPhotos itemPets={item.fotos} />
                 <CardActions disableSpacing>
-                  <IconButton aria-label='add to favorites'>
+                  <IconButton aria-label="add to favorites">
                     <FavoriteIcon />
                   </IconButton>
                   <PetModalData />
-                  <IconButton onClick={() => console.log("dato entrante")} value={item.id_mascota}>
+                  <IconButton
+                    onClick={() => console.log('dato entrante')}
+                    value={item.id_mascota}
+                  >
                     <PetsIcon />
                   </IconButton>
                   <Button
                     className={classes.buttonPrimary}
-                    variant='contained'
-                    color='primary'
+                    variant="contained"
+                    color="primary"
                     fullWidth
-                    onClick={() => dispatch(adopt_me_dialog_action(true))}>Adóptame</Button>
+                    onClick={() => dispatch(adopt_me_dialog_action(true))}
+                  >
+                    Adóptame
+                  </Button>
                 </CardActions>
               </Card>
             </Grid>
@@ -337,15 +348,15 @@ export default function RecipeReviewCard(props) {
         onClose={handleClickClose}
       >
         <Paper elevation={3} className={classes.paperContainer}>
-          <Box display='flex' justifyContent='center'></Box>
-          <Box display='flex' justifyContent='center' mb={5} my={5}>
-            <Typography variant='h4' color='initial'>
+          <Box display="flex" justifyContent="center"></Box>
+          <Box display="flex" justifyContent="center" mb={5} my={5}>
+            <Typography variant="h4" color="initial">
               Ficha De Mascota
             </Typography>
           </Box>
           <Box mb={5}>
             <TableContainer component={Paper}>
-              <Table className={classes.table} aria-label='simple table'>
+              <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                   <TableRow>
                     <TableCell>Nombre</TableCell>
@@ -357,7 +368,7 @@ export default function RecipeReviewCard(props) {
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell component='th' scope='row'>
+                    <TableCell component="th" scope="row">
                       {getPet.nombre_mascota}
                     </TableCell>
                     <TableCell>
@@ -374,8 +385,8 @@ export default function RecipeReviewCard(props) {
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
-              aria-controls='panel1a-content'
-              id='panel1a-header'
+              aria-controls="panel1a-content"
+              id="panel1a-header"
             >
               <Typography className={classes.heading}>Vacunas</Typography>
             </AccordionSummary>
@@ -387,8 +398,8 @@ export default function RecipeReviewCard(props) {
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
-              aria-controls='panel2a-content'
-              id='panel2a-header'
+              aria-controls="panel2a-content"
+              id="panel2a-header"
             >
               <Typography className={classes.heading}>Descripción</Typography>
             </AccordionSummary>
