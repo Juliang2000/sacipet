@@ -9,7 +9,7 @@ export default function Pagination() {
     const dispatch = useDispatch(); //Redux hook
     const { mascotas } = useSelector(state => state.saciPets); // get pet Data from Local Storage
     const [offset, setOffset] = useState(0); // set the offset of the pages
-    const [perPage] = useState(10); // set the items showed in each page
+    const [perPage] = useState(40); // set the items showed in each page
     const [pageCount, setPageCount] = useState(0); // set the count to the pagination component
     const [allowPagination, setAllowPagination] = useState(true); // if true display the pagination
     const sliceStart = offset * perPage - perPage; // set the start of array slice
