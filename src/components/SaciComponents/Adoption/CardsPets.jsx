@@ -98,7 +98,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cardsPets: {
     borderRadius: 10,
-    // boxShadow: ' 0px 0px 10px  #989898,  -5px -5px 10px #ffffff',
+    boxShadow: ' 0px 0px 10px  #989898,  -5px -5px 10px #ffffff',
     [theme.breakpoints.down('xs')]: {
       margin: theme.spacing(0, 0, 3, 0),
     },
