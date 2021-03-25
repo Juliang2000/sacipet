@@ -97,11 +97,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   cardsPets: {
+    borderRadius: 10,
+    // boxShadow: ' 0px 0px 10px  #989898,  -5px -5px 10px #ffffff',
     [theme.breakpoints.down('xs')]: {
       margin: theme.spacing(0, 0, 3, 0),
     },
     '&:hover': {
-      boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)',
+      boxShadow: '0 0 10px rgba(99, 193, 50), 0px 0px 20px rgba(99, 193, 50)',
     },
   },
   buttonPrimary: {
@@ -285,6 +287,7 @@ export default function RecipeReviewCard(props) {
         spacing={isMobile ? 1 : 3}
         /* xs={12} */ justify="center"
         className={classes.cardsPetsContainer}
+        // style={{background: '#e0e0e0'}}
       >
         {pageMascotas.map((item) => {
           return (
@@ -299,8 +302,6 @@ export default function RecipeReviewCard(props) {
             >
               <Card
                 className={classes.cardsPets}
-                style={{ borderRadius: 10 }}
-
                 onClick={() => dispatch(select_pet_action(item.id_mascota))}
               >
                 <CarouselPhotos itemPets={item.fotos} />
@@ -312,7 +313,7 @@ export default function RecipeReviewCard(props) {
                   // }
                   title={<Typography>{item.nombre_mascota}</Typography>}
                   subheader={item.raza}
-                  style={{ textAlign: 'center'}}
+                  style={{ textAlign: 'center' }}
                 />
                 <CardActions disableSpacing>
                   <IconButton aria-label="add to favorites">

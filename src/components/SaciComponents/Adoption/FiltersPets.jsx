@@ -41,6 +41,7 @@ import petMale from '../../../assets/icons/filters/male-final.svg';
 import petFemale from '../../../assets/icons/filters/female-final.svg';
 
 import petYear from '../../../assets/icons/filters/pet-year-final.svg';
+import petPuppie from '../../../assets/icons/filters/puppie-final.svg';
 import petYoung from '../../../assets/icons/filters/young-final.svg';
 import petAdult from '../../../assets/icons/filters/adult-final.svg';
 import petOld from '../../../assets/icons/filters/old-final.svg';
@@ -169,10 +170,6 @@ const useStyles = makeStyles((theme) => ({
     width: '40px',
     marginRight: '10px',
   },
-  iconSize2: {
-    width: '60px',
-    marginRight: '10px',
-  },
 
   CustomTooltip: {
     backgroundColor: '#63C132',
@@ -261,16 +258,16 @@ export default function GmailTreeView() {
   const raceHamster = () => {
     return (
       <img
-      src={petRaceHamster}
-      alt="Icon Pet Race Hamster"
-      className={classes.iconSize}
-    />
-    )
-  }
+        src={petRaceHamster}
+        alt="Icon Pet Race Hamster"
+        className={classes.iconSize}
+      />
+    );
+  };
   ///////////////////////////////////////////////////////
   const lottiePetSize = () => {
     return (
-      <img src={petSize} alt="Icon Pet Size" className={classes.iconSize2} />
+      <img src={petSize} alt="Icon Pet Size" className={classes.iconSize} />
     );
   };
 
@@ -319,6 +316,12 @@ export default function GmailTreeView() {
   const lottiePetYear = () => {
     return (
       <img src={petYear} alt="Icon Pet Year" className={classes.iconSize} />
+    );
+  };
+
+  const lottiePuppie = () => {
+    return (
+      <img src={petPuppie} alt="Icon Pet Puppie" className={classes.iconSize} />
     );
   };
 
@@ -4630,7 +4633,6 @@ export default function GmailTreeView() {
     (pets) => pets.id_tipo_mascota === '3'
   );
 
-
   return (
     <div>
       <div className={classes.filtersChips}>
@@ -4836,52 +4838,53 @@ export default function GmailTreeView() {
             />
           </StyledTreeItem>
           <StyledTreeItem nodeId="3" labelText="Raza" labelIcon={lottiePetRace}>
-            <Box
-              style={{
-                height: 200,
-                overflow: 'auto',
-                display: filtersCats || filtersDogs || filtersHamsters ? 'inherit' : 'none',
-              }}
-            >
-              {filtersCats
-                ? filtersIconsCats.map((item) => (
-                    <StyledTreeItem
-                      key={item.id_mascota}
-                      value={item.id_raza}
-                      defaultValue={item.raza}
-                      nodeId={item.id_mascota}
-                      labelIcon={raceCat}
-                      labelText={item.raza}
-                    ></StyledTreeItem>
-                  ))
-                : null}
+            {filtersCats || filtersDogs || filtersHamsters ? (
+              <Box
+                style={{
+                  height: 200,
+                  overflow: 'auto',
+                }}
+              >
+                {filtersCats
+                  ? filtersIconsCats.map((item) => (
+                      <StyledTreeItem
+                        key={item.id_mascota}
+                        value={item.id_raza}
+                        defaultValue={item.raza}
+                        nodeId={item.id_mascota}
+                        labelIcon={raceCat}
+                        labelText={item.raza}
+                      ></StyledTreeItem>
+                    ))
+                  : null}
 
-              {filtersDogs
-                ? filtersIconsDogs.map((item) => (
-                    <StyledTreeItem
-                      key={item.id_mascota}
-                      value={item.id_raza}
-                      defaultValue={item.raza}
-                      nodeId={item.id_mascota}
-                      labelIcon={raceDog2}
-                      labelText={item.raza}
-                    ></StyledTreeItem>
-                  ))
-                : null}
+                {filtersDogs
+                  ? filtersIconsDogs.map((item) => (
+                      <StyledTreeItem
+                        key={item.id_mascota}
+                        value={item.id_raza}
+                        defaultValue={item.raza}
+                        nodeId={item.id_mascota}
+                        labelIcon={raceDog2}
+                        labelText={item.raza}
+                      ></StyledTreeItem>
+                    ))
+                  : null}
 
-              {filtersHamsters
-                ? filtersIconsHamsters.map((item) => (
-                    <StyledTreeItem
-                      key={item.id_mascota}
-                      value={item.id_raza}
-                      defaultValue={item.raza}
-                      nodeId={item.id_mascota}
-                      labelIcon={raceHamster}
-                      labelText={item.raza}
-                    ></StyledTreeItem>
-                  ))
-                : null}
-            </Box>
+                {filtersHamsters
+                  ? filtersIconsHamsters.map((item) => (
+                      <StyledTreeItem
+                        key={item.id_mascota}
+                        value={item.id_raza}
+                        defaultValue={item.raza}
+                        nodeId={item.id_mascota}
+                        labelIcon={raceHamster}
+                        labelText={item.raza}
+                      ></StyledTreeItem>
+                    ))
+                  : null}
+              </Box>
+            ) : null}
 
             {/* <StyledTreeItem
               nodeId="10"
@@ -4967,7 +4970,7 @@ export default function GmailTreeView() {
                 <StyledTreeItem
                   nodeId="20"
                   labelText="Cachorros"
-                  labelIcon={lottieYoung}
+                  labelIcon={lottiePuppie}
                   onClick={handlePuppiesAdd}
                   // labelInfo="90"
                 />
