@@ -23,8 +23,8 @@ import petHamster from '../../../assets/icons/filters/hamster-final.svg';
 import petRace from '../../../assets/icons/filters/pet-race-final.svg';
 
 import petRaceCat from '../../../assets/icons/filters/pet-race-cat.svg';
-import petRaceDog2 from '../../../assets/icons/filters/pet-race-dog02.svg';
-import petRaceHamster from '../../../assets/icons/filters/hamster-final.svg';
+import petRaceDog from '../../../assets/icons/filters/pet-race-dog.svg';
+import petRaceHamster from '../../../assets/icons/filters/pet-race-hamster.svg';
 
 // import petRaceDog1 from '../../../assets/icons/filters/pet-race-dog01.svg';
 // import petRaceDog3 from '../../../assets/icons/filters/pet-race-dog03.svg';
@@ -248,7 +248,7 @@ export default function GmailTreeView() {
   const raceDog2 = () => {
     return (
       <img
-        src={petRaceDog2}
+        src={petRaceDog}
         alt="Icon Pet Race Dog"
         className={classes.iconSize}
       />

@@ -24,6 +24,12 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import PetsIcon from '@material-ui/icons/Pets';
 
+import FavoriteIconPet from '../../../assets/icons/cards/favorite-icon-pet.svg';
+import ShareIconPet from '../../../assets/icons/cards/share-icon-pet.svg';
+import FootprintIconPet from '../../../assets/icons/cards/footprint-icon-pet.svg';
+
+import marco_inferior from '../../../assets/icons/cards/marco_inferior.svg';
+
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 // Accordion
@@ -107,13 +113,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   buttonPrimary: {
-    // backgroundColor: '#29ABE2',
-    // '&:hover': {
-    //   backgroundColor: '#29ABE2',
-    // },
     color: '#ffffff',
+    fontWeight: 'bold',
     textTransform: 'none',
-    // fontSize: '18px',
   },
 
   heading: {
@@ -123,10 +125,8 @@ const useStyles = makeStyles((theme) => ({
   paperContainer: {
     padding: '50px',
   },
-  media: {
-    height: 450,
-    paddingTop: '56.25%', // 16:9
-    cursor: 'pointer',
+  iconsCards: {
+    width: '25px',
   },
 }));
 ////////////////////////////////////////////////////////////
@@ -276,18 +276,22 @@ export default function RecipeReviewCard(props) {
   }, [getPet]);
 
   const theme = useTheme();
+
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'), {
     defaultMatches: true,
   });
+
+  // const isTablet = useMediaQuery(theme.breakpoints.only('md'), {
+  //   defaultMatches: true,
+  // });
 
   return (
     <>
       <Grid
         container
-        spacing={isMobile ? 1 : 3}
-        /* xs={12} */ justify="center"
+        spacing={isMobile ? 1 : 3 /* && isTablet ? 6 : 3 */}
+        justify="center"
         className={classes.cardsPetsContainer}
-        // style={{background: '#e0e0e0'}}
       >
         {pageMascotas.map((item) => {
           return (
@@ -297,7 +301,7 @@ export default function RecipeReviewCard(props) {
               xs={12}
               sm={6}
               md={6}
-              lg={3}
+              lg={4}
               xl={3}
             >
               <Card
@@ -305,37 +309,73 @@ export default function RecipeReviewCard(props) {
                 onClick={() => dispatch(select_pet_action(item.id_mascota))}
               >
                 <CarouselPhotos itemPets={item.fotos} />
-                <CardHeader
-                  // avatar={
-                  //   <Avatar aria-label='recipe' className={classes.avatar}>
-                  //     R
-                  //   </Avatar>
-                  // }
-                  title={<Typography>{item.nombre_mascota}</Typography>}
-                  subheader={item.raza}
-                  style={{ textAlign: 'center' }}
-                />
-                <CardActions disableSpacing>
-                  <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
-                  </IconButton>
-                  <PetModalData />
-                  <IconButton
-                    onClick={() => console.log('dato entrante')}
-                    value={item.id_mascota}
-                  >
-                    <PetsIcon />
-                  </IconButton>
-                  <Button
-                    className={classes.buttonPrimary}
-                    variant="contained"
-                    color="primary"
-                    fullWidth
-                    onClick={() => dispatch(adopt_me_dialog_action(true))}
-                  >
-                    Adóptame
-                  </Button>
-                </CardActions>
+                <div
+                  style={{
+                    backgroundImage: `url(${marco_inferior})`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'cover',
+                  }}
+                >
+                  <CardHeader
+                    // avatar={
+                    //   <Avatar aria-label='recipe' className={classes.avatar}>
+                    //     R
+                    //   </Avatar>
+                    // }
+                    title={
+                      <Typography
+                        style={{
+                          /* marginBottom: '20px', */ color: '#FFFFFF',
+                          fontWeight: 'bolder',
+                          fontSize: '20px',
+                        }}
+                      >
+                        {item.nombre_mascota}
+                      </Typography>
+                    }
+                    subheader={item.raza}
+                  />
+
+                  <CardActions disableSpacing>
+                    <div style={{ display: 'flex', flexGrow: 1 }}>
+                      <IconButton aria-label="add to favorites">
+                        <img
+                          src={FavoriteIconPet}
+                          alt="Favorite Icon Pet"
+                          className={classes.iconsCards}
+                        />
+                      </IconButton>
+                      {/* <PetModalData /> */}
+                      <IconButton aria-label="share">
+                        <img
+                          src={ShareIconPet}
+                          alt="Share Icon Pet"
+                          className={classes.iconsCards}
+                        />
+                      </IconButton>
+                      <IconButton
+                        onClick={() => console.log('dato entrante')}
+                        value={item.id_mascota}
+                      >
+                        <img
+                          src={FootprintIconPet}
+                          alt="Footprint Icon Pet"
+                          className={classes.iconsCards}
+                        />
+                      </IconButton>
+                    </div>
+                    <Button
+                      className={classes.buttonPrimary}
+                      variant="contained"
+                      size={'small'}
+                      color="primary"
+                      // fullWidth
+                      onClick={() => dispatch(adopt_me_dialog_action(true))}
+                    >
+                      Adóptame
+                    </Button>
+                  </CardActions>
+                </div>
               </Card>
             </Grid>
           );
