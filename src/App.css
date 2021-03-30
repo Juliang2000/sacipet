@@ -1,5 +1,9 @@
 /* Quitar bordes de botones */
 
+body {
+  background-color: #f0f2f5;
+}
+
 button {
   outline: none !important;
 }

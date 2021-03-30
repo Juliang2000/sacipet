@@ -25,7 +25,9 @@ import servicesIcon from '../../assets/icons/drawer/services.svg'
 import storeIcon from '../../assets/icons/drawer/store.svg'
 import logoIcon from './../../assets/svg/logo-pinina.svg';
 import menuIcon from '../../assets/icons/menu-final.svg'
-import SearchIcon from '@material-ui/icons/Search';
+
+import searchIcon from '../../assets/icons/drawer/searchIcon-final.svg';
+// import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -202,7 +204,8 @@ export default function PrimarySearchAppBar() {
           </Hidden>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
-              <SearchIcon />
+              {/* <SearchIcon /> */}
+              <img src={searchIcon} alt="" style={{width: '30px'}}/>
             </div>
             <InputBase
               placeholder="Buscar…"

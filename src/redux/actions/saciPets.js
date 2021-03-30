@@ -1710,3 +1710,17 @@ export const unlogged_modal_action = (state) => async (dispatch) => {
 
 }
 
+export const get_saci_pets_filters_races_action = (filtersPrueba) => async (dispatch) => {
+  try {
+    console.log(filtersPrueba)
+    dispatch({
+      type: GET_SACI_PETS,
+      payload: filtersPrueba
+    })
+  } catch (error) {
+    console.log(error)
+  }
+
+}
+
+

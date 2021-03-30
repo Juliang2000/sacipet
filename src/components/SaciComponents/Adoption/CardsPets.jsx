@@ -24,6 +24,13 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import PetsIcon from '@material-ui/icons/Pets';
 
+import FavoriteIconPet from '../../../assets/icons/cards/favorite-icon-pet.svg';
+import ShareIconPet from '../../../assets/icons/cards/share-icon-pet.svg';
+import FootprintIconPet from '../../../assets/icons/cards/footprint-icon-pet.svg';
+
+import marco_inferior from '../../../assets/icons/cards/marco10.svg';
+import { ReactComponent as NotFound } from '../../../assets/icons/cards/404-spanish.svg';
+
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 // Accordion
@@ -86,7 +93,7 @@ import pug5 from '../../../assets/images/cardsModal/pug5.jpg';
 import axiosClient from '../../../configAxios/axios';
 import CarouselPhotos from './CarouselPhotos';
 
-import House from '../../../assets/icons/pet-house.svg'
+import House from '../../../assets/icons/pet-house.svg';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -99,21 +106,20 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   cardsPets: {
+    borderRadius: 10,
+    boxShadow: ' 0px 0px 10px  #989898,  -5px -5px 10px #ffffff',
     [theme.breakpoints.down('xs')]: {
       margin: theme.spacing(0, 0, 3, 0),
     },
     '&:hover': {
-      boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)',
+      boxShadow: '0 0 10px rgba(99, 193, 50), 0px 0px 20px rgba(99, 193, 50)',
     },
   },
   buttonPrimary: {
-    // backgroundColor: '#29ABE2',
-    // '&:hover': {
-    //   backgroundColor: '#29ABE2',
-    // },
     color: '#ffffff',
+    fontWeight: 'bold',
     textTransform: 'none',
-    // fontSize: '18px',
+    marginRight: '12px',
   },
 
   heading: {
@@ -123,17 +129,23 @@ const useStyles = makeStyles((theme) => ({
   paperContainer: {
     padding: '50px',
   },
-  media: {
-    height: 450,
-    paddingTop: '56.25%', // 16:9
-    cursor: 'pointer',
+  iconsCards: {
+    width: '25px',
+  },
+  cardDesign: {
+    backgroundImage: `url(${marco_inferior})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: '100%',
+    [theme.breakpoints.only('sm')]: {
+      backgroundSize: '115%',
+    },
   },
 }));
 ////////////////////////////////////////////////////////////
 // Data
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction='up' ref={ref} {...props} />;
+  return <Slide direction="up" ref={ref} {...props} />;
 });
 
 function createData(name, calories, sexo, fat, carbs, protein) {
@@ -294,17 +306,41 @@ export default function RecipeReviewCard(props) {
   }, [getPet]);
 
   const theme = useTheme();
+
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'), {
     defaultMatches: true,
   });
 
+  // const isTablet = useMediaQuery(theme.breakpoints.only('md'), {
+  //   defaultMatches: true,
+  // });
+
+  const Error = () => {
+    if (pageMascotas.length === 0) {
+      return (
+        <div
+          className="animate__animated animate__zoomIn"
+          style={{ display: 'flex', alignItems: 'center', height: '80vh' }}
+        >
+          <NotFound
+            style={{
+              maxWidth: '100%',
+              height: '80%',
+            }}
+          />
+        </div>
+      );
+    } else {
+      return null;
+    }
+  };
 
   return (
     <>
       <Grid
         container
-        spacing={isMobile ? 1 : 3}
-        /* xs={12} */ justify='center'
+        spacing={isMobile ? 1 : 3 /* && isTablet ? 6 : 3 */}
+        justify="center"
         className={classes.cardsPetsContainer}
       >
         {pageMascotas.map((item) => {
@@ -315,19 +351,13 @@ export default function RecipeReviewCard(props) {
               xs={12}
               sm={6}
               md={6}
-              lg={3}
+              lg={4}
               xl={3}
             >
-              <Card className={classes.cardsPets} style={{ borderRadius: 10 }} onClick={() => dispatch(select_pet_action(item.id_mascota))}>
-                <CardHeader
-                  avatar={
-                    <Avatar aria-label='recipe' className={classes.avatar}>
-                      R
-                    </Avatar>
-                  }
-                  title={<Typography>{item.nombre_mascota}</Typography>}
-                  subheader={item.raza}
-                />
+              <Card
+                className={classes.cardsPets}
+                onClick={() => dispatch(select_pet_action(item.id_mascota))}
+              >
                 <CarouselPhotos itemPets={item.fotos} />
                 <CardActions disableSpacing>
                   <IconButton aria-label='add to favorites'>
@@ -348,6 +378,7 @@ export default function RecipeReviewCard(props) {
             </Grid>
           );
         })}
+        <Error />
       </Grid>
 
       <Dialog
@@ -357,15 +388,15 @@ export default function RecipeReviewCard(props) {
         onClose={handleClickClose}
       >
         <Paper elevation={3} className={classes.paperContainer}>
-          <Box display='flex' justifyContent='center'></Box>
-          <Box display='flex' justifyContent='center' mb={5} my={5}>
-            <Typography variant='h4' color='initial'>
+          <Box display="flex" justifyContent="center"></Box>
+          <Box display="flex" justifyContent="center" mb={5} my={5}>
+            <Typography variant="h4" color="initial">
               Ficha De Mascota
             </Typography>
           </Box>
           <Box mb={5}>
             <TableContainer component={Paper}>
-              <Table className={classes.table} aria-label='simple table'>
+              <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                   <TableRow>
                     <TableCell>Nombre</TableCell>
@@ -377,7 +408,7 @@ export default function RecipeReviewCard(props) {
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell component='th' scope='row'>
+                    <TableCell component="th" scope="row">
                       {getPet.nombre_mascota}
                     </TableCell>
                     <TableCell>
@@ -394,8 +425,8 @@ export default function RecipeReviewCard(props) {
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
-              aria-controls='panel1a-content'
-              id='panel1a-header'
+              aria-controls="panel1a-content"
+              id="panel1a-header"
             >
               <Typography className={classes.heading}>Vacunas</Typography>
             </AccordionSummary>
@@ -407,8 +438,8 @@ export default function RecipeReviewCard(props) {
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
-              aria-controls='panel2a-content'
-              id='panel2a-header'
+              aria-controls="panel2a-content"
+              id="panel2a-header"
             >
               <Typography className={classes.heading}>Descripción</Typography>
             </AccordionSummary>

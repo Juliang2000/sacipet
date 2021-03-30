@@ -131,7 +131,7 @@ export default function CarouselPhotos({ itemPets }) {
                 indicatorIconButtonProps={{
                     style: {
                         padding: '5px',
-                        color: 'white'
+                        color: 'white',
                     }
                 }}
 
@@ -149,7 +149,7 @@ export default function CarouselPhotos({ itemPets }) {
 
                 navButtonsProps={{
                     style: {
-                        // backgroundColor: 'cornflowerblue',
+                        backgroundColor: '#1E3F20',
                         // borderRadius: 0,
                         width: 10,
                         height: 10
