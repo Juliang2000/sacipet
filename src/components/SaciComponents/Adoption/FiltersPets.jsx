@@ -6,7 +6,15 @@ import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import { Typography, Chip, Tooltip, Zoom, Box } from '@material-ui/core';
+import {
+  Typography,
+  Chip,
+  Tooltip,
+  Zoom,
+  Box,
+  Button,
+  ListItemAvatar,
+} from '@material-ui/core';
 
 // import filters from '../../../assets/icons/filters/046-pet-shelter.svg'
 // import dog from '../../../assets/icons/petype/dog.svg';
@@ -50,7 +58,10 @@ import petOld from '../../../assets/icons/filters/old-final.svg';
 import { useDispatch, useSelector } from 'react-redux';
 
 // Redux Actions
-import { get_saci_pets_action } from '../../../redux/actions/saciPets';
+import {
+  get_saci_pets_action,
+  get_saci_pets_filters_races_action,
+} from '../../../redux/actions/saciPets';
 
 // import Button from '@material-ui/core/Button';
 
@@ -558,16 +569,84 @@ export default function GmailTreeView() {
   };
 
   /////////////////////////////////////////////////////////////////////////
-
   const { mascotas } = useSelector((state) => state.saciPets);
+  //razas
 
-  // console.log(mascotas)
+  // crear array de un array
+  let dataArr = mascotas.map((item) => {
+    return [item.id_raza, item];
+  });
 
-  // const harold = mascotas.filter(pets => pets.id_tipo_mascota === "1")
-  // const [filters, setFilters] = useState({
-  //   filtro: mascotas.filter(pets => pets.id_tipo_mascota === "1")
-  // })
+  // crear valor clave  de un array de array
+  let maparr = new Map(dataArr);
 
+  // convertir de nuevo a array desde mapobject
+  let mascotasDuplicate = [...maparr.values()];
+
+  // mostrar raza gatos no duplicados
+  let filtersIconsCats = mascotasDuplicate.filter(
+    (pets) => pets.id_tipo_mascota === '1'
+  );
+
+  // mostrar raza perros no duplicados
+  let filtersIconsDogs = mascotasDuplicate.filter(
+    (pets) => pets.id_tipo_mascota === '2'
+  );
+
+  // mostrar raza hamsters no duplicados
+  let filtersIconsHamsters = mascotasDuplicate.filter(
+    (pets) => pets.id_tipo_mascota === '3'
+  );
+
+  const [chipItem, setChipItem] = useState(false);
+  const [chipData, setChipData] = useState(false);
+
+  const handleChipsAdd = (item) => {
+    setChipItem(true);
+    setChipData(item);
+  };
+
+  const handleChipsDelete = () => {
+    setChipItem(false);
+    setChipData(false);
+  };
+
+  const filtersRaces = mascotasDuplicate.filter(function (pets) {
+    return pets.id_raza === chipData;
+  });
+  console.log(filtersRaces);
+
+  const filtersPrueba = mascotas.filter(function (pets) {
+    return pets.id_raza === chipData;
+  });
+  console.log(filtersPrueba);
+
+  useEffect(() => {
+    if (chipData !== false) {
+      dispatch(get_saci_pets_filters_races_action(filtersPrueba));
+    }
+  }, [chipData]);
+
+  // let otro = '1';
+  // let filtersPugs = mascotasDuplicate.filter((pets) => pets.id_raza === otro);
+  // console.log(filtersPugs);
+
+  const harold = filtersRaces.map((data) => {
+    if (chipItem === true) {
+      return (
+          <Chip
+            key={data.id_mascota}
+            label={data.raza}
+            color="primary"
+            onDelete={handleChipsDelete}
+          />
+      );
+    } else {
+      return null;
+    }
+  });
+
+  /////////////////////////////////////////////////////////////////////////
   let filtersObjs = {
     id_tipo_mascota: false,
     cats: true,
@@ -1755,7 +1834,8 @@ export default function GmailTreeView() {
       !filtersPuppies &&
       !filtersYoungs &&
       !filtersAdults &&
-      !filtersOlds
+      !filtersOlds &&
+      !chipData
     ) {
       dispatch(get_saci_pets_action(filtersInitial));
     }
@@ -1773,7 +1853,8 @@ export default function GmailTreeView() {
       !filtersPuppies &&
       !filtersYoungs &&
       !filtersAdults &&
-      !filtersOlds
+      !filtersOlds &&
+      !chipData
     ) {
       dispatch(get_saci_pets_action(petsFiltersCats));
       setExpanded(['1', '2', '3']);
@@ -1792,7 +1873,8 @@ export default function GmailTreeView() {
       !filtersPuppies &&
       !filtersYoungs &&
       !filtersAdults &&
-      !filtersOlds
+      !filtersOlds &&
+      !chipData
     ) {
       dispatch(get_saci_pets_action(petsFiltersDogs));
       setExpanded(['1', '2', '3']);
@@ -1811,7 +1893,8 @@ export default function GmailTreeView() {
       !filtersPuppies &&
       !filtersYoungs &&
       !filtersAdults &&
-      !filtersOlds
+      !filtersOlds &&
+      !chipData
     ) {
       dispatch(get_saci_pets_action(petsFiltersHamsters));
       setExpanded(['1', '2', '3']);
@@ -4595,6 +4678,7 @@ export default function GmailTreeView() {
     filtersYoungs,
     filtersAdults,
     filtersOlds,
+    chipData,
   ]);
 
   const CustomTooltip = (props) => (
@@ -4605,32 +4689,6 @@ export default function GmailTreeView() {
       placement={'right'}
       classes={{ tooltip: classes.CustomTooltip }}
     />
-  );
-
-  // crear array de un array
-  let dataArr = mascotas.map((item) => {
-    return [item.id_raza, item];
-  });
-
-  // crear valor clave  de un array de array
-  let maparr = new Map(dataArr);
-
-  // convertir de nuevo a array desde mapobject
-  let mascotasDuplicate = [...maparr.values()];
-
-  // mostrar raza gatos no duplicados
-  let filtersIconsCats = mascotasDuplicate.filter(
-    (pets) => pets.id_tipo_mascota === '1'
-  );
-
-  // mostrar raza perros no duplicados
-  let filtersIconsDogs = mascotasDuplicate.filter(
-    (pets) => pets.id_tipo_mascota === '2'
-  );
-
-  // mostrar raza hamsters no duplicados
-  let filtersIconsHamsters = mascotasDuplicate.filter(
-    (pets) => pets.id_tipo_mascota === '3'
   );
 
   return (
@@ -4675,6 +4733,8 @@ export default function GmailTreeView() {
           />
         ) : null}
       </div>
+
+      <div className={classes.filtersChips}>{harold}</div>
 
       <div className={classes.filtersChips}>
         {filtersSmalls ? (
@@ -4854,6 +4914,7 @@ export default function GmailTreeView() {
                         nodeId={item.id_mascota}
                         labelIcon={raceCat}
                         labelText={item.raza}
+                        onClick={() => handleChipsAdd(item.id_raza)}
                       ></StyledTreeItem>
                     ))
                   : null}
@@ -4867,6 +4928,7 @@ export default function GmailTreeView() {
                         nodeId={item.id_mascota}
                         labelIcon={raceDog2}
                         labelText={item.raza}
+                        onClick={() => handleChipsAdd(item.id_raza)}
                       ></StyledTreeItem>
                     ))
                   : null}
@@ -4880,6 +4942,7 @@ export default function GmailTreeView() {
                         nodeId={item.id_mascota}
                         labelIcon={raceHamster}
                         labelText={item.raza}
+                        onClick={() => handleChipsAdd(item.id_raza)}
                       ></StyledTreeItem>
                     ))
                   : null}

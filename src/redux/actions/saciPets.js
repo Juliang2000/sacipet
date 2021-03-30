@@ -1694,3 +1694,15 @@ export const pet_data_dialog_action = (dialogDataState) => async (dispatch) => {
 
 }
 
+export const get_saci_pets_filters_races_action = (filtersPrueba) => async (dispatch) => {
+  try {
+    console.log(filtersPrueba)
+      dispatch({
+          type: GET_SACI_PETS,
+          payload: filtersPrueba
+      })
+  } catch (error) {
+      console.log(error)
+  }
+}
+

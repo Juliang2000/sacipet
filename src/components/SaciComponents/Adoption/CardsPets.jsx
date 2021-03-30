@@ -28,7 +28,8 @@ import FavoriteIconPet from '../../../assets/icons/cards/favorite-icon-pet.svg';
 import ShareIconPet from '../../../assets/icons/cards/share-icon-pet.svg';
 import FootprintIconPet from '../../../assets/icons/cards/footprint-icon-pet.svg';
 
-import marco_inferior from '../../../assets/icons/cards/marco_inferior.svg';
+import marco_inferior from '../../../assets/icons/cards/marco10.svg';
+import { ReactComponent as NotFound } from '../../../assets/icons/cards/404-spanish.svg';
 
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
@@ -116,6 +117,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#ffffff',
     fontWeight: 'bold',
     textTransform: 'none',
+    marginRight: '12px',
   },
 
   heading: {
@@ -127,6 +129,14 @@ const useStyles = makeStyles((theme) => ({
   },
   iconsCards: {
     width: '25px',
+  },
+  cardDesign: {
+    backgroundImage: `url(${marco_inferior})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: '100%',
+    [theme.breakpoints.only('sm')]: {
+      backgroundSize: '115%',
+    },
   },
 }));
 ////////////////////////////////////////////////////////////
@@ -285,6 +295,26 @@ export default function RecipeReviewCard(props) {
   //   defaultMatches: true,
   // });
 
+  const Error = () => {
+    if (pageMascotas.length === 0) {
+      return (
+        <div
+          className="animate__animated animate__zoomIn"
+          style={{ display: 'flex', alignItems: 'center', height: '80vh' }}
+        >
+          <NotFound
+            style={{
+              maxWidth: '100%',
+              height: '80%',
+            }}
+          />
+        </div>
+      );
+    } else {
+      return null;
+    }
+  };
+
   return (
     <>
       <Grid
@@ -309,13 +339,7 @@ export default function RecipeReviewCard(props) {
                 onClick={() => dispatch(select_pet_action(item.id_mascota))}
               >
                 <CarouselPhotos itemPets={item.fotos} />
-                <div
-                  style={{
-                    backgroundImage: `url(${marco_inferior})`,
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'cover',
-                  }}
-                >
+                <div className={classes.cardDesign}>
                   <CardHeader
                     // avatar={
                     //   <Avatar aria-label='recipe' className={classes.avatar}>
@@ -335,7 +359,6 @@ export default function RecipeReviewCard(props) {
                     }
                     subheader={item.raza}
                   />
-
                   <CardActions disableSpacing>
                     <div style={{ display: 'flex', flexGrow: 1 }}>
                       <IconButton aria-label="add to favorites">
@@ -368,7 +391,7 @@ export default function RecipeReviewCard(props) {
                       className={classes.buttonPrimary}
                       variant="contained"
                       size={'small'}
-                      color="primary"
+                      color="secondary"
                       // fullWidth
                       onClick={() => dispatch(adopt_me_dialog_action(true))}
                     >
@@ -380,6 +403,7 @@ export default function RecipeReviewCard(props) {
             </Grid>
           );
         })}
+        <Error />
       </Grid>
 
       <Dialog
