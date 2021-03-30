@@ -35,6 +35,7 @@ import Login from '../../pages/Login'
 import Register from '../../pages/Register'
 import { LoginRegisteredAction, login_dialog_close_action, login_dialog_open_action, adopt_dialog_close_action, adoptstepper_dialog_open_action } from '../../redux/actions/loginAction';
 import { register_dialog_close_action } from '../../redux/actions/registerAction';
+import { user_pets_modal_action } from '../../redux/actions/userPetsAction';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -107,7 +108,7 @@ export default function SectionDesktop() {
 
     const dispatch = useDispatch();
 
-    const { user } = useSelector(state => state.login);
+    const { nombres } = useSelector(state => state.login.user);
     const { registerData } = useSelector(state => state.register);
 
     const { loginDialog } = useSelector(state => state.login);
@@ -143,10 +144,10 @@ export default function SectionDesktop() {
     };
 
     useEffect(() => {
-        if (user.length !== 0) {
+        if (nombres.length !== 0) {
             Swal.fire({
                 icon: 'success',
-                title: `Bienvenid@ ${user.nombres}`,
+                title: `Bienvenid@ ${nombres}`,
                 text: 'Sesión Iniciada',
                 confirmButtonColor: '#63C132',
             }).then((result) => {
@@ -158,7 +159,7 @@ export default function SectionDesktop() {
                 }
             })
         }
-    }, [dispatch, user])
+    }, [dispatch, nombres])
 
     useEffect(() => {
         if (registerData.length !== 0) {
@@ -177,9 +178,14 @@ export default function SectionDesktop() {
         }
     }, [registerData, dispatch, newUser])
 
+    const handleclickMyPets = () => {
+        setAnchorEl(null);
+        dispatch(user_pets_modal_action(true))
+    }
+
     return (
         <>
-            { user ?
+            { nombres ?
                 <>
                     <Hidden smDown>
                         <Button
@@ -192,7 +198,7 @@ export default function SectionDesktop() {
                             startIcon={<img src={petUser} alt="Login" className={classes.menuIcons} />}
                         >
                             <ArrowDropDownIcon />
-                            {`${user.nombres}`}
+                            {`${nombres}`}
                         </Button>
                     </Hidden>
 
@@ -207,7 +213,7 @@ export default function SectionDesktop() {
                         >
                             <img src={petUser} alt="Login" className={classes.menuIcons} />
                             <ArrowDropDownIcon />
-                            {`${user.nombres}`}
+                            {`${nombres}`}
                         </MenuItem>
                     </Hidden>
 
@@ -225,6 +231,18 @@ export default function SectionDesktop() {
                             </ListItemIcon>
                             <ListItemText primary="Ver Tu Perfil" />
                         </StyledMenuItem>
+                        <StyledMenuItem onClick={handleclickMyPets}>
+                            <ListItemIcon>
+                                <Person />
+                            </ListItemIcon>
+                            <ListItemText primary="Tus mascotas registradas" />
+                        </StyledMenuItem>
+                        <StyledMenuItem >
+                            <ListItemIcon>
+                                <Person />
+                            </ListItemIcon>
+                            <ListItemText primary="Tus solicitudes de adopción" />
+                        </StyledMenuItem>
                     </StyledMenu>
                 </> :
 
@@ -238,9 +256,7 @@ export default function SectionDesktop() {
                             startIcon={<img src={petUser} alt="Login" className={classes.menuIcons} />}
                         >
                             <ArrowDropDownIcon />
-                            {/* <Hidden mdDown> */}
                             Ingresar
-                        {/* </Hidden> */}
                         </Button>
                     </Hidden>
 

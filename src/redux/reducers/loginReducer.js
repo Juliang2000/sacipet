@@ -13,7 +13,11 @@ import {
 
 const initialState = {
   // user: 'developer',
-  user: '',
+  user: {
+    nombres: '',
+    correo: '',
+    telefono: '',
+  },
   loader: false,
   error: false,
   loginDialog: null,
@@ -51,7 +55,11 @@ export default (state = initialState, action) => {
         loader: false,
         error: true,
         errorMessage: action.payload.error,
-        user: '',
+        user: {
+          nombres: '',
+          correo: '',
+          telefono: '',
+        },
         ok: false,
       };
 
@@ -71,7 +79,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         adoptDialog: true,
-        procedure: action.payload
+        procedure: action.payload,
       };
 
     case ADOPT_DIALOG_CLOSE:

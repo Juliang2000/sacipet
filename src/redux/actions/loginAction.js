@@ -13,6 +13,7 @@ import {
 } from "../types";
 import Swal from 'sweetalert2';
 
+
 // Get Data to localStorage
 export function loginNormalAction(data) {
     return async (dispatch) => {
@@ -40,9 +41,7 @@ export function LoginRegisteredAction(userLog) {
 
         try {
             const response = await LoginUserRegistered(userLog)
-            // setTimeout(() => {
-            dispatch(loginNormalSuccess(response.data.user));
-            // }, 2000)
+            dispatch(loginNormalSuccess(response.data.user))
         } catch (error) {
             dispatch(loginNormalError(error))
             console.log(error)

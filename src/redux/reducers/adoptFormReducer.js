@@ -60,7 +60,7 @@ const initialState = {
         edad_mascota: '',
         escala_edad: '',
         esterilizado: '',
-        id_tamanio: '',
+        id_tamanio: 2,
         id_raza: '',
         genero_mascota: '',
         id_color: '',
