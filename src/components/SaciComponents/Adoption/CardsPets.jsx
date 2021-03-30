@@ -63,7 +63,9 @@ import {
   adopt_me_dialog_action,
   get_pet_photos_action,
   get_saci_pets_action,
+  pet_data_dialog_action,
   select_pet_action,
+  unlogged_modal_action,
 } from '../../../redux/actions/saciPets';
 // import { Height, LensTwoTone } from '@material-ui/icons';
 
@@ -144,6 +146,7 @@ const rows = [createData('Pinina', 10, 'Macho', 'Pastor Alemán', 'Perro', 80)];
 export default function RecipeReviewCard(props) {
   const dispatch = useDispatch();
   const { pageMascotas } = useSelector((state) => state.saciPets);
+  const { nombres } = useSelector((state) => state.login.user);
   const [open, setOpen] = useState(false);
   const [newPet, setNewPet] = useState();
   const [anchorMenu, setAnchorMenu] = useState(null);
@@ -188,9 +191,26 @@ export default function RecipeReviewCard(props) {
   const classes = useStyles();
 
   const [modal, setModal] = useState(false);
+  const [checkLogin, setCheckLogin] = useState(false)
 
   const [petPhoto, setPetPhoto] = useState(petSample);
   const [checkPets, setCheckPets] = useState(false);
+
+  const handleClickAdoptMe = () => {
+    if (checkLogin) {
+      dispatch(adopt_me_dialog_action(true));
+    } else {
+      dispatch(unlogged_modal_action(true));
+    }
+  }
+
+
+  useEffect(() => {
+    if (nombres) {
+      setCheckLogin(true)
+      console.log('verificado')
+    }
+  }, [nombres])
 
   const handleClickMenu = (event) => {
     setAnchorMenu(event.currentTarget);
@@ -322,7 +342,7 @@ export default function RecipeReviewCard(props) {
                     variant='contained'
                     color='primary'
                     fullWidth
-                    onClick={() => dispatch(adopt_me_dialog_action(true))}>Adóptame</Button>
+                    onClick={handleClickAdoptMe}>Adóptame</Button>
                 </CardActions>
               </Card>
             </Grid>

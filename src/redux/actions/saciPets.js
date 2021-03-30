@@ -1,4 +1,11 @@
-import { GET_SACI_PETS, PAGE_SACI_PETS, SELECT_PET_DATA, SET_ADOPT_ME_DIALOG, SET_PET_DATA_DIALOG } from "../types";
+import {
+  GET_SACI_PETS,
+  PAGE_SACI_PETS,
+  SELECT_PET_DATA,
+  SET_ADOPT_ME_DIALOG,
+  SET_PET_DATA_DIALOG,
+  SET_UNLOGGED_MODAL
+} from "../types";
 import { getSaciPets } from "../../configAxios/saciPets"
 
 export const get_saci_pets_action = (filters) => async (dispatch) => {
@@ -1690,6 +1697,15 @@ export const pet_data_dialog_action = (dialogDataState) => async (dispatch) => {
   dispatch({
     type: SET_PET_DATA_DIALOG,
     payload: dialogDataState
+  })
+
+}
+
+export const unlogged_modal_action = (state) => async (dispatch) => {
+
+  dispatch({
+    type: SET_UNLOGGED_MODAL,
+    payload: state
   })
 
 }

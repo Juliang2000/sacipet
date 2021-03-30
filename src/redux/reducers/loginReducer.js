@@ -13,16 +13,17 @@ import {
 
 const initialState = {
     // user: 'developer',
-    user: '',
+    user: {
+        nombres: '',
+        correo: '',
+        telefono: ''
+
+    },
     loader: false,
     error: false,
-    loginDialog: null,
-    adoptDialog: null,
-    adoptstepperDialog: null,
-    // errorMessage: '',
-    // registerToLogin: null,
-    // success: false,
-    // mensaje: '',
+    loginDialog: false,
+    adoptDialog: false,
+    adoptstepperDialog: false,
 }
 
 export default (state = initialState, action) => {
@@ -55,7 +56,12 @@ export default (state = initialState, action) => {
                 loader: false,
                 error: true,
                 errorMessage: action.payload.error,
-                user: '',
+                user: {
+                    nombres: '',
+                    correo: '',
+                    telefono: ''
+
+                },
                 ok: false,
             }
 

@@ -1,15 +1,18 @@
-import { withStyles, Switch, FormGroup, Box, Button, Dialog, FormControlLabel, Grid, Hidden, IconButton, Step, StepLabel, Stepper, TextField, Typography } from '@material-ui/core'
+import { withStyles, Switch, FormGroup, Box, Button, Dialog, FormControlLabel, Grid, Hidden, IconButton, Step, StepLabel, Stepper, TextField, Typography, Select, MenuItem, FormControl, InputLabel } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { adopt_me_dialog_action } from '../../../redux/actions/saciPets';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
+import Swal from 'sweetalert2';
 
 //styles
 import adoptMeFormStyles from '../../../assets/css/js/adoptMeFormStyles';
 //icons
 import CloseIcon from '@material-ui/icons/Close';
 import useStyles from '../../../assets/css/js/styles';
+import { get_city_data_action, get_department_data_action, get_form_data_action, update_form_data_action } from '../../../redux/actions/adoptFormAction';
+import { enable_step_two_action, get_adopt_me_form_action, get_adopt_me_form_name, get_adopt_me_form_tel, save_adopt_me_form_action, update_adopt_me_form_action } from '../../../redux/actions/adoptMeFormAction';
 
 // const ColorlibConnector = withStyles({
 //     alternativeLabel: {
@@ -88,6 +91,8 @@ const IOSSwitch = withStyles((theme) => ({
     );
 });
 
+
+
 function CustomizedSwitch() {
     const classes = useStyles();
     const [state, setState] = useState({
@@ -111,432 +116,29 @@ function CustomizedSwitch() {
 }
 
 export function getSteps() {
-    return ['Tus Datos Personales', 'Preguntas de interés', 'Preguntas Familiares', 'Sobre la Adopción', 'Registra tu Solicitud'];
+    return ['Tus Datos Personales', 'Sobre la Adopción'];
 }
 
 export function getStepContent(step) {
 
-
-    const classes = adoptMeFormStyles();
-
     switch (step) {
         case 0:
-            return (
-                <>
-                    <Grid style={{ margin: '2%', marginLeft: '10%', marginRight: '10%' }}>
-                        <Grid container justify='center'>
-                            <Typography variant="h5">
-                                Tus datos Personales (Campos requeridos)
-                            </Typography>
-                        </Grid>
-                        <Grid container spacing={1} style={{ marginTop: '2%' }}>
-                            <Grid item xl={6} lg={6}>
-                                <TextField
-                                    label="Nombres y Apellidos"
-                                    type="text"
-                                    name="nombre_adoptante"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={6} lg={6}>
-                                <TextField
-                                    label="Dirección"
-                                    type="text"
-                                    name="direccion_adoptante"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={3} lg={3}>
-                                <TextField
-                                    label="Ciudad o Municipio"
-                                    type="text"
-                                    name="id_codigo"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={3} lg={3}>
-                                <TextField
-                                    label="Localidad"
-                                    type="text"
-                                    name="localidad"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={3} lg={3}>
-                                <TextField
-                                    label="Teléfono"
-                                    type="text"
-                                    name="telefono"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={3} lg={3}>
-                                <TextField
-                                    label="E-mail"
-                                    type="text"
-                                    name="email"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={6} lg={6}>
-                                <TextField
-                                    label="Ocupación"
-                                    type="text"
-                                    name="ocupacion"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={6} lg={6}>
-                                <TextField
-                                    label="Estado Civil"
-                                    type="text"
-                                    name="estado_civil"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </>
-            )
+            return <UserData />
         case 1:
-            return (
-                <>
-                    <Grid style={{ margin: '2%', marginLeft: '10%', marginRight: '10%' }}>
-                        <Grid container justify='center'>
-                            <Typography variant="h5">
-                                Preguntas de interés
-                            </Typography>
-                        </Grid>
-                        <Grid container spacing={1} style={{ marginTop: '2%' }}>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="¿Por qué deseas adoptar a una mascota?"
-                                    type="text"
-                                    name="pregunta_mascota_1"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="¿Actualmente tienes más animales? ¿Cuáles?"
-                                    type="text"
-                                    name="pregunta_mascota_2"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="¿Anteriormente has tenido mascotas?"
-                                    type="text"
-                                    name="pregunta_mascota_3"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                        </Grid>
-                        {/* pregunta 4 */}
-                        <Grid style={{ marginTop: '2%' }} container justify="center" alignItems="center">
-                            <Grid item xl={6} lg={6}>
-                                <Typography>
-                                    ¿Estarías de acuerdo con realizar visitas para ver las condiciones de la mascota?
-                                </Typography>
-                            </Grid>
-                            <Grid item xl={3} lg={3}>
-                                <CustomizedSwitch />
-                            </Grid>
-                        </Grid>
-                    </Grid>
+            return <AdoptQuestions />
 
-                </>
-            )
-        case 2:
-            return (
-                <>
-                    <Grid style={{ margin: '2%', marginLeft: '10%', marginRight: '10%' }}>
-                        <Grid container justify='center'>
-                            <Typography variant="h5">
-                                Tu círculo Familiar
-                            </Typography>
-                        </Grid>
-                        <Grid container spacing={1} style={{ marginTop: '2%' }}>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="¿Cuántas Personas viven en su casa?"
-                                    type="text"
-                                    name="pregunta_familia_1"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="¿Están todos de acuerdo en adoptar? en el caso de que no, indica la razón"
-                                    type="text"
-                                    name="pregunta_familia_2"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="¿Alguien que viva con usted es alérgico a los animales?"
-                                    type="text"
-                                    name="pregunta_familia_3"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="¿En caso de alquiler ¿sus arrendadores permiten mascotas en el departamento?"
-                                    type="text"
-                                    name="pregunta_familia_4"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="Si tuviera que cambiar de domicilio, ¿qué pasaría con la mascota?"
-                                    type="text"
-                                    name="nombre_mascota"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="En caso de calamidad doméstica o la llegada de un nuevo familiar ¿Cuales serian los tratos hacie el animal adoptado?"
-                                    type="text"
-                                    name="pregunta_ultima"
-                                    variant="outlined"
-                                    fullWidth
-                                    multiline
-                                    rows={4}
-                                />
-                            </Grid>
-                        </Grid>
-                    </Grid>
-
-                </>
-            )
-        case 3:
-            return (
-                <>
-                    <Grid style={{ margin: '2%', marginLeft: '10%', marginRight: '10%' }}>
-                        <Grid container justify='center'>
-                            <Typography variant="h5">
-                                Preguntas sobre la adopción
-                            </Typography>
-                        </Grid>
-                        <Grid container spacing={1} style={{ marginTop: '2%' }}>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="¿Qué tamaño de mascota prefiere, pequeño, mediano o grande?"
-                                    type="text"
-                                    name="nombre_mascota"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="¿Cuántos años cree que vive un perro o gato en promedio?"
-                                    type="text"
-                                    name="nombre_mascota"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="¿Cómo se ve con su mascota adoptada en 5 años?"
-                                    type="text"
-                                    name="nombre_mascota"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="¿Tiene espacio suficiente para que su mascota se sienta cómoda?"
-                                    type="text"
-                                    name="nombre_mascota"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="¿Dónde dormirá la mascota?"
-                                    type="text"
-                                    name="nombre_mascota"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="cuantas horas al dia  pasaría sola la mascota?"
-                                    type="text"
-                                    name="pregunta_ultima"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="Si el comportamiento de la mascota no es el deseado, ¿Qúe medidas tomaría?"
-                                    type="text"
-                                    name="pregunta_ultima"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="¿Qúe energías debería tener la mascota?"
-                                    type="text"
-                                    name="pregunta_ultima"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="¿Quién sera el responsable y se hara cargo de cubrir los gastos de la adoptada?"
-                                    type="text"
-                                    name="pregunta_ultima"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="¿Está dispuesto a vacunar a su mascota?"
-                                    type="text"
-                                    name="pregunta_ultima"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="¿Está dispuesto a llevar a su mascota a un veterinario periódicamente?"
-                                    type="text"
-                                    name="pregunta_ultima"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="¿Qué tipo de alimentación le suministraría a la mascota?"
-                                    type="text"
-                                    name="pregunta_ultima"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="¿Realizaría desparacitación de la mascota cuando se requiera?"
-                                    type="text"
-                                    name="pregunta_ultima"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="¿Realizaría cepillado de Pelo a su máscota?"
-                                    type="text"
-                                    name="pregunta_ultima"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="¿Realizaría aseo riguroso de la mascota?"
-                                    type="text"
-                                    name="pregunta_ultima"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="¿Cuenta con los recursos sufucientes para cubrir los gastos de veterinaria?"
-                                    type="text"
-                                    name="pregunta_ultima"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="¿Tienes alguna razón específica por la cual quieras adoptar a ésta mascota?"
-                                    type="text"
-                                    name="pregunta_ultima"
-                                    variant="outlined"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xl={12} lg={12}>
-                                <TextField
-                                    label="¿Dónde dejarías a la mascota si necesitas ausentarte por horas, días, semanas?"
-                                    type="text"
-                                    name="pregunta_ultima"
-                                    variant="outlined"
-                                    fullWidth
-                                    multiline
-                                    rows={2}
-                                />
-                            </Grid>
-                        </Grid>
-                    </Grid>
-
-                </>
-            )
-        case 4:
-            return (
-                <>
-                    <Grid style={{ margin: '2%', marginLeft: '10%', marginRight: '10%' }}>
-                        <Grid container justify='center'>
-                            <Typography variant="h5">
-                                Estás a un paso de realizar tu solicitud!
-                            </Typography>
-                        </Grid>
-                        <Grid container style={{ marginTop: '5%' }} justify='center'>
-                            <Typography>
-                                Acepta los términos y condiciones del siguiente contrato
-                            </Typography>
-                        </Grid>
-                        <Grid container style={{ marginTop: '2%', display: 'flex' }} justify="center" alignItems="center">
-                            <Grid item xl={3} lg={3}>
-                                <CustomizedSwitch />
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </>
-            )
         default:
-            return 'Unknown step';
     }
 }
 
+
+
 export default function AdoptMeForm() {
+    const { nombres, telefono, correo } = useSelector(state => state.login.user)
+    const { user } = useSelector(state => state.login)
+    const { formData } = useSelector(state => state.adoptMeForm)
+    const { stepTwo } = useSelector(state => state.adoptMeForm)
+    const [allowContent, setAllowContent] = useState(false);
     const [activeStep, setActiveStep] = useState(0);
     const steps = getSteps();
     const classes = adoptMeFormStyles();
@@ -547,9 +149,41 @@ export default function AdoptMeForm() {
         console.log(adoptMeDialog)
     }, [adoptMeDialog])
 
+    useEffect(() => {
+        if (nombres?.length) {
+            console.log(user)
+            dispatch(get_adopt_me_form_action({
+                ...formData,
+                nombre_adoptante: `${nombres}`,
+                telefono: `${telefono}`,
+                correo: `${correo}`
+            }));
+        }
+    }, [nombres])
+
     const handleClickClose = () => {
-        dispatch(adopt_me_dialog_action(false));
+        return Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'No podrás revertir los cambios!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#D33',
+            cancelButtonColor: '#63C132',
+            confirmButtonText: 'Sí, salir!',
+            cancelButtonText: 'No, cancelar!',
+            customClass: 'swal-wide',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(adopt_me_dialog_action(false))
+                Swal.close();
+            }
+        });
+    };
+
+    const handleClickRegister = () => {
+        dispatch(save_adopt_me_form_action(formData))
     }
+
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -588,25 +222,30 @@ export default function AdoptMeForm() {
                     <div>
                         {activeStep === steps.length ? (
                             <div>
-                                <Box m={10}>
-                                    <Typography variant="h5" className={classes.instructions}>
-                                        ¿Todo está listo?
-                      </Typography>
-                                    <Grid container justify="center">
-                                        Pulsa el botón enviar para registrar tu formulario,
-                        </Grid>
-                                    <Grid container justify="center">
-                                        Si deseas cambiar algún dato pulsa el botón de atrás
-                        </Grid>
-                                </Box>
-                                <Grid container justify="center">
-                                    <Button className={classes.button}>
+                                <Grid style={{ margin: '2%', marginLeft: '10%', marginRight: '10%' }}>
+                                    <Grid container justify='center'>
+                                        <Typography variant="h5">
+                                            ¡Estás a un paso de realizar tu solicitud!
+                            </Typography>
+                                    </Grid>
+                                    <Grid container style={{ marginTop: '5%' }} justify='center'>
+                                        <Typography>
+                                            Acepta los términos y condiciones del siguiente contrato
+                            </Typography>
+                                    </Grid>
+                                    <Grid container style={{ marginTop: '2%', display: 'flex' }} justify="center" alignItems="center">
+                                        <CustomizedSwitch />
+                                    </Grid>
+                                </Grid>
+                                <Grid container style={{ marginBottom: '5px' }} justify="center">
+                                    <Button className={classes.button} onClick={handleBack}>
                                         Atrás
                       </Button>
                                     <Button
                                         variant="contained"
                                         color="primary"
-                                        className={classes.button}>
+                                        className={classes.button}
+                                        onClick={handleClickRegister}>
                                         Enviar
                       </Button>
                                 </Grid>
@@ -615,7 +254,7 @@ export default function AdoptMeForm() {
                             <div>
                                 <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
                                 <div>
-                                    <Grid container style={{ marginBottom: '10px' }} justify="center">
+                                    <Grid container style={{ marginBottom: '2%' }} justify="center">
                                         <Button style={{ textTransform: 'none' }} disabled={activeStep === 0} className={classes.button} onClick={handleBack}>
                                             Atrás
                           </Button>
@@ -625,6 +264,7 @@ export default function AdoptMeForm() {
                                             color="primary"
                                             className={classes.button}
                                             onClick={handleNext}
+                                            disabled={stepTwo === false}
                                         >
                                             {activeStep === steps.length - 1 ? 'Siguiente' : 'Siguiente'}
                                         </Button>
@@ -635,6 +275,358 @@ export default function AdoptMeForm() {
                     </div>
                 </div>
             </Dialog>
+        </>
+    )
+}
+
+function UserData() {
+
+    const dispatch = useDispatch();
+    const idStore = useSelector(state => state.saciPets.petSelected);
+    const nombreStore = useSelector(state => state.adoptMeForm.formData.nombre_adoptante);
+    const idUsuarioStore = useSelector(state => state.login.user.id);
+    const correoStore = useSelector(state => state.adoptMeForm.formData.email);
+    const telefonoStore = useSelector(state => state.adoptMeForm.formData.telefono);
+    const direccionStore = useSelector(state => state.adoptMeForm.formData.direccion_adoptante);
+    const idUndeStore = useSelector(state => state.adoptMeForm.formData.id_unde);
+    const idCodigoStore = useSelector(state => state.adoptMeForm.formData.id_codigo);
+    const ocupacionStore = useSelector(state => state.adoptMeForm.formData.ocupacion);
+    const estadoCivilStore = useSelector(state => state.adoptMeForm.formData.estado_civil);
+    const { departments, cities } = useSelector(state => state.adoptFormData);
+    const [allowCities, setAllowCities] = useState(false)
+    const [userData, setUserData] = useState({
+        nombre_adoptante: `${nombreStore}`,
+        direccion_adoptante: `${direccionStore}`,
+        id_codigo: `${idUndeStore}`,
+        localidad: `${idCodigoStore}`,
+        telefono: `${telefonoStore}`,
+        email: `${correoStore}`,
+        ocupacion: `${ocupacionStore}`,
+        estado_civil: `${estadoCivilStore}`,
+        id_usuario: `${idUsuarioStore}`,
+        id: `${idStore}`,
+    })
+    const { nombre_adoptante, email, direccion_adoptante, localidad, id_codigo, telefono, ocupacion, estado_civil } = userData;
+    const idCodigoData = {
+        id_unde: `${id_codigo}`
+    }
+
+    useEffect(() => {
+        dispatch(get_department_data_action());
+    }, [])
+
+    useEffect(() => {
+        if (cities.length !== 0) {
+            setAllowCities(true)
+        } else {
+            setAllowCities(false)
+        }
+    }, [cities])
+
+    useEffect(() => {
+        if (id_codigo) {
+            dispatch(get_city_data_action(idCodigoData))
+        }
+    }, [id_codigo])
+
+    const handleChange = e => {
+        setUserData({
+            ...userData,
+            [e.target.name]: e.target.value
+        })
+    }
+    useEffect(() => {
+        if (
+            nombre_adoptante.length && direccion_adoptante.length && id_codigo.length && localidad.length
+            && telefono.length && estado_civil.length && ocupacion.length !== 0) {
+            console.log("todos los campos llenos")
+            dispatch(enable_step_two_action(true));
+            dispatch(update_adopt_me_form_action(userData));
+        } else {
+            console.log("campos sin llenar")
+            dispatch(enable_step_two_action(false));
+        }
+    }, [userData])
+
+    return (
+        <div>
+            <Grid style={{ margin: '2%', marginLeft: '10%', marginRight: '10%' }}>
+                <Grid container justify='center'>
+                    <Typography variant='h6'>
+                        Tus datos Personales (Campos requeridos)
+                </Typography>
+                </Grid>
+                <Grid container spacing={1} style={{ marginTop: '2%' }}>
+                    <Grid item xl={6} lg={6}>
+                        <TextField
+                            label="Nombres y Apellidos"
+                            type="text"
+                            name="nombre_adoptante"
+                            variant="outlined"
+                            defaultValue={nombreStore}
+                            onChange={handleChange}
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item xl={6} lg={6}>
+                        <TextField
+                            label="Dirección"
+                            type="text"
+                            name="direccion_adoptante"
+                            variant="outlined"
+                            defaultValue={direccionStore}
+                            onChange={handleChange}
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={4} md={4}>
+                        <FormControl variant="outlined" fullWidth>
+                            <InputLabel id="demo-simple-select-outlined-label">Departamento</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-outlined-label"
+                                id="demo-simple-select-outlined"
+                                name="id_codigo"
+                                label="Departamento"
+                                onChange={handleChange}
+                                defaultValue={idUndeStore}
+                            >
+                                {
+                                    departments.map(item => (
+                                        <MenuItem key={item.id_codigo} value={item.id_codigo}>
+                                            {item.descripcion}
+                                        </MenuItem>
+                                    ))
+                                }
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={4} md={4}>
+                        <FormControl variant="outlined" fullWidth>
+                            <InputLabel id="demo-simple-select-outlined-label">Ciudad o municipio</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-outlined-label"
+                                id="demo-simple-select-outlined"
+                                name="localidad"
+                                label="Ciudad o municipio"
+                                onChange={handleChange}
+                                disabled={allowCities === false}
+                                defaultValue={idCodigoStore}
+                            >
+                                {
+                                    cities.map(item => (
+                                        <MenuItem key={item.id_codigo} value={item.descripcion}>
+                                            {item.descripcion}
+                                        </MenuItem>
+                                    ))
+                                }
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xl={4} lg={4}>
+                        <TextField
+                            label="Teléfono"
+                            type="text"
+                            name="telefono"
+                            variant="outlined"
+                            defaultValue={telefonoStore}
+                            onChange={handleChange}
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item xl={4} lg={4}>
+                        <TextField
+                            label="E-mail"
+                            type="email"
+                            name="email"
+                            variant="outlined"
+                            defaultValue={correoStore}
+                            onChange={handleChange}
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item xl={4} lg={4}>
+                        <TextField
+                            label="Ocupación"
+                            type="text"
+                            name="ocupacion"
+                            variant="outlined"
+                            onChange={handleChange}
+                            fullWidth
+                            defaultValue={ocupacionStore}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={4} md={4}>
+                        <FormControl variant="outlined" fullWidth>
+                            <InputLabel id="demo-simple-select-outlined-label">Estado Civil</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-outlined-label"
+                                id="demo-simple-select-outlined"
+                                name="estado_civil"
+                                label="Estado Civil"
+                                onChange={handleChange}
+                                defaultValue={estadoCivilStore}
+                            >
+                                <MenuItem value="soltero">
+                                    Soltero(a)
+                                </MenuItem>
+                                <MenuItem value="casado">
+                                    Casado(a)
+                                </MenuItem>
+                                <MenuItem value="divorciado">
+                                    Divorciado(a)
+                                </MenuItem>
+                                <MenuItem value="union_libre">
+                                    Unión libre
+                                </MenuItem>
+
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </div>
+    )
+
+}
+
+function AdoptQuestions() {
+    const dispatch = useDispatch();
+    const { formData } = useSelector(state => state.adoptMeForm);
+    const [questionData, setQuestionData] = useState({
+        pregunta_mascota_1: '',
+        pregunta_mascota_2: '',
+        pregunta_adopcion_4: '',
+        pregunta_adopcion_18: '',
+        pregunta_adopcion_11: '',
+        pregunta_adopcion_10: ''
+    })
+
+    const { pregunta_mascota_1,
+        pregunta_mascota_2,
+        pregunta_adopcion_4,
+        pregunta_adopcion_18,
+        pregunta_adopcion_11,
+        pregunta_adopcion_10 } = questionData;
+
+    const handleChange = e => {
+        setQuestionData({
+            ...questionData,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    useEffect(() => {
+        dispatch(update_adopt_me_form_action({
+            ...formData,
+            pregunta_mascota_1,
+            pregunta_mascota_2,
+            pregunta_adopcion_4,
+            pregunta_adopcion_18,
+            pregunta_adopcion_11,
+            pregunta_adopcion_10
+        }))
+    }, [questionData])
+    return (
+        <>
+            <Grid style={{ margin: '2%', marginLeft: '10%', marginRight: '10%' }}>
+                <Grid container justify='center'>
+                    <Typography variant="h5">
+                        Sobre la Adopción (Campos Opcionales)
+                    </Typography>
+                </Grid>
+                <Grid container spacing={1} style={{ marginTop: '2%' }}>
+                    <Grid item xl={12} lg={12}>
+                        <TextField
+                            label="¿Por qué deseas adoptar a esta mascota?"
+                            type="text"
+                            name="pregunta_mascota_1"
+                            variant="outlined"
+                            fullWidth
+                            onChange={handleChange}
+                        />
+                    </Grid>
+                    <Grid item xl={12} lg={12}>
+                        <FormControl variant="outlined" fullWidth>
+                            <InputLabel id="demo-simple-select-outlined-label">¿Tienes más mascotas?</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-outlined-label"
+                                id="demo-simple-select-outlined"
+                                name="pregunta_mascota_2"
+                                label="¿Tienes más mascotas?"
+                                fullwidth
+                                onChange={handleChange}
+                            >
+                                <MenuItem value='Si' >Si</MenuItem>
+                                <MenuItem value='No' >No</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xl={12} lg={12}>
+                        <FormControl variant="outlined" fullWidth>
+                            <InputLabel id="demo-simple-select-outlined-label">¿Tienes espacio suficiente para la comodidad de la mascota?</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-outlined-label"
+                                id="demo-simple-select-outlined"
+                                name="pregunta_adopcion_4"
+                                label="¿Tienes espacio suficiente para la comodidad de la mascota?"
+                                fullwidth
+                                onChange={handleChange}
+                            >
+                                <MenuItem value='Si' >Si</MenuItem>
+                                <MenuItem value='No' >No</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xl={12} lg={12}>
+                        <FormControl variant="outlined" fullWidth>
+                            <InputLabel id="demo-simple-select-outlined-label">¿Si te ausentas, puedes dejar a cargo a tu mascota con alguien más?</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-outlined-label"
+                                id="demo-simple-select-outlined"
+                                name="pregunta_adopcion_18"
+                                label="¿Si te ausentas, puedes dejar a cargo a tu mascota con alguien más?"
+                                fullwidth
+                                onChange={handleChange}
+                            >
+                                <MenuItem value='Si' >Si</MenuItem>
+                                <MenuItem value='No' >No</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xl={12} lg={12}>
+                        <FormControl variant="outlined" fullWidth>
+                            <InputLabel id="demo-simple-select-outlined-label">¿Estarías a disposicion para llevar peródicamente a la mascota con un veterinario?</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-outlined-label"
+                                id="demo-simple-select-outlined"
+                                name="pregunta_adopcion_11"
+                                label="¿Estarías a disposicion para llevar peródicamente a la mascota con un veterinario"
+                                fullwidth
+                                onChange={handleChange}
+                            >
+                                <MenuItem value='Si' >Si</MenuItem>
+                                <MenuItem value='No' >No</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xl={12} lg={12}>
+                        <FormControl variant="outlined" fullWidth>
+                            <InputLabel id="demo-simple-select-outlined-label">¿Estarías a disposicion de vacunar a tu mascota?</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-outlined-label"
+                                id="demo-simple-select-outlined"
+                                name="pregunta_adopcion_10"
+                                label="¿Estarías a disposicion de vacunar a tu mascota"
+                                fullwidth
+                                onChange={handleChange}
+                            >
+                                <MenuItem value='Si' >Si</MenuItem>
+                                <MenuItem value='No' >No</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                </Grid>
+            </Grid>
         </>
     )
 }

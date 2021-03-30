@@ -68,7 +68,8 @@ export default function PetDescription() {
   const hamsterRaceData = useSelector(store => store.hamsterRaceData.hamsterRaceData);
   const hamster = useSelector(state => state.petType.hamster);
   const { departments, cities } = useSelector(state => state.adoptFormData);
-  const { user } = useSelector(state => state.login);
+  const { id } = useSelector(state => state.login.user);
+
 
   const {
     nombre_mascota,
@@ -89,7 +90,7 @@ export default function PetDescription() {
   } = useSelector(store => store.adoptFormData.updateDescriptionData);
 
   const [newPet, setnewPet] = useState({
-    id_usuario: user.id,
+    id_usuario: id,
     tipo_tramite: 1,
     nombre_mascota: `${nombre_mascota}`,
     edad_mascota: `${edad_mascota}`,
@@ -107,6 +108,13 @@ export default function PetDescription() {
     id_unde: `${id_unde}`,
     descripcion_mascota: `${descripcion_mascota}`,
   })
+
+  useEffect(() => {
+    if (hamster === true) {
+      setnewPet({ ...newPet, id_tamanio: 2 })
+    }
+  }, [hamster])
+
 
   const handleChange = (event) => {
     const { name, value } = event.target
