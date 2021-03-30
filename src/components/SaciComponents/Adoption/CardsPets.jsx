@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
+// Clsx
+import clsx from 'clsx';
+
 import {
   Card,
   CardHeader,
@@ -28,7 +31,9 @@ import FavoriteIconPet from '../../../assets/icons/cards/favorite-icon-pet.svg';
 import ShareIconPet from '../../../assets/icons/cards/share-icon-pet.svg';
 import FootprintIconPet from '../../../assets/icons/cards/footprint-icon-pet.svg';
 
-import marco_inferior from '../../../assets/icons/cards/marco10.svg';
+import marco1 from '../../../assets/icons/cards/marco10.svg';
+import marco2 from '../../../assets/icons/cards/marcoAmarillo.svg';
+
 import { ReactComponent as NotFound } from '../../../assets/icons/cards/404-spanish.svg';
 
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -130,8 +135,16 @@ const useStyles = makeStyles((theme) => ({
   iconsCards: {
     width: '25px',
   },
-  cardDesign: {
-    backgroundImage: `url(${marco_inferior})`,
+  cardDesign1: {
+    backgroundImage: `url(${marco1})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: '100%',
+    [theme.breakpoints.only('sm')]: {
+      backgroundSize: '115%',
+    },
+  },
+  cardDesign2: {
+    backgroundImage: `url(${marco2})`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: '100%',
     [theme.breakpoints.only('sm')]: {
@@ -155,7 +168,12 @@ const rows = [createData('Pinina', 10, 'Macho', 'Pastor Alemán', 'Perro', 80)];
 ////////////////////////////////////////////////////////////
 export default function RecipeReviewCard(props) {
   const dispatch = useDispatch();
+
+
   const { pageMascotas } = useSelector((state) => state.saciPets);
+
+  // const { procedure } = useSelector((state) => state.login);
+
   const [open, setOpen] = useState(false);
   const [newPet, setNewPet] = useState();
   const [anchorMenu, setAnchorMenu] = useState(null);
@@ -315,6 +333,13 @@ export default function RecipeReviewCard(props) {
     }
   };
 
+  // let tipo_tramite1 = pageMascotas.filter((pets) => pets.tipo_tramite === '1');
+
+  // let tipo_tramite2 = pageMascotas.filter((pets) => pets.tipo_tramite === '2');
+
+  // let tipo_tramite3 = pageMascotas.filter((pets) => pets.tipo_tramite === '3');
+  // console.log(tipo_tramite3)
+
   return (
     <>
       <Grid
@@ -339,7 +364,9 @@ export default function RecipeReviewCard(props) {
                 onClick={() => dispatch(select_pet_action(item.id_mascota))}
               >
                 <CarouselPhotos itemPets={item.fotos} />
-                <div className={classes.cardDesign}>
+
+                <div className={clsx(classes.cardDesign1/* , { [classes.cardDesign2]: procedure } */)}>
+
                   <CardHeader
                     // avatar={
                     //   <Avatar aria-label='recipe' className={classes.avatar}>

@@ -295,8 +295,12 @@ export default function AdoptStepper() {
     icon: PropTypes.node,
   };
 
+  const [tramite1] = useState({
+    tipo_tramite: 1
+  })
+
   const handleClickOpenModal = () => {
-    dispatch(adopt_dialog_open_action());
+    dispatch(adopt_dialog_open_action(tramite1));
     dispatch(adoptstepper_dialog_open_action());
   };
 

@@ -79,9 +79,13 @@ export const login_dialog_close_action = (loginDialog) => {
 }
 
 export const adopt_dialog_open_action = (adoptDialog) => {
+    console.log(adoptDialog)
+    let procedure_type = adoptDialog.tipo_tramite
+    console.log(procedure_type)
+
     return {
         type: ADOPT_DIALOG_OPEN,
-        payload: adoptDialog
+        payload: procedure_type
     }
 }
 

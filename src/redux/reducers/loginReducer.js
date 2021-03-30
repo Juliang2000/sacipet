@@ -1,109 +1,104 @@
 import {
-    INICIAR_SESION_ERROR,
-    INICIAR_SESION_EXITO,
-    INICIAR_SESION_START,
-    LOGIN_DIALOG_OPEN,
-    LOGIN_DIALOG_CLOSE,
-    ADOPT_DIALOG_OPEN,
-    ADOPT_DIALOG_CLOSE,
-    ADOPTSTEPPER_DIALOG_OPEN,
-    ADOPTSTEPPER_DIALOG_CLOSE
-    /* REGISTER_TO_LOGIN */
-} from "../types"
+  INICIAR_SESION_ERROR,
+  INICIAR_SESION_EXITO,
+  INICIAR_SESION_START,
+  LOGIN_DIALOG_OPEN,
+  LOGIN_DIALOG_CLOSE,
+  ADOPT_DIALOG_OPEN,
+  ADOPT_DIALOG_CLOSE,
+  ADOPTSTEPPER_DIALOG_OPEN,
+  ADOPTSTEPPER_DIALOG_CLOSE,
+  /* REGISTER_TO_LOGIN */
+} from '../types';
 
 const initialState = {
-    // user: 'developer',
-    user: '',
-    loader: false,
-    error: false,
-    loginDialog: null,
-    adoptDialog: null,
-    adoptstepperDialog: null,
-    // errorMessage: '',
-    // registerToLogin: null,
-    // success: false,
-    // mensaje: '',
-}
+  // user: 'developer',
+  user: '',
+  loader: false,
+  error: false,
+  loginDialog: null,
+  adoptDialog: null,
+  adoptstepperDialog: null,
+  procedure: null,
+  // errorMessage: '',
+  // registerToLogin: null,
+  // success: false,
+  // mensaje: '',
+};
 
 export default (state = initialState, action) => {
+  switch (action.type) {
+    case INICIAR_SESION_START:
+      return {
+        ...state,
+        loader: true,
+      };
 
-    switch (action.type) {
+    case INICIAR_SESION_EXITO:
+      return {
+        ...state,
+        loader: false,
+        error: false,
+        // errorMessage: '',
+        user: action.payload,
+        // success: true,
+        // mensaje: action.payload
+      };
 
-        case INICIAR_SESION_START:
+    case INICIAR_SESION_ERROR:
+      return {
+        ...state,
+        loader: false,
+        error: true,
+        errorMessage: action.payload.error,
+        user: '',
+        ok: false,
+      };
 
-            return {
-                ...state,
-                loader: true,
-            }
+    case LOGIN_DIALOG_OPEN:
+      return {
+        ...state,
+        loginDialog: true,
+      };
 
-        case INICIAR_SESION_EXITO:
+    case LOGIN_DIALOG_CLOSE:
+      return {
+        ...state,
+        loginDialog: false,
+      };
 
-            return {
-                ...state,
-                loader: false,
-                error: false,
-                // errorMessage: '',
-                user: action.payload,
-                // success: true,
-                // mensaje: action.payload
-            }
+    case ADOPT_DIALOG_OPEN:
+      return {
+        ...state,
+        adoptDialog: true,
+        procedure: action.payload
+      };
 
-        case INICIAR_SESION_ERROR:
+    case ADOPT_DIALOG_CLOSE:
+      return {
+        ...state,
+        adoptDialog: false,
+      };
 
-            return {
-                ...state,
-                loader: false,
-                error: true,
-                errorMessage: action.payload.error,
-                user: '',
-                ok: false,
-            }
+    case ADOPTSTEPPER_DIALOG_OPEN:
+      return {
+        ...state,
+        adoptstepperDialog: true,
+      };
 
-        case LOGIN_DIALOG_OPEN:
+    case ADOPTSTEPPER_DIALOG_CLOSE:
+      return {
+        ...state,
+        adoptstepperDialog: false,
+      };
+    // case REGISTER_TO_LOGIN:
 
-            return {
-                ...state,
-                loginDialog: true,
-            }
-        case LOGIN_DIALOG_CLOSE:
+    //     return {
+    //         ...state,
+    //         registerToLogin: true,
+    //     }
 
-            return {
-                ...state,
-                loginDialog: false,
-            }
-
-        case ADOPT_DIALOG_OPEN:
-
-            return {
-                ...state,
-                adoptDialog: true,
-            }
-        case ADOPT_DIALOG_CLOSE:
-
-            return {
-                ...state,
-                adoptDialog: false,
-            }
-
-        case ADOPTSTEPPER_DIALOG_OPEN:
-
-            return {
-                ...state,
-                adoptstepperDialog: true,
-            }
-
-        case ADOPTSTEPPER_DIALOG_CLOSE:
-            return {
-                ...state,
-                adoptstepperDialog: false,
-            }
-        // case REGISTER_TO_LOGIN:
-
-        //     return {
-        //         ...state,
-        //         registerToLogin: true,
-        //     }
-
-        default: return state
-    }
-}
+    default:
+      return state;
+  }
+};

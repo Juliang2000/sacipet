@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react';
 import { Button, makeStyles, withStyles, Hidden } from '@material-ui/core';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -6,11 +6,20 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
 //icons
-import iconFind from '../../../assets/icons/drawer/iconFind-final.svg'
+import iconFind from '../../../assets/icons/drawer/iconFind-final.svg';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
-const useStyles = makeStyles((theme) => ({
+//redux
+import { useDispatch } from 'react-redux';
 
+import {
+  // login_dialog_open_action,
+  adoptstepper_dialog_open_action,
+  // adoptstepper_dialog_close_action,
+  adopt_dialog_open_action,
+} from '../../../redux/actions/loginAction';
+
+const useStyles = makeStyles((theme) => ({
   adoptionButton: {
     color: '#fff',
     textTransform: 'none',
@@ -28,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '15px',
     [theme.breakpoints.between('xs', 'sm')]: {
       color: '#000',
-    }
+    },
   },
   mobile: {
     width: '25rem',
@@ -41,9 +50,9 @@ const useStyles = makeStyles((theme) => ({
     width: '40px',
     [theme.breakpoints.only('xs')]: {
       width: '35px',
-    }
+    },
   },
-}))
+}));
 
 const StyledMenu = withStyles({
   paper: {
@@ -77,9 +86,7 @@ const StyledMenuItem = withStyles((theme) => ({
   },
 }))(MenuItem);
 
-
 export default function FindPetButton() {
-
   ///////////////Constantes Botón Encuentra tu mascota////////////////
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -91,42 +98,58 @@ export default function FindPetButton() {
     setAnchorEl(null);
   };
   ////////////////////////////////////////////////////////////////////
+  const dispatch = useDispatch();
+
+
+  const [tramite2] = useState({
+    tipo_tramite: 2
+  })
+
+  const handleClickOpenModalRecover = () => {
+    setAnchorEl(null);
+    dispatch(adopt_dialog_open_action(tramite2));
+    dispatch(adoptstepper_dialog_open_action());
+  };
+
+  const [tramite3] = useState({
+    tipo_tramite: 3
+  })
+
+  const handleClickOpenModalLost = () => {
+    setAnchorEl(null);
+    dispatch(adopt_dialog_open_action(tramite3));
+    dispatch(adoptstepper_dialog_open_action());
+  };
 
   const classes = useStyles();
   return (
     <div>
-      {/* <Hidden xsDown> */}
-      {/* <Grid container justify="center"> */}
       <Hidden smDown>
         <Button
-          // fullWidth
-          // variant="contained"
           color="secondary"
           className={classes.findPetButtonDesktop}
           onClick={handleClick}
-          startIcon={<img src={iconFind} alt="LogIn" className={classes.menuIcons} />}
+          startIcon={
+            <img src={iconFind} alt="LogIn" className={classes.menuIcons} />
+          }
         >
           <ArrowDropDownIcon />
-          <Hidden only="md"/* mdDown */>
-            Encontrar
-          </Hidden>
+          <Hidden only="md">Encontrar</Hidden>
         </Button>
       </Hidden>
 
       <Hidden mdUp>
         <MenuItem
-         color="secondary"
-         className={classes.findPetButtonDesktop}
-         onClick={handleClick}
-         >
+          color="secondary"
+          className={classes.findPetButtonDesktop}
+          onClick={handleClick}
+        >
           <img src={iconFind} alt="LogIn" className={classes.menuIcons} />
           <ArrowDropDownIcon />
           Encontrar
         </MenuItem>
       </Hidden>
 
-
-      {/* </Grid> */}
       <StyledMenu
         autoFocus={false}
         id="customized-menu"
@@ -135,70 +158,19 @@ export default function FindPetButton() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <StyledMenuItem>
+        <StyledMenuItem onClick={handleClickOpenModalRecover}>
           <ListItemIcon>
             <img src={iconFind} alt="Lost Pets" className={classes.menuIcons} />
           </ListItemIcon>
-          <ListItemText primary="Mascotas recuperadas" />
+          <ListItemText primary="Mascotas Recuperadas" />
         </StyledMenuItem>
-        <StyledMenuItem>
+        <StyledMenuItem onClick={handleClickOpenModalLost}>
           <ListItemIcon>
             <img src={iconFind} alt="Lost Pets" className={classes.menuIcons} />
           </ListItemIcon>
-          <ListItemText primary="Publica tu mascota como perdida" />
+          <ListItemText primary="Mascotas Perdidas" />
         </StyledMenuItem>
       </StyledMenu>
-      {/* </Hidden> */}
-      {/* <Hidden mdUp>
-        <div className={classes.mobile}>
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-
-              <img src={findPetIcon} alt="Lost Pets" style={{ width: '30px' }} />
-
-
-              <Typography
-                className={classes.heading}
-              // className={classes.findPetButton}
-              // onClick={handleClick2}
-
-              >
-
-                Encuentra tu mascota
-                </Typography>
-
-
-            </AccordionSummary>
-            <AccordionDetails>
-
-              <Typography
-                className={classes.heading}
-              >
-                <img src={findPetIcon} alt="Lost Pets" style={{ width: '40px' }} />
-                Mascotas recuperadas
-                </Typography>
-
-            </AccordionDetails>
-            <AccordionDetails>
-              <Typography
-                className={classes.heading}
-              >
-                <img src={findPetIcon} alt="Lost Pets" style={{ width: '40px' }} />
-                Publica tu mascota perdida
-                </Typography>
-            </AccordionDetails>
-
-
-          </Accordion>
-        </div>
-      </Hidden> */}
-
-
     </div>
-  )
+  );
 }
-

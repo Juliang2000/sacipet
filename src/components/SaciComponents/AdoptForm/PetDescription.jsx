@@ -68,7 +68,7 @@ export default function PetDescription() {
   const hamsterRaceData = useSelector(store => store.hamsterRaceData.hamsterRaceData);
   const hamster = useSelector(state => state.petType.hamster);
   const { departments, cities } = useSelector(state => state.adoptFormData);
-  const { user } = useSelector(state => state.login);
+  const { user, procedure } = useSelector(state => state.login);
 
   const {
     nombre_mascota,
@@ -90,7 +90,7 @@ export default function PetDescription() {
 
   const [newPet, setnewPet] = useState({
     id_usuario: user.id,
-    tipo_tramite: 1,
+    tipo_tramite: procedure,
     nombre_mascota: `${nombre_mascota}`,
     edad_mascota: `${edad_mascota}`,
     escala_edad: `${escala_edad}`,
