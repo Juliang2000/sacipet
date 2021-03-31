@@ -31,8 +31,9 @@ import FavoriteIconPet from '../../../assets/icons/cards/favorite-icon-pet.svg';
 import ShareIconPet from '../../../assets/icons/cards/share-icon-pet.svg';
 import FootprintIconPet from '../../../assets/icons/cards/footprint-icon-pet.svg';
 
-import marco1 from '../../../assets/icons/cards/marco10.svg';
+import marco1 from '../../../assets/icons/cards/marcoVerde.svg';
 import marco2 from '../../../assets/icons/cards/marcoAmarillo.svg';
+import marco3 from '../../../assets/icons/cards/marcoRojo.svg';
 
 import { ReactComponent as NotFound } from '../../../assets/icons/cards/404-spanish.svg';
 
@@ -116,10 +117,29 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('xs')]: {
       margin: theme.spacing(0, 0, 3, 0),
     },
+    // '&:hover': {
+    //   boxShadow: '0 0 10px rgba(99, 193, 50), 0px 0px 20px rgba(99, 193, 50)',
+    // },
+  },
+
+  cardsPets1: {
     '&:hover': {
       boxShadow: '0 0 10px rgba(99, 193, 50), 0px 0px 20px rgba(99, 193, 50)',
     },
   },
+
+  cardsPets2: {
+    '&:hover': {
+      boxShadow: '0 0 10px rgba(188, 191, 52), 0px 0px 20px rgba(188, 191, 52)',
+    },
+  },
+
+  cardsPets3: {
+    '&:hover': {
+      boxShadow: '0 0 10px rgba(188, 53, 53), 0px 0px 20px rgba(188, 53, 53)',
+    },
+  },
+
   buttonPrimary: {
     color: '#ffffff',
     fontWeight: 'bold',
@@ -137,21 +157,23 @@ const useStyles = makeStyles((theme) => ({
   iconsCards: {
     width: '25px',
   },
-  cardDesign1: {
-    backgroundImage: `url(${marco1})`,
+
+  cardDesign: {
     backgroundRepeat: 'no-repeat',
     backgroundSize: '100%',
     [theme.breakpoints.only('sm')]: {
       backgroundSize: '115%',
     },
   },
+
+  cardDesign1: {
+    backgroundImage: `url(${marco1})`,
+  },
   cardDesign2: {
     backgroundImage: `url(${marco2})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: '100%',
-    [theme.breakpoints.only('sm')]: {
-      backgroundSize: '115%',
-    },
+  },
+  cardDesign3: {
+    backgroundImage: `url(${marco3})`,
   },
 }));
 ////////////////////////////////////////////////////////////
@@ -378,15 +400,21 @@ export default function RecipeReviewCard(props) {
               xl={3}
             >
               <Card
-                className={classes.cardsPets}
+                className={clsx(classes.cardsPets, {
+                  [classes.cardsPets1]: item.tipo_tramite === '1',
+                  [classes.cardsPets2]: item.tipo_tramite === '2',
+                  [classes.cardsPets3]: item.tipo_tramite === '3',
+                })}
                 onClick={() => dispatch(select_pet_action(item.id_mascota))}
               >
                 <CarouselPhotos itemPets={item.fotos} />
 
                 <div
-                  className={clsx(
-                    classes.cardDesign1 /* , { [classes.cardDesign2]: procedure } */
-                  )}
+                  className={clsx(classes.cardDesign, {
+                    [classes.cardDesign1]: item.tipo_tramite === '1',
+                    [classes.cardDesign2]: item.tipo_tramite === '2',
+                    [classes.cardDesign3]: item.tipo_tramite === '3',
+                  })}
                 >
                   <CardHeader
                     // avatar={
