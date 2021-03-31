@@ -616,10 +616,13 @@ export default function GmailTreeView() {
   });
   console.log(filtersRaces);
 
+  // let filtersPrueba;
+  // if (chipItem === true) {
   const filtersPrueba = mascotas.filter(function (pets) {
     return pets.id_raza === chipData;
   });
   console.log(filtersPrueba);
+  // }
 
   useEffect(() => {
     if (chipData !== false) {
@@ -634,12 +637,12 @@ export default function GmailTreeView() {
   const harold = filtersRaces.map((data) => {
     if (chipItem === true) {
       return (
-          <Chip
-            key={data.id_mascota}
-            label={data.raza}
-            color="primary"
-            onDelete={handleChipsDelete}
-          />
+        <Chip
+          key={data.id_mascota}
+          label={data.raza}
+          color="primary"
+          onDelete={handleChipsDelete}
+        />
       );
     } else {
       return null;

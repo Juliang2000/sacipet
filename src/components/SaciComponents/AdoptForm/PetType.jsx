@@ -162,15 +162,11 @@ export default function PetType() {
                 <Typography variant="h5" fontFamily>
                   ¿Qué tipo de mascota deseas dar en adopción?
                 </Typography>
-              ) : null}
-
-              {procedure === 2 ? (
+              ) : procedure === 2 ? (
                 <Typography variant="h5" fontFamily>
                   ¿Qué tipo de mascota recuperaste?
                 </Typography>
-              ) : null}
-
-              {procedure === 3 ? (
+              ) : procedure === 3 ? (
                 <Typography variant="h5" fontFamily>
                   ¿Qué tipo de mascota deseas encontrar?
                 </Typography>

@@ -15,13 +15,18 @@ import {
 } from '@material-ui/core';
 
 // Form Validation
-import { useForm } from "react-hook-form";
-import * as yup from "yup";
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 // Dispach Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { big_size_action, medium_size_action, small_size_action, get_pet_size_data } from '../../../redux/actions/petSizeAction';
+import {
+  big_size_action,
+  medium_size_action,
+  small_size_action,
+  get_pet_size_data,
+} from '../../../redux/actions/petSizeAction';
 import { get_hamster_race_action } from '../../../redux/actions/getHamsterRaceAction';
 
 import {
@@ -32,14 +37,14 @@ import {
   get_form_data_action,
   push_data_action,
   not_full_pet_description_action,
-  reset_city_action
+  reset_city_action,
 } from '../../../redux/actions/adoptFormAction';
 
 const useStyles = makeStyles((theme) => ({
   formPetDescription: {
     marginTop: 20,
-    marginBottom: 20
-  }
+    marginBottom: 20,
+  },
 }));
 
 const ITEM_HEIGHT = 48;
@@ -48,29 +53,29 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250
-    }
-  }
+      width: 250,
+    },
+  },
 };
 
 export default function PetDescription() {
-
   // redux Actions
   const dispatch = useDispatch();
-  const { petType } = useSelector(store => store.petType);
+  const { petType } = useSelector((store) => store.petType);
   const [sendHamsterData, setSendHamsterData] = useState(true);
   const [racesContent, setRacesContent] = useState(false);
   const [allowCities, setAllowCities] = useState(false);
   const [allowRaces, setAllowRaces] = useState(false);
 
   ///////////////////////INSERTS
-  const raceData = useSelector(store => store.raceData.raceData);
-  const hamsterRaceData = useSelector(store => store.hamsterRaceData.hamsterRaceData);
-  const hamster = useSelector(state => state.petType.hamster);
-  const { departments, cities } = useSelector(state => state.adoptFormData);
-  const { procedure } = useSelector(state => state.login);
-  const { id } = useSelector(state => state.login.user);
-
+  const raceData = useSelector((store) => store.raceData.raceData);
+  const hamsterRaceData = useSelector(
+    (store) => store.hamsterRaceData.hamsterRaceData
+  );
+  const hamster = useSelector((state) => state.petType.hamster);
+  const { departments, cities } = useSelector((state) => state.adoptFormData);
+  const { procedure } = useSelector((state) => state.login);
+  const { id } = useSelector((state) => state.login.user);
 
   const {
     nombre_mascota,
@@ -87,8 +92,8 @@ export default function PetDescription() {
     id_vacuna_Moquillo,
     id_codigo,
     id_unde,
-    descripcion_mascota
-  } = useSelector(store => store.adoptFormData.updateDescriptionData);
+    descripcion_mascota,
+  } = useSelector((store) => store.adoptFormData.updateDescriptionData);
 
   const [newPet, setnewPet] = useState({
     id_usuario: id,
@@ -108,24 +113,23 @@ export default function PetDescription() {
     id_codigo: `${id_codigo}`,
     id_unde: `${id_unde}`,
     descripcion_mascota: `${descripcion_mascota}`,
-  })
+  });
 
   useEffect(() => {
     if (hamster === true) {
-      setnewPet({ ...newPet, id_tamanio: 2 })
+      setnewPet({ ...newPet, id_tamanio: 2 });
     }
-  }, [hamster])
-
+  }, [hamster]);
 
   const handleChange = (event) => {
-    const { name, value } = event.target
-    setnewPet({ ...newPet, [name]: value })
-    setDepData({ ...depData, [name]: value })
-  }
+    const { name, value } = event.target;
+    setnewPet({ ...newPet, [name]: value });
+    setDepData({ ...depData, [name]: value });
+  };
 
   useEffect(() => {
     dispatch(get_department_data_action());
-  }, [])
+  }, []);
 
   const [petData, setPetData] = useState({
     id_tipo_mascota: petType,
@@ -137,7 +141,7 @@ export default function PetDescription() {
   };
 
   const [depData, setDepData] = useState({
-    id_unde: ''
+    id_unde: '',
   });
 
   function petSizeChange(event) {
@@ -153,7 +157,7 @@ export default function PetDescription() {
     dispatch(push_data_action());
     setSendPetData(true);
     setRacesContent(true);
-  }
+  };
 
   const saveSmallSize = () => {
     dispatch(small_size_action());
@@ -169,7 +173,6 @@ export default function PetDescription() {
     setRacesContent(true);
     dispatch(get_form_data_action(newPet));
     dispatch(update_form_data_action());
-
   };
   const saveBigSize = () => {
     dispatch(big_size_action());
@@ -181,11 +184,10 @@ export default function PetDescription() {
 
   useEffect(() => {
     if (newPet.id_unde) {
-      dispatch(get_city_data_action(depData),
-        reset_city_action());
-      setAllowCities(true)
+      dispatch(get_city_data_action(depData), reset_city_action());
+      setAllowCities(true);
     }
-  }, [newPet.id_unde])
+  }, [newPet.id_unde]);
 
   if (racesContent === true) {
     if (id_tamanio !== 0) {
@@ -196,18 +198,18 @@ export default function PetDescription() {
   }
 
   useEffect(() => {
-    (dispatch(get_pet_size_data(petData)))
-  }, [newPet.id_tamanio])
+    dispatch(get_pet_size_data(petData));
+  }, [newPet.id_tamanio]);
 
   if (sendHamsterData === true) {
     if (hamster === true) {
-      (dispatch(get_hamster_race_action(hamsterData)));
+      dispatch(get_hamster_race_action(hamsterData));
       setRacesContent(true);
     }
     setSendHamsterData(false);
   }
 
-  const [checkAge, setCheckAge] = useState(true)
+  const [checkAge, setCheckAge] = useState(true);
 
   if (checkAge === true)
     if (edad_mascota.length !== 0) {
@@ -216,13 +218,12 @@ export default function PetDescription() {
       setRacesContent(true);
       dispatch(get_form_data_action(newPet));
       dispatch(update_form_data_action());
-      setCheckAge(false)
+      setCheckAge(false);
     }
 
   const classes = useStyles();
 
   const schema = yup.object().shape({
-
     nombre_mascota: yup
       .string()
       .required('¡Campo Obligatorio!')
@@ -234,9 +235,8 @@ export default function PetDescription() {
       .number()
       .typeError('¡Obligatorio!')
       .min(1, '¡Edad mínima 1!')
-      .max(20, '¡máxima 20!')
+      .max(25, '¡máxima 25!')
       .integer('!Solo números enteros!'),
-
   });
 
   const { handleSubmit, register, errors } = useForm({
@@ -244,21 +244,23 @@ export default function PetDescription() {
       nombre_mascota: nombre_mascota,
       edad_mascota: edad_mascota,
     },
-    mode: "onChange",
+    mode: 'onChange',
     resolver: yupResolver(schema),
   });
 
   useEffect(() => {
     if (newPet.id_tamanio.length !== 0) {
-      setAllowRaces(true)
+      setAllowRaces(true);
     }
-  }, [newPet.id_tamanio])
+  }, [newPet.id_tamanio]);
 
   useEffect(() => {
     switch (petType) {
-      case 3: setAllowRaces(true);
+      case 3:
+        setAllowRaces(true);
         if (!errors.nombre_mascota && !errors.edad_mascota) {
-          if (newPet.nombre_mascota.length &&
+          if (
+            newPet.nombre_mascota.length &&
             newPet.edad_mascota.length &&
             newPet.escala_edad &&
             newPet.esterilizado.length &&
@@ -276,49 +278,63 @@ export default function PetDescription() {
           }
         }
         break;
-      default: if (!errors.nombre_mascota && !errors.edad_mascota) {
-        if (newPet.nombre_mascota.length &&
-          newPet.edad_mascota.length &&
-          newPet.escala_edad &&
-          newPet.esterilizado.length &&
-          newPet.id_tamanio &&
-          newPet.id_raza &&
-          newPet.id_color &&
-          newPet.id_unde &&
-          newPet.id_codigo &&
-          newPet.descripcion_mascota.length !== 0
-        ) {
-          dispatch(full_pet_description_action());
-          dispatch(get_form_data_action(newPet));
-          dispatch(update_form_data_action());
-        } else {
-          dispatch(not_full_pet_description_action());
+      default:
+        if (!errors.nombre_mascota && !errors.edad_mascota) {
+          if (
+            newPet.nombre_mascota.length &&
+            newPet.edad_mascota.length &&
+            newPet.escala_edad &&
+            newPet.esterilizado.length &&
+            newPet.id_tamanio &&
+            newPet.id_raza &&
+            newPet.id_color &&
+            newPet.id_unde &&
+            newPet.id_codigo &&
+            newPet.descripcion_mascota.length !== 0
+          ) {
+            dispatch(full_pet_description_action());
+            dispatch(get_form_data_action(newPet));
+            dispatch(update_form_data_action());
+          } else {
+            dispatch(not_full_pet_description_action());
+          }
         }
-      }
     }
-  }, [newPet.nombre_mascota,
-  newPet.descripcion_mascota,
-  newPet.id_codigo,
-  newPet.id_unde,
+  }, [
+    newPet.nombre_mascota,
+    newPet.descripcion_mascota,
+    newPet.id_codigo,
+    newPet.id_unde,
     errors,
-  newPet.edad_mascota,
-  newPet.escala_edad,
-  newPet.id_tamanio,
-  newPet.id_raza,
-  newPet.id_color,
-  newPet.esterilizado])
+    newPet.edad_mascota,
+    newPet.escala_edad,
+    newPet.id_tamanio,
+    newPet.id_raza,
+    newPet.id_color,
+    newPet.esterilizado,
+  ]);
 
   const handleChange3 = (event) => {
-    setnewPet({ ...newPet, [event.target.name]: "true" });
+    setnewPet({ ...newPet, [event.target.name]: 'true' });
   };
 
   return (
     <form onSubmit={handleSubmit()} autocomplete="off">
       <Grid container spacing={2} className={classes.formPetDescription}>
         <Grid item xs={12}>
-          <Typography variant="h4" gutterBottom>
-            Describe Tu Mascota
-      </Typography>
+          {procedure === 1 ? (
+            <Typography variant="h4" gutterBottom>
+              Describe La Mascota Adoptiva
+            </Typography>
+          ) : procedure === 2 ? (
+            <Typography variant="h4" gutterBottom>
+              Describe La Mascota Encontrada
+            </Typography>
+          ) : procedure === 3 ? (
+            <Typography variant="h4" gutterBottom>
+              Describe La Mascota Perdida
+            </Typography>
+          ) : null}
         </Grid>
         <Grid item xs={12} sm={5} md={6}>
           <TextField
@@ -350,7 +366,9 @@ export default function PetDescription() {
         </Grid>
         <Grid item xs={12} sm={4} md={4}>
           <FormControl variant="outlined" fullWidth>
-            <InputLabel id="demo-simple-select-outlined-label">Escala Edad</InputLabel>
+            <InputLabel id="demo-simple-select-outlined-label">
+              Escala Edad
+            </InputLabel>
             <Select
               labelId="demo-simple-select-outlined-label"
               id="demo-simple-select-outlined"
@@ -362,16 +380,24 @@ export default function PetDescription() {
               {/* <MenuItem>
                 <em>Seleccione:</em>
               </MenuItem> */}
-              <MenuItem value={1} onClick={saveData}>Semanas</MenuItem>
-              <MenuItem value={2} onClick={saveData}>Meses</MenuItem>
-              <MenuItem value={3} onClick={saveData}>Años</MenuItem>
+              <MenuItem value={1} onClick={saveData}>
+                Semanas
+              </MenuItem>
+              <MenuItem value={2} onClick={saveData}>
+                Meses
+              </MenuItem>
+              <MenuItem value={3} onClick={saveData}>
+                Años
+              </MenuItem>
             </Select>
           </FormControl>
         </Grid>
 
         <Grid item xs={12} md={4}>
           <FormControl variant="outlined" fullWidth>
-            <InputLabel id="demo-simple-select-outlined-label">Mascota esterilizada</InputLabel>
+            <InputLabel id="demo-simple-select-outlined-label">
+              Mascota esterilizada
+            </InputLabel>
             <Select
               labelId="demo-simple-select-outlined-label"
               id="demo-simple-select-outlined"
@@ -383,15 +409,21 @@ export default function PetDescription() {
               {/* <MenuItem>
                 <em>Seleccione:</em>
               </MenuItem> */}
-              <MenuItem value="1" onClick={saveData}>Si</MenuItem>
-              <MenuItem value="0" onClick={saveData}>No</MenuItem>
+              <MenuItem value="1" onClick={saveData}>
+                Si
+              </MenuItem>
+              <MenuItem value="0" onClick={saveData}>
+                No
+              </MenuItem>
             </Select>
           </FormControl>
         </Grid>
 
         <Grid item xs={12} sm={6} md={4}>
           <FormControl variant="outlined" fullWidth>
-            <InputLabel id="demo-simple-select-outlined-label">Tamaño De Mascota</InputLabel>
+            <InputLabel id="demo-simple-select-outlined-label">
+              Tamaño De Mascota
+            </InputLabel>
             <Select
               labelId="demo-simple-select-outlined-label"
               id="demo-simple-select-outlined"
@@ -405,15 +437,23 @@ export default function PetDescription() {
               {/* <MenuItem>
                 <em>Seleccione:</em>
               </MenuItem> */}
-              <MenuItem value={1} onClick={saveBigSize}>Grande</MenuItem>
-              <MenuItem value={2} onClick={saveMediumSize}>Mediano</MenuItem>
-              <MenuItem value={3} onClick={saveSmallSize}>Pequeño</MenuItem>
+              <MenuItem value={1} onClick={saveBigSize}>
+                Grande
+              </MenuItem>
+              <MenuItem value={2} onClick={saveMediumSize}>
+                Mediano
+              </MenuItem>
+              <MenuItem value={3} onClick={saveSmallSize}>
+                Pequeño
+              </MenuItem>
             </Select>
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
           <FormControl variant="outlined" fullWidth>
-            <InputLabel id="demo-simple-select-outlined-label">Raza De Mascota</InputLabel>
+            <InputLabel id="demo-simple-select-outlined-label">
+              Raza De Mascota
+            </InputLabel>
             <Select
               labelId="demo-simple-select-outlined-label"
               id="demo-simple-select-outlined"
@@ -423,26 +463,33 @@ export default function PetDescription() {
               disabled={allowRaces === false}
               defaultValue={id_raza}
             >
-
-              {hamster ?
-                hamsterRaceData.map(item => (
-                  <MenuItem key={item.nombre_raza} value={item.id_raza} defaultValue={item.nombre_raza} >
-                    {item.nombre_raza}
-                  </MenuItem>
-                ))
-                :
-                raceData.map(item => (
-                  <MenuItem key={item.nombre_raza} value={item.id_raza} defaultValue={item.nombre_raza}>
-                    {item.nombre_raza}
-                  </MenuItem>
-                ))
-              }
+              {hamster
+                ? hamsterRaceData.map((item) => (
+                    <MenuItem
+                      key={item.nombre_raza}
+                      value={item.id_raza}
+                      defaultValue={item.nombre_raza}
+                    >
+                      {item.nombre_raza}
+                    </MenuItem>
+                  ))
+                : raceData.map((item) => (
+                    <MenuItem
+                      key={item.nombre_raza}
+                      value={item.id_raza}
+                      defaultValue={item.nombre_raza}
+                    >
+                      {item.nombre_raza}
+                    </MenuItem>
+                  ))}
             </Select>
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
           <FormControl variant="outlined" fullWidth>
-            <InputLabel id="demo-simple-select-outlined-label">Genéro De Macota</InputLabel>
+            <InputLabel id="demo-simple-select-outlined-label">
+              Genéro De Macota
+            </InputLabel>
             <Select
               labelId="demo-simple-select-outlined-label"
               id="demo-simple-select-outlined"
@@ -455,14 +502,20 @@ export default function PetDescription() {
               {/* <MenuItem>
                 <em>Seleccione:</em>
               </MenuItem> */}
-              <MenuItem value={1} onClick={saveData}>Macho</MenuItem>
-              <MenuItem value={2} onClick={saveData}>Hembra</MenuItem>
+              <MenuItem value={1} onClick={saveData}>
+                Macho
+              </MenuItem>
+              <MenuItem value={2} onClick={saveData}>
+                Hembra
+              </MenuItem>
             </Select>
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
           <FormControl variant="outlined" fullWidth>
-            <InputLabel id="demo-simple-select-outlined-label">Color De Mascota</InputLabel>
+            <InputLabel id="demo-simple-select-outlined-label">
+              Color De Mascota
+            </InputLabel>
             <Select
               labelId="demo-simple-select-outlined-label"
               id="demo-simple-select-outlined"
@@ -475,16 +528,26 @@ export default function PetDescription() {
               {/* <MenuItem>
                 <em>Seleccione:</em>
               </MenuItem> */}
-              <MenuItem value={1} onClick={saveData}>Café</MenuItem>
-              <MenuItem value={2} onClick={saveData}>Negro</MenuItem>
-              <MenuItem value={3} onClick={saveData}>Gris</MenuItem>
-              <MenuItem value={4} onClick={saveData}>Blanco</MenuItem>
+              <MenuItem value={1} onClick={saveData}>
+                Café
+              </MenuItem>
+              <MenuItem value={2} onClick={saveData}>
+                Negro
+              </MenuItem>
+              <MenuItem value={3} onClick={saveData}>
+                Gris
+              </MenuItem>
+              <MenuItem value={4} onClick={saveData}>
+                Blanco
+              </MenuItem>
             </Select>
           </FormControl>
         </Grid>
         <Grid item xs={12} md={4}>
           <FormControl variant="outlined" fullWidth>
-            <InputLabel id="demo-mutiple-checkbox-label">Vacunas De Mascota</InputLabel>
+            <InputLabel id="demo-mutiple-checkbox-label">
+              Vacunas De Mascota
+            </InputLabel>
             <Select
               labelId="demo-mutiple-checkbox-label"
               id="demo-mutiple-checkbox"
@@ -503,13 +566,14 @@ export default function PetDescription() {
                   name="id_vacuna_Rabia"
                   onChange={handleChange3}
                   checked={newPet.id_vacuna_Rabia}
-                /* checked={personName.indexOf(name) > -1} */ />
+                  /* checked={personName.indexOf(name) > -1} */
+                />
                 Rabia
-              <ListItemText /* primary={name} */ />
+                <ListItemText /* primary={name} */ />
               </MenuItem>
               {/* ))} */}
 
-              <MenuItem >
+              <MenuItem>
                 <Checkbox
                   color="primary"
                   name="id_vacuna_Rinotraqueítis"
@@ -517,10 +581,10 @@ export default function PetDescription() {
                   checked={newPet.id_vacuna_Rinotraqueítis}
                 />
                 Rinotraqueítis
-              <ListItemText />
+                <ListItemText />
               </MenuItem>
 
-              <MenuItem >
+              <MenuItem>
                 <Checkbox
                   color="primary"
                   name="id_vacuna_Parvovirus"
@@ -528,10 +592,10 @@ export default function PetDescription() {
                   checked={newPet.id_vacuna_Parvovirus}
                 />
                 Parvovirus
-              <ListItemText />
+                <ListItemText />
               </MenuItem>
 
-              <MenuItem >
+              <MenuItem>
                 <Checkbox
                   color="primary"
                   name="id_vacuna_Moquillo"
@@ -539,14 +603,16 @@ export default function PetDescription() {
                   checked={newPet.id_vacuna_Moquillo}
                 />
                 Moquillo
-              <ListItemText />
+                <ListItemText />
               </MenuItem>
             </Select>
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6} md={6}>
           <FormControl variant="outlined" fullWidth>
-            <InputLabel id="demo-simple-select-outlined-label">Departamento</InputLabel>
+            <InputLabel id="demo-simple-select-outlined-label">
+              Departamento
+            </InputLabel>
             <Select
               labelId="demo-simple-select-outlined-label"
               id="demo-simple-select-outlined"
@@ -558,19 +624,19 @@ export default function PetDescription() {
               {/* <MenuItem>
                 <em>Seleccione:</em>
               </MenuItem> */}
-              {
-                departments.map(item => (
-                  <MenuItem key={item.id_codigo} value={item.id_codigo}>
-                    {item.descripcion}
-                  </MenuItem>
-                ))
-              }
+              {departments.map((item) => (
+                <MenuItem key={item.id_codigo} value={item.id_codigo}>
+                  {item.descripcion}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6} md={6}>
           <FormControl variant="outlined" fullWidth>
-            <InputLabel id="demo-simple-select-outlined-label">Ciudad o municipio</InputLabel>
+            <InputLabel id="demo-simple-select-outlined-label">
+              Ciudad o municipio
+            </InputLabel>
             <Select
               labelId="demo-simple-select-outlined-label"
               id="demo-simple-select-outlined"
@@ -583,13 +649,11 @@ export default function PetDescription() {
               {/* <MenuItem>
                 <em>Seleccione:</em>
               </MenuItem> */}
-              {
-                cities.map(item => (
-                  <MenuItem key={item.id_codigo} value={item.id_codigo}>
-                    {item.descripcion}
-                  </MenuItem>
-                ))
-              }
+              {cities.map((item) => (
+                <MenuItem key={item.id_codigo} value={item.id_codigo}>
+                  {item.descripcion}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>
@@ -607,5 +671,5 @@ export default function PetDescription() {
         </Grid>
       </Grid>
     </form>
-  )
-};
+  );
+}

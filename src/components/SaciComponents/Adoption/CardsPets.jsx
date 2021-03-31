@@ -130,7 +130,7 @@ const useStyles = makeStyles((theme) => ({
 
   cardsPets2: {
     '&:hover': {
-      boxShadow: '0 0 10px rgba(188, 191, 52), 0px 0px 20px rgba(188, 191, 52)',
+      boxShadow: '0 0 10px rgba(239, 229, 8), 0px 0px 20px rgba(239, 229, 8)',
     },
   },
 
@@ -291,25 +291,25 @@ export default function RecipeReviewCard(props) {
     }
   }, [getPet]);
 
-  useEffect(() => {
-    if (petIndex >= 0) {
-      setGetPet(pageMascotas[petIndex]);
-    }
-  }, [petIndex]);
+  // useEffect(() => {
+  //   if (petIndex >= 0) {
+  //     setGetPet(pageMascotas[petIndex]);
+  //   }
+  // }, [petIndex]);
 
-  useEffect(() => {
-    if (pageMascotas) {
-      let petInfo = pageMascotas.findIndex(function (item) {
-        return item.id_mascota === newPet;
-      });
-      setPetIndex(petInfo);
-      console.log(petIndex);
-    }
-  }, [newPet]);
+  // useEffect(() => {
+  //   if (pageMascotas) {
+  //     let petInfo = pageMascotas.findIndex(function (item) {
+  //       return item.id_mascota === newPet;
+  //     });
+  //     setPetIndex(petInfo);
+  //     console.log(petIndex);
+  //   }
+  // }, [newPet]);
 
-  useEffect(() => {
-    console.log(vaccines);
-  }, [vaccines]);
+  // useEffect(() => {
+  //   console.log(vaccines);
+  // }, [vaccines]);
 
   useEffect(() => {
     if (getPet.edad_mascota === '1') {
@@ -353,8 +353,16 @@ export default function RecipeReviewCard(props) {
   //   defaultMatches: true,
   // });
 
+  const [cards, setCards] = useState(false);
+
+  useEffect(() => {
+    if (pageMascotas.length !== 0) {
+      setCards(true);
+    }
+  }, [pageMascotas]);
+
   const Error = () => {
-    if (pageMascotas.length === 0) {
+    if (pageMascotas.length === 0 && cards === true) {
       return (
         <div
           className="animate__animated animate__zoomIn"
@@ -463,15 +471,38 @@ export default function RecipeReviewCard(props) {
                         />
                       </IconButton>
                     </div>
-                    <Button
-                      className={classes.buttonPrimary}
-                      variant="contained"
-                      size="small"
-                      color="secondary"
-                      onClick={handleClickAdoptMe}
-                    >
-                      Adóptame
-                    </Button>
+
+                    {item.tipo_tramite === '1' ? (
+                      <Button
+                        className={classes.buttonPrimary}
+                        variant="contained"
+                        size="small"
+                        color="secondary"
+                        onClick={handleClickAdoptMe}
+                      >
+                        Adóptame
+                      </Button>
+                    ) : item.tipo_tramite === '2' ? (
+                      <Button
+                        className={classes.buttonPrimary}
+                        variant="contained"
+                        size="small"
+                        color="secondary"
+                        onClick={handleClickAdoptMe}
+                      >
+                        Encuéntrame
+                      </Button>
+                    ) : item.tipo_tramite === '3' ? (
+                      <Button
+                        className={classes.buttonPrimary}
+                        variant="contained"
+                        size="small"
+                        color="secondary"
+                        onClick={handleClickAdoptMe}
+                      >
+                        Infórmame
+                      </Button>
+                    ) : null}
                   </CardActions>
                 </div>
               </Card>
