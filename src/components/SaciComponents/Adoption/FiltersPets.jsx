@@ -54,6 +54,10 @@ import petYoung from '../../../assets/icons/filters/young-final.svg';
 import petAdult from '../../../assets/icons/filters/adult-final.svg';
 import petOld from '../../../assets/icons/filters/old-final.svg';
 
+import WarningIcon from '@material-ui/icons/Warning';
+import ErrorIcon from '@material-ui/icons/Error';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+
 // Dispatch Redux
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -62,6 +66,7 @@ import {
   get_saci_pets_action,
   get_saci_pets_filters_races_action,
 } from '../../../redux/actions/saciPets';
+import { Autocomplete } from '@material-ui/lab';
 
 // import Button from '@material-ui/core/Button';
 
@@ -569,8 +574,45 @@ export default function GmailTreeView() {
   };
 
   /////////////////////////////////////////////////////////////////////////
-  const { mascotas } = useSelector((state) => state.saciPets);
+  // Estado
+
+  // Recuperados
+  const [filtersRecovered, setFiltersRecovered] = useState(false);
+  const [filtersRecoveredValidate, setFiltersRecoveredValidate] = useState(
+    false
+  );
+
+  const handleRecoveredAdd = () => {
+    setFiltersRecovered(true);
+  };
+
+  const handleRecoveredDelete = () => {
+    setFiltersRecoveredValidate(true);
+    setTimeout(() => {
+      setFiltersRecoveredValidate(false);
+      setFiltersRecovered(false);
+    }, 1000);
+  };
+
+  // Perdidos
+  const [filtersLost, setFiltersLost] = useState(false);
+  const [filtersLostValidate, setFiltersLostValidate] = useState(false);
+
+  const handleLostAdd = () => {
+    setFiltersLost(true);
+  };
+
+  const handleLostDelete = () => {
+    setFiltersLostValidate(true);
+    setTimeout(() => {
+      setFiltersLostValidate(false);
+      setFiltersLost(false);
+    }, 1000);
+  };
+
+  /////////////////////////////////////////////////////////////////////////
   //razas
+  const { mascotas } = useSelector((state) => state.saciPets);
 
   // crear array de un array
   let dataArr = mascotas.map((item) => {
@@ -600,6 +642,7 @@ export default function GmailTreeView() {
 
   const [chipItem, setChipItem] = useState(false);
   const [chipData, setChipData] = useState(false);
+  const [chipFiltersRaces, setChipFiltersRaces] = useState(false);
 
   const handleChipsAdd = (item) => {
     setChipItem(true);
@@ -607,37 +650,54 @@ export default function GmailTreeView() {
   };
 
   const handleChipsDelete = () => {
-    setChipItem(false);
-    setChipData(false);
+    setChipFiltersRaces(true);
+    setTimeout(() => {
+      setChipFiltersRaces(false);
+      setChipItem(false);
+      setChipData(false);
+    }, 1000);
   };
 
-  const filtersRaces = mascotasDuplicate.filter(function (pets) {
-    return pets.id_raza === chipData;
-  });
-  console.log(filtersRaces);
+  let filtersRaces = mascotas;
+  let filtersRacesCards;
 
-  // let filtersPrueba;
-  // if (chipItem === true) {
-  const filtersPrueba = mascotas.filter(function (pets) {
-    return pets.id_raza === chipData;
-  });
-  console.log(filtersPrueba);
-  // }
+  let heightRaces;
+  if (mascotasDuplicate.length >= 4) {
+    heightRaces = 200;
+  } else {
+    heightRaces = 'auto';
+  }
+  // console.log(mascotasDuplicate.length);
+
+  let countPets = mascotas.length;
+
+  if (chipItem === true) {
+    filtersRaces = mascotasDuplicate.filter(function (pets) {
+      return pets.id_raza === chipData;
+    });
+    console.log(filtersRaces);
+
+    filtersRacesCards = mascotas.filter(function (pets) {
+      return pets.id_raza === chipData;
+    });
+    console.log(filtersRacesCards);
+  }
 
   useEffect(() => {
     if (chipData !== false) {
-      dispatch(get_saci_pets_filters_races_action(filtersPrueba));
+      dispatch(get_saci_pets_filters_races_action(filtersRacesCards));
     }
   }, [chipData]);
 
-  // let otro = '1';
-  // let filtersPugs = mascotasDuplicate.filter((pets) => pets.id_raza === otro);
-  // console.log(filtersPugs);
-
-  const harold = filtersRaces.map((data) => {
+  const chipRaces = filtersRaces.map((data) => {
     if (chipItem === true) {
       return (
         <Chip
+          className={
+            chipFiltersRaces
+              ? 'animate__animated animate__backOutDown'
+              : 'animate__animated animate__fadeInUpBig'
+          }
           key={data.id_mascota}
           label={data.raza}
           color="primary"
@@ -664,6 +724,8 @@ export default function GmailTreeView() {
     youngs: true,
     adults: true,
     olds: true,
+    recovered: true,
+    lost: true
   };
 
   const {
@@ -680,6 +742,8 @@ export default function GmailTreeView() {
     youngs,
     adults,
     olds,
+    recovered,
+    lost
   } = filtersObjs;
 
   // filtro vacio
@@ -1808,6 +1872,23 @@ export default function GmailTreeView() {
     hamsters,
   });
 
+  // filtros, recuperados
+  const [petsFiltersRecovered] = useState({
+    recovered,
+  });
+
+  // filtros, perdidos
+  const [petsFiltersLost] = useState({
+    lost
+  })
+
+  // filtros recuperados, perdidos
+  const [petsFiltersRecoveredLost] = useState({
+    recovered,
+    lost
+  })
+
+
   // const filtersDeps = [
   //   filtersCats,
   //   filtersDogs,
@@ -1838,7 +1919,9 @@ export default function GmailTreeView() {
       !filtersYoungs &&
       !filtersAdults &&
       !filtersOlds &&
-      !chipData
+      !chipData &&
+      !filtersRecovered &&
+      !filtersLost
     ) {
       dispatch(get_saci_pets_action(filtersInitial));
     }
@@ -4668,6 +4751,67 @@ export default function GmailTreeView() {
     ) {
       dispatch(get_saci_pets_action(petsFiltersOldsHamsters));
     }
+
+    // recuperados
+    if (
+      filtersRecovered &&
+      !filtersCats &&
+      !filtersDogs &&
+      !filtersHamsters &&
+      !filtersSmalls &&
+      !filtersMediums &&
+      !filtersBigs &&
+      !filtersMales &&
+      !filtersFemales &&
+      !filtersPuppies &&
+      !filtersYoungs &&
+      !filtersAdults &&
+      !filtersOlds &&
+      !filtersLost
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersRecovered));
+    }
+
+    // perdidos
+    if (
+      filtersLost &&
+      !filtersCats &&
+      !filtersDogs &&
+      !filtersHamsters &&
+      !filtersSmalls &&
+      !filtersMediums &&
+      !filtersBigs &&
+      !filtersMales &&
+      !filtersFemales &&
+      !filtersPuppies &&
+      !filtersYoungs &&
+      !filtersAdults &&
+      !filtersOlds &&
+      !filtersRecovered
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersLost));
+    }
+
+    // recuperados, perdidos
+    if (
+      filtersRecovered &&
+      filtersLost &&
+      !filtersCats &&
+      !filtersDogs &&
+      !filtersHamsters &&
+      !filtersSmalls &&
+      !filtersMediums &&
+      !filtersBigs &&
+      !filtersMales &&
+      !filtersFemales &&
+      !filtersPuppies &&
+      !filtersYoungs &&
+      !filtersAdults &&
+      !filtersOlds
+    ) {
+      dispatch(get_saci_pets_action(petsFiltersRecoveredLost));
+    }
+
   }, [
     filtersCats,
     filtersDogs,
@@ -4682,6 +4826,8 @@ export default function GmailTreeView() {
     filtersAdults,
     filtersOlds,
     chipData,
+    filtersRecovered,
+    filtersLost,
   ]);
 
   const CustomTooltip = (props) => (
@@ -4737,7 +4883,7 @@ export default function GmailTreeView() {
         ) : null}
       </div>
 
-      <div className={classes.filtersChips}>{harold}</div>
+      <div className={classes.filtersChips}>{chipRaces}</div>
 
       <div className={classes.filtersChips}>
         {filtersSmalls ? (
@@ -4856,6 +5002,32 @@ export default function GmailTreeView() {
           />
         ) : null}
       </div>
+      <div className={classes.filtersChips}>
+        {filtersRecovered ? (
+          <Chip
+            className={
+              filtersRecoveredValidate
+                ? 'animate__animated animate__backOutDown'
+                : 'animate__animated animate__fadeInUpBig'
+            }
+            color="primary"
+            label="Recuperados"
+            onDelete={handleRecoveredDelete}
+          />
+        ) : null}
+        {filtersLost ? (
+          <Chip
+            className={
+              filtersLostValidate
+                ? 'animate__animated animate__backOutDown'
+                : 'animate__animated animate__fadeInUpBig'
+            }
+            color="primary"
+            label="Perdidos"
+            onDelete={handleLostDelete}
+          />
+        ) : null}
+      </div>
 
       <TreeView
         className={classes.root}
@@ -4871,11 +5043,13 @@ export default function GmailTreeView() {
           labelIcon={lottieFilter}
           bgColor="#63C132"
           color="#FFFFFF"
+          labelInfo={`${countPets}`}
         >
           <StyledTreeItem
             nodeId="2"
             labelText="Tipo De Mascota"
             labelIcon={lottiePetType}
+            // labelInfo="90"
           >
             <StyledTreeItem
               nodeId="7"
@@ -4904,7 +5078,7 @@ export default function GmailTreeView() {
             {filtersCats || filtersDogs || filtersHamsters ? (
               <Box
                 style={{
-                  height: 200,
+                  height: heightRaces,
                   overflow: 'auto',
                 }}
               >
@@ -5075,6 +5249,26 @@ export default function GmailTreeView() {
                 />
               </Box>
             </CustomTooltip>
+          </StyledTreeItem>
+          <StyledTreeItem
+            nodeId="7"
+            labelText="Estado"
+            labelIcon={AssignmentIcon}
+          >
+            <StyledTreeItem
+              nodeId="24"
+              labelText="Recuperados"
+              labelIcon={WarningIcon}
+              onClick={handleRecoveredAdd}
+              // labelInfo="90"
+            />
+            <StyledTreeItem
+              nodeId="25"
+              labelText="Perdidos"
+              labelIcon={ErrorIcon}
+              onClick={handleLostAdd}
+              // labelInfo="90"
+            />
           </StyledTreeItem>
         </StyledTreeItem>
       </TreeView>

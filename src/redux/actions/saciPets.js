@@ -4,9 +4,9 @@ import {
   SELECT_PET_DATA,
   SET_ADOPT_ME_DIALOG,
   SET_PET_DATA_DIALOG,
-  SET_UNLOGGED_MODAL
-} from "../types";
-import { getSaciPets } from "../../configAxios/saciPets"
+  SET_UNLOGGED_MODAL,
+} from '../types';
+import { getSaciPets } from '../../configAxios/saciPets';
 
 export const get_saci_pets_action = (filters) => async (dispatch) => {
   try {
@@ -17,7 +17,10 @@ export const get_saci_pets_action = (filters) => async (dispatch) => {
     var filter = response.data.mascotas;
 
     if (filters.id_tipo_mascota === false) {
-      filter = response.data.mascotas.reverse();
+      filter = response.data.mascotas.filter(
+        (pets) => pets.tipo_tramite === '1'
+      );
+      filter = filter.reverse();
     }
 
     /////////////////////// Filtros 1 ///////////////////////
@@ -111,6 +114,20 @@ export const get_saci_pets_action = (filters) => async (dispatch) => {
           pets.edad_mascota >= 11 &&
           pets.edad_mascota <= 25 &&
           pets.escala_edad === '3'
+      );
+    }
+
+    // filtros, recuperados
+    if (filters.recovered) {
+      filter = response.data.mascotas.filter(
+        (pets) => pets.tipo_tramite === '2'
+      );
+    }
+
+    // filtros, perdidos
+    if (filters.lost) {
+      filter = response.data.mascotas.filter(
+        (pets) => pets.tipo_tramite === '3'
       );
     }
 
@@ -428,6 +445,13 @@ export const get_saci_pets_action = (filters) => async (dispatch) => {
           pets.edad_mascota <= 25 &&
           pets.escala_edad === '3' &&
           pets.id_tipo_mascota === '3'
+      );
+    }
+
+    // filtros recuperados, perdidos
+    if (filters.recovered && filters.lost) {
+      filter = response.data.mascotas.filter(
+        (pets) => pets.tipo_tramite === '2' || pets.tipo_tramite === '3'
       );
     }
 
@@ -1652,7 +1676,13 @@ export const get_saci_pets_action = (filters) => async (dispatch) => {
     /////////////////////////////////////////////////////////
 
     // // filtros ultima mascota agregada y ordenada de 1 a 3
-    if (filters.id_tipo_mascota !== false) {
+    if (
+      filters.id_tipo_mascota !== false &&
+      filters.recovered !== true &&
+      filters.lost !== true
+    ) {
+      filter = filter.filter((pets) => pets.tipo_tramite === '1');
+
       filter = filter.reverse();
       filter = filter.sort((a, b) => a.id_tipo_mascota - b.id_tipo_mascota);
     }
@@ -1678,49 +1708,41 @@ export const page_saci_pets_action = (slicePets) => async (dispatch) => {
 export const select_pet_action = (id_mascota) => async (dispatch) => {
   dispatch({
     type: SELECT_PET_DATA,
-    payload: id_mascota
-  })
-
-}
+    payload: id_mascota,
+  });
+};
 
 export const adopt_me_dialog_action = (dialogState) => async (dispatch) => {
-
   dispatch({
     type: SET_ADOPT_ME_DIALOG,
-    payload: dialogState
-  })
-
-}
+    payload: dialogState,
+  });
+};
 
 export const pet_data_dialog_action = (dialogDataState) => async (dispatch) => {
-
   dispatch({
     type: SET_PET_DATA_DIALOG,
-    payload: dialogDataState
-  })
-
-}
+    payload: dialogDataState,
+  });
+};
 
 export const unlogged_modal_action = (state) => async (dispatch) => {
-
   dispatch({
     type: SET_UNLOGGED_MODAL,
-    payload: state
-  })
+    payload: state,
+  });
+};
 
-}
-
-export const get_saci_pets_filters_races_action = (filtersPrueba) => async (dispatch) => {
+export const get_saci_pets_filters_races_action = (filtersRacesCards) => async (
+  dispatch
+) => {
   try {
-    console.log(filtersPrueba)
+    console.log(filtersRacesCards);
     dispatch({
       type: GET_SACI_PETS,
-      payload: filtersPrueba
-    })
+      payload: filtersRacesCards,
+    });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-
-}
-
-
+};
