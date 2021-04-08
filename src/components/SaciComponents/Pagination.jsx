@@ -14,6 +14,7 @@ export default function Pagination() {
     const [allowPagination, setAllowPagination] = useState(true); // if true display the pagination
     const sliceStart = offset * perPage - perPage; // set the start of array slice
     const sliceEnd = offset * perPage; // set the end of array slice
+    const { userPets } = useSelector(state => state.state)
 
     // to the start display de first elements in array less than mascotas length
     useEffect(() => {
