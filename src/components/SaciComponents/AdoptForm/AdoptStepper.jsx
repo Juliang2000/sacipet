@@ -465,7 +465,7 @@ export default function AdoptStepper() {
         <>
           <Dialog
             style={{ zIndex: 2 }}
-            open={adoptDialog && adoptstepperDialog || editUserPet === true}
+            open={adoptDialog && adoptstepperDialog}
             onClose={handleClickCloseModal}
             fullWidth
             maxWidth="md"
