@@ -110,7 +110,7 @@ export default function CarouselPhotos({ itemPets }) {
                 <CardMedia
                     // component="img"
                     className={classes.media}
-                    title="Pinina"
+                    // title="PET SACI"
                     // item={props.item.imgPath}
                     // onClick={handleClickOpen}
                     image={props.item.imgPath}

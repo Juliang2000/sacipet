@@ -31,8 +31,9 @@ import FavoriteIconPet from '../../../assets/icons/cards/favorite-icon-pet.svg';
 import ShareIconPet from '../../../assets/icons/cards/share-icon-pet.svg';
 import FootprintIconPet from '../../../assets/icons/cards/footprint-icon-pet.svg';
 
-import marco1 from '../../../assets/icons/cards/marco10.svg';
+import marco1 from '../../../assets/icons/cards/marcoVerde.svg';
 import marco2 from '../../../assets/icons/cards/marcoAmarillo.svg';
+import marco3 from '../../../assets/icons/cards/marcoRojo.svg';
 
 import { ReactComponent as NotFound } from '../../../assets/icons/cards/404-spanish.svg';
 
@@ -117,10 +118,29 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('xs')]: {
       margin: theme.spacing(0, 0, 3, 0),
     },
+    // '&:hover': {
+    //   boxShadow: '0 0 10px rgba(99, 193, 50), 0px 0px 20px rgba(99, 193, 50)',
+    // },
+  },
+
+  cardsPets1: {
     '&:hover': {
       boxShadow: '0 0 10px rgba(99, 193, 50), 0px 0px 20px rgba(99, 193, 50)',
     },
   },
+
+  cardsPets2: {
+    '&:hover': {
+      boxShadow: '0 0 10px rgba(239, 229, 8), 0px 0px 20px rgba(239, 229, 8)',
+    },
+  },
+
+  cardsPets3: {
+    '&:hover': {
+      boxShadow: '0 0 10px rgba(188, 53, 53), 0px 0px 20px rgba(188, 53, 53)',
+    },
+  },
+
   buttonPrimary: {
     color: '#ffffff',
     fontWeight: 'bold',
@@ -138,21 +158,23 @@ const useStyles = makeStyles((theme) => ({
   iconsCards: {
     width: '25px',
   },
-  cardDesign1: {
-    backgroundImage: `url(${marco1})`,
+
+  cardDesign: {
     backgroundRepeat: 'no-repeat',
     backgroundSize: '100%',
     [theme.breakpoints.only('sm')]: {
       backgroundSize: '115%',
     },
   },
+
+  cardDesign1: {
+    backgroundImage: `url(${marco1})`,
+  },
   cardDesign2: {
     backgroundImage: `url(${marco2})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: '100%',
-    [theme.breakpoints.only('sm')]: {
-      backgroundSize: '115%',
-    },
+  },
+  cardDesign3: {
+    backgroundImage: `url(${marco3})`,
   },
   userPetTittleContainer: {
     margin: theme.spacing(2, 0, 5, 0),
@@ -223,8 +245,16 @@ export default function RecipeReviewCard(props) {
   });
 
 
+  const [cards, setCards] = useState(false);
+
+  useEffect(() => {
+    if (pageMascotas.length !== 0) {
+      setCards(true);
+    }
+  }, [pageMascotas]);
+
   const Error = () => {
-    if (pageMascotas.length === 0) {
+    if (pageMascotas.length === 0 && cards === true) {
       return (
         <div
           className="animate__animated animate__zoomIn"
@@ -277,15 +307,21 @@ export default function RecipeReviewCard(props) {
               xl={3}
             >
               <Card
-                className={classes.cardsPets}
+                className={clsx(classes.cardsPets, {
+                  [classes.cardsPets1]: item.tipo_tramite === '1',
+                  [classes.cardsPets2]: item.tipo_tramite === '2',
+                  [classes.cardsPets3]: item.tipo_tramite === '3',
+                })}
                 onClick={() => dispatch(select_pet_action(item.id_mascota))}
               >
                 <CarouselPhotos itemPets={item.fotos} />
 
                 <div
-                  className={clsx(
-                    classes.cardDesign1 /* , { [classes.cardDesign2]: procedure } */
-                  )}
+                  className={clsx(classes.cardDesign, {
+                    [classes.cardDesign1]: item.tipo_tramite === '1',
+                    [classes.cardDesign2]: item.tipo_tramite === '2',
+                    [classes.cardDesign3]: item.tipo_tramite === '3',
+                  })}
                 >
                   <CardHeader
                     // avatar={
@@ -334,17 +370,8 @@ export default function RecipeReviewCard(props) {
                         />
                       </IconButton>
                     </div>
+
                     {showUserPets ?
-                      <Button
-                        className={classes.buttonPrimary}
-                        variant="contained"
-                        size="small"
-                        color="secondary"
-                        onClick={handleOpenMenu}
-                      >
-                        Opciones
-                      </Button>
-                      :
                       <Button
                         className={classes.buttonPrimary}
                         variant="contained"
@@ -353,7 +380,40 @@ export default function RecipeReviewCard(props) {
                         onClick={handleClickAdoptMe}
                       >
                         Adóptame
-                    </Button>
+                   </Button>
+                      :
+                      item.tipo_tramite === '1' ? (
+                        <Button
+                          className={classes.buttonPrimary}
+                          variant="contained"
+                          size="small"
+                          color="secondary"
+                          onClick={handleClickAdoptMe}
+                        >
+                          Adóptame
+                        </Button>
+                      ) : item.tipo_tramite === '2' ? (
+                        <Button
+                          className={classes.buttonPrimary}
+                          variant="contained"
+                          size="small"
+                          color="secondary"
+                          onClick={handleClickAdoptMe}
+                        >
+                          Encuéntrame
+                        </Button>
+                      ) : item.tipo_tramite === '3' ? (
+                        <Button
+                          className={classes.buttonPrimary}
+                          variant="contained"
+                          size="small"
+                          color="secondary"
+                          onClick={handleClickAdoptMe}
+                        >
+                          Infórmame
+                        </Button>
+                      ) : null
+
                     }
                   </CardActions>
                 </div>
