@@ -4,7 +4,9 @@ import {
     SELECT_PET_DATA,
     SET_ADOPT_ME_DIALOG,
     SET_PET_DATA_DIALOG,
-    SET_UNLOGGED_MODAL
+    SET_UNLOGGED_MODAL,
+    SHOW_USER_PETS,
+    RESET_PETS
 } from "../types"
 
 const initialState = {
@@ -14,7 +16,8 @@ const initialState = {
     petSelected: false,
     adoptMeDialog: false,
     dataDialog: false,
-    unloggedModal: false
+    unloggedModal: false,
+    showUserPets: false
 
 }
 
@@ -31,7 +34,7 @@ export default (state = initialState, action) => {
         case PAGE_SACI_PETS:
             return {
                 ...state,
-                pageMascotas: action.payload
+                pageMascotas: action.payload,
 
             }
         case SELECT_PET_DATA:
@@ -56,6 +59,19 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 unloggedModal: action.payload
+
+            }
+        case SHOW_USER_PETS:
+            return {
+                ...state,
+                mascotas: action.payload,
+                showUserPets: true
+
+            }
+        case RESET_PETS:
+            return {
+                ...state,
+                pageMascotas: []
 
             }
 

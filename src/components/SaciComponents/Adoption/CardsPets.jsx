@@ -99,6 +99,7 @@ import axiosClient from '../../../configAxios/axios';
 import CarouselPhotos from './CarouselPhotos';
 
 import House from '../../../assets/icons/pet-house.svg';
+import { get_pets_by_user_action } from '../../../redux/actions/userPetsAction';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -153,6 +154,9 @@ const useStyles = makeStyles((theme) => ({
       backgroundSize: '115%',
     },
   },
+  userPetTittleContainer: {
+    margin: theme.spacing(2, 0, 5, 0),
+  }
 }));
 ////////////////////////////////////////////////////////////
 // Data
@@ -170,60 +174,17 @@ const rows = [createData('Pinina', 10, 'Macho', 'Pastor Alemán', 'Perro', 80)];
 ////////////////////////////////////////////////////////////
 export default function RecipeReviewCard(props) {
   const dispatch = useDispatch();
-
   const { pageMascotas } = useSelector((state) => state.saciPets);
-
   // const { procedure } = useSelector((state) => state.login);
-
   const { nombres } = useSelector((state) => state.login.user);
-  const [open, setOpen] = useState(false);
-  const [newPet, setNewPet] = useState();
-  const [anchorMenu, setAnchorMenu] = useState(null);
-  const [images, setImages] = useState(pug1);
-  const InitialPetState = {
-    nombre_mascota: '',
-    edad_mascota: '',
-    escala_edad: '',
-    descripcion_mascota: '',
-    esterilizado: '',
-    genero_mascota: '',
-    raza: '',
-    string_agg: '',
-    municipio: '',
-    fotos: [],
-  };
-  const [getPet, setGetPet] = useState(InitialPetState);
-  const [petData, setPetData] = useState([]);
-  const [petIndex, setPetIndex] = useState();
-  const ageScale = ['s', 'semana', 'mes', 'año', 'es'];
-  const [viewAgeScale, setViewAgeScale] = useState(ageScale[0]);
-  const [vaccines, setVaccines] = useState();
-  const [genre, setGenre] = useState();
-  const [displayContent, setDisplayContent] = useState(false);
-
-  const handleClickOpen = (value) => {
-    setNewPet('' + value);
-    console.log(newPet);
-    setOpen(true);
-    setTimeout(() => {
-      setDisplayContent(true);
-    }, 1000);
-  };
-
-  const handleClickClose = () => {
-    setOpen(false);
-    setDisplayContent(false);
-  };
-
-  const { petImage1 } = useSelector((state) => state.adoptFormData);
-
+  const { id } = useSelector(state => state.login.user)
   const classes = useStyles();
-
-  const [modal, setModal] = useState(false);
+  const { showUserPets } = useSelector(state => state.saciPets);
   const [checkLogin, setCheckLogin] = useState(false);
-
-  const [petPhoto, setPetPhoto] = useState(petSample);
-  const [checkPets, setCheckPets] = useState(false);
+  const userId = {
+    id_usuario: `${id}`
+  }
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClickAdoptMe = () => {
     if (checkLogin) {
@@ -240,86 +201,20 @@ export default function RecipeReviewCard(props) {
     }
   }, [nombres]);
 
-  const handleClickMenu = (event) => {
-    setAnchorMenu(event.currentTarget);
-  };
-
-  const handleCloseMenu = () => {
-    setAnchorMenu(null);
-  };
-
-  // filtros harold
-  const [filtersInitial] = useState({
-    id_tipo_mascota: false,
-  });
-
   useEffect(() => {
-    dispatch(get_saci_pets_action(filtersInitial));
-  }, []);
-
-  useEffect(() => {
-    console.log(getPet);
-    const parvovirus = 'Parvovirus';
-    setVaccines(getPet.string_agg);
-    console.log(parvovirus.includes(getPet.string_agg));
-    if (getPet.genero_mascota === '1') {
-      setGenre('Macho');
-    } else if (getPet.genero_mascota === '2') {
-      setGenre('Hembra');
+    if (id) {
+      dispatch(get_pets_by_user_action(userId))
     }
-  }, [getPet]);
+  }, [id]);
 
-  useEffect(() => {
-    if (petIndex >= 0) {
-      setGetPet(pageMascotas[petIndex]);
-    }
-  }, [petIndex]);
+  const handleOpenMenu = event => {
+    setAnchorEl(event.currentTarget);
+  }
+  const handlePetMenuClose = () => {
+    setAnchorEl(null);
+  }
 
-  useEffect(() => {
-    if (pageMascotas) {
-      let petInfo = pageMascotas.findIndex(function (item) {
-        return item.id_mascota === newPet;
-      });
-      setPetIndex(petInfo);
-      console.log(petIndex);
-    }
-  }, [newPet]);
 
-  useEffect(() => {
-    console.log(vaccines);
-  }, [vaccines]);
-
-  useEffect(() => {
-    if (getPet.edad_mascota === '1') {
-      switch (getPet.escala_edad) {
-        case '1':
-          setViewAgeScale(ageScale[1]);
-          break;
-        case '2':
-          setViewAgeScale(ageScale[2]);
-          break;
-        case '3':
-          setViewAgeScale(ageScale[3]);
-          break;
-        default:
-      }
-    } else {
-      switch (getPet.escala_edad) {
-        case '1':
-          setViewAgeScale(`${ageScale[1]}${ageScale[0]}`);
-          break;
-        case '2':
-          setViewAgeScale(`${ageScale[1]}${ageScale[0]}`);
-          break;
-        case '3':
-          setViewAgeScale(`${ageScale[1]}${ageScale[0]}`);
-          break;
-        default:
-      }
-    }
-    console.log(ageScale);
-    console.log(getPet.escala_edad);
-  }, [getPet]);
 
   const theme = useTheme();
 
@@ -327,9 +222,6 @@ export default function RecipeReviewCard(props) {
     defaultMatches: true,
   });
 
-  // const isTablet = useMediaQuery(theme.breakpoints.only('md'), {
-  //   defaultMatches: true,
-  // });
 
   const Error = () => {
     if (pageMascotas.length === 0) {
@@ -360,6 +252,13 @@ export default function RecipeReviewCard(props) {
 
   return (
     <>
+      { showUserPets ?
+        <Grid container className={classes.userPetTittleContainer} justify="center">
+          <Typography variant="h4">Mis mascotas Publicadas</Typography>
+        </Grid>
+        :
+
+        null}
       <Grid
         container
         spacing={isMobile ? 1 : 3 /* && isTablet ? 6 : 3 */}
@@ -435,15 +334,27 @@ export default function RecipeReviewCard(props) {
                         />
                       </IconButton>
                     </div>
-                    <Button
-                      className={classes.buttonPrimary}
-                      variant="contained"
-                      size="small"
-                      color="secondary"
-                      onClick={handleClickAdoptMe}
-                    >
-                      Adóptame
+                    {showUserPets ?
+                      <Button
+                        className={classes.buttonPrimary}
+                        variant="contained"
+                        size="small"
+                        color="secondary"
+                        onClick={handleOpenMenu}
+                      >
+                        Opciones
+                      </Button>
+                      :
+                      <Button
+                        className={classes.buttonPrimary}
+                        variant="contained"
+                        size="small"
+                        color="secondary"
+                        onClick={handleClickAdoptMe}
+                      >
+                        Adóptame
                     </Button>
+                    }
                   </CardActions>
                 </div>
               </Card>
@@ -452,75 +363,16 @@ export default function RecipeReviewCard(props) {
         })}
         <Error />
       </Grid>
-
-      <Dialog
-        open={open}
-        TransitionComponent={Transition}
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
         keepMounted
-        onClose={handleClickClose}
+        open={Boolean(anchorEl)}
+        onClose={handlePetMenuClose}
       >
-        <Paper elevation={3} className={classes.paperContainer}>
-          <Box display="flex" justifyContent="center"></Box>
-          <Box display="flex" justifyContent="center" mb={5} my={5}>
-            <Typography variant="h4" color="initial">
-              Ficha De Mascota
-            </Typography>
-          </Box>
-          <Box mb={5}>
-            <TableContainer component={Paper}>
-              <Table className={classes.table} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Nombre</TableCell>
-                    <TableCell>Edad</TableCell>
-                    <TableCell>Sexo</TableCell>
-                    <TableCell>Raza</TableCell>
-                    <TableCell>Ubicación</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell component="th" scope="row">
-                      {getPet.nombre_mascota}
-                    </TableCell>
-                    <TableCell>
-                      {getPet.escala_edad} {viewAgeScale}
-                    </TableCell>
-                    <TableCell>{genre}</TableCell>
-                    <TableCell>{getPet.raza}</TableCell>
-                    <TableCell>{getPet.municipio}</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography className={classes.heading}>Vacunas</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>{vaccines}</Typography>
-            </AccordionDetails>
-          </Accordion>
-
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel2a-content"
-              id="panel2a-header"
-            >
-              <Typography className={classes.heading}>Descripción</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>{getPet.descripcion_mascota}</Typography>
-            </AccordionDetails>
-          </Accordion>
-        </Paper>
-      </Dialog>
+        <MenuItem>Editar</MenuItem>
+        <MenuItem>Desactivar Publicación</MenuItem>
+      </Menu>
     </>
   );
 }

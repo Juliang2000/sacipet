@@ -4,7 +4,8 @@ import {
   SELECT_PET_DATA,
   SET_ADOPT_ME_DIALOG,
   SET_PET_DATA_DIALOG,
-  SET_UNLOGGED_MODAL
+  SET_UNLOGGED_MODAL,
+  SHOW_USER_PETS
 } from "../types";
 import { getSaciPets } from "../../configAxios/saciPets"
 
@@ -1672,6 +1673,13 @@ export const page_saci_pets_action = (slicePets) => async (dispatch) => {
   dispatch({
     type: PAGE_SACI_PETS,
     payload: slicePets,
+  });
+};
+
+export const show_user_pets_action = (userPets) => async (dispatch) => {
+  dispatch({
+    type: SHOW_USER_PETS,
+    payload: userPets,
   });
 };
 

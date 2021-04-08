@@ -285,7 +285,7 @@ function UserData() {
     const idStore = useSelector(state => state.saciPets.petSelected);
     const nombreStore = useSelector(state => state.adoptMeForm.formData.nombre_adoptante);
     const idUsuarioStore = useSelector(state => state.login.user.id);
-    const correoStore = useSelector(state => state.adoptMeForm.formData.email);
+    const correoStore = useSelector(state => state.adoptMeForm.formData.correo);
     const telefonoStore = useSelector(state => state.adoptMeForm.formData.telefono);
     const direccionStore = useSelector(state => state.adoptMeForm.formData.direccion_adoptante);
     const idUndeStore = useSelector(state => state.adoptMeForm.formData.id_unde);

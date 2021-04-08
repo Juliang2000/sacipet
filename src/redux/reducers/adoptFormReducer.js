@@ -20,7 +20,8 @@ import {
     SAVE_PET_IMAGE_4,
     SAVE_PET_IMAGE_5,
     PET_DESCRIPTION_NOT_OK,
-    RESET_CITY_ACTION
+    RESET_CITY_ACTION,
+    SET_DIALOG_EDIT_USER_PET
 
 } from "../types"
 
@@ -121,7 +122,8 @@ const initialState = {
             },
             ok: false,
         }
-    }
+    },
+    editPetDialog: false
 }
 
 export default (state = initialState, action) => {
@@ -263,6 +265,11 @@ export default (state = initialState, action) => {
                 updateDescriptionData: {
                     id_codigo: '',
                 }
+            }
+        case SET_DIALOG_EDIT_USER_PET:
+            return {
+                ...state,
+                editPetDialog: action.payload
             }
         default: return state
     }

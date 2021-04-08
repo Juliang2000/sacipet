@@ -21,7 +21,8 @@ import {
     SAVE_PET_IMAGE_4,
     SAVE_PET_IMAGE_5,
     PET_DESCRIPTION_NOT_OK,
-    RESET_CITY_ACTION
+    RESET_CITY_ACTION,
+    SET_DIALOG_EDIT_USER_PET
 } from "../types";
 
 //axios
@@ -134,6 +135,13 @@ export const registry_form_adopt = (newPet) => async (dispatch, getState) => {
         })
     } catch (error) {
         console.log(error)
+    }
+}
+
+export const set_edit_user_pet_by_adopt_form = (state) => async (dispatch, getState) => {
+    return {
+        type: SET_DIALOG_EDIT_USER_PET,
+        payload: state
     }
 }
 

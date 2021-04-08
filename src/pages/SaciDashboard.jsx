@@ -8,7 +8,7 @@ import { Grid, Hidden } from '@material-ui/core';
 import Pagination from '../components/SaciComponents/Pagination'
 import AdoptMeForm from '../components/SaciComponents/Adoption/AdoptMeForm';
 import UnLoggedModal from '../components/SaciComponents/UnLoggedModal';
-import UserPetsModal from '../components/SaciComponents/UserComponents/UserPetsModal';
+
 
 const useStyles = makeStyles((theme) => ({
     pageContainer: {
@@ -46,7 +46,6 @@ export default function SaciDashboard() {
 
                 <AdoptMeForm />
                 <UnLoggedModal />
-                <UserPetsModal />
 
             </Grid>
             <Grid container justify='center' className={classes.pageContainer}>

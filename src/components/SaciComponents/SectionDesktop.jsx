@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
     makeStyles,
@@ -35,7 +35,9 @@ import Login from '../../pages/Login'
 import Register from '../../pages/Register'
 import { LoginRegisteredAction, login_dialog_close_action, login_dialog_open_action, adopt_dialog_close_action, adoptstepper_dialog_open_action } from '../../redux/actions/loginAction';
 import { register_dialog_close_action } from '../../redux/actions/registerAction';
-import { user_pets_modal_action } from '../../redux/actions/userPetsAction';
+import { reset_pets_action, user_pets_modal_action } from '../../redux/actions/userPetsAction';
+import { useHistory } from 'react-router';
+import { show_user_pets_action } from '../../redux/actions/saciPets';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -105,14 +107,17 @@ export default function SectionDesktop() {
 
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
+    const [cleanPets, setCleanPets] = useState(false);
 
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const { nombres } = useSelector(state => state.login.user);
     const { registerData } = useSelector(state => state.register);
 
     const { loginDialog } = useSelector(state => state.login);
     const { registerDialog } = useSelector(state => state.register);
+    const { userPetsRegistered } = useSelector(state => state.userPets)
 
     const newUser = useSelector(state => state.register.registerLoginData);
 
@@ -180,8 +185,15 @@ export default function SectionDesktop() {
 
     const handleclickMyPets = () => {
         setAnchorEl(null);
-        dispatch(user_pets_modal_action(true))
+        dispatch(show_user_pets_action(userPetsRegistered));
+        setCleanPets(true);
     }
+
+    // useEffect(() => {
+    //     if (cleanPets) {
+    //         dispatch(show_user_pets_action(userPetsRegistered));
+    //     }
+    // }, [cleanPets])
 
     return (
         <>
@@ -235,7 +247,7 @@ export default function SectionDesktop() {
                             <ListItemIcon>
                                 <Person />
                             </ListItemIcon>
-                            <ListItemText primary="Tus mascotas registradas" />
+                            <ListItemText primary="Mis mascotas publicadas" />
                         </StyledMenuItem>
                         <StyledMenuItem >
                             <ListItemIcon>
