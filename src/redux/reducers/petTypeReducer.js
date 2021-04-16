@@ -8,7 +8,7 @@ const default_petType = {
 };
 
 const petType = (state = default_petType, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case DOG_ACTION: {
             return {
                 ...state,

@@ -8,6 +8,8 @@ import { Grid, Hidden } from '@material-ui/core';
 import Pagination from '../components/SaciComponents/Pagination'
 import AdoptMeForm from '../components/SaciComponents/Adoption/AdoptMeForm';
 import UnLoggedModal from '../components/SaciComponents/UnLoggedModal';
+import UserPetFilter from '../components/SaciComponents/UserComponents/UserPetFilter';
+import { useSelector } from 'react-redux';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SaciDashboard() {
     const classes = useStyles();
+    const { showUserPets } = useSelector(state => state.saciPets);
 
     return (
         <>
@@ -30,7 +33,8 @@ export default function SaciDashboard() {
 
                 <Hidden smDown>
                     <Grid item xs={12} sm={12} md={2} lg={2} xl={2}>
-                        <FiltersPets />
+                        {showUserPets ? <UserPetFilter /> : <FiltersPets />}
+
                     </Grid>
                 </Hidden>
 

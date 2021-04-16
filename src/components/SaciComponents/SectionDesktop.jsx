@@ -35,7 +35,7 @@ import Login from '../../pages/Login'
 import Register from '../../pages/Register'
 import { LoginRegisteredAction, login_dialog_close_action, login_dialog_open_action, adopt_dialog_close_action, adoptstepper_dialog_open_action } from '../../redux/actions/loginAction';
 import { register_dialog_close_action } from '../../redux/actions/registerAction';
-import { reset_pets_action, user_pets_modal_action } from '../../redux/actions/userPetsAction';
+import { reset_pets_action, set_active_pets_action, user_pets_modal_action } from '../../redux/actions/userPetsAction';
 import { useHistory } from 'react-router';
 import { show_user_pets_action } from '../../redux/actions/saciPets';
 

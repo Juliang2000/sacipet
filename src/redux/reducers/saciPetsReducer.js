@@ -6,14 +6,15 @@ import {
     SET_PET_DATA_DIALOG,
     SET_UNLOGGED_MODAL,
     SHOW_USER_PETS,
-    RESET_PETS
+    RESET_PETS,
+    GET_PETS_NO_FILTER
 } from "../types"
 
 const initialState = {
 
     mascotas: [],
     pageMascotas: [],
-    petSelected: false,
+    petSelected: null,
     adoptMeDialog: false,
     dataDialog: false,
     unloggedModal: false,
@@ -28,7 +29,8 @@ export default (state = initialState, action) => {
         case GET_SACI_PETS:
             return {
                 ...state,
-                mascotas: action.payload
+                mascotas: action.payload,
+                showUserPets: false
             }
 
         case PAGE_SACI_PETS:
@@ -72,6 +74,13 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 pageMascotas: []
+
+            }
+        case GET_PETS_NO_FILTER:
+            return {
+                ...state,
+                mascotas: action.payload,
+                showUserPets: false
 
             }
 

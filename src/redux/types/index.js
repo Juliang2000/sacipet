@@ -72,12 +72,17 @@ export const ENABLE_STEP_TWO = 'ENABLE_STEP_TWO'
 export const SAVE_ADOPT_ME_FORM = 'SAVE_ADOPT_ME_FORM'
 export const SET_USER_PETS_MODAL = 'SET_USER_PETS_MODAL'
 export const GET_PETS_BY_USER = 'GET_PETS_BY_USER'
+////////////////////////////////////
 export const SET_USER_PET_MODAL_DATA = 'SET_USER_PET_MODAL_DATA'
 export const SAVE_USER_PET_ID = 'SAVE_USER_PET_ID'
 export const SAVE_USER_PET_DATA = 'SAVE_USER_PET_DATA'
 export const SHOW_USER_PETS = 'SHOW_USER_PETS'
 export const RESET_PETS = 'RESET_PETS'
-export const SET_DIALOG_EDIT_USER_PET = 'SET_DIALOG_EDIT_USER_PET'
-/////////////
+export const SET_EDIT_USER_PET_DIALOG = 'SET_EDIT_USER_PET_DIALOG'
+export const SET_STEP = 'SET_STEP'
+export const GET_PETS_NO_FILTER = 'GET_PETS_NO_FILTER'
+export const ACTIVE_PET_STATE = 'ACTIVE_PET_STATE'
+export const SET_PUBLISHED_PET = 'SET_PUBLISHED_PET'
+//////////////////////////////////////////
 
 

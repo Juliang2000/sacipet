@@ -17,8 +17,8 @@ export default function Pagination() {
 
     // to the start display de first elements in array less than mascotas length
     useEffect(() => {
-        const slicePets = mascotas.slice(0, perPage)
-        setPageCount(Math.ceil(mascotas.length / perPage))
+        const slicePets = mascotas?.slice(0, perPage)
+        setPageCount(Math.ceil(mascotas?.length / perPage))
         dispatch(page_saci_pets_action(slicePets));
         if (mascotas.length <= perPage) {
             console.log(false)

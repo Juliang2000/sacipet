@@ -4,6 +4,8 @@ import {
     SET_USER_PETS_MODAL,
     SET_USER_PET_MODAL_DATA,
     SAVE_USER_PET_DATA,
+    ACTIVE_PET_STATE,
+    SET_PUBLISHED_PET
 } from "../types"
 
 
@@ -24,7 +26,6 @@ const initialState = {
         id_codigo: "",
         id_municipio: "",
         municipio: "",
-        id_departamento: "",
         departameto: "",
         id_pais: "",
         pais: "",
@@ -38,12 +39,15 @@ const initialState = {
         genero_mascota: "",
         tipo: "",
         id_usuario: "",
+        id_unde: "",
         nombres: "",
+        publicado: "",
         id_mascotaa: "",
         fotos: "",
         vacunas: ""
-    }
-
+    },
+    activePets: true,
+    publishPetResponse: null
 }
 
 export default (state = initialState, action) => {
@@ -74,8 +78,16 @@ export default (state = initialState, action) => {
                 ...state,
                 userPetData: action.payload
             }
-
-
+        case ACTIVE_PET_STATE:
+            return {
+                ...state,
+                activePets: action.payload
+            }
+        case SET_PUBLISHED_PET:
+            return {
+                ...state,
+                publishPetResponse: action.payload
+            }
         default: return state
     }
 }

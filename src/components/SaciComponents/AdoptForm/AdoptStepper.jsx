@@ -27,6 +27,8 @@ import {
   upload_pet_image_4,
   upload_pet_image_5,
   reset_form_action,
+  set_edit_user_pet_dialog,
+  set_step_action,
 } from '../../../redux/actions/adoptFormAction';
 
 //components
@@ -46,7 +48,7 @@ import petPhotoIcon from '../../../assets/icons/dialogs/pet-photo.svg';
 
 //lotties
 import registerPetForm from '../../../assets/lotties/registerPetForm.json';
-import { get_saci_pets_action } from '../../../redux/actions/saciPets';
+import { get_saci_pets_action, get_saci_pets_no_filters_action, show_user_pets_action } from '../../../redux/actions/saciPets';
 
 // open dialog login
 import {
@@ -188,13 +190,18 @@ const useColorlibStepIconStyles = makeStyles({
 
 function ColorlibStepIcon(props) {
   const classes = useColorlibStepIconStyles();
-  const { active, completed } = props;
-
-  const icons = {
-    1: <img src={petTypeIcon} alt="Pets Types" />,
-    2: <img src={petDateIcon} alt="Pets Dates" />,
-    3: <img src={petPhotoIcon} alt="Pets Photos" />,
-  };
+  const { showUserPets, active, completed } = props;
+  console.log(showUserPets)
+  const icons = showUserPets ? {
+    1: <img src={petDateIcon} alt="Pets Dates" />,
+    2: <img src={petPhotoIcon} alt="Pets Photos" />,
+  }
+    :
+    {
+      1: <img src={petTypeIcon} alt="Pets Types" />,
+      2: <img src={petDateIcon} alt="Pets Dates" />,
+      3: <img src={petPhotoIcon} alt="Pets Photos" />,
+    };
 
   return (
     <div
@@ -208,36 +215,44 @@ function ColorlibStepIcon(props) {
   );
 }
 
-export function getSteps() {
-  return [
-    'Selecciona el tipo de mascota',
+export function getSteps(showUserPets) {
+  return showUserPets ? [
+    // 'Selecciona el tipo de mascota',
     'Datos de la mascota',
     'Subir fotos',
-  ];
+  ]
+    :
+    [
+      'Selecciona el tipo de mascota',
+      'Datos de la mascota',
+      'Subir fotos',
+    ];
 }
 
-function getStepContent(step) {
+function getStepContent(step, showUserPets, setDescriptionState) {
   switch (step) {
     case 0:
-      return <PetType />;
+      return showUserPets ? <PetDescription /> : <PetType />;
     case 1:
-      return <PetDescription />;
+      return showUserPets ? <PetImages /> : <PetDescription />
     case 2:
-      return <PetImages />;
+      return showUserPets ? null : <PetImages />;
     default:
       return 'Unknown step';
   }
 }
 
-export default function AdoptStepper() {
-  const { adoptDialog, adoptstepperDialog } = useSelector(
-    (state) => state.login
-  );
 
+export default function AdoptStepper() {
+  const { adoptDialog, adoptstepperDialog } = useSelector((state) => state.login);
   const { nombres } = useSelector((state) => state.login.user);
   const { petType } = useSelector((store) => store.petType);
   const { activeStepState } = useSelector((state) => state.adoptFormData);
   const { petDescription } = useSelector((state) => state.adoptFormData);
+  const { editPetDialog } = useSelector(state => state.adoptFormData)
+  const { userPetData } = useSelector(state => state.userPets);
+  const { showUserPets } = useSelector(state => state.saciPets);
+
   const newPet = useSelector(
     (state) => state.adoptFormData.updateDescriptionData
   );
@@ -253,13 +268,29 @@ export default function AdoptStepper() {
 
   const [saveFormDescription, setSaveFormDescription] = useState(true);
   const [allowContent, setAllowContent] = useState(false);
+  const [descriptionState, setDescriptionState] = useState(false);
+  const [activeStep, setActiveStep] = useState(0);
+  const steps = getSteps(showUserPets);
 
-  if (saveFormDescription === true) {
-    if (activeStepState === 2) {
-      dispatch(update_form_data_action());
-      setSaveFormDescription(false);
+
+
+  useEffect(() => {
+    if (showUserPets) {
+      dispatch(set_step_action(2));
+    } else {
+      dispatch(set_step_action(1));
+
     }
-  }
+  }, [showUserPets]);
+
+  useEffect(() => {
+    if (saveFormDescription === true) {
+      if (activeStepState === 2) {
+        dispatch(update_form_data_action());
+        setSaveFormDescription(false);
+      }
+    }
+  }, [activeStepState])
 
   useEffect(() => {
     if (activeStepState) {
@@ -279,16 +310,22 @@ export default function AdoptStepper() {
           }
           break;
         case 3:
-          if (savePetImage1 === true) {
+          if (showUserPets) {
             setAllowContent(true);
           } else {
-            setAllowContent(false);
+            if (savePetImage1 === true) {
+              setAllowContent(true);
+            } else {
+              setAllowContent(false);
+            }
           }
           break;
         default:
       }
     }
+
   }, [activeStepState, petDescription, petType, savePetImage1]);
+
 
   ColorlibStepIcon.propTypes = {
     active: PropTypes.bool,
@@ -318,18 +355,22 @@ export default function AdoptStepper() {
       customClass: 'swal-wide',
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(adoptstepper_dialog_close_action());
-        dispatch(reset_action());
-        dispatch(reset_form_action());
-        setActiveStep(0);
-        setAllowContent(false);
+        if (showUserPets) {
+          dispatch(set_edit_user_pet_dialog(false));
+        } else {
+          dispatch(set_edit_user_pet_dialog(false));
+          dispatch(adoptstepper_dialog_close_action());
+          dispatch(reset_action());
+          dispatch(reset_form_action());
+          // setActiveStep(0);
+          setAllowContent(false);
+        }
         Swal.close();
       }
     });
   };
 
-  const [activeStep, setActiveStep] = useState(0);
-  const steps = getSteps();
+
 
   const handleNext = () => {
     dispatch(next_step_action());
@@ -366,32 +407,62 @@ export default function AdoptStepper() {
   };
 
   const handleRegisterForm = () => {
-    return Swal.fire({
-      title: '¿Deseas registrar los datos anteriores?',
-      showDenyButton: true,
-      confirmButtonColor: '#63C132',
-      denyButtonColor: '#D33',
-      confirmButtonText: 'Guardar',
-      denyButtonText: 'No Guardar',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dispatch(registry_form_adopt(newPet));
-        setSendPhotos(true);
-        Swal.fire('Registro exitoso!', '', 'success').then((result) => {
-          if (result.isConfirmed) {
-            dispatch(adoptstepper_dialog_close_action());
-            dispatch(reset_action());
-            dispatch(reset_form_action());
-            dispatch(get_saci_pets_action());
-            setActiveStep(0);
-            setAllowContent(false);
-            Swal.close();
-          }
-        });
-      } else if (result.isDenied) {
-        Swal.fire('Los cambios no han sido guardados', '', 'info');
-      }
-    });
+    if (showUserPets) {
+      return Swal.fire({
+        title: '¿Deseas actualizar los datos anteriores?',
+        showDenyButton: true,
+        confirmButtonColor: '#63C132',
+        denyButtonColor: '#D33',
+        confirmButtonText: 'Actualizar',
+        denyButtonText: 'Volver',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // dispatch(registry_form_adopt(newPet));
+          // setSendPhotos(true);
+          Swal.fire('Actualización exitosa!', '', 'success').then((result) => {
+            if (result.isConfirmed) {
+              dispatch(set_edit_user_pet_dialog(false));
+              Swal.close();
+              // dispatch(reset_action());
+              // dispatch(reset_form_action());
+              // dispatch(get_saci_pets_action());
+              // setActiveStep(0);
+              // setAllowContent(false);
+
+            }
+          });
+        } else if (result.isDenied) {
+          Swal.fire('Los cambios no han sido guardados', '', 'info');
+        }
+      });
+    } else {
+      return Swal.fire({
+        title: '¿Deseas registrar los datos anteriores?',
+        showDenyButton: true,
+        confirmButtonColor: '#63C132',
+        denyButtonColor: '#D33',
+        confirmButtonText: 'Guardar',
+        denyButtonText: 'Volver',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(registry_form_adopt(newPet));
+          setSendPhotos(true);
+          Swal.fire('Registro exitoso!', '', 'success').then((result) => {
+            if (result.isConfirmed) {
+              dispatch(adoptstepper_dialog_close_action());
+              dispatch(reset_action());
+              dispatch(reset_form_action());
+              dispatch(get_saci_pets_action());
+              setActiveStep(0);
+              setAllowContent(false);
+              Swal.close();
+            }
+          });
+        } else if (result.isDenied) {
+          Swal.fire('Los cambios no han sido guardados', '', 'info');
+        }
+      });
+    }
   };
 
   if (sendPhotos === true) {
@@ -432,21 +503,42 @@ export default function AdoptStepper() {
     dispatch(adoptstepper_dialog_close_action());
   };
 
+  const [checked, setChecked] = useState(false);
+
+  const handleClickSaciPets = () => {
+    dispatch(get_saci_pets_no_filters_action());
+  }
+
   return (
     <>
       <Hidden smDown>
-        <Button
-          // fullWidth
-          color="secondary"
-          className={classes.adoptionButton}
-          onClick={handleClickOpenModal}
-          startIcon={
-            <img src={iconAdopt} alt="LogIn" className={classes.menuIcons} />
-          }
-        >
-          <ArrowDropDownIcon />
-          <Hidden only="md" /* mdDown */>Dar en adopción</Hidden>
-        </Button>
+        {showUserPets ?
+          <Button
+            // fullWidth
+            color="secondary"
+            className={classes.adoptionButton}
+            onClick={handleClickSaciPets}
+            startIcon={
+              <img src={iconAdopt} alt="LogIn" className={classes.menuIcons} />
+            }
+          >
+            <ArrowDropDownIcon />
+            <Hidden only="md" /* mdDown */>Ver Adopciones</Hidden>
+          </Button>
+          :
+          <Button
+            // fullWidth
+            color="secondary"
+            className={classes.adoptionButton}
+            onClick={handleClickOpenModal}
+            startIcon={
+              <img src={iconAdopt} alt="LogIn" className={classes.menuIcons} />
+            }
+          >
+            <ArrowDropDownIcon />
+            <Hidden only="md" /* mdDown */>Dar en adopción</Hidden>
+          </Button>
+        }
       </Hidden>
 
       <Hidden mdUp>
@@ -465,7 +557,7 @@ export default function AdoptStepper() {
         <>
           <Dialog
             style={{ zIndex: 2 }}
-            open={adoptDialog && adoptstepperDialog}
+            open={adoptDialog && adoptstepperDialog || editPetDialog}
             onClose={handleClickCloseModal}
             fullWidth
             maxWidth="md"
@@ -487,7 +579,7 @@ export default function AdoptStepper() {
                 <Stepper
                   alternativeLabel
                   activeStep={activeStep}
-                  connector={<ColorlibConnector />}
+                  connector={<ColorlibConnector showUserPets={showUserPets} />}
                 >
                   {steps.map((label) => (
                     <Step key={label}>
@@ -501,23 +593,52 @@ export default function AdoptStepper() {
               <div>
                 {activeStep === steps.length ? (
                   <div>
-                    <Box m={10}>
-                      <Typography variant="h5" className={classes.instructions}>
-                        ¿Todo está listo?
+                    {showUserPets ? (
+                      <Box m={10}>
+                        <Typography variant="h5" className={classes.instructions}>
+                          ¿Todo está listo?
+                        </Typography>
+                        <Lottie
+                          options={formRegisterLottieOptions}
+                          height={200}
+                          width={200}
+                        // isPaused={playLottie.registerPetForm}
+                        />
+                        <Grid container justify="center">
+                          <Typography>
+                            Pulsa el botón enviar para actualizar el formulario de adopción
+                          </Typography>
+                        </Grid>
+                        <Grid container justify="center">
+                          <Typography>
+                            Si deseas cambiar algún dato pulsa el botón de atrás
+                          </Typography>
+                        </Grid>
+                      </Box>
+                    ) : (
+                      <Box m={10}>
+                        <Typography variant="h5" className={classes.instructions}>
+                          ¿Todo está listo?
                       </Typography>
-                      <Lottie
-                        options={formRegisterLottieOptions}
-                        height={200}
-                        width={200}
-                      // isPaused={playLottie.registerPetForm}
-                      />
-                      <Grid container justify="center">
-                        Pulsa el botón enviar para registrar tu formulario,
-                      </Grid>
-                      <Grid container justify="center">
-                        Si deseas cambiar algún dato pulsa el botón de atrás
-                      </Grid>
-                    </Box>
+                        <Lottie
+                          options={formRegisterLottieOptions}
+                          height={200}
+                          width={200}
+                        // isPaused={playLottie.registerPetForm}
+                        />
+                        <Grid container justify="center">
+                          <Typography>
+                            Pulsa el botón enviar para registrar tu formulario,
+                          </Typography>
+                        </Grid>
+                        <Grid container justify="center">
+                          <Typography>
+                            Si deseas cambiar algún dato pulsa el botón de atrás
+                          </Typography>
+                        </Grid>
+                      </Box>
+                    )}
+
                     <Grid container justify="center">
                       <Button onClick={handleBack} className={classes.button}>
                         Atrás
@@ -535,13 +656,19 @@ export default function AdoptStepper() {
                 ) : (
                   <div>
                     <Typography className={classes.instructions}>
-                      {getStepContent(activeStep)}
+                      {getStepContent(activeStep, showUserPets, setDescriptionState)}
                     </Typography>
                     <div>
                       <Grid container justify="center" >
+                        {/* {showUserPets ?
+                          <Button disabled={activeStep === 1} onClick={handleBack} className={classes.button}>
+                            Atrás
+                          </Button> */}
+                        {/* : */}
                         <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                           Atrás
                         </Button>
+                        {/* } */}
                         <Button
                           disabled={allowContent === false}
                           variant="contained"

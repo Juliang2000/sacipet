@@ -93,7 +93,7 @@ const IOSSwitch = withStyles((theme) => ({
 
 
 
-function CustomizedSwitch() {
+export function CustomizedSwitch() {
     const classes = useStyles();
     const [state, setState] = useState({
         checkedB: true,
@@ -138,7 +138,6 @@ export default function AdoptMeForm() {
     const { user } = useSelector(state => state.login)
     const { formData } = useSelector(state => state.adoptMeForm)
     const { stepTwo } = useSelector(state => state.adoptMeForm)
-    const [allowContent, setAllowContent] = useState(false);
     const [activeStep, setActiveStep] = useState(0);
     const steps = getSteps();
     const classes = adoptMeFormStyles();

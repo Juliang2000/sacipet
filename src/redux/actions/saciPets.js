@@ -1,4 +1,5 @@
 import {
+  GET_PETS_NO_FILTER,
   GET_SACI_PETS,
   PAGE_SACI_PETS,
   SELECT_PET_DATA,
@@ -1755,3 +1756,16 @@ export const get_saci_pets_filters_races_action = (filtersRacesCards) => async (
     console.log(error);
   }
 };
+
+export const get_saci_pets_no_filters_action = () => async (dispatch) => {
+  try {
+    const response = await getSaciPets();
+    dispatch({
+      type: GET_PETS_NO_FILTER,
+      payload: response.data.mascotas
+    })
+  } catch (e) {
+    console.error(e);
+  }
+}
+
