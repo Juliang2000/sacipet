@@ -9,33 +9,9 @@ import store from './redux/store';
 // Pages
 import PininaDashboard from './pages/PininaDashboard'
 import SaciDashboard from './pages/SaciDashboard'
-import mainTheme from './assets/css/js/mainTheme';
 import Profile from './pages/Profile'
-
-
-// import classes from '*.module.css';
-
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-
-      main: '#63c132',
-      // main: '#432918'
-      // main: '#E4DAD8',
-
-    },
-    secondary: {
-      main: '#1E3F20'
-
-    },
-  },
-  typography: {
-    fontFamily: `'Poppins', 'sans-serif'`,
-  }
-})
-
-
+//theme
+import mainTheme from './assets/css/js/mainTheme';
 
 function App() {
   const theme = mainTheme;
