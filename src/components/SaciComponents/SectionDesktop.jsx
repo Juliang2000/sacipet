@@ -184,13 +184,24 @@ export default function SectionDesktop() {
 
     const handleclickMyPets = () => {
         setAnchorEl(null);
-        dispatch(show_user_pets_action(userPetsRegistered));
-        setCleanPets(true);
+        if (userPetsRegistered?.length) {
+            dispatch(show_user_pets_action(userPetsRegistered));
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: `Ooops!, no tienes mascotas publicadas`,
+                confirmButtonColor: '#63C132',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.close()
+                }
+            })
+        }
     }
 
-// Rediccionamiento a perfil de usuario con history push
+    // Rediccionamiento a perfil de usuario con history push
     let history = useHistory();
-    function handleclickMyProfile(){
+    function handleclickMyProfile() {
         history.push("/Profile");
     }
 

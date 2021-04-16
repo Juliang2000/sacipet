@@ -105,7 +105,7 @@ import axiosClient from '../../../configAxios/axios';
 import CarouselPhotos from './CarouselPhotos';
 
 import House from '../../../assets/icons/pet-house.svg';
-import { get_pets_by_user_action, save_selected_pet_data_action, save_user_pet_id_action, set_active_pets_action, set_id_unde_by_pet_saved, set_published_pet_action } from '../../../redux/actions/userPetsAction';
+import { get_pets_by_user_action, save_selected_pet_data_action, save_user_pet_id_action, set_active_pets_action, set_id_unde_by_pet_saved, set_published_pet_action, set_user_pet_modal_data_action } from '../../../redux/actions/userPetsAction';
 import { cat_action, dog_action, hamster_action } from '../../../redux/actions/petTypeAction';
 import { get_pet_size_data } from '../../../redux/actions/petSizeAction';
 
@@ -299,8 +299,13 @@ export default function RecipeReviewCard(props) {
 
   useEffect(() => {
     if (petSelected !== null) {
-      const userPet = userPetsRegistered.filter(pet => pet.id_mascota === petSelected);
-      dispatch(save_selected_pet_data_action(userPet[0]));
+      if (showUserPets) {
+        const userPet = userPetsRegistered.filter(pet => pet.id_mascota === petSelected);
+        dispatch(save_selected_pet_data_action(userPet[0]));
+      } else {
+        const userPet = pageMascotas.filter(pet => pet.id_mascota === petSelected);
+        dispatch(save_selected_pet_data_action(userPet[0]));
+      }
     }
   }, [petSelected])
 
@@ -529,7 +534,7 @@ export default function RecipeReviewCard(props) {
                   [classes.cardsPets2]: item.tipo_tramite === '2',
                   [classes.cardsPets3]: item.tipo_tramite === '3',
                 })}
-                onClick={() => showUserPets ? dispatch(select_pet_action(item.id_mascota)) : null}
+                onClick={() => dispatch(select_pet_action(item.id_mascota))}
               >
 
                 <CarouselPhotos itemPets={item.fotos} />
@@ -573,7 +578,7 @@ export default function RecipeReviewCard(props) {
                         />
                       </IconButton>
                       <IconButton
-                        onClick={() => console.log('dato entrante')}
+                        onClick={() => dispatch(set_user_pet_modal_data_action(true))}
                         value={item.id_mascota}
                       >
                         <img

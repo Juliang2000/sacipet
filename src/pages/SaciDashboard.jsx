@@ -10,6 +10,7 @@ import AdoptMeForm from '../components/SaciComponents/Adoption/AdoptMeForm';
 import UnLoggedModal from '../components/SaciComponents/UnLoggedModal';
 import UserPetFilter from '../components/SaciComponents/UserComponents/UserPetFilter';
 import { useSelector } from 'react-redux';
+import UserPetModalData from '../components/SaciComponents/UserComponents/UserPetModalData';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -50,6 +51,7 @@ export default function SaciDashboard() {
 
                 <AdoptMeForm />
                 <UnLoggedModal />
+                <UserPetModalData />
 
             </Grid>
             <Grid container justify='center' className={classes.pageContainer}>
