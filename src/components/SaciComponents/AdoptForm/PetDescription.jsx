@@ -39,6 +39,7 @@ import {
   not_full_pet_description_action,
   reset_city_action,
 } from '../../../redux/actions/adoptFormAction';
+import { StarRateOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   formPetDescription: {
@@ -76,6 +77,11 @@ export default function PetDescription() {
   const { departments, cities } = useSelector((state) => state.adoptFormData);
   const { procedure } = useSelector((state) => state.login);
   const { id } = useSelector((state) => state.login.user);
+  const { editPetDialog } = useSelector(state => state.adoptFormData);
+  const { userPetData } = useSelector(state => state.userPets);
+  const [checkUserPetData, setCheckUserPetData] = useState(false);
+  const { showUserPets } = useSelector(state => state.saciPets);
+  const { descriptionData } = useSelector(state => state.adoptFormData)
 
   const {
     nombre_mascota,
@@ -93,7 +99,8 @@ export default function PetDescription() {
     id_codigo,
     id_unde,
     descripcion_mascota,
-  } = useSelector((store) => store.adoptFormData.updateDescriptionData);
+    vacunas
+  } = useSelector(state => state.adoptFormData.updateDescriptionData);
 
   const [newPet, setnewPet] = useState({
     id_usuario: id,
@@ -113,7 +120,24 @@ export default function PetDescription() {
     id_codigo: `${id_codigo}`,
     id_unde: `${id_unde}`,
     descripcion_mascota: `${descripcion_mascota}`,
+    vacunas: `${vacunas}`
   });
+
+
+  useEffect(() => {
+    if (showUserPets) {
+      dispatch(get_form_data_action(userPetData));
+      setCheckUserPetData(true);
+    }
+  }, [showUserPets])
+
+
+
+  useEffect(() => {
+    if (showUserPets) {
+      dispatch(update_form_data_action());
+    }
+  }, [descriptionData])
 
   useEffect(() => {
     if (hamster === true) {
@@ -211,15 +235,15 @@ export default function PetDescription() {
 
   const [checkAge, setCheckAge] = useState(true);
 
-  if (checkAge === true)
-    if (edad_mascota.length !== 0) {
-      dispatch(push_data_action());
-      setSendPetData(true);
-      setRacesContent(true);
-      dispatch(get_form_data_action(newPet));
-      dispatch(update_form_data_action());
-      setCheckAge(false);
-    }
+  // if (checkAge === true)
+  //   if (edad_mascota.length !== 0) {
+  //     dispatch(push_data_action());
+  //     setSendPetData(true);
+  //     setRacesContent(true);
+  //     dispatch(get_form_data_action(newPet));
+  //     dispatch(update_form_data_action());
+  //     setCheckAge(false);
+  //   }
 
   const classes = useStyles();
 
@@ -318,6 +342,67 @@ export default function PetDescription() {
     setnewPet({ ...newPet, [event.target.name]: 'true' });
   };
 
+  const [checkUserPetSize, setCheckUserPetSize] = useState(false);
+  // const [userPetVaccines, setUserPetVaccines] = useState([]);
+  // useEffect(() => {
+  //   if (showUserPets) {
+  //     let vaccines = vacunas.split(",")
+  //     setUserPetVaccines(vaccines);
+  //   }
+  // }, [showUserPets]);
+
+  // useEffect(() => {
+  //   if (userPetVaccines.length !== 0) {
+  //     let rabia = userPetVaccines.indexOf("Rabia");
+  //     let moquillo = userPetVaccines.indexOf("Moquillo");
+  //     let rinotraqueitis = userPetVaccines.indexOf("Rinotraqueítis");
+  //     let parvovirus = userPetVaccines.indexOf("Parvovirus");
+  //     if (rabia > -1) {
+  //       dispatch(get_form_data_action({ ...descriptionData, id_vacuna_Rabia: true }))
+  //       console.log("vacunado contra rabia")
+  //     }
+  //     if (moquillo > -1) {
+  //       dispatch(get_form_data_action({ ...descriptionData, id_vacuna_Moquillo: true }))
+  //       console.log("vacunado contra moquillo")
+  //     }
+  //     if (rinotraqueitis > -1) {
+  //       setnewPet({ ...newPet, id_vacuna_Rinotraqueítis: true })
+  //       console.log("vacunado contra rinotraqueítis")
+  //     }
+  //     if (parvovirus > -1) {
+  //       setnewPet({ ...newPet, id_vacuna_Parvovirus: true })
+  //       console.log("vacunado contra parvovirus")
+  //     }
+  //   }
+  // }, [userPetVaccines]);
+
+  useEffect(() => {
+    if (showUserPets === true) {
+      dispatch(get_city_data_action({ id_unde: id_unde }));
+      switch (id_tamanio) {
+        case "2": dispatch(medium_size_action());
+          setCheckUserPetSize(true);
+          break;
+        case "1": dispatch(big_size_action());
+          setCheckUserPetSize(true);
+          break;
+        case "3": dispatch(small_size_action());
+          setCheckUserPetSize(true);
+          break;
+        default:
+      }
+    }
+  }, [showUserPets])
+
+  useEffect(() => {
+    if (checkUserPetSize) {
+      dispatch(get_pet_size_data({
+        id_tipo_mascota: petType,
+        id_tamanio: parseInt(id_tamanio)
+      }))
+    }
+  }, [checkUserPetSize]);
+
   return (
     <form onSubmit={handleSubmit()} autocomplete="off">
       <Grid container spacing={2} className={classes.formPetDescription}>
@@ -334,7 +419,10 @@ export default function PetDescription() {
             <Typography variant="h4" gutterBottom>
               Describe La Mascota Perdida
             </Typography>
-          ) : null}
+          ) : <Typography variant="h5" gutterBottom>
+            Actualiza los datos
+              </Typography>
+          }
         </Grid>
         <Grid item xs={12} sm={5} md={6}>
           <TextField
@@ -465,23 +553,23 @@ export default function PetDescription() {
             >
               {hamster
                 ? hamsterRaceData.map((item) => (
-                    <MenuItem
-                      key={item.nombre_raza}
-                      value={item.id_raza}
-                      defaultValue={item.nombre_raza}
-                    >
-                      {item.nombre_raza}
-                    </MenuItem>
-                  ))
+                  <MenuItem
+                    key={item.nombre_raza}
+                    value={item.id_raza}
+                  // defaultValue={item.nombre_raza}
+                  >
+                    {item.nombre_raza}
+                  </MenuItem>
+                ))
                 : raceData.map((item) => (
-                    <MenuItem
-                      key={item.nombre_raza}
-                      value={item.id_raza}
-                      defaultValue={item.nombre_raza}
-                    >
-                      {item.nombre_raza}
-                    </MenuItem>
-                  ))}
+                  <MenuItem
+                    key={item.nombre_raza}
+                    value={item.id_raza}
+                  // defaultValue={item.id_raza}
+                  >
+                    {item.nombre_raza}
+                  </MenuItem>
+                ))}
             </Select>
           </FormControl>
         </Grid>
@@ -566,7 +654,7 @@ export default function PetDescription() {
                   name="id_vacuna_Rabia"
                   onChange={handleChange3}
                   checked={newPet.id_vacuna_Rabia}
-                  /* checked={personName.indexOf(name) > -1} */
+                /* checked={personName.indexOf(name) > -1} */
                 />
                 Rabia
                 <ListItemText /* primary={name} */ />
@@ -621,9 +709,6 @@ export default function PetDescription() {
               onChange={handleChange}
               defaultValue={id_unde}
             >
-              {/* <MenuItem>
-                <em>Seleccione:</em>
-              </MenuItem> */}
               {departments.map((item) => (
                 <MenuItem key={item.id_codigo} value={item.id_codigo}>
                   {item.descripcion}

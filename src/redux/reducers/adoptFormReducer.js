@@ -20,7 +20,9 @@ import {
     SAVE_PET_IMAGE_4,
     SAVE_PET_IMAGE_5,
     PET_DESCRIPTION_NOT_OK,
-    RESET_CITY_ACTION
+    RESET_CITY_ACTION,
+    SET_EDIT_USER_PET_DIALOG,
+    SET_STEP
 
 } from "../types"
 
@@ -47,7 +49,8 @@ const initialState = {
         id_vacuna_Moquillo: false,
         id_codigo: '',
         id_unde: '',
-        descripcion_mascota: ''
+        descripcion_mascota: '',
+        vacunas: ''
     },
     cities: [],
 
@@ -70,7 +73,8 @@ const initialState = {
         id_vacuna_Moquillo: false,
         id_codigo: '',
         id_unde: '',
-        descripcion_mascota: ''
+        descripcion_mascota: '',
+        vacunas: ''
     },
 
     PushData: false,
@@ -121,7 +125,8 @@ const initialState = {
             },
             ok: false,
         }
-    }
+    },
+    editPetDialog: false
 }
 
 export default (state = initialState, action) => {
@@ -136,6 +141,11 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 activeStepState: state.activeStepState - 1
+            }
+        case SET_STEP:
+            return {
+                ...state,
+                activeStepState: action.payload
             }
         case GET_DEPARTMENT_DATA:
             return {
@@ -254,6 +264,7 @@ export default (state = initialState, action) => {
                     id_codigo: '',
                     id_unde: '',
                     descripcion_mascota: '',
+                    vacunas: ''
                 },
                 activeStepState: 1,
             }
@@ -263,6 +274,11 @@ export default (state = initialState, action) => {
                 updateDescriptionData: {
                     id_codigo: '',
                 }
+            }
+        case SET_EDIT_USER_PET_DIALOG:
+            return {
+                ...state,
+                editPetDialog: action.payload
             }
         default: return state
     }

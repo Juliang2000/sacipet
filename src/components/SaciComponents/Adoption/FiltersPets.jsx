@@ -4841,6 +4841,7 @@ export default function GmailTreeView() {
   );
 
   return (
+
     <div>
       <div className={classes.filtersChips}>
         {filtersCats ? (
@@ -5028,7 +5029,6 @@ export default function GmailTreeView() {
           />
         ) : null}
       </div>
-
       <TreeView
         className={classes.root}
         defaultCollapseIcon={<ArrowDropDownIcon />}
@@ -5049,21 +5049,21 @@ export default function GmailTreeView() {
             nodeId="2"
             labelText="Tipo De Mascota"
             labelIcon={lottiePetType}
-            // labelInfo="90"
+          // labelInfo="90"
           >
             <StyledTreeItem
               nodeId="7"
               labelText="Gatos"
               labelIcon={lottieCat}
               onClick={handleCatsAdd}
-              // labelInfo="90"
+            // labelInfo="90"
             />
             <StyledTreeItem
               nodeId="8"
               labelText="Perros"
               labelIcon={lottieDog}
               onClick={handleDogsAdd}
-              // labelInfo="90"
+            // labelInfo="90"
             />
 
             <StyledTreeItem
@@ -5071,7 +5071,7 @@ export default function GmailTreeView() {
               labelText="Hámsters"
               labelIcon={lottieHamster}
               onClick={handleHamstersAdd}
-              // labelInfo="90"
+            // labelInfo="90"
             />
           </StyledTreeItem>
           <StyledTreeItem nodeId="3" labelText="Raza" labelIcon={lottiePetRace}>
@@ -5084,44 +5084,44 @@ export default function GmailTreeView() {
               >
                 {filtersCats
                   ? filtersIconsCats.map((item) => (
-                      <StyledTreeItem
-                        key={item.id_mascota}
-                        value={item.id_raza}
-                        defaultValue={item.raza}
-                        nodeId={item.id_mascota}
-                        labelIcon={raceCat}
-                        labelText={item.raza}
-                        onClick={() => handleChipsAdd(item.id_raza)}
-                      ></StyledTreeItem>
-                    ))
+                    <StyledTreeItem
+                      key={item.id_mascota}
+                      value={item.id_raza}
+                      defaultValue={item.raza}
+                      nodeId={item.id_mascota}
+                      labelIcon={raceCat}
+                      labelText={item.raza}
+                      onClick={() => handleChipsAdd(item.id_raza)}
+                    ></StyledTreeItem>
+                  ))
                   : null}
 
                 {filtersDogs
                   ? filtersIconsDogs.map((item) => (
-                      <StyledTreeItem
-                        key={item.id_mascota}
-                        value={item.id_raza}
-                        defaultValue={item.raza}
-                        nodeId={item.id_mascota}
-                        labelIcon={raceDog2}
-                        labelText={item.raza}
-                        onClick={() => handleChipsAdd(item.id_raza)}
-                      ></StyledTreeItem>
-                    ))
+                    <StyledTreeItem
+                      key={item.id_mascota}
+                      value={item.id_raza}
+                      defaultValue={item.raza}
+                      nodeId={item.id_mascota}
+                      labelIcon={raceDog2}
+                      labelText={item.raza}
+                      onClick={() => handleChipsAdd(item.id_raza)}
+                    ></StyledTreeItem>
+                  ))
                   : null}
 
                 {filtersHamsters
                   ? filtersIconsHamsters.map((item) => (
-                      <StyledTreeItem
-                        key={item.id_mascota}
-                        value={item.id_raza}
-                        defaultValue={item.raza}
-                        nodeId={item.id_mascota}
-                        labelIcon={raceHamster}
-                        labelText={item.raza}
-                        onClick={() => handleChipsAdd(item.id_raza)}
-                      ></StyledTreeItem>
-                    ))
+                    <StyledTreeItem
+                      key={item.id_mascota}
+                      value={item.id_raza}
+                      defaultValue={item.raza}
+                      nodeId={item.id_mascota}
+                      labelIcon={raceHamster}
+                      labelText={item.raza}
+                      onClick={() => handleChipsAdd(item.id_raza)}
+                    ></StyledTreeItem>
+                  ))
                   : null}
               </Box>
             ) : null}
@@ -5167,21 +5167,21 @@ export default function GmailTreeView() {
               labelText="Pequeños"
               labelIcon={lottieSmall}
               onClick={handleSmallsAdd}
-              // labelInfo="90"
+            // labelInfo="90"
             />
             <StyledTreeItem
               nodeId="16"
               labelText="Medianos"
               labelIcon={lottieMedium}
               onClick={handleMediumsAdd}
-              // labelInfo="90"
+            // labelInfo="90"
             />
             <StyledTreeItem
               nodeId="17"
               labelText="Grandes"
               labelIcon={lottieBig}
               onClick={handleBigsAdd}
-              // labelInfo="90"
+            // labelInfo="90"
             />
           </StyledTreeItem>
           <StyledTreeItem
@@ -5194,14 +5194,14 @@ export default function GmailTreeView() {
               labelText="Machos"
               labelIcon={lottieMale}
               onClick={handleMalesAdd}
-              // labelInfo="90"
+            // labelInfo="90"
             />
             <StyledTreeItem
               nodeId="19"
               labelText="Hembras"
               labelIcon={lottieFemale}
               onClick={handleFemalesAdd}
-              // labelInfo="90"
+            // labelInfo="90"
             />
           </StyledTreeItem>
           <StyledTreeItem nodeId="6" labelText="Edad" labelIcon={lottiePetYear}>
@@ -5212,7 +5212,7 @@ export default function GmailTreeView() {
                   labelText="Cachorros"
                   labelIcon={lottiePuppie}
                   onClick={handlePuppiesAdd}
-                  // labelInfo="90"
+                // labelInfo="90"
                 />
               </Box>
             </CustomTooltip>
@@ -5223,7 +5223,7 @@ export default function GmailTreeView() {
                   labelText="Jóvenes"
                   labelIcon={lottieYoung}
                   onClick={handleYoungsAdd}
-                  // labelInfo="90"
+                // labelInfo="90"
                 />
               </Box>
             </CustomTooltip>
@@ -5234,7 +5234,7 @@ export default function GmailTreeView() {
                   labelText="Adultos"
                   labelIcon={lottieAdult}
                   onClick={handleAdultsAdd}
-                  // labelInfo="90"
+                // labelInfo="90"
                 />
               </Box>
             </CustomTooltip>
@@ -5245,7 +5245,7 @@ export default function GmailTreeView() {
                   labelText="Viejos"
                   labelIcon={lottieOld}
                   onClick={handleOldsAdd}
-                  // labelInfo="90"
+                // labelInfo="90"
                 />
               </Box>
             </CustomTooltip>
@@ -5260,18 +5260,19 @@ export default function GmailTreeView() {
               labelText="Recuperados"
               labelIcon={WarningIcon}
               onClick={handleRecoveredAdd}
-              // labelInfo="90"
+            // labelInfo="90"
             />
             <StyledTreeItem
               nodeId="25"
               labelText="Perdidos"
               labelIcon={ErrorIcon}
               onClick={handleLostAdd}
-              // labelInfo="90"
+            // labelInfo="90"
             />
           </StyledTreeItem>
         </StyledTreeItem>
       </TreeView>
     </div>
+
   );
 }

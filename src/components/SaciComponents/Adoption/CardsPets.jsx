@@ -27,6 +27,8 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import PetsIcon from '@material-ui/icons/Pets';
 
+import { CustomizedSwitch } from './AdoptMeForm';
+
 import FavoriteIconPet from '../../../assets/icons/cards/favorite-icon-pet.svg';
 import ShareIconPet from '../../../assets/icons/cards/share-icon-pet.svg';
 import FootprintIconPet from '../../../assets/icons/cards/footprint-icon-pet.svg';
@@ -64,6 +66,7 @@ import Slide from '@material-ui/core/Slide';
 
 // components
 import PetModalData from './PetModalData';
+import Swal from 'sweetalert2';
 
 //Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -78,8 +81,10 @@ import {
   get_saci_pets_action,
   pet_data_dialog_action,
   select_pet_action,
+  show_user_pets_action,
   unlogged_modal_action,
 } from '../../../redux/actions/saciPets';
+import { get_city_data_action, get_department_data_action, get_form_data_action, set_edit_user_pet_dialog, update_form_data_action } from '../../../redux/actions/adoptFormAction';
 // import { Height, LensTwoTone } from '@material-ui/icons';
 
 //images
@@ -100,6 +105,9 @@ import axiosClient from '../../../configAxios/axios';
 import CarouselPhotos from './CarouselPhotos';
 
 import House from '../../../assets/icons/pet-house.svg';
+import { get_pets_by_user_action, save_selected_pet_data_action, save_user_pet_id_action, set_active_pets_action, set_id_unde_by_pet_saved, set_published_pet_action } from '../../../redux/actions/userPetsAction';
+import { cat_action, dog_action, hamster_action } from '../../../redux/actions/petTypeAction';
+import { get_pet_size_data } from '../../../redux/actions/petSizeAction';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -175,6 +183,9 @@ const useStyles = makeStyles((theme) => ({
   cardDesign3: {
     backgroundImage: `url(${marco3})`,
   },
+  userPetTittleContainer: {
+    margin: theme.spacing(2, 0, 5, 0),
+  }
 }));
 ////////////////////////////////////////////////////////////
 // Data
@@ -192,60 +203,27 @@ const rows = [createData('Pinina', 10, 'Macho', 'Pastor Alemán', 'Perro', 80)];
 ////////////////////////////////////////////////////////////
 export default function RecipeReviewCard(props) {
   const dispatch = useDispatch();
-
   const { pageMascotas } = useSelector((state) => state.saciPets);
-
   // const { procedure } = useSelector((state) => state.login);
-
   const { nombres } = useSelector((state) => state.login.user);
-  const [open, setOpen] = useState(false);
-  const [newPet, setNewPet] = useState();
-  const [anchorMenu, setAnchorMenu] = useState(null);
-  const [images, setImages] = useState(pug1);
-  const InitialPetState = {
-    nombre_mascota: '',
-    edad_mascota: '',
-    escala_edad: '',
-    descripcion_mascota: '',
-    esterilizado: '',
-    genero_mascota: '',
-    raza: '',
-    string_agg: '',
-    municipio: '',
-    fotos: [],
-  };
-  const [getPet, setGetPet] = useState(InitialPetState);
-  const [petData, setPetData] = useState([]);
-  const [petIndex, setPetIndex] = useState();
-  const ageScale = ['s', 'semana', 'mes', 'año', 'es'];
-  const [viewAgeScale, setViewAgeScale] = useState(ageScale[0]);
-  const [vaccines, setVaccines] = useState();
-  const [genre, setGenre] = useState();
-  const [displayContent, setDisplayContent] = useState(false);
-
-  const handleClickOpen = (value) => {
-    setNewPet('' + value);
-    console.log(newPet);
-    setOpen(true);
-    setTimeout(() => {
-      setDisplayContent(true);
-    }, 1000);
-  };
-
-  const handleClickClose = () => {
-    setOpen(false);
-    setDisplayContent(false);
-  };
-
-  const { petImage1 } = useSelector((state) => state.adoptFormData);
-
+  const { id } = useSelector(state => state.login.user);
+  const { petSelected } = useSelector(state => state.saciPets)
   const classes = useStyles();
-
-  const [modal, setModal] = useState(false);
+  const { showUserPets } = useSelector(state => state.saciPets);
   const [checkLogin, setCheckLogin] = useState(false);
-
-  const [petPhoto, setPetPhoto] = useState(petSample);
-  const [checkPets, setCheckPets] = useState(false);
+  const { userPetsRegistered } = useSelector(state => state.userPets);
+  const { userPetData } = useSelector(state => state.userPets);
+  const [checkEdit, setCheckEdit] = useState(false);
+  const { editPetDialog } = useSelector(state => state.adoptFormData);
+  const { id_tipo_mascota, id_departamento, id_mascota } = useSelector(state => state.userPets.userPetData);
+  const { descriptionData } = useSelector(state => state.adoptFormData);
+  const { vacunas } = useSelector(state => state.userPets.userPetData);
+  const { activePets } = useSelector(state => state.userPets);
+  const userId = {
+    id_usuario: `${id}`
+  }
+  const [petId, setPetId] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClickAdoptMe = () => {
     if (checkLogin) {
@@ -262,86 +240,21 @@ export default function RecipeReviewCard(props) {
     }
   }, [nombres]);
 
-  const handleClickMenu = (event) => {
-    setAnchorMenu(event.currentTarget);
-  };
-
-  const handleCloseMenu = () => {
-    setAnchorMenu(null);
-  };
-
-  // filtros harold
-  const [filtersInitial] = useState({
-    id_tipo_mascota: false,
-  });
-
   useEffect(() => {
-    dispatch(get_saci_pets_action(filtersInitial));
-  }, []);
-
-  useEffect(() => {
-    console.log(getPet);
-    const parvovirus = 'Parvovirus';
-    setVaccines(getPet.string_agg);
-    console.log(parvovirus.includes(getPet.string_agg));
-    if (getPet.genero_mascota === '1') {
-      setGenre('Macho');
-    } else if (getPet.genero_mascota === '2') {
-      setGenre('Hembra');
+    if (id) {
+      dispatch(get_pets_by_user_action(userId))
     }
-  }, [getPet]);
+  }, [id]);
 
-  // useEffect(() => {
-  //   if (petIndex >= 0) {
-  //     setGetPet(pageMascotas[petIndex]);
-  //   }
-  // }, [petIndex]);
+  const handleOpenMenu = event => {
+    setAnchorEl(event.currentTarget);
+    // dispatch(show_user_pets_action(true));
+  }
+  const handlePetMenuClose = () => {
+    setAnchorEl(null);
+  }
 
-  // useEffect(() => {
-  //   if (pageMascotas) {
-  //     let petInfo = pageMascotas.findIndex(function (item) {
-  //       return item.id_mascota === newPet;
-  //     });
-  //     setPetIndex(petInfo);
-  //     console.log(petIndex);
-  //   }
-  // }, [newPet]);
 
-  // useEffect(() => {
-  //   console.log(vaccines);
-  // }, [vaccines]);
-
-  useEffect(() => {
-    if (getPet.edad_mascota === '1') {
-      switch (getPet.escala_edad) {
-        case '1':
-          setViewAgeScale(ageScale[1]);
-          break;
-        case '2':
-          setViewAgeScale(ageScale[2]);
-          break;
-        case '3':
-          setViewAgeScale(ageScale[3]);
-          break;
-        default:
-      }
-    } else {
-      switch (getPet.escala_edad) {
-        case '1':
-          setViewAgeScale(`${ageScale[1]}${ageScale[0]}`);
-          break;
-        case '2':
-          setViewAgeScale(`${ageScale[1]}${ageScale[0]}`);
-          break;
-        case '3':
-          setViewAgeScale(`${ageScale[1]}${ageScale[0]}`);
-          break;
-        default:
-      }
-    }
-    console.log(ageScale);
-    console.log(getPet.escala_edad);
-  }, [getPet]);
 
   const theme = useTheme();
 
@@ -349,9 +262,6 @@ export default function RecipeReviewCard(props) {
     defaultMatches: true,
   });
 
-  // const isTablet = useMediaQuery(theme.breakpoints.only('md'), {
-  //   defaultMatches: true,
-  // });
 
   const [cards, setCards] = useState(false);
 
@@ -381,6 +291,197 @@ export default function RecipeReviewCard(props) {
     }
   };
 
+  useEffect(() => {
+    if (petSelected !== null || showUserPets === true) {
+      dispatch(save_user_pet_id_action(petSelected))
+    }
+  }, [petSelected]);
+
+  useEffect(() => {
+    if (petSelected !== null) {
+      const userPet = userPetsRegistered.filter(pet => pet.id_mascota === petSelected);
+      dispatch(save_selected_pet_data_action(userPet[0]));
+    }
+  }, [petSelected])
+
+  const handleClickEditMe = () => {
+    setAnchorEl(null);
+    dispatch(set_edit_user_pet_dialog(true))
+  }
+
+  useEffect(() => {
+    switch (id_tipo_mascota) {
+      case "1": dispatch(cat_action());
+        break;
+      case "2": dispatch(dog_action());
+        break;
+      case "3": dispatch(hamster_action());
+        break;
+      default:
+    }
+  }, [id_tipo_mascota]);
+
+  const depData = {
+    id_unde: userPetData.id_departamento
+  }
+
+  const petData = {
+    id_tipo_mascota: userPetData.id_tipo_mascota,
+    id_tamanio: userPetData.id_tamanio,
+  };
+
+  const [userPetVaccines, setUserPetVaccines] = useState([]);
+  const [checkVaccines, setCheckVaccines] = useState(false);
+  const [rabia, setRabia] = useState(false);
+  const [moquillo, setMoquillo] = useState(false);
+  const [rino, setRino] = useState(false);
+  const [parvo, setParvo] = useState(false);
+
+  useEffect(() => {
+    if (showUserPets) {
+      let vaccines = vacunas.split(",")
+      setUserPetVaccines(vaccines);
+    }
+  }, [userPetData]);
+
+  useEffect(() => {
+    if (userPetVaccines.length !== 0) {
+      let rabia = userPetVaccines.indexOf("Rabia");
+      let moquillo = userPetVaccines.indexOf("Moquillo");
+      let rinotraqueitis = userPetVaccines.indexOf("Rinotraqueítis");
+      let parvovirus = userPetVaccines.indexOf("Parvovirus");
+      if (rabia > -1) {
+        setRabia(true);
+      }
+      if (moquillo > -1) {
+        setMoquillo(true);
+      }
+      if (rinotraqueitis > -1) {
+        setRino(true);
+      }
+      if (parvovirus > -1) {
+        setParvo(true)
+      }
+      setCheckVaccines(true);
+    }
+  }, [userPetVaccines]);
+
+  useEffect(() => {
+    if (showUserPets === true && userPetData.id_mascota.length !== 0) {
+
+      dispatch(get_form_data_action(userPetData));
+      dispatch(update_form_data_action());
+      dispatch(get_city_data_action(depData));
+      dispatch(get_pet_size_data(petData));
+    }
+  }, [showUserPets, userPetData]);
+
+  useEffect(() => {
+    if (checkVaccines) {
+      dispatch(get_form_data_action({
+        ...userPetData,
+        id_vacuna_Rabia: rabia,
+        id_vacuna_Moquillo: moquillo,
+        id_vacuna_Parvovirus: parvo,
+        id_vacuna_Rinotraqueítis: rino
+      }))
+      dispatch(update_form_data_action());
+    }
+  }, [checkVaccines]);
+
+  useEffect(() => {
+    dispatch(get_department_data_action());
+  }, [])
+
+  useEffect(() => {
+    if (showUserPets) {
+      dispatch(update_form_data_action());
+    }
+  }, [descriptionData])
+
+  useEffect(() => {
+    if (!editPetDialog) {
+      setCheckVaccines(false);
+      setRabia(false);
+      setParvo(false);
+      setMoquillo(false);
+      setRino(false);
+    }
+  }, [editPetDialog])
+
+  const handleUnpublishPet = () => {
+    setAnchorEl(null);
+    return Swal.fire({
+      title: '¿Deseas desactivar la mascota publicada?',
+      showDenyButton: true,
+      confirmButtonColor: '#63C132',
+      denyButtonColor: '#D33',
+      confirmButtonText: 'Confirmar',
+      denyButtonText: 'Volver',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(set_published_pet_action({
+          id_usuario: id,
+          id_mascota: id_mascota,
+          publicado: "0"
+        }))
+        Swal.fire('¡Mascota desactivada!', '', 'success').then((result) => {
+          if (result.isConfirmed) {
+            dispatch(get_pets_by_user_action({
+              id_usuario: id
+            }))
+            dispatch(set_active_pets_action(true));
+            Swal.close();
+          }
+        });
+      } else if (result.isDenied) {
+        Swal.fire('Los cambios no han sido guardados', '', 'info');
+      }
+    });
+
+  }
+
+  const handlePublishPet = () => {
+    setAnchorEl(null);
+    return Swal.fire({
+      title: '¿Deseas publicar nuevamente ésta mascota?',
+      showDenyButton: true,
+      confirmButtonColor: '#63C132',
+      denyButtonColor: '#D33',
+      confirmButtonText: 'Confirmar',
+      denyButtonText: 'Volver',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(set_published_pet_action({
+          id_usuario: id,
+          id_mascota: id_mascota,
+          publicado: "1"
+        }))
+        Swal.fire('¡Mascota publicada!', '', 'success').then((result) => {
+          if (result.isConfirmed) {
+            dispatch(get_pets_by_user_action({
+              id_usuario: id
+            }))
+            dispatch(set_active_pets_action(false));
+            Swal.close();
+          }
+        });
+      } else if (result.isDenied) {
+        Swal.fire('Los cambios no han sido guardados', '', 'info');
+      }
+    });
+
+  }
+
+  // filtros harold
+  const [filtersInitial] = useState({
+    id_tipo_mascota: false,
+  });
+
+  useEffect(() => {
+    dispatch(get_saci_pets_action(filtersInitial));
+  }, []);
+
   // let tipo_tramite1 = pageMascotas.filter((pets) => pets.tipo_tramite === '1');
 
   // let tipo_tramite2 = pageMascotas.filter((pets) => pets.tipo_tramite === '2');
@@ -390,6 +491,21 @@ export default function RecipeReviewCard(props) {
 
   return (
     <>
+      { showUserPets ?
+        <Grid container className={classes.userPetTittleContainer} justify="center">
+          {activePets ?
+            <Typography variant="h4">
+              Mis mascotas Publicadas
+            </Typography>
+            :
+            <Typography variant="h4">
+              Mis publicaciones desactivadas
+              </Typography>
+          }
+        </Grid>
+        :
+        null
+      }
       <Grid
         container
         spacing={isMobile ? 1 : 3 /* && isTablet ? 6 : 3 */}
@@ -413,8 +529,9 @@ export default function RecipeReviewCard(props) {
                   [classes.cardsPets2]: item.tipo_tramite === '2',
                   [classes.cardsPets3]: item.tipo_tramite === '3',
                 })}
-                onClick={() => dispatch(select_pet_action(item.id_mascota))}
+                onClick={() => showUserPets ? dispatch(select_pet_action(item.id_mascota)) : null}
               >
+
                 <CarouselPhotos itemPets={item.fotos} />
 
                 <div
@@ -425,11 +542,6 @@ export default function RecipeReviewCard(props) {
                   })}
                 >
                   <CardHeader
-                    // avatar={
-                    //   <Avatar aria-label='recipe' className={classes.avatar}>
-                    //     R
-                    //   </Avatar>
-                    // }
                     title={
                       <Typography
                         style={{
@@ -470,39 +582,57 @@ export default function RecipeReviewCard(props) {
                           className={classes.iconsCards}
                         />
                       </IconButton>
+                      {/* {showUserPets ?
+                        <CustomizedSwitch />
+                        :
+                        null
+                      } */}
                     </div>
 
-                    {item.tipo_tramite === '1' ? (
+                    {showUserPets ?
                       <Button
                         className={classes.buttonPrimary}
                         variant="contained"
                         size="small"
                         color="secondary"
-                        onClick={handleClickAdoptMe}
+                        onClick={handleOpenMenu}
                       >
-                        Adóptame
-                      </Button>
-                    ) : item.tipo_tramite === '2' ? (
-                      <Button
-                        className={classes.buttonPrimary}
-                        variant="contained"
-                        size="small"
-                        color="secondary"
-                        onClick={handleClickAdoptMe}
-                      >
-                        Encuéntrame
-                      </Button>
-                    ) : item.tipo_tramite === '3' ? (
-                      <Button
-                        className={classes.buttonPrimary}
-                        variant="contained"
-                        size="small"
-                        color="secondary"
-                        onClick={handleClickAdoptMe}
-                      >
-                        Infórmame
-                      </Button>
-                    ) : null}
+                        Opciones
+                   </Button>
+                      :
+                      item.tipo_tramite === '1' ? (
+                        <Button
+                          className={classes.buttonPrimary}
+                          variant="contained"
+                          size="small"
+                          color="secondary"
+                          onClick={handleClickAdoptMe}
+                        >
+                          Adóptame
+                        </Button>
+                      ) : item.tipo_tramite === '2' ? (
+                        <Button
+                          className={classes.buttonPrimary}
+                          variant="contained"
+                          size="small"
+                          color="secondary"
+                          onClick={handleClickAdoptMe}
+                        >
+                          Encuéntrame
+                        </Button>
+                      ) : item.tipo_tramite === '3' ? (
+                        <Button
+                          className={classes.buttonPrimary}
+                          variant="contained"
+                          size="small"
+                          color="secondary"
+                          onClick={handleClickAdoptMe}
+                        >
+                          Infórmame
+                        </Button>
+                      ) : null
+
+                    }
                   </CardActions>
                 </div>
               </Card>
@@ -511,75 +641,21 @@ export default function RecipeReviewCard(props) {
         })}
         <Error />
       </Grid>
-
-      <Dialog
-        open={open}
-        TransitionComponent={Transition}
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
         keepMounted
-        onClose={handleClickClose}
+        open={Boolean(anchorEl)}
+        onClose={handlePetMenuClose}
       >
-        <Paper elevation={3} className={classes.paperContainer}>
-          <Box display="flex" justifyContent="center"></Box>
-          <Box display="flex" justifyContent="center" mb={5} my={5}>
-            <Typography variant="h4" color="initial">
-              Ficha De Mascota
-            </Typography>
-          </Box>
-          <Box mb={5}>
-            <TableContainer component={Paper}>
-              <Table className={classes.table} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Nombre</TableCell>
-                    <TableCell>Edad</TableCell>
-                    <TableCell>Sexo</TableCell>
-                    <TableCell>Raza</TableCell>
-                    <TableCell>Ubicación</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell component="th" scope="row">
-                      {getPet.nombre_mascota}
-                    </TableCell>
-                    <TableCell>
-                      {getPet.escala_edad} {viewAgeScale}
-                    </TableCell>
-                    <TableCell>{genre}</TableCell>
-                    <TableCell>{getPet.raza}</TableCell>
-                    <TableCell>{getPet.municipio}</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography className={classes.heading}>Vacunas</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>{vaccines}</Typography>
-            </AccordionDetails>
-          </Accordion>
+        <MenuItem onClick={handleClickEditMe}>Editar</MenuItem>
+        {activePets ? (
+          <MenuItem onClick={handleUnpublishPet}>Desactivar Publicación</MenuItem>
+        ) : (
+          <MenuItem onClick={handlePublishPet}>Activar Publicación</MenuItem>
+        )}
 
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel2a-content"
-              id="panel2a-header"
-            >
-              <Typography className={classes.heading}>Descripción</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>{getPet.descripcion_mascota}</Typography>
-            </AccordionDetails>
-          </Accordion>
-        </Paper>
-      </Dialog>
+      </Menu>
     </>
   );
 }

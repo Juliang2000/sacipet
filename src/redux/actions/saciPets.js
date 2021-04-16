@@ -1,12 +1,15 @@
 import {
+  GET_PETS_NO_FILTER,
   GET_SACI_PETS,
   PAGE_SACI_PETS,
   SELECT_PET_DATA,
   SET_ADOPT_ME_DIALOG,
   SET_PET_DATA_DIALOG,
   SET_UNLOGGED_MODAL,
-} from '../types';
-import { getSaciPets } from '../../configAxios/saciPets';
+  SHOW_USER_PETS
+} from "../types";
+import { getSaciPets } from "../../configAxios/saciPets";
+
 
 export const get_saci_pets_action = (filters) => async (dispatch) => {
   try {
@@ -1705,6 +1708,13 @@ export const page_saci_pets_action = (slicePets) => async (dispatch) => {
   });
 };
 
+export const show_user_pets_action = (userPets) => async (dispatch) => {
+  dispatch({
+    type: SHOW_USER_PETS,
+    payload: userPets,
+  });
+};
+
 export const select_pet_action = (id_mascota) => async (dispatch) => {
   dispatch({
     type: SELECT_PET_DATA,
@@ -1746,3 +1756,16 @@ export const get_saci_pets_filters_races_action = (filtersRacesCards) => async (
     console.log(error);
   }
 };
+
+export const get_saci_pets_no_filters_action = () => async (dispatch) => {
+  try {
+    const response = await getSaciPets();
+    dispatch({
+      type: GET_PETS_NO_FILTER,
+      payload: response.data.mascotas
+    })
+  } catch (e) {
+    console.error(e);
+  }
+}
+

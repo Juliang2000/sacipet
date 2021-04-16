@@ -21,7 +21,9 @@ import {
     SAVE_PET_IMAGE_4,
     SAVE_PET_IMAGE_5,
     PET_DESCRIPTION_NOT_OK,
-    RESET_CITY_ACTION
+    RESET_CITY_ACTION,
+    SET_EDIT_USER_PET_DIALOG,
+    SET_STEP
 } from "../types";
 
 //axios
@@ -49,6 +51,13 @@ export const back_step_action = (activeStepState) => ({
     type: BACK_STEP_ACTION,
     payload: activeStepState
 });
+
+export const set_step_action = (state) => async (dispatch, getState) => {
+    dispatch({
+        type: SET_STEP,
+        payload: state
+    })
+}
 
 // get departments to the db
 export const get_department_data_action = () => async (dispatch, getState) => {
@@ -89,11 +98,11 @@ export const get_form_data_action = (newPet) => {
     }
 }
 
-export const update_form_data_action = (updateDescriptionData) => {
-    return {
+export const update_form_data_action = (data) => async (dispatch, getState) => {
+    dispatch({
         type: UPDATE_ADOPT_FORM_DESCRIPTION_DATA,
-        payload: updateDescriptionData
-    }
+        payload: data
+    })
 }
 
 //check the fully complete description
@@ -136,6 +145,13 @@ export const registry_form_adopt = (newPet) => async (dispatch, getState) => {
         console.log(error)
     }
 }
+
+export const set_edit_user_pet_dialog = (state) => async (dispatch, getState) => {
+    dispatch({
+        type: SET_EDIT_USER_PET_DIALOG,
+        payload: state
+    })
+};
 
 export const save_pet_image_1 = (petimage1) => {
     return {

@@ -11,10 +11,7 @@ import store from './redux/store';
 
 
 // Pages
-import PublicRoute from './routes/PublicRoute';
-import PrivateRoute from './routes/PrivateRoute';
-import Login from './pages/Login'
-import Register from './pages/Register'
+
 import PininaDashboard from './pages/PininaDashboard'
 import SaciDashboard from './pages/SaciDashboard'
 import Profile from './pages/Profile'
@@ -52,12 +49,9 @@ function App() {
         <Router>
           <Switch>
             <Route exact path="/" component={SaciDashboard} />
-            <Route path="/Register" component={Register} />
-            <Route path="/Login" component={Login} />
             <Route path="/Pinina" component={PininaDashboard} />
             <Route path="/Profile" component={Profile} />
             {/* <PrivateRoute path="/menu-user" component={MenuUser} /> */}
-
           </Switch>
         </Router>
       </ThemeProvider>

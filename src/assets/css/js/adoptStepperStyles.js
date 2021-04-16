@@ -7,6 +7,7 @@ const adoptStepperStyles = makeStyles((theme) => ({
     },
     button: {
         marginRight: theme.spacing(1),
+        textTransform: 'none',
         alignItems: 'center',
     },
     instructions: {

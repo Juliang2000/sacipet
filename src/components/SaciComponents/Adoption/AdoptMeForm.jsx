@@ -93,7 +93,7 @@ const IOSSwitch = withStyles((theme) => ({
 
 
 
-function CustomizedSwitch() {
+export function CustomizedSwitch() {
     const classes = useStyles();
     const [state, setState] = useState({
         checkedB: true,
@@ -138,7 +138,6 @@ export default function AdoptMeForm() {
     const { user } = useSelector(state => state.login)
     const { formData } = useSelector(state => state.adoptMeForm)
     const { stepTwo } = useSelector(state => state.adoptMeForm)
-    const [allowContent, setAllowContent] = useState(false);
     const [activeStep, setActiveStep] = useState(0);
     const steps = getSteps();
     const classes = adoptMeFormStyles();
@@ -285,7 +284,7 @@ function UserData() {
     const idStore = useSelector(state => state.saciPets.petSelected);
     const nombreStore = useSelector(state => state.adoptMeForm.formData.nombre_adoptante);
     const idUsuarioStore = useSelector(state => state.login.user.id);
-    const correoStore = useSelector(state => state.adoptMeForm.formData.email);
+    const correoStore = useSelector(state => state.adoptMeForm.formData.correo);
     const telefonoStore = useSelector(state => state.adoptMeForm.formData.telefono);
     const direccionStore = useSelector(state => state.adoptMeForm.formData.direccion_adoptante);
     const idUndeStore = useSelector(state => state.adoptMeForm.formData.id_unde);
