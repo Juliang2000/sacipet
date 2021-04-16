@@ -10,6 +10,32 @@ import store from './redux/store';
 import PininaDashboard from './pages/PininaDashboard'
 import SaciDashboard from './pages/SaciDashboard'
 import mainTheme from './assets/css/js/mainTheme';
+import Profile from './pages/Profile'
+
+
+// import classes from '*.module.css';
+
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+
+      main: '#63c132',
+      // main: '#432918'
+      // main: '#E4DAD8',
+
+    },
+    secondary: {
+      main: '#1E3F20'
+
+    },
+  },
+  typography: {
+    fontFamily: `'Poppins', 'sans-serif'`,
+  }
+})
+
+
 
 function App() {
   const theme = mainTheme;
@@ -20,6 +46,8 @@ function App() {
           <Switch>
             <Route exact path="/" component={SaciDashboard} />
             <Route path="/Pinina" component={PininaDashboard} />
+            <Route path="/Profile" component={Profile} />
+            {/* <PrivateRoute path="/menu-user" component={MenuUser} /> */}
           </Switch>
         </Router>
       </ThemeProvider>

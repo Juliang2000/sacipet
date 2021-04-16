@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from "react-router-dom";
 
 import {
     makeStyles,
@@ -36,7 +37,6 @@ import Register from '../../pages/Register'
 import { LoginRegisteredAction, login_dialog_close_action, login_dialog_open_action, adopt_dialog_close_action, adoptstepper_dialog_open_action } from '../../redux/actions/loginAction';
 import { register_dialog_close_action } from '../../redux/actions/registerAction';
 import { reset_pets_action, set_active_pets_action, user_pets_modal_action } from '../../redux/actions/userPetsAction';
-import { useHistory } from 'react-router';
 import { show_user_pets_action } from '../../redux/actions/saciPets';
 
 
@@ -110,7 +110,6 @@ export default function SectionDesktop() {
     const [cleanPets, setCleanPets] = useState(false);
 
     const dispatch = useDispatch();
-    const history = useHistory();
 
     const { nombres } = useSelector(state => state.login.user);
     const { registerData } = useSelector(state => state.register);
@@ -189,6 +188,12 @@ export default function SectionDesktop() {
         setCleanPets(true);
     }
 
+// Rediccionamiento a perfil de usuario con history push
+    let history = useHistory();
+    function handleclickMyProfile(){
+        history.push("/Profile");
+    }
+
     // useEffect(() => {
     //     if (cleanPets) {
     //         dispatch(show_user_pets_action(userPetsRegistered));
@@ -237,7 +242,7 @@ export default function SectionDesktop() {
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
                     >
-                        <StyledMenuItem>
+                        <StyledMenuItem onClick={handleclickMyProfile}>
                             <ListItemIcon>
                                 <Person />
                             </ListItemIcon>
