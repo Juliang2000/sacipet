@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 
 import {
     makeStyles,
@@ -183,6 +184,12 @@ export default function SectionDesktop() {
         dispatch(user_pets_modal_action(true))
     }
 
+// Rediccionamiento a perfil de usuario con history push
+    let history = useHistory();
+    function handleclickMyProfile(){
+        history.push("/Profile");
+    }
+
     return (
         <>
             { nombres ?
@@ -225,7 +232,7 @@ export default function SectionDesktop() {
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
                     >
-                        <StyledMenuItem>
+                        <StyledMenuItem onClick={handleclickMyProfile}>
                             <ListItemIcon>
                                 <Person />
                             </ListItemIcon>
