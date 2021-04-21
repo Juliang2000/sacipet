@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   withStyles,
   Switch,
@@ -234,7 +235,7 @@ export default function AdoptMeForm() {
   };
 
   const handleClickRegister = () => {
-    Swal.fire({
+    return Swal.fire({
       title: '¿Deseas registrar los datos anteriores?',
       showDenyButton: true,
       confirmButtonColor: '#63C132',
@@ -591,6 +592,7 @@ function UserData() {
                 name="estado_civil"
                 label="Estado Civil"
                 onChange={handleChange}
+                value={userData.estado_civil}
                 defaultValue={estadoCivilStore}
               >
                 <MenuItem value="soltero">Soltero(a)</MenuItem>

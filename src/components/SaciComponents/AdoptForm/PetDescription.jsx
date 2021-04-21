@@ -39,7 +39,7 @@ import {
   not_full_pet_description_action,
   reset_city_action,
 } from '../../../redux/actions/adoptFormAction';
-import { StarRateOutlined } from '@material-ui/icons';
+// import { StarRateOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   formPetDescription: {
@@ -77,9 +77,9 @@ export default function PetDescription() {
   const { departments, cities } = useSelector((state) => state.adoptFormData);
   const { procedure } = useSelector((state) => state.login);
   const { id } = useSelector((state) => state.login.user);
-  const { editPetDialog } = useSelector(state => state.adoptFormData);
+  // const { editPetDialog } = useSelector(state => state.adoptFormData);
   const { userPetData } = useSelector(state => state.userPets);
-  const [checkUserPetData, setCheckUserPetData] = useState(false);
+  const [/* checkUserPetData, */ setCheckUserPetData] = useState(false);
   const { showUserPets } = useSelector(state => state.saciPets);
   const { descriptionData } = useSelector(state => state.adoptFormData)
 
@@ -233,7 +233,7 @@ export default function PetDescription() {
     setSendHamsterData(false);
   }
 
-  const [checkAge, setCheckAge] = useState(true);
+  // const [checkAge, setCheckAge] = useState(true);
 
   // if (checkAge === true)
   //   if (edad_mascota.length !== 0) {
@@ -463,6 +463,7 @@ export default function PetDescription() {
               name="escala_edad"
               label="Escala Edad"
               onChange={handleChange}
+              value={newPet.escala_edad}
               defaultValue={escala_edad}
             >
               {/* <MenuItem>
@@ -492,6 +493,7 @@ export default function PetDescription() {
               name="esterilizado"
               label="Mascota esterilizada"
               onChange={handleChange}
+              value={newPet.esterilizado}
               defaultValue={esterilizado}
             >
               {/* <MenuItem>
@@ -520,6 +522,7 @@ export default function PetDescription() {
               label="Tamaño De Mascota"
               onChange={petSizeChange}
               disabled={hamster === true}
+              value={newPet.id_tamanio}
               defaultValue={id_tamanio}
             >
               {/* <MenuItem>
@@ -582,9 +585,9 @@ export default function PetDescription() {
               labelId="demo-simple-select-outlined-label"
               id="demo-simple-select-outlined"
               name="genero_mascota"
-              // value={age}
               label="Genéro De Mascota"
               onChange={handleChange}
+              value={newPet.genero_mascota}
               defaultValue={genero_mascota}
             >
               {/* <MenuItem>
@@ -608,9 +611,9 @@ export default function PetDescription() {
               labelId="demo-simple-select-outlined-label"
               id="demo-simple-select-outlined"
               name="id_color"
-              // value={age}
               label="Color De Mascota"
               onChange={handleChange}
+              value={newPet.id_color}
               defaultValue={id_color}
             >
               {/* <MenuItem>
