@@ -37,8 +37,6 @@ import Slide from '@material-ui/core/Slide';
 
 import MuiAlert from '@material-ui/lab/Alert';
 
-import { green } from '@material-ui/core/colors';
-
 //Icons Material UI
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import CheckIcon from '@material-ui/icons/Check';
@@ -67,9 +65,8 @@ import {
   saci_password_validate_profile_action,
   saci_password_profile_action,
   saci_photo_profile_action,
+  saci_photo_delete_profile_action,
 } from '../redux/actions/loginAction';
-
-import Loader from './Loader';
 
 // Form Validation
 import { useForm } from 'react-hook-form';
@@ -225,26 +222,9 @@ function Profile() {
 
   const { vertical, horizontal, open } = state;
 
-  // const handleClick = (newState, Transition) => () => {
-  //   setTransition(() => Transition);
-  //   setState({ open: true, ...newState });
-  // };
-
   const handleClose = () => {
     setState({ ...state, open: false });
   };
-
-  // const [open2, setOpen2] = React.useState(false);
-  // const [transition2, setTransition2] = React.useState(undefined);
-
-  // const handleClick2 = (Transition) => () => {
-  //   setTransition2(() => Transition);
-  //   setOpen2(true);
-  // };
-
-  // const handleClose2 = () => {
-  //   setOpen2(false);
-  // };
 
   ////////////////////////////////////////
 
@@ -601,8 +581,11 @@ function Profile() {
       };
       reader.readAsDataURL(userimage);
       setChecked1(true);
+      setPhotoSave(true)
     } else {
       setPreview(null);
+      setPhotoDelete(false)
+      setPhotoSave(false)
     }
   }, [userimage]);
 
@@ -622,6 +605,7 @@ function Profile() {
           console.log('foto subida');
           dispatch(saci_photo_profile_action(userimage, id));
           setChecked1(false);
+          setPhotoSave(false)
         } else if (result.isDenied) {
           Swal.fire('Foto No Guardada', '', 'error');
           // setUserImage(null);
@@ -631,21 +615,23 @@ function Profile() {
   };
 
   const handleDeleteImageProfile = () => {
-    if (checked1 === true) {
-      Swal.fire({
-        title: '¿Estás seguro de eliminar la foto?',
-        showDenyButton: true,
-        confirmButtonText: `Si`,
-        confirmButtonColor: '#63C132',
-        denyButtonText: `No`,
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire('Foto Eliminada', '', 'error');
-          setUserImage(null);
-        } else if (result.isDenied) {
-        }
-      });
-    }
+    // setChecked1(true);
+    // if (checked1 === true) {
+    Swal.fire({
+      title: '¿Estás seguro de eliminar la foto?',
+      showDenyButton: true,
+      confirmButtonText: `Si`,
+      confirmButtonColor: '#63C132',
+      denyButtonText: `No`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire('Foto Eliminada', '', 'error');
+        dispatch(saci_photo_delete_profile_action(id));
+        setUserImage(null);
+      } else if (result.isDenied) {
+      }
+    });
+    // }
   };
   ///////////////////////////////////////
   const baseURL = process.env.REACT_APP_BACKEND_URL;
@@ -658,6 +644,10 @@ function Profile() {
   //   imgPath: `${baseURL}${userPhoto[0].id}.jpg`,
   // });
 
+  const [photoDelete, setPhotoDelete] = useState(false);
+
+  const [photoSave, setPhotoSave] = useState(false)
+
   const [items, setItems] = useState({
     imgPath: userImage,
   });
@@ -665,15 +655,16 @@ function Profile() {
   useEffect(() => {
     if (userPhoto !== null) {
       if (userPhoto.length === 1) {
-        console.log('existe');
+        console.log('existe foto');
         setItems({
           imgPath: `${baseURL}${userPhoto[0].id}.jpg`,
         });
+        setPhotoDelete(true)
       }
     }
 
     if (userPhoto === null) {
-      console.log('no existe');
+      console.log('no existe foto');
       setItems({
         imgPath: userImage,
       });
@@ -729,9 +720,13 @@ function Profile() {
                 {preview ? (
                   <Grid item>
                     <Avatar
-                      alt="Imagen Perfil"
+                      onClick={(event) => {
+                        event.preventDefault();
+                        fileInputRef1.current.click();
+                      }}
                       src={preview}
                       className={classes.rootProfile}
+                      title="Mi Imagen De Perfil"
                     />
                   </Grid>
                 ) : (
@@ -741,7 +736,7 @@ function Profile() {
                         event.preventDefault();
                         fileInputRef1.current.click();
                       }}
-                      alt="Remy Sharp"
+                      // alt="Remy Sharp"
                       // src={userImage}
                       src={items.imgPath}
                       className={classes.rootProfile}
@@ -795,7 +790,7 @@ function Profile() {
                       size="small"
                       color="primary"
                       onClick={handleSubmitImageProfile}
-                      // disabled
+                      disabled={photoSave ? false : true}
                     >
                       Guardar
                     </Button>
@@ -806,7 +801,7 @@ function Profile() {
                       size="small"
                       color="primary"
                       onClick={handleDeleteImageProfile}
-                      // disabled
+                      disabled={preview || photoDelete  ? false : true}
                     >
                       Borrar
                     </Button>

@@ -77,6 +77,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 // import useModal from '../../../hooks/useModal';
 import {
   adopt_me_dialog_action,
+  adopt_me_dialog_procedure_action,
   get_pet_photos_action,
   get_saci_pets_action,
   pet_data_dialog_action,
@@ -84,7 +85,13 @@ import {
   show_user_pets_action,
   unlogged_modal_action,
 } from '../../../redux/actions/saciPets';
-import { get_city_data_action, get_department_data_action, get_form_data_action, set_edit_user_pet_dialog, update_form_data_action } from '../../../redux/actions/adoptFormAction';
+import {
+  get_city_data_action,
+  get_department_data_action,
+  get_form_data_action,
+  set_edit_user_pet_dialog,
+  update_form_data_action,
+} from '../../../redux/actions/adoptFormAction';
 // import { Height, LensTwoTone } from '@material-ui/icons';
 
 //images
@@ -105,9 +112,23 @@ import axiosClient from '../../../configAxios/axios';
 import CarouselPhotos from './CarouselPhotos';
 
 import House from '../../../assets/icons/pet-house.svg';
-import { get_pets_by_user_action, save_selected_pet_data_action, save_user_pet_id_action, set_active_pets_action, set_id_unde_by_pet_saved, set_published_pet_action, set_user_pet_modal_data_action } from '../../../redux/actions/userPetsAction';
-import { cat_action, dog_action, hamster_action } from '../../../redux/actions/petTypeAction';
+import {
+  get_pets_by_user_action,
+  save_selected_pet_data_action,
+  save_user_pet_id_action,
+  set_active_pets_action,
+  set_id_unde_by_pet_saved,
+  set_published_pet_action,
+  set_user_pet_modal_data_action,
+} from '../../../redux/actions/userPetsAction';
+import {
+  cat_action,
+  dog_action,
+  hamster_action,
+} from '../../../redux/actions/petTypeAction';
 import { get_pet_size_data } from '../../../redux/actions/petSizeAction';
+
+import { adopt_dialog_open_action } from '../../../redux/actions/loginAction';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -185,7 +206,7 @@ const useStyles = makeStyles((theme) => ({
   },
   userPetTittleContainer: {
     margin: theme.spacing(2, 0, 5, 0),
-  }
+  },
 }));
 ////////////////////////////////////////////////////////////
 // Data
@@ -204,30 +225,53 @@ const rows = [createData('Pinina', 10, 'Macho', 'Pastor Alemán', 'Perro', 80)];
 export default function RecipeReviewCard(props) {
   const dispatch = useDispatch();
   const { pageMascotas } = useSelector((state) => state.saciPets);
-  // const { procedure } = useSelector((state) => state.login);
   const { nombres } = useSelector((state) => state.login.user);
-  const { id } = useSelector(state => state.login.user);
-  const { petSelected } = useSelector(state => state.saciPets)
+  const { id } = useSelector((state) => state.login.user);
+  const { petSelected } = useSelector((state) => state.saciPets);
   const classes = useStyles();
-  const { showUserPets } = useSelector(state => state.saciPets);
+  const { showUserPets } = useSelector((state) => state.saciPets);
   const [checkLogin, setCheckLogin] = useState(false);
-  const { userPetsRegistered } = useSelector(state => state.userPets);
-  const { userPetData } = useSelector(state => state.userPets);
+  const { userPetsRegistered } = useSelector((state) => state.userPets);
+  const { userPetData } = useSelector((state) => state.userPets);
   const [checkEdit, setCheckEdit] = useState(false);
-  const { editPetDialog } = useSelector(state => state.adoptFormData);
-  const { id_tipo_mascota, id_departamento, id_mascota } = useSelector(state => state.userPets.userPetData);
-  const { descriptionData } = useSelector(state => state.adoptFormData);
-  const { vacunas } = useSelector(state => state.userPets.userPetData);
-  const { activePets } = useSelector(state => state.userPets);
+  const { editPetDialog } = useSelector((state) => state.adoptFormData);
+  const { id_tipo_mascota, id_departamento, id_mascota } = useSelector(
+    (state) => state.userPets.userPetData
+  );
+  const { descriptionData } = useSelector((state) => state.adoptFormData);
+  const { vacunas } = useSelector((state) => state.userPets.userPetData);
+  const { activePets } = useSelector((state) => state.userPets);
   const userId = {
-    id_usuario: `${id}`
-  }
+    id_usuario: `${id}`,
+  };
   const [petId, setPetId] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
 
+  // Al dar clic botón Adóptame
   const handleClickAdoptMe = () => {
     if (checkLogin) {
       dispatch(adopt_me_dialog_action(true));
+      dispatch(adopt_me_dialog_procedure_action(1));
+    } else {
+      dispatch(unlogged_modal_action(true));
+    }
+  };
+
+  // Al dar clic botón Encuentrame
+  const handleClickFindMe = () => {
+    if (checkLogin) {
+      dispatch(adopt_me_dialog_action(true));
+      dispatch(adopt_me_dialog_procedure_action(2));
+    } else {
+      dispatch(unlogged_modal_action(true));
+    }
+  };
+
+  // Al dar clic botón
+  const handleClickHelpMe = () => {
+    if (checkLogin) {
+      dispatch(adopt_me_dialog_action(true));
+      dispatch(adopt_me_dialog_procedure_action(3));
     } else {
       dispatch(unlogged_modal_action(true));
     }
@@ -242,26 +286,23 @@ export default function RecipeReviewCard(props) {
 
   useEffect(() => {
     if (id) {
-      dispatch(get_pets_by_user_action(userId))
+      dispatch(get_pets_by_user_action(userId));
     }
   }, [id]);
 
-  const handleOpenMenu = event => {
+  const handleOpenMenu = (event) => {
     setAnchorEl(event.currentTarget);
     // dispatch(show_user_pets_action(true));
-  }
+  };
   const handlePetMenuClose = () => {
     setAnchorEl(null);
-  }
-
-
+  };
 
   const theme = useTheme();
 
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'), {
     defaultMatches: true,
   });
-
 
   const [cards, setCards] = useState(false);
 
@@ -293,42 +334,49 @@ export default function RecipeReviewCard(props) {
 
   useEffect(() => {
     if (petSelected !== null || showUserPets === true) {
-      dispatch(save_user_pet_id_action(petSelected))
+      dispatch(save_user_pet_id_action(petSelected));
     }
   }, [petSelected]);
 
   useEffect(() => {
     if (petSelected !== null) {
       if (showUserPets) {
-        const userPet = userPetsRegistered.filter(pet => pet.id_mascota === petSelected);
+        const userPet = userPetsRegistered.filter(
+          (pet) => pet.id_mascota === petSelected
+        );
         dispatch(save_selected_pet_data_action(userPet[0]));
       } else {
-        const userPet = pageMascotas.filter(pet => pet.id_mascota === petSelected);
+        const userPet = pageMascotas.filter(
+          (pet) => pet.id_mascota === petSelected
+        );
         dispatch(save_selected_pet_data_action(userPet[0]));
       }
     }
-  }, [petSelected])
+  }, [petSelected]);
 
   const handleClickEditMe = () => {
     setAnchorEl(null);
-    dispatch(set_edit_user_pet_dialog(true))
-  }
+    dispatch(set_edit_user_pet_dialog(true));
+  };
 
   useEffect(() => {
     switch (id_tipo_mascota) {
-      case "1": dispatch(cat_action());
+      case '1':
+        dispatch(cat_action());
         break;
-      case "2": dispatch(dog_action());
+      case '2':
+        dispatch(dog_action());
         break;
-      case "3": dispatch(hamster_action());
+      case '3':
+        dispatch(hamster_action());
         break;
       default:
     }
   }, [id_tipo_mascota]);
 
   const depData = {
-    id_unde: userPetData.id_departamento
-  }
+    id_unde: userPetData.id_departamento,
+  };
 
   const petData = {
     id_tipo_mascota: userPetData.id_tipo_mascota,
@@ -344,17 +392,17 @@ export default function RecipeReviewCard(props) {
 
   useEffect(() => {
     if (showUserPets) {
-      let vaccines = vacunas.split(",")
+      let vaccines = vacunas.split(',');
       setUserPetVaccines(vaccines);
     }
   }, [userPetData]);
 
   useEffect(() => {
     if (userPetVaccines.length !== 0) {
-      let rabia = userPetVaccines.indexOf("Rabia");
-      let moquillo = userPetVaccines.indexOf("Moquillo");
-      let rinotraqueitis = userPetVaccines.indexOf("Rinotraqueítis");
-      let parvovirus = userPetVaccines.indexOf("Parvovirus");
+      let rabia = userPetVaccines.indexOf('Rabia');
+      let moquillo = userPetVaccines.indexOf('Moquillo');
+      let rinotraqueitis = userPetVaccines.indexOf('Rinotraqueítis');
+      let parvovirus = userPetVaccines.indexOf('Parvovirus');
       if (rabia > -1) {
         setRabia(true);
       }
@@ -365,7 +413,7 @@ export default function RecipeReviewCard(props) {
         setRino(true);
       }
       if (parvovirus > -1) {
-        setParvo(true)
+        setParvo(true);
       }
       setCheckVaccines(true);
     }
@@ -373,7 +421,6 @@ export default function RecipeReviewCard(props) {
 
   useEffect(() => {
     if (showUserPets === true && userPetData.id_mascota.length !== 0) {
-
       dispatch(get_form_data_action(userPetData));
       dispatch(update_form_data_action());
       dispatch(get_city_data_action(depData));
@@ -383,26 +430,28 @@ export default function RecipeReviewCard(props) {
 
   useEffect(() => {
     if (checkVaccines) {
-      dispatch(get_form_data_action({
-        ...userPetData,
-        id_vacuna_Rabia: rabia,
-        id_vacuna_Moquillo: moquillo,
-        id_vacuna_Parvovirus: parvo,
-        id_vacuna_Rinotraqueítis: rino
-      }))
+      dispatch(
+        get_form_data_action({
+          ...userPetData,
+          id_vacuna_Rabia: rabia,
+          id_vacuna_Moquillo: moquillo,
+          id_vacuna_Parvovirus: parvo,
+          id_vacuna_Rinotraqueítis: rino,
+        })
+      );
       dispatch(update_form_data_action());
     }
   }, [checkVaccines]);
 
   useEffect(() => {
     dispatch(get_department_data_action());
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (showUserPets) {
       dispatch(update_form_data_action());
     }
-  }, [descriptionData])
+  }, [descriptionData]);
 
   useEffect(() => {
     if (!editPetDialog) {
@@ -412,7 +461,7 @@ export default function RecipeReviewCard(props) {
       setMoquillo(false);
       setRino(false);
     }
-  }, [editPetDialog])
+  }, [editPetDialog]);
 
   const handleUnpublishPet = () => {
     setAnchorEl(null);
@@ -425,16 +474,20 @@ export default function RecipeReviewCard(props) {
       denyButtonText: 'Volver',
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(set_published_pet_action({
-          id_usuario: id,
-          id_mascota: id_mascota,
-          publicado: "0"
-        }))
+        dispatch(
+          set_published_pet_action({
+            id_usuario: id,
+            id_mascota: id_mascota,
+            publicado: '0',
+          })
+        );
         Swal.fire('¡Mascota desactivada!', '', 'success').then((result) => {
           if (result.isConfirmed) {
-            dispatch(get_pets_by_user_action({
-              id_usuario: id
-            }))
+            dispatch(
+              get_pets_by_user_action({
+                id_usuario: id,
+              })
+            );
             dispatch(set_active_pets_action(true));
             Swal.close();
           }
@@ -443,8 +496,7 @@ export default function RecipeReviewCard(props) {
         Swal.fire('Los cambios no han sido guardados', '', 'info');
       }
     });
-
-  }
+  };
 
   const handlePublishPet = () => {
     setAnchorEl(null);
@@ -457,16 +509,20 @@ export default function RecipeReviewCard(props) {
       denyButtonText: 'Volver',
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(set_published_pet_action({
-          id_usuario: id,
-          id_mascota: id_mascota,
-          publicado: "1"
-        }))
+        dispatch(
+          set_published_pet_action({
+            id_usuario: id,
+            id_mascota: id_mascota,
+            publicado: '1',
+          })
+        );
         Swal.fire('¡Mascota publicada!', '', 'success').then((result) => {
           if (result.isConfirmed) {
-            dispatch(get_pets_by_user_action({
-              id_usuario: id
-            }))
+            dispatch(
+              get_pets_by_user_action({
+                id_usuario: id,
+              })
+            );
             dispatch(set_active_pets_action(false));
             Swal.close();
           }
@@ -475,8 +531,7 @@ export default function RecipeReviewCard(props) {
         Swal.fire('Los cambios no han sido guardados', '', 'info');
       }
     });
-
-  }
+  };
 
   // filtros harold
   const [filtersInitial] = useState({
@@ -496,21 +551,19 @@ export default function RecipeReviewCard(props) {
 
   return (
     <>
-      { showUserPets ?
-        <Grid container className={classes.userPetTittleContainer} justify="center">
-          {activePets ?
-            <Typography variant="h4">
-              Mis mascotas Publicadas
-            </Typography>
-            :
-            <Typography variant="h4">
-              Mis publicaciones desactivadas
-              </Typography>
-          }
+      {showUserPets ? (
+        <Grid
+          container
+          className={classes.userPetTittleContainer}
+          justify="center"
+        >
+          {activePets ? (
+            <Typography variant="h4">Mis mascotas Publicadas</Typography>
+          ) : (
+            <Typography variant="h4">Mis publicaciones desactivadas</Typography>
+          )}
         </Grid>
-        :
-        null
-      }
+      ) : null}
       <Grid
         container
         spacing={isMobile ? 1 : 3 /* && isTablet ? 6 : 3 */}
@@ -536,7 +589,6 @@ export default function RecipeReviewCard(props) {
                 })}
                 onClick={() => dispatch(select_pet_action(item.id_mascota))}
               >
-
                 <CarouselPhotos itemPets={item.fotos} />
 
                 <div
@@ -578,7 +630,9 @@ export default function RecipeReviewCard(props) {
                         />
                       </IconButton>
                       <IconButton
-                        onClick={() => dispatch(set_user_pet_modal_data_action(true))}
+                        onClick={() =>
+                          dispatch(set_user_pet_modal_data_action(true))
+                        }
                         value={item.id_mascota}
                       >
                         <img
@@ -594,7 +648,7 @@ export default function RecipeReviewCard(props) {
                       } */}
                     </div>
 
-                    {showUserPets ?
+                    {showUserPets ? (
                       <Button
                         className={classes.buttonPrimary}
                         variant="contained"
@@ -603,41 +657,38 @@ export default function RecipeReviewCard(props) {
                         onClick={handleOpenMenu}
                       >
                         Opciones
-                   </Button>
-                      :
-                      item.tipo_tramite === '1' ? (
-                        <Button
-                          className={classes.buttonPrimary}
-                          variant="contained"
-                          size="small"
-                          color="secondary"
-                          onClick={handleClickAdoptMe}
-                        >
-                          Adóptame
-                        </Button>
-                      ) : item.tipo_tramite === '2' ? (
-                        <Button
-                          className={classes.buttonPrimary}
-                          variant="contained"
-                          size="small"
-                          color="secondary"
-                          onClick={handleClickAdoptMe}
-                        >
-                          Encuéntrame
-                        </Button>
-                      ) : item.tipo_tramite === '3' ? (
-                        <Button
-                          className={classes.buttonPrimary}
-                          variant="contained"
-                          size="small"
-                          color="secondary"
-                          onClick={handleClickAdoptMe}
-                        >
-                          Infórmame
-                        </Button>
-                      ) : null
-
-                    }
+                      </Button>
+                    ) : item.tipo_tramite === '1' ? (
+                      <Button
+                        className={classes.buttonPrimary}
+                        variant="contained"
+                        size="small"
+                        color="secondary"
+                        onClick={handleClickAdoptMe}
+                      >
+                        Adóptame
+                      </Button>
+                    ) : item.tipo_tramite === '2' ? (
+                      <Button
+                        className={classes.buttonPrimary}
+                        variant="contained"
+                        size="small"
+                        color="secondary"
+                        onClick={handleClickFindMe}
+                      >
+                        Encuéntrame
+                      </Button>
+                    ) : item.tipo_tramite === '3' ? (
+                      <Button
+                        className={classes.buttonPrimary}
+                        variant="contained"
+                        size="small"
+                        color="secondary"
+                        onClick={handleClickHelpMe}
+                      >
+                        Infórmame
+                      </Button>
+                    ) : null}
                   </CardActions>
                 </div>
               </Card>
@@ -655,11 +706,12 @@ export default function RecipeReviewCard(props) {
       >
         <MenuItem onClick={handleClickEditMe}>Editar</MenuItem>
         {activePets ? (
-          <MenuItem onClick={handleUnpublishPet}>Desactivar Publicación</MenuItem>
+          <MenuItem onClick={handleUnpublishPet}>
+            Desactivar Publicación
+          </MenuItem>
         ) : (
           <MenuItem onClick={handlePublishPet}>Activar Publicación</MenuItem>
         )}
-
       </Menu>
     </>
   );

@@ -15,7 +15,7 @@ const initialState = {
         id_unde: '',
         id_codigo: '',
         telefono: '',
-        email: '',
+        correo: '',
         estado_civil: '',
         ocupacion: '',
         id: ''

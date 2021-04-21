@@ -16,6 +16,7 @@ import {
   SACI_PASSWORD_PROFILE,
   SACI_PASSWORD_VALIDATE_PROFILE,
   SACI_PHOTO_PROFILE,
+  SACI_PHOTO_DELETE_PROFILE,
   // GET_SACI_USER_MESSAGE,
   /* REGISTER_TO_LOGIN */
 } from '../types';
@@ -159,6 +160,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         photoProfile: action.payload,
+      };
+
+    case SACI_PHOTO_DELETE_PROFILE:
+      return {
+        ...state,
+        photoProfile: action.payload,
+        userPhoto: null
       };
 
     // case GET_SACI_USER_MESSAGE:

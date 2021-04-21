@@ -41,18 +41,14 @@ export async function savePasswordEdit(editPassword) {
 }
 
 export async function validatePasswordEdit(editPasswordCurrent) {
-
-  console.log(editPasswordCurrent)
+  console.log(editPasswordCurrent);
   const formData = new FormData();
 
-formData.append('password', editPasswordCurrent.passwordCurrent);
-formData.append('id', editPasswordCurrent.id);
+  formData.append('password', editPasswordCurrent.passwordCurrent);
+  formData.append('id', editPasswordCurrent.id);
 
   try {
-    const response = await axiosClient.post(
-      '/CompararContra',
-      formData
-    );
+    const response = await axiosClient.post('/CompararContra', formData);
     console.log(response);
     return response;
   } catch (error) {
@@ -71,6 +67,19 @@ export async function uploadPhotoEdit(userimage, id) {
     const response = await axiosClient.post('/upload2', formData);
     console.log(response);
     return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function deletePhotoEdit(id) {
+  const formData = new FormData();
+
+  formData.append('id_usuario', id);
+
+  try {
+    const response = await axiosClient.post('/EliminarFotoUser', formData);
+    console.log(response);
   } catch (error) {
     console.log(error);
   }

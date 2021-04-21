@@ -4,6 +4,7 @@ import {
   PAGE_SACI_PETS,
   SELECT_PET_DATA,
   SET_ADOPT_ME_DIALOG,
+  SET_ADOPT_ME_DIALOG_PROCEDURE,
   SET_PET_DATA_DIALOG,
   SET_UNLOGGED_MODAL,
   SHOW_USER_PETS
@@ -1728,6 +1729,14 @@ export const adopt_me_dialog_action = (dialogState) => async (dispatch) => {
     payload: dialogState,
   });
 };
+
+export const adopt_me_dialog_procedure_action = (procedure) => async (dispatch) => {
+  console.log(procedure)
+  dispatch({
+    type: SET_ADOPT_ME_DIALOG_PROCEDURE,
+    payload: procedure
+  })
+}
 
 export const pet_data_dialog_action = (dialogDataState) => async (dispatch) => {
   dispatch({

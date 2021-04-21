@@ -6,6 +6,7 @@ import {
   savePasswordEdit,
   validatePasswordEdit,
   uploadPhotoEdit,
+  deletePhotoEdit,
 } from '../../configAxios/userProfile';
 import {
   INICIAR_SESION_ERROR,
@@ -25,6 +26,7 @@ import {
   SACI_PASSWORD_VALIDATE_PROFILE,
   SACI_PASSWORD_PROFILE,
   SACI_PHOTO_PROFILE,
+  SACI_PHOTO_DELETE_PROFILE,
 } from '../types';
 import Swal from 'sweetalert2';
 
@@ -36,7 +38,7 @@ export function loginNormalAction(data) {
     try {
       const response = await saveUserLogin(data);
       dispatch(loginNormalSuccess(response.data.user));
-      dispatch(loginNormalSuccessPhoto(response.data.foto))
+      dispatch(loginNormalSuccessPhoto(response.data.foto));
     } catch (error) {
       dispatch(loginNormalError(error));
       console.log(data);
@@ -226,6 +228,19 @@ export const saci_photo_profile_action = (userimage, id) => async (
     dispatch({
       type: SACI_PHOTO_PROFILE,
       payload: responsePhotoProfile.data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const saci_photo_delete_profile_action = (id) => async (dispatch) => {
+  try {
+    const responseDeletePhotoProfile = await deletePhotoEdit(id);
+    console.log(responseDeletePhotoProfile);
+    dispatch({
+      type: SACI_PHOTO_DELETE_PROFILE,
+      payload: responseDeletePhotoProfile,
     });
   } catch (error) {
     console.log(error);
