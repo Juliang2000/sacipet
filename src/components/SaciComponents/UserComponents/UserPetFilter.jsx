@@ -1,13 +1,16 @@
 import { Button, Grid } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { show_user_pets_action } from '../../../redux/actions/saciPets';
 import { set_active_pets_action } from '../../../redux/actions/userPetsAction';
 
 export default function UserPetFilter() {
     const { userPetsRegistered } = useSelector(state => state.userPets);
+    const history = useHistory()
     const [petState, setPetState] = useState("1");
     const { showUserPets } = useSelector(state => state.saciPets);
+    const { onRequestPage } = useSelector(state => state.userPets);
     const dispatch = useDispatch();
     useEffect(() => {
         if (petState !== null) {
@@ -23,7 +26,7 @@ export default function UserPetFilter() {
     }, [petState]);
     return (
         <>
-            <Grid container style={{ marginTop: "100px", /* marginLeft: "10px", */ marginRight: "30px" }} spacing={2} alignItems="center" justify="center">
+            <Grid container style={{/* marginLeft: "10px", */ marginRight: "30px" }} spacing={2} alignItems="center" justify="center">
                 <Grid item xs={8}>
                     <Button
                         onClick={() => setPetState("1")}
@@ -41,6 +44,15 @@ export default function UserPetFilter() {
                         fullWidth
                         style={{ color: "#fff", textTransform: "none" }}>
                         Publicaciones desactivadas
+                    </Button>
+                </Grid>
+                <Grid item xs={8}>
+                    <Button
+                        onClick={() => history.push("/adopt-request")}
+                        variant="contained" color="primary"
+                        fullWidth
+                        style={{ color: "#fff", textTransform: "none" }}>
+                        Solicitudes de adopción
                     </Button>
                 </Grid>
             </Grid>

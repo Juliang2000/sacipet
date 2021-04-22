@@ -25,6 +25,7 @@ import {
   SACI_PASSWORD_VALIDATE_PROFILE,
   SACI_PASSWORD_PROFILE,
   SACI_PHOTO_PROFILE,
+  CHECK_LOGIN,
 } from '../types';
 import Swal from 'sweetalert2';
 
@@ -231,3 +232,9 @@ export const saci_photo_profile_action = (userimage, id) => async (
     console.log(error);
   }
 };
+
+export const check_login_action = () => async (dispatch) => {
+  dispatch({
+    type: CHECK_LOGIN
+  })
+}

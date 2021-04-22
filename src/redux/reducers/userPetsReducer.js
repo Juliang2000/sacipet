@@ -5,7 +5,9 @@ import {
     SET_USER_PET_MODAL_DATA,
     SAVE_USER_PET_DATA,
     ACTIVE_PET_STATE,
-    SET_PUBLISHED_PET
+    SET_PUBLISHED_PET,
+    REQUEST_PET,
+    SELECTED_REQUEST
 } from "../types"
 
 
@@ -47,7 +49,10 @@ const initialState = {
         vacunas: ""
     },
     activePets: true,
-    publishPetResponse: null
+    publishPetResponse: null,
+    petRequestArray: [],
+    onRequestPage: false,
+    selectRequestData: null
 }
 
 export default (state = initialState, action) => {
@@ -87,6 +92,17 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 publishPetResponse: action.payload
+            }
+        case REQUEST_PET:
+            return {
+                ...state,
+                petRequestArray: action.payload,
+                onRequestPage: true
+            }
+        case SELECTED_REQUEST:
+            return {
+                ...state,
+                selectRequestData: action.payload
             }
         default: return state
     }

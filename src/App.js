@@ -12,6 +12,7 @@ import SaciDashboard from './pages/SaciDashboard'
 import Profile from './pages/Profile'
 //theme
 import mainTheme from './assets/css/js/mainTheme';
+import MyAdoptRequest from './pages/MyAdoptRequest';
 
 function App() {
   const theme = mainTheme;
@@ -23,6 +24,7 @@ function App() {
             <Route exact path="/" component={SaciDashboard} />
             <Route path="/Pinina" component={PininaDashboard} />
             <Route path="/Profile" component={Profile} />
+            <Route path="/adopt-request" component={MyAdoptRequest} />
             {/* <PrivateRoute path="/menu-user" component={MenuUser} /> */}
           </Switch>
         </Router>

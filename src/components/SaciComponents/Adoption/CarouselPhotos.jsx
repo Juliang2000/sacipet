@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 // Carousel
 import Carousel from 'react-material-ui-carousel'
-import { CardMedia } from '@material-ui/core'
+import { Button, CardMedia } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 
 //iconos de Carousel
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
         height: 450,
         [theme.breakpoints.down('lg')]: {
             height: 370,
-          },
+        },
     },
 }));
 

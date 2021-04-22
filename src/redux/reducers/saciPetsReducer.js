@@ -30,7 +30,6 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 mascotas: action.payload,
-                showUserPets: false
             }
 
         case PAGE_SACI_PETS:
@@ -79,7 +78,6 @@ export default (state = initialState, action) => {
         case GET_PETS_NO_FILTER:
             return {
                 ...state,
-                mascotas: action.payload,
                 showUserPets: false
 
             }

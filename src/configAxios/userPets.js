@@ -20,3 +20,13 @@ export async function publishPet(data) {
 }
 
 export default getUserPets;
+
+export async function userPetRequest(userId) {
+    try {
+        const response = await axiosClient.post('/MacotasRegistradas', userId);
+        return response.data.form;
+
+    } catch (e) {
+        console.log(e);
+    }
+}

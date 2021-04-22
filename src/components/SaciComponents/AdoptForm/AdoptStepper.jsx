@@ -506,6 +506,7 @@ export default function AdoptStepper() {
   const [checked, setChecked] = useState(false);
 
   const handleClickSaciPets = () => {
+    dispatch(get_saci_pets_action({ id_tipo_mascota: false }));
     dispatch(get_saci_pets_no_filters_action());
   }
 

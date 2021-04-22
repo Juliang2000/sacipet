@@ -34,7 +34,7 @@ import Swal from 'sweetalert2';
 
 import Login from '../../pages/Login'
 import Register from '../../pages/Register'
-import { LoginRegisteredAction, login_dialog_close_action, login_dialog_open_action, adopt_dialog_close_action, adoptstepper_dialog_open_action } from '../../redux/actions/loginAction';
+import { LoginRegisteredAction, login_dialog_close_action, login_dialog_open_action, adopt_dialog_close_action, adoptstepper_dialog_open_action, check_login_action } from '../../redux/actions/loginAction';
 import { register_dialog_close_action } from '../../redux/actions/registerAction';
 import { reset_pets_action, set_active_pets_action, user_pets_modal_action } from '../../redux/actions/userPetsAction';
 import { show_user_pets_action } from '../../redux/actions/saciPets';
@@ -108,9 +108,8 @@ export default function SectionDesktop() {
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
     const [cleanPets, setCleanPets] = useState(false);
-
     const dispatch = useDispatch();
-
+    const { checkLogin } = useSelector(state => state.login);
     const { nombres } = useSelector(state => state.login.user);
     const { registerData } = useSelector(state => state.register);
 
@@ -149,21 +148,24 @@ export default function SectionDesktop() {
 
     useEffect(() => {
         if (nombres.length !== 0) {
-            Swal.fire({
-                icon: 'success',
-                title: `Bienvenid@ ${nombres}`,
-                text: 'Sesión Iniciada',
-                confirmButtonColor: '#63C132',
-            }).then((result) => {
-                dispatch(login_dialog_close_action());
-                dispatch(register_dialog_close_action());
-                dispatch(adoptstepper_dialog_open_action());
-                if (result.isConfirmed) {
-                    Swal.close()
-                }
-            })
+            if (checkLogin === false) {
+                Swal.fire({
+                    icon: 'success',
+                    title: `Bienvenid@ ${nombres}`,
+                    text: 'Sesión Iniciada',
+                    confirmButtonColor: '#63C132',
+                }).then((result) => {
+                    dispatch(login_dialog_close_action());
+                    dispatch(register_dialog_close_action());
+                    dispatch(adoptstepper_dialog_open_action());
+                    if (result.isConfirmed) {
+                        Swal.close();
+                        dispatch(check_login_action());
+                    }
+                })
+            }
         }
-    }, [dispatch, nombres])
+    }, [dispatch, nombres, checkLogin])
 
     useEffect(() => {
         if (registerData.length !== 0) {
@@ -197,6 +199,10 @@ export default function SectionDesktop() {
                 }
             })
         }
+    }
+
+    const handleMyRequest = () => {
+        history.push('./adopt-request')
     }
 
     // Rediccionamiento a perfil de usuario con history push
@@ -266,7 +272,8 @@ export default function SectionDesktop() {
                             <ListItemText primary="Mis mascotas publicadas" />
                         </StyledMenuItem>
                         <StyledMenuItem >
-                            <ListItemIcon>
+                            <ListItemIcon
+                                onClick={handleMyRequest}>
                                 <Person />
                             </ListItemIcon>
                             <ListItemText primary="Tus solicitudes de adopción" />

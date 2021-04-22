@@ -2,6 +2,7 @@
 export const INICIAR_SESION_START = 'INICIAR_SESION_START';
 export const INICIAR_SESION_ERROR = 'INICIAR_SESION_ERROR';
 export const INICIAR_SESION_EXITO = 'INICIAR_SESION_EXITO';
+export const CHECK_LOGIN = 'CHECK_LOGIN'
 
 // Registro
 export const REGISTRO_USUARIO_START = 'REGISTRO_USUARIO_START';
@@ -85,6 +86,8 @@ export const SET_STEP = 'SET_STEP'
 export const GET_PETS_NO_FILTER = 'GET_PETS_NO_FILTER'
 export const ACTIVE_PET_STATE = 'ACTIVE_PET_STATE'
 export const SET_PUBLISHED_PET = 'SET_PUBLISHED_PET'
+export const REQUEST_PET = 'REQUEST_PET'
+export const SELECTED_REQUEST = 'SELECTED_REQUEST'
 //////////////////////////////////////////
 
 

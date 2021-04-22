@@ -92,6 +92,8 @@ import petSample from '../../../assets/images/cards/perro_con_peluca.jpg';
 
 // Carousel
 import Carousel from 'react-material-ui-carousel';
+//icons
+import iconAdopt from '../../../assets/icons/drawer/iconAdopt-final.svg';
 
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
@@ -105,7 +107,7 @@ import axiosClient from '../../../configAxios/axios';
 import CarouselPhotos from './CarouselPhotos';
 
 import House from '../../../assets/icons/pet-house.svg';
-import { get_pets_by_user_action, save_selected_pet_data_action, save_user_pet_id_action, set_active_pets_action, set_id_unde_by_pet_saved, set_published_pet_action, set_user_pet_modal_data_action } from '../../../redux/actions/userPetsAction';
+import { get_pets_by_user_action, get_user_pets_request, save_selected_pet_data_action, save_user_pet_id_action, set_active_pets_action, set_id_unde_by_pet_saved, set_published_pet_action, set_user_pet_modal_data_action } from '../../../redux/actions/userPetsAction';
 import { cat_action, dog_action, hamster_action } from '../../../redux/actions/petTypeAction';
 import { get_pet_size_data } from '../../../redux/actions/petSizeAction';
 
@@ -185,7 +187,13 @@ const useStyles = makeStyles((theme) => ({
   },
   userPetTittleContainer: {
     margin: theme.spacing(2, 0, 5, 0),
-  }
+  },
+  RequestIcon: {
+    width: '50px',
+    [theme.breakpoints.only('xs')]: {
+      width: '30px',
+    },
+  },
 }));
 ////////////////////////////////////////////////////////////
 // Data
@@ -218,7 +226,7 @@ export default function RecipeReviewCard(props) {
   const { id_tipo_mascota, id_departamento, id_mascota } = useSelector(state => state.userPets.userPetData);
   const { descriptionData } = useSelector(state => state.adoptFormData);
   const { vacunas } = useSelector(state => state.userPets.userPetData);
-  const { activePets } = useSelector(state => state.userPets);
+  const { activePets, petRequestArray, showRequests } = useSelector(state => state.userPets);
   const userId = {
     id_usuario: `${id}`
   }
@@ -341,6 +349,7 @@ export default function RecipeReviewCard(props) {
   const [moquillo, setMoquillo] = useState(false);
   const [rino, setRino] = useState(false);
   const [parvo, setParvo] = useState(false);
+  const petRequest = true;
 
   useEffect(() => {
     if (showUserPets) {
@@ -483,9 +492,9 @@ export default function RecipeReviewCard(props) {
     id_tipo_mascota: false,
   });
 
-  useEffect(() => {
-    dispatch(get_saci_pets_action(filtersInitial));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(get_saci_pets_action(filtersInitial));
+  // }, []);
 
   // let tipo_tramite1 = pageMascotas.filter((pets) => pets.tipo_tramite === '1');
 
@@ -493,6 +502,13 @@ export default function RecipeReviewCard(props) {
 
   // let tipo_tramite3 = pageMascotas.filter((pets) => pets.tipo_tramite === '3');
   // console.log(tipo_tramite3)
+
+  // consultar solicitudes del usuario
+  useEffect(() => {
+    if (showUserPets) {
+      dispatch(get_user_pets_request({ id_usuario: id }));
+    }
+  }, [showUserPets])
 
   return (
     <>
@@ -587,6 +603,19 @@ export default function RecipeReviewCard(props) {
                           className={classes.iconsCards}
                         />
                       </IconButton>
+                      {petRequest ?
+                        <IconButton
+                          onClick={() => dispatch(set_user_pet_modal_data_action(true))}
+                          value={item.id_mascota}
+                        >
+                          <img
+                            src={iconAdopt}
+                            alt="Request Pet"
+                            className={classes.RequestIcon}
+                          />
+                        </IconButton>
+                        : null
+                      }
                       {/* {showUserPets ?
                         <CustomizedSwitch />
                         :
@@ -635,6 +664,7 @@ export default function RecipeReviewCard(props) {
                         >
                           Infórmame
                         </Button>
+
                       ) : null
 
                     }

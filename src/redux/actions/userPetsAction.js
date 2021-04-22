@@ -1,4 +1,4 @@
-import getUserPets, { publishPet } from "../../configAxios/userPets";
+import getUserPets, { publishPet, userPetRequest } from "../../configAxios/userPets";
 import {
     SET_USER_PETS_MODAL,
     GET_PETS_BY_USER,
@@ -7,7 +7,9 @@ import {
     SAVE_USER_PET_DATA,
     RESET_PETS,
     ACTIVE_PET_STATE,
-    SET_PUBLISHED_PET
+    SET_PUBLISHED_PET,
+    REQUEST_PET,
+    SELECTED_REQUEST
 } from "../types"
 
 
@@ -77,4 +79,24 @@ export const set_published_pet_action = (data) => async (dispatch) => {
     } catch (error) {
         console.log(error)
     }
+}
+
+export const get_user_pets_request = (data) => async (dispatch) => {
+    try {
+        const response = await userPetRequest(data);
+        dispatch({
+            type: REQUEST_PET,
+            payload: response
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const set_selected_request_action = (requestData) => async (dispatch) => {
+    dispatch({
+        type: SELECTED_REQUEST,
+        payload: requestData
+    })
 }
