@@ -37,7 +37,7 @@ import Register from '../../pages/Register'
 import { LoginRegisteredAction, login_dialog_close_action, login_dialog_open_action, adopt_dialog_close_action, adoptstepper_dialog_open_action, check_login_action } from '../../redux/actions/loginAction';
 import { register_dialog_close_action } from '../../redux/actions/registerAction';
 import { reset_pets_action, set_active_pets_action, user_pets_modal_action } from '../../redux/actions/userPetsAction';
-import { show_user_pets_action } from '../../redux/actions/saciPets';
+import { show_out_request_pets_action, show_user_pets_action } from '../../redux/actions/saciPets';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -115,7 +115,8 @@ export default function SectionDesktop() {
 
     const { loginDialog } = useSelector(state => state.login);
     const { registerDialog } = useSelector(state => state.register);
-    const { userPetsRegistered } = useSelector(state => state.userPets)
+    const { userPetsRegistered, showUserPets } = useSelector(state => state.userPets)
+    const { outputRequestData } = useSelector(state => state.outputRequest)
 
     const newUser = useSelector(state => state.register.registerLoginData);
 
@@ -201,8 +202,10 @@ export default function SectionDesktop() {
         }
     }
 
-    const handleMyRequest = () => {
-        history.push('./adopt-request')
+    const handleClickOutputRequest = () => {
+        // if(outputRequestData?.length) {
+            dispatch(show_out_request_pets_action(outputRequestData));
+        // }
     }
 
     // Rediccionamiento a perfil de usuario con history push
@@ -271,9 +274,8 @@ export default function SectionDesktop() {
                             </ListItemIcon>
                             <ListItemText primary="Mis mascotas publicadas" />
                         </StyledMenuItem>
-                        <StyledMenuItem >
-                            <ListItemIcon
-                                onClick={handleMyRequest}>
+                        <StyledMenuItem onClick={handleClickOutputRequest} >
+                            <ListItemIcon>
                                 <Person />
                             </ListItemIcon>
                             <ListItemText primary="Tus solicitudes de adopción" />

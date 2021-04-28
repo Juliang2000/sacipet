@@ -16,7 +16,8 @@ import {
   SACI_PASSWORD_PROFILE,
   SACI_PASSWORD_VALIDATE_PROFILE,
   SACI_PHOTO_PROFILE,
-  CHECK_LOGIN
+  CHECK_LOGIN,
+  SACI_PHOTO_DELETE_PROFILE,
   // GET_SACI_USER_MESSAGE,
   /* REGISTER_TO_LOGIN */
 } from '../types';
@@ -38,7 +39,7 @@ const initialState = {
   passwordValidate: '',
   emailValidate: '',
   userPhoto: '',
-  checkLogin: false
+  checkLogin: false,
 };
 
 export default (state = initialState, action) => {
@@ -155,11 +156,17 @@ export default (state = initialState, action) => {
         ...state,
         photoProfile: action.payload,
       };
+    case SACI_PHOTO_DELETE_PROFILE:
+      return {
+        ...state,
+        photoProfile: action.payload,
+        userPhoto: null,
+      };
     case CHECK_LOGIN:
       return {
         ...state,
-        checkLogin: true
-      }
+        checkLogin: true,
+      };
     default:
       return state;
   }

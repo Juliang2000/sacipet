@@ -9,7 +9,8 @@ import {
     ACTIVE_PET_STATE,
     SET_PUBLISHED_PET,
     REQUEST_PET,
-    SELECTED_REQUEST
+    SELECTED_REQUEST,
+    CLEAN_USER_PETS_DATA
 } from "../types"
 
 
@@ -98,5 +99,11 @@ export const set_selected_request_action = (requestData) => async (dispatch) => 
     dispatch({
         type: SELECTED_REQUEST,
         payload: requestData
+    })
+}
+
+export const clean_user_petS_data_action = () => async (dispatch) => {
+    dispatch({
+        type: CLEAN_USER_PETS_DATA
     })
 }

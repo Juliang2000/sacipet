@@ -1,15 +1,17 @@
 import {
   GET_PETS_NO_FILTER,
   GET_SACI_PETS,
+  NO_USER_PETS,
   PAGE_SACI_PETS,
   SELECT_PET_DATA,
   SET_ADOPT_ME_DIALOG,
+  SET_ADOPT_ME_DIALOG_PROCEDURE,
   SET_PET_DATA_DIALOG,
   SET_UNLOGGED_MODAL,
+  SHOW_OUTPUT_REQ_PETS,
   SHOW_USER_PETS
-} from "../types";
-import { getSaciPets } from "../../configAxios/saciPets";
-
+} from '../types';
+import { getSaciPets } from '../../configAxios/saciPets';
 
 export const get_saci_pets_action = (filters) => async (dispatch) => {
   try {
@@ -1694,7 +1696,7 @@ export const get_saci_pets_action = (filters) => async (dispatch) => {
 
     dispatch({
       type: GET_SACI_PETS,
-      payload: filter,
+      payload: filter
     });
   } catch (error) {
     console.log(error);
@@ -1704,42 +1706,52 @@ export const get_saci_pets_action = (filters) => async (dispatch) => {
 export const page_saci_pets_action = (slicePets) => async (dispatch) => {
   dispatch({
     type: PAGE_SACI_PETS,
-    payload: slicePets,
+    payload: slicePets
   });
 };
 
 export const show_user_pets_action = (userPets) => async (dispatch) => {
   dispatch({
     type: SHOW_USER_PETS,
-    payload: userPets,
+    payload: userPets
   });
 };
 
 export const select_pet_action = (id_mascota) => async (dispatch) => {
   dispatch({
     type: SELECT_PET_DATA,
-    payload: id_mascota,
+    payload: id_mascota
   });
 };
 
 export const adopt_me_dialog_action = (dialogState) => async (dispatch) => {
   dispatch({
     type: SET_ADOPT_ME_DIALOG,
-    payload: dialogState,
+    payload: dialogState
+  });
+};
+
+export const adopt_me_dialog_procedure_action = (procedure) => async (
+  dispatch
+) => {
+  console.log(procedure);
+  dispatch({
+    type: SET_ADOPT_ME_DIALOG_PROCEDURE,
+    payload: procedure
   });
 };
 
 export const pet_data_dialog_action = (dialogDataState) => async (dispatch) => {
   dispatch({
     type: SET_PET_DATA_DIALOG,
-    payload: dialogDataState,
+    payload: dialogDataState
   });
 };
 
 export const unlogged_modal_action = (state) => async (dispatch) => {
   dispatch({
     type: SET_UNLOGGED_MODAL,
-    payload: state,
+    payload: state
   });
 };
 
@@ -1750,7 +1762,7 @@ export const get_saci_pets_filters_races_action = (filtersRacesCards) => async (
     console.log(filtersRacesCards);
     dispatch({
       type: GET_SACI_PETS,
-      payload: filtersRacesCards,
+      payload: filtersRacesCards
     });
   } catch (error) {
     console.log(error);
@@ -1763,9 +1775,21 @@ export const get_saci_pets_no_filters_action = () => async (dispatch) => {
     dispatch({
       type: GET_PETS_NO_FILTER,
       payload: response.data.mascotas
-    })
+    });
   } catch (e) {
     console.error(e);
   }
-}
+};
 
+export const no_user_pets_action = () => async (dispatch) => {
+  dispatch({
+    type: NO_USER_PETS
+  });
+};
+
+export const show_out_request_pets_action = (petData) => async (dispatch) => {
+  dispatch({
+    type: SHOW_OUTPUT_REQ_PETS,
+    payload: petData
+  });
+};

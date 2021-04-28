@@ -59,10 +59,10 @@ export async function getCityData(depData) {
 export async function uploadImagesAdoption(petimage1, id_mascota) {
     const formData = new FormData();
 
-    formData.append('consecutivo',1)
+    formData.append('consecutivo', 1)
     formData.append('photo', petimage1)
     formData.append('id_mascota', id_mascota)
-    
+
     try {
         const response = await axiosClient.post('/upload', formData)
         return response
@@ -74,7 +74,7 @@ export async function uploadImagesAdoption(petimage1, id_mascota) {
 export async function uploadPetImage2(petimage2, id_mascota) {
     const formData = new FormData();
 
-    formData.append('consecutivo',2)
+    formData.append('consecutivo', 2)
     formData.append('photo', petimage2)
     formData.append('id_mascota', id_mascota)
 
@@ -89,7 +89,7 @@ export async function uploadPetImage2(petimage2, id_mascota) {
 export async function uploadPetImage3(petimage3, id_mascota) {
     const formData = new FormData();
 
-    formData.append('consecutivo',3)
+    formData.append('consecutivo', 3)
     formData.append('photo', petimage3)
     formData.append('id_mascota', id_mascota)
 
@@ -104,10 +104,10 @@ export async function uploadPetImage3(petimage3, id_mascota) {
 export async function uploadPetImage4(petimage4, id_mascota) {
     const formData = new FormData();
 
-    formData.append('consecutivo',4)
+    formData.append('consecutivo', 4)
     formData.append('photo', petimage4)
     formData.append('id_mascota', id_mascota)
-  
+
     try {
         const response = await axiosClient.post('/upload', formData)
         return response
@@ -119,7 +119,7 @@ export async function uploadPetImage4(petimage4, id_mascota) {
 export async function uploadPetImage5(petimage5, id_mascota) {
     const formData = new FormData();
 
-    formData.append('consecutivo',5)
+    formData.append('consecutivo', 5)
     formData.append('photo', petimage5)
     formData.append('id_mascota', id_mascota)
 
@@ -128,6 +128,16 @@ export async function uploadPetImage5(petimage5, id_mascota) {
         return response
     } catch (e) {
         console.log(e)
+    }
+}
+
+export async function updateFormData(descriptionData) {
+    try {
+        const response = await axiosClient.post('/ActualizarMascota', descriptionData)
+        return response.data
+    }
+    catch (error) {
+        console.log(error)
     }
 }
 

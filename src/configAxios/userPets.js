@@ -3,11 +3,11 @@ import axiosClient from "./axios";
 async function getUserPets(userId) {
     try {
         const response = await axiosClient.post('/mascotasDesactivadas', userId);
-        return response.data.mascotas;
+        return response.data.mascotas.reverse();
     } catch (e) {
         console.log(e);
     }
-}
+};
 
 export async function publishPet(data) {
     try {
@@ -17,16 +17,16 @@ export async function publishPet(data) {
     } catch (e) {
         console.log(e);
     }
-}
-
-export default getUserPets;
+};
 
 export async function userPetRequest(userId) {
     try {
         const response = await axiosClient.post('/MacotasRegistradas', userId);
-        return response.data.form;
+        return response.data.form.reverse();
 
     } catch (e) {
         console.log(e);
     }
-}
+};
+
+export default getUserPets;

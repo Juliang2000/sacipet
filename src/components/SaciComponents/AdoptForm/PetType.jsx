@@ -176,7 +176,7 @@ export default function PetType() {
         </Hidden>
         <br />
         <br />
-        <Grid item xs={12} sm={4} md={4} spacing={10}>
+        <Grid item xs={12} sm={4} md={4}>
           <Button className={selectClassCat} onClick={handleClickCat}>
             <img src={gato} alt="" className={classes.petsGifs} />
             {/* <Lottie
@@ -192,7 +192,7 @@ export default function PetType() {
             </Typography>
           </div>
         </Grid>
-        <Grid item xs={12} sm={4} md={4} spacing={10}>
+        <Grid item xs={12} sm={4} md={4}>
           <Button className={selectClassDog} onClick={handleClickDog}>
             <img src={perro} alt="" className={classes.petsGifDog} />
             {/* <Lottie
@@ -208,7 +208,7 @@ export default function PetType() {
             </Typography>
           </div>
         </Grid>
-        <Grid item xs={12} sm={4} md={4} spacing={10}>
+        <Grid item xs={12} sm={4} md={4}>
           <Button className={selectClassHamster} onClick={handleClickHamster}>
             <img src={hamster} alt="" className={classes.petsGifs} />
             {/* <Lottie

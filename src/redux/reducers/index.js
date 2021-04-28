@@ -10,6 +10,7 @@ import getHamsterRaceReducer from "./getHamsterRaceReducer";
 import saciPetsReducer from "./saciPetsReducer";
 import adoptMeFormReducer from "./adoptMeFormReducer";
 import userPetsReducer from "./userPetsReducer";
+import outputRequestReducer from "./outputRequestReducer";
 
 export default combineReducers({
     main: mainReducer,
@@ -23,5 +24,6 @@ export default combineReducers({
     adoptFormData: adoptFormReducer,
     saciPets: saciPetsReducer,
     adoptMeForm: adoptMeFormReducer,
-    userPets: userPetsReducer
+    userPets: userPetsReducer,
+    outputRequest: outputRequestReducer
 })

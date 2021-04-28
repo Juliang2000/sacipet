@@ -28,10 +28,10 @@ export default function MyAdoptRequest() {
 
                 </div>
 
-                <Grid container style={{ paddingTop: '100px' }} justify='center'>
+                <Grid container style={{ paddingTop: '20px' }} justify='center'>
                     <Grid item style={{ paddingLeft: '40px', height: '600px', alignContent: 'center' }} xs={2} lg={3} xl={2} >
                         <Typography
-                            style={{ paddingBottom: '30px' }}
+                            // style={{ paddingBottom: '30px' }}
                             variant="h5">
                             Solicitudes entrantes
                             </Typography>

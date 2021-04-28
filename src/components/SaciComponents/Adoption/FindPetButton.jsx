@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Button, makeStyles, withStyles, Hidden } from '@material-ui/core';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -10,7 +10,7 @@ import iconFind from '../../../assets/icons/drawer/iconFind-final.svg';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 //redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   // login_dialog_open_action,
@@ -18,6 +18,7 @@ import {
   // adoptstepper_dialog_close_action,
   adopt_dialog_open_action,
 } from '../../../redux/actions/loginAction';
+import { no_user_pets_action } from '../../../redux/actions/saciPets';
 
 const useStyles = makeStyles((theme) => ({
   adoptionButton: {
@@ -89,6 +90,7 @@ const StyledMenuItem = withStyles((theme) => ({
 export default function FindPetButton() {
   ///////////////Constantes Botón Encuentra tu mascota////////////////
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { showUserPets } = useSelector(state => state.saciPets)
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -107,6 +109,7 @@ export default function FindPetButton() {
 
   const handleClickOpenModalRecover = () => {
     setAnchorEl(null);
+    dispatch(no_user_pets_action());
     dispatch(adopt_dialog_open_action(tramite2));
     dispatch(adoptstepper_dialog_open_action());
   };
@@ -117,25 +120,30 @@ export default function FindPetButton() {
 
   const handleClickOpenModalLost = () => {
     setAnchorEl(null);
+    dispatch(no_user_pets_action());
     dispatch(adopt_dialog_open_action(tramite3));
     dispatch(adoptstepper_dialog_open_action());
   };
 
   const classes = useStyles();
   return (
-    <div>
+    <>
       <Hidden smDown>
-        <Button
-          color="secondary"
-          className={classes.findPetButtonDesktop}
-          onClick={handleClick}
-          startIcon={
-            <img src={iconFind} alt="LogIn" className={classes.menuIcons} />
-          }
-        >
-          <ArrowDropDownIcon />
-          <Hidden only="md">Encontrar</Hidden>
-        </Button>
+        {showUserPets ?
+          null
+          :
+          <Button
+            color="secondary"
+            className={classes.findPetButtonDesktop}
+            onClick={handleClick}
+            startIcon={
+              <img src={iconFind} alt="LogIn" className={classes.menuIcons} />
+            }
+          >
+            <ArrowDropDownIcon />
+            <Hidden only="md">Encontrar</Hidden>
+          </Button>
+        }
       </Hidden>
 
       <Hidden mdUp>
@@ -171,6 +179,6 @@ export default function FindPetButton() {
           <ListItemText primary="Mascotas Perdidas" />
         </StyledMenuItem>
       </StyledMenu>
-    </div>
+    </>
   );
 }
