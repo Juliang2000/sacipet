@@ -6,6 +6,11 @@ body {
 
 button {
   outline: none !important;
+  text-transform: none !important;
+}
+
+#buttonWhite {
+  color: #fff !important
 }
 
 .swal-wide {

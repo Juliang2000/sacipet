@@ -124,12 +124,10 @@ const IOSSwitch = withStyles((theme) => ({
   );
 });
 
-export function CustomizedSwitch() {
+export function CustomizedSwitch({stateTerm, setStateTerm}) {
   const dispatch = useDispatch();
   const { formData } = useSelector((state) => state.adoptMeForm);
-  const [stateTerm, setStateTerm] = useState({
-    terminos: false,
-  });
+
 
   const handleChange = (event) => {
     setStateTerm({ ...stateTerm, [event.target.name]: event.target.checked });
@@ -185,6 +183,13 @@ export function getStepContent(step) {
 }
 
 export default function AdoptMeForm() {
+
+
+  const [stateTerm, setStateTerm] = useState({
+    terminos: false,
+  });
+
+
   const { nombres, telefono, correo } = useSelector(
     (state) => state.login.user
   );
@@ -315,7 +320,7 @@ export default function AdoptMeForm() {
                     justify="center"
                     alignItems="center"
                   >
-                    <CustomizedSwitch />
+                    <CustomizedSwitch stateTerm = {stateTerm} setStateTerm= {setStateTerm}/>
                   </Grid>
                 </Grid>
                 <Grid container style={{ marginBottom: '2%' }} justify="center">
@@ -327,7 +332,7 @@ export default function AdoptMeForm() {
                     color="primary"
                     className={classes.button}
                     onClick={handleClickRegister}
-                    // disabled={}
+                    disabled={stateTerm.terminos ? false : true}
                   >
                     Enviar
                   </Button>
@@ -401,7 +406,11 @@ function UserData() {
   const estadoCivilStore = useSelector(
     (state) => state.adoptMeForm.formData.estado_civil
   );
+  
   const { departments, cities } = useSelector((state) => state.adoptFormData);
+
+  const { userPetData } = useSelector((state) => state.userPets);
+
   const [allowCities, setAllowCities] = useState(false);
   const [userData, setUserData] = useState({
     nombre_adoptante: `${nombreStore}`,
@@ -412,6 +421,7 @@ function UserData() {
     correo: `${correoStore}`,
     ocupacion: `${ocupacionStore}`,
     estado_civil: `${estadoCivilStore}`,
+    id_mascota: `${userPetData.id_mascota}`,
     // id_usuario: `${idUsuarioStore}`,
     // id: `${idStore}`,
     id: `${idUsuarioStore}`,
