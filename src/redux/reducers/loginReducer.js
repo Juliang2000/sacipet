@@ -16,6 +16,7 @@ import {
   SACI_PASSWORD_PROFILE,
   SACI_PASSWORD_VALIDATE_PROFILE,
   SACI_PHOTO_PROFILE,
+  CHECK_LOGIN,
   SACI_PHOTO_DELETE_PROFILE,
   // GET_SACI_USER_MESSAGE,
   /* REGISTER_TO_LOGIN */
@@ -38,10 +39,7 @@ const initialState = {
   passwordValidate: '',
   emailValidate: '',
   userPhoto: '',
-  // errorMessage: '',
-  // registerToLogin: null,
-  // success: false,
-  // mensaje: '',
+  checkLogin: false,
 };
 
 export default (state = initialState, action) => {
@@ -57,10 +55,7 @@ export default (state = initialState, action) => {
         ...state,
         loader: false,
         error: false,
-        // errorMessage: '',
         user: action.payload,
-        // success: true,
-        // mensaje: action.payload
       };
 
     case INICIAR_SESION_EXITO_PHOTO:
@@ -161,20 +156,17 @@ export default (state = initialState, action) => {
         ...state,
         photoProfile: action.payload,
       };
-
     case SACI_PHOTO_DELETE_PROFILE:
       return {
         ...state,
         photoProfile: action.payload,
-        userPhoto: null
+        userPhoto: null,
       };
-
-    // case GET_SACI_USER_MESSAGE:
-    //   return {
-    //     ...state,
-    //     message: action.payload,
-    //   };
-
+    case CHECK_LOGIN:
+      return {
+        ...state,
+        checkLogin: true,
+      };
     default:
       return state;
   }

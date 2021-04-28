@@ -27,6 +27,7 @@ import {
   SACI_PASSWORD_PROFILE,
   SACI_PHOTO_PROFILE,
   SACI_PHOTO_DELETE_PROFILE,
+  CHECK_LOGIN,
 } from '../types';
 import Swal from 'sweetalert2';
 
@@ -245,4 +246,10 @@ export const saci_photo_delete_profile_action = (id) => async (dispatch) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const check_login_action = () => async (dispatch) => {
+  dispatch({
+    type: CHECK_LOGIN,
+  });
 };

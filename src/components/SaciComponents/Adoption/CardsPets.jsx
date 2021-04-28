@@ -99,6 +99,8 @@ import petSample from '../../../assets/images/cards/perro_con_peluca.jpg';
 
 // Carousel
 import Carousel from 'react-material-ui-carousel';
+//icons
+import iconAdopt from '../../../assets/icons/drawer/iconAdopt-final.svg';
 
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
@@ -110,10 +112,9 @@ import pug4 from '../../../assets/images/cardsModal/pug4.jpg';
 import pug5 from '../../../assets/images/cardsModal/pug5.jpg';
 import axiosClient from '../../../configAxios/axios';
 import CarouselPhotos from './CarouselPhotos';
-
-import House from '../../../assets/icons/pet-house.svg';
 import {
   get_pets_by_user_action,
+  get_user_pets_request,
   save_selected_pet_data_action,
   save_user_pet_id_action,
   set_active_pets_action,
@@ -129,6 +130,7 @@ import {
 import { get_pet_size_data } from '../../../redux/actions/petSizeAction';
 
 import { adopt_dialog_open_action } from '../../../redux/actions/loginAction';
+import { get_output_request_pets_action } from '../../../redux/actions/outputRequestAction';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -206,6 +208,12 @@ const useStyles = makeStyles((theme) => ({
   },
   userPetTittleContainer: {
     margin: theme.spacing(2, 0, 5, 0),
+  },
+  RequestIcon: {
+    width: '50px',
+    [theme.breakpoints.only('xs')]: {
+      width: '30px',
+    },
   },
 }));
 ////////////////////////////////////////////////////////////
@@ -389,6 +397,7 @@ export default function RecipeReviewCard(props) {
   const [moquillo, setMoquillo] = useState(false);
   const [rino, setRino] = useState(false);
   const [parvo, setParvo] = useState(false);
+  const petRequest = true;
 
   useEffect(() => {
     if (showUserPets) {
@@ -539,8 +548,14 @@ export default function RecipeReviewCard(props) {
   });
 
   useEffect(() => {
-    dispatch(get_saci_pets_action(filtersInitial));
-  }, []);
+    if (id !== null) {
+      dispatch(get_output_request_pets_action({ id: id }));
+    }
+  }, [id])
+
+  // useEffect(() => {
+  //   dispatch(get_saci_pets_action(filtersInitial));
+  // }, []);
 
   // let tipo_tramite1 = pageMascotas.filter((pets) => pets.tipo_tramite === '1');
 
@@ -548,6 +563,13 @@ export default function RecipeReviewCard(props) {
 
   // let tipo_tramite3 = pageMascotas.filter((pets) => pets.tipo_tramite === '3');
   // console.log(tipo_tramite3)
+
+  // consultar solicitudes del usuario
+  useEffect(() => {
+    if (showUserPets) {
+      dispatch(get_user_pets_request({ id_usuario: id }));
+    }
+  }, [showUserPets])
 
   return (
     <>
@@ -641,6 +663,19 @@ export default function RecipeReviewCard(props) {
                           className={classes.iconsCards}
                         />
                       </IconButton>
+                      {petRequest ?
+                        <IconButton
+                          onClick={() => dispatch(set_user_pet_modal_data_action(true))}
+                          value={item.id_mascota}
+                        >
+                          <img
+                            src={iconAdopt}
+                            alt="Request Pet"
+                            className={classes.RequestIcon}
+                          />
+                        </IconButton>
+                        : null
+                      }
                       {/* {showUserPets ?
                         <CustomizedSwitch />
                         :
@@ -692,11 +727,11 @@ export default function RecipeReviewCard(props) {
                   </CardActions>
                 </div>
               </Card>
-            </Grid>
+            </Grid >
           );
         })}
         <Error />
-      </Grid>
+      </Grid >
       <Menu
         id="simple-menu"
         anchorEl={anchorEl}

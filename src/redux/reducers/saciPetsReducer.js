@@ -9,6 +9,8 @@ import {
   SHOW_USER_PETS,
   RESET_PETS,
   GET_PETS_NO_FILTER,
+  NO_USER_PETS,
+  SHOW_OUTPUT_REQ_PETS
 } from '../types';
 
 const initialState = {
@@ -19,7 +21,8 @@ const initialState = {
   dataDialog: false,
   unloggedModal: false,
   showUserPets: false,
-  procedure: null,
+  showOutReqPets: false,
+  procedure: null
 };
 
 export default (state = initialState, action) => {
@@ -28,63 +31,74 @@ export default (state = initialState, action) => {
       return {
         ...state,
         mascotas: action.payload,
-        showUserPets: false,
+        showUserPets: false
       };
 
     case PAGE_SACI_PETS:
       return {
         ...state,
-        pageMascotas: action.payload,
+        pageMascotas: action.payload
       };
 
     case SELECT_PET_DATA:
       return {
         ...state,
-        petSelected: action.payload,
+        petSelected: action.payload
       };
 
     case SET_ADOPT_ME_DIALOG:
       return {
         ...state,
-        adoptMeDialog: action.payload,
+        adoptMeDialog: action.payload
       };
 
     case SET_ADOPT_ME_DIALOG_PROCEDURE:
       return {
         ...state,
-        procedure: action.payload,
+        procedure: action.payload
       };
 
     case SET_PET_DATA_DIALOG:
       return {
         ...state,
-        dataDialog: action.payload,
+        dataDialog: action.payload
       };
 
     case SET_UNLOGGED_MODAL:
       return {
         ...state,
-        unloggedModal: action.payload,
+        unloggedModal: action.payload
       };
 
     case SHOW_USER_PETS:
       return {
         ...state,
         mascotas: action.payload,
-        showUserPets: true,
+        showUserPets: true
       };
 
     case RESET_PETS:
       return {
         ...state,
-        pageMascotas: [],
+        pageMascotas: []
       };
 
     case GET_PETS_NO_FILTER:
       return {
         ...state,
         mascotas: action.payload,
-        showUserPets: false,
+        showUserPets: false
+      };
+    case NO_USER_PETS:
+      return {
+        ...state,
+        showUserPets: false
+      };
+    case SHOW_OUTPUT_REQ_PETS:
+      return {
+        ...state,
+        mascotas: action.payload,
+        showOutReqPets: true
       };
 
     default:

@@ -23,7 +23,10 @@ import {
     PET_DESCRIPTION_NOT_OK,
     RESET_CITY_ACTION,
     SET_EDIT_USER_PET_DIALOG,
-    SET_STEP
+    SET_STEP,
+    SAVE_USER_CONTACT_DATA,
+    SET_CHECKBOX_CONTACT_DATA,
+    UPDATE_USER_PET_FORMDATA
 } from "../types";
 
 //axios
@@ -35,7 +38,8 @@ import {
     uploadPetImage2,
     uploadPetImage3,
     uploadPetImage4,
-    uploadPetImage5
+    uploadPetImage5,
+    updateFormData
 } from "../../configAxios/petFormAdoption"
 import { CardActions } from "@material-ui/core";
 
@@ -248,6 +252,26 @@ export const upload_pet_image_5 = (petimage5, id_mascota) => async (dispatch, ge
     }
 }
 
+export const save_user_contact_data_action = (data) => async (dispatch) => {
+    dispatch({
+        type: SAVE_USER_CONTACT_DATA,
+        payload: data
+    })
+}
+
+export const set_checkbox_contactData_action = (checkboxData) => async (dispatch) => {
+    dispatch({
+        type: SET_CHECKBOX_CONTACT_DATA,
+        payload: checkboxData
+    })
+}
+
+export const update_user_pet_formData_action = (descriptionData) => async (dispatch) => {
+    const response = await updateFormData(descriptionData)
+    dispatch({
+        type: UPDATE_USER_PET_FORMDATA
+    })
+}
 
 
 

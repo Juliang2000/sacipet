@@ -10,6 +10,7 @@ import getHamsterRaceReducer from "./getHamsterRaceReducer";
 import saciPetsReducer from "./saciPetsReducer";
 import adoptMeFormReducer from "./adoptMeFormReducer";
 import userPetsReducer from "./userPetsReducer";
+import outputRequestReducer from "./outputRequestReducer";
 import questionPetsReducer from "./questionPetsReducer";
 
 export default combineReducers({
@@ -25,10 +26,6 @@ export default combineReducers({
     saciPets: saciPetsReducer,
     adoptMeForm: adoptMeFormReducer,
     userPets: userPetsReducer,
-
-
-
-
-    
+    outputRequest: outputRequestReducer,
     questionPets: questionPetsReducer
 })

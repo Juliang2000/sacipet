@@ -29,6 +29,7 @@ import {
   reset_form_action,
   set_edit_user_pet_dialog,
   set_step_action,
+  update_user_pet_formData_action,
 } from '../../../redux/actions/adoptFormAction';
 
 //components
@@ -59,6 +60,8 @@ import {
 } from '../../../redux/actions/loginAction';
 import { register_dialog_open_action } from '../../../redux/actions/registerAction';
 import adoptStepperStyles from '../../../assets/css/js/adoptStepperStyles';
+import { clean_user_petS_data_action, reset_pets_action } from '../../../redux/actions/userPetsAction';
+import UserDescription from './UserDescription';
 
 const ColorlibConnector = withStyles({
   alternativeLabel: {
@@ -194,13 +197,15 @@ function ColorlibStepIcon(props) {
   console.log(showUserPets)
   const icons = showUserPets ? {
     1: <img src={petDateIcon} alt="Pets Dates" />,
-    2: <img src={petPhotoIcon} alt="Pets Photos" />,
+    2: <img src={petDateIcon} alt="Pets Dates" />,
+    3: <img src={petPhotoIcon} alt="Pets Photos" />,
   }
     :
     {
       1: <img src={petTypeIcon} alt="Pets Types" />,
       2: <img src={petDateIcon} alt="Pets Dates" />,
-      3: <img src={petPhotoIcon} alt="Pets Photos" />,
+      3: <img src={petDateIcon} alt="Pets Dates" />,
+      4: <img src={petPhotoIcon} alt="Pets Photos" />,
     };
 
   return (
@@ -219,12 +224,14 @@ export function getSteps(showUserPets) {
   return showUserPets ? [
     // 'Selecciona el tipo de mascota',
     'Datos de la mascota',
+    'Datos del usuario',
     'Subir fotos',
   ]
     :
     [
       'Selecciona el tipo de mascota',
       'Datos de la mascota',
+      'Datos del usuario',
       'Subir fotos',
     ];
 }
@@ -234,8 +241,10 @@ function getStepContent(step, showUserPets, setDescriptionState) {
     case 0:
       return showUserPets ? <PetDescription /> : <PetType />;
     case 1:
-      return showUserPets ? <PetImages /> : <PetDescription />
+      return showUserPets ? <UserDescription /> : <PetDescription />
     case 2:
+      return showUserPets ? <PetImages /> : <UserDescription />;
+    case 3:
       return showUserPets ? null : <PetImages />;
     default:
       return 'Unknown step';
@@ -252,7 +261,8 @@ export default function AdoptStepper() {
   const { editPetDialog } = useSelector(state => state.adoptFormData)
   const { userPetData } = useSelector(state => state.userPets);
   const { showUserPets } = useSelector(state => state.saciPets);
-
+  const { descriptionData } = useSelector(state => state.adoptFormData);
+  const { userPetId } = useSelector(state => state.userPets)
   const newPet = useSelector(
     (state) => state.adoptFormData.updateDescriptionData
   );
@@ -267,7 +277,7 @@ export default function AdoptStepper() {
   const classes = adoptStepperStyles();
 
   const [saveFormDescription, setSaveFormDescription] = useState(true);
-  const [allowContent, setAllowContent] = useState(false);
+  const [allowContent, setAllowContent] = useState(true);
   const [descriptionState, setDescriptionState] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps(showUserPets);
@@ -277,8 +287,16 @@ export default function AdoptStepper() {
   useEffect(() => {
     if (showUserPets) {
       dispatch(set_step_action(2));
+      setAllowContent(true);
     } else {
       dispatch(set_step_action(1));
+    }
+    if (showUserPets === false) {
+      dispatch(set_edit_user_pet_dialog(false));
+      dispatch(adoptstepper_dialog_close_action());
+      dispatch(reset_action());
+      dispatch(reset_form_action());
+      setAllowContent(false);
 
     }
   }, [showUserPets]);
@@ -296,20 +314,27 @@ export default function AdoptStepper() {
     if (activeStepState) {
       switch (activeStepState) {
         case 1:
-          if (petType !== 0) {
-            setAllowContent(true);
-          } else {
-            setAllowContent(false);
+          if (showUserPets === false) {
+            if (petType !== 0) {
+              setAllowContent(true);
+            } else {
+              setAllowContent(false);
+            }
           }
           break;
         case 2:
-          if (petDescription === true) {
-            setAllowContent(true);
-          } else {
-            setAllowContent(false);
+          if (showUserPets === false) {
+            if (petDescription === true) {
+              setAllowContent(true);
+            } else {
+              setAllowContent(false);
+            }
           }
           break;
         case 3:
+          setAllowContent(true);
+          break;
+        case 4:
           if (showUserPets) {
             setAllowContent(true);
           } else {
@@ -340,6 +365,7 @@ export default function AdoptStepper() {
   const handleClickOpenModal = () => {
     dispatch(adopt_dialog_open_action(tramite1));
     dispatch(adoptstepper_dialog_open_action());
+
   };
 
   const handleClickCloseModal = () => {
@@ -357,13 +383,16 @@ export default function AdoptStepper() {
       if (result.isConfirmed) {
         if (showUserPets) {
           dispatch(set_edit_user_pet_dialog(false));
+          setActiveStep(0);
+          dispatch(set_step_action(1))
+          setAllowContent(true);
         } else {
           dispatch(set_edit_user_pet_dialog(false));
           dispatch(adoptstepper_dialog_close_action());
           dispatch(reset_action());
           dispatch(reset_form_action());
-          // setActiveStep(0);
-          setAllowContent(false);
+          setActiveStep(0);
+
         }
         Swal.close();
       }
@@ -417,17 +446,25 @@ export default function AdoptStepper() {
         denyButtonText: 'Volver',
       }).then((result) => {
         if (result.isConfirmed) {
-          // dispatch(registry_form_adopt(newPet));
-          // setSendPhotos(true);
+          dispatch(update_user_pet_formData_action(
+            { ...descriptionData, 
+              id_mascota: userPetId, 
+              tipo_tramite: "1",
+              id_vacuna_Rabia: '',
+              id_vacuna_Rinotraqueítis: '',
+              id_vacuna_Parvovirus: '',
+              id_vacuna_Moquillo: ''
+             }));
+          setSendPhotos(true);
           Swal.fire('Actualización exitosa!', '', 'success').then((result) => {
             if (result.isConfirmed) {
               dispatch(set_edit_user_pet_dialog(false));
-              Swal.close();
-              // dispatch(reset_action());
-              // dispatch(reset_form_action());
-              // dispatch(get_saci_pets_action());
-              // setActiveStep(0);
-              // setAllowContent(false);
+              dispatch(reset_action());
+              dispatch(reset_form_action());
+              dispatch(get_saci_pets_action());
+              setActiveStep(0);
+              setAllowContent(false);
+              Swal.close();        
 
             }
           });
@@ -445,7 +482,7 @@ export default function AdoptStepper() {
         denyButtonText: 'Volver',
       }).then((result) => {
         if (result.isConfirmed) {
-          dispatch(registry_form_adopt(newPet));
+          dispatch(registry_form_adopt(descriptionData));
           setSendPhotos(true);
           Swal.fire('Registro exitoso!', '', 'success').then((result) => {
             if (result.isConfirmed) {
@@ -490,6 +527,7 @@ export default function AdoptStepper() {
   const handleClickOpenLogin = () => {
     dispatch(adoptstepper_dialog_close_action());
     dispatch(login_dialog_open_action());
+
   };
 
   // Open dialog Register
@@ -506,7 +544,8 @@ export default function AdoptStepper() {
   const [checked, setChecked] = useState(false);
 
   const handleClickSaciPets = () => {
-    dispatch(get_saci_pets_no_filters_action());
+    dispatch(get_saci_pets_action({ id_tipo_mascota: false }));
+    // dispatch(get_saci_pets_no_filters_action());
   }
 
   return (

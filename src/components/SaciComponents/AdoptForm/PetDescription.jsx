@@ -123,19 +123,15 @@ export default function PetDescription() {
     vacunas: `${vacunas}`
   });
 
-
   useEffect(() => {
     if (showUserPets) {
       dispatch(get_form_data_action(userPetData));
-      setCheckUserPetData(true);
     }
-  }, [showUserPets])
-
-
+  }, [showUserPets]);
 
   useEffect(() => {
     if (showUserPets) {
-      dispatch(update_form_data_action());
+      dispatch(update_form_data_action()); 
     }
   }, [descriptionData])
 
@@ -339,7 +335,8 @@ export default function PetDescription() {
   ]);
 
   const handleChange3 = (event) => {
-    setnewPet({ ...newPet, [event.target.name]: 'true' });
+    setnewPet({ ...newPet, [event.target.name]: event.target.checked });
+    dispatch(get_form_data_action({...descriptionData, [event.target.name]: event.target.checked }));
   };
 
   const [checkUserPetSize, setCheckUserPetSize] = useState(false);

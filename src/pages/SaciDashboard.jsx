@@ -34,7 +34,19 @@ export default function SaciDashboard() {
 
                 <Hidden smDown>
                     <Grid item xs={12} sm={12} md={2} lg={2} xl={2}>
-                        {showUserPets ? <UserPetFilter /> : <FiltersPets />}
+                        {showUserPets ?
+                            <Grid
+                                container
+                                style={{
+                                    marginTop: '200px'
+                                }}
+                                alignItems='center'
+                            >
+                                <UserPetFilter />
+                            </Grid>
+                            :
+                            <FiltersPets />
+                        }
 
                     </Grid>
                 </Hidden>
